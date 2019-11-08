@@ -1,0 +1,41 @@
+{
+  "name": "graphql-basics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
+    "test": "jest",
+    "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env"
+  },
+  "jest": {
+    "globalSetup": "./tests/jest/globalSetup.js",
+    "globalTeardown": "./tests/jest/globalTeardown.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/runtime": "^7.7.2",
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
+    "csv-parser": "^2.3.1",
+    "env-cmd": "^10.0.1",
+    "graphql-cli": "^3.0.14",
+    "graphql-yoga": "^1.14.10",
+    "jest": "^24.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "prisma-binding": "^2.3.16"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
+    "nodemon": "^1.17.5"
+  }
+}
