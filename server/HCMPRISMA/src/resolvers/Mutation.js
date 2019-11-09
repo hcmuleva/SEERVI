@@ -40,7 +40,7 @@ const Mutation = {
 
         return {
             user,
-            token: jwt.sign({ userId: user.id }, 'thisisasecret')
+            token: jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
         }
     },
     async deleteUser(parent, args, { prisma, request }, info) {
