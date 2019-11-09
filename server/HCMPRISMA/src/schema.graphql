@@ -52,8 +52,6 @@ input UpdateUserInput {
     name: String
     email: String
     password:String
-    updatedAt:String
-    createdAt:String
 }
 
 input CreatePostInput {
