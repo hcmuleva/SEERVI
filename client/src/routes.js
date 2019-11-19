@@ -12,7 +12,7 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
-
+import FileHandlers from './components/fileuploads/FileHandler'
 export default [
   {
     path: "/",
@@ -24,6 +24,11 @@ export default [
     path: "/blog-overview",
     layout: DefaultLayout,
     component: BlogOverview
+  },
+  {
+    path:"/fileUpload",
+    layout:DefaultLayout,
+    component:FileHandlers
   },
   {
     path: "/user-profile-lite",

@@ -1,3 +1,4 @@
+scalar Upload
 type Query {
     users(query: String): [User!]!
     posts(query: String): [Post!]!
@@ -7,8 +8,7 @@ type Query {
     post(id: ID!): Post!
     address(id:ID!):Address!
     addresses(query:String):[Address!]!
-
-    
+    uploads: [File]
 }
 
 type Mutation {
@@ -24,6 +24,9 @@ type Mutation {
     updateComment(id: ID!, data: UpdateCommentInput!): Comment!
     createAddress(data:createAddressInput!):Address!
     createBaseAddress(data:baseAddressInput):BaseAddress
+    uploadFile(file: Upload!): Boolean!
+    singleUpload(file: Upload!): File!
+
 }
 
 type Subscription {
@@ -172,4 +175,11 @@ type BaseAddress{
     relatedHeadoffice: String
     longitude: String
     latitude: String 
+}
+type File {
+  id: ID!
+  path: String
+  filename: String!
+  mimetype: String!
+  encoding: String!
 }

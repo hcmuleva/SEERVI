@@ -109,7 +109,8 @@ const Query = {
         }
 
         return addresses[0]
-    }
+    },
+    
 
 }
 
