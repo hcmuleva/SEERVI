@@ -1,4 +1,5 @@
 import getUserId from '../utils/getUserId'
+const fs = require("fs");
 
 const Query = {
     users(parent, args, { prisma }, info) {
@@ -109,6 +110,21 @@ const Query = {
         }
 
         return addresses[0]
+    },
+    async getPhoto(parent, args, { prisma, request }, info) {
+        if(args.url){
+            fs.readFile(args.url, {encoding: 'utf-8'}, function(err,data){
+                if (!err) {
+                    console.log("\n File Data", data, " \nEnd \n")
+                    return data
+                } else {
+                    console.log(err);
+                    return err;
+                }
+            });
+        }
+        
+
     },
     
 
