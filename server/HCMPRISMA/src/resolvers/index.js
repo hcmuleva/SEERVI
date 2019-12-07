@@ -6,6 +6,7 @@ import Address from './address/Address'
 import BaseAddress from './address/BaseAddress'
 import Comment from './comments/Comment'
 import User from './users/User'
+import StudyCatelog from './education/student/StudyCatelog'
 const resolvers= {
     Query,
     Mutation,
@@ -14,6 +15,7 @@ const resolvers= {
     Post,
     Comment,
     Address,
-    BaseAddress
+    BaseAddress,
+    StudyCatelog
 }
 export {resolvers}

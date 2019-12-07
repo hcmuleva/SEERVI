@@ -65,3 +65,16 @@ type File {
   mimetype: String!
   encoding: String!
 }
+
+type StudyCatelog{
+  id:ID! @id
+  std:String!
+  substd:String
+  academic:String
+  subacademic:String
+  subjects:[Subject!]! @relation(name: "SubjectToStudyCatelog", onDelete: CASCADE)
+  boards:[Board!]!     @relation(name: "BoardToStudyCatelog", onDelete: CASCADE)
+  specialization:[Specialization!]! @relation(name: "SpecilizationToStudyCatelog", onDelete: CASCADE)
+  competition:[Competition!]! @relation(name: "CompetitionToStudyCatelog", onDelete: CASCADE)
+  published:Boolean
+}
