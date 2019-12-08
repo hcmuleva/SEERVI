@@ -17,7 +17,7 @@ import updateComment from './comments/mutation/updateComment'
 import createBaseAddress from './address/mutation/createBaseAddress'
 import createAddress from './address/mutation/createAddress'
 import uploadFile from './files/uploadFile'
-import createStudyCatelog from './education/student/createStudyCatelog'
+import createStudyCatelog from './education/student/mutation/createStudyCatelog'
 const Mutation = {
     /** Users */
     createUser,

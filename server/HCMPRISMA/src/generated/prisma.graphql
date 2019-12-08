@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Nov 16 2019 10:22:36 GMT+0530 (India Standard Time)
+# timestamp: Sat Dec 07 2019 14:33:22 GMT+0530 (India Standard Time)
 
 type Address implements Node {
   id: ID!
@@ -445,7 +445,15 @@ type AggregateBaseAddress {
   count: Int!
 }
 
+type AggregateBoard {
+  count: Int!
+}
+
 type AggregateComment {
+  count: Int!
+}
+
+type AggregateCompetition {
   count: Int!
 }
 
@@ -454,6 +462,18 @@ type AggregateFile {
 }
 
 type AggregatePost {
+  count: Int!
+}
+
+type AggregateSpecialization {
+  count: Int!
+}
+
+type AggregateStudyCatelog {
+  count: Int!
+}
+
+type AggregateSubject {
   count: Int!
 }
 
@@ -1305,6 +1325,328 @@ type BatchPayload {
   count: Long!
 }
 
+type Board implements Node {
+  id: ID!
+  name: String
+  catelog: StudyCatelog!
+}
+
+"""A connection to a list of items."""
+type BoardConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BoardEdge]!
+  aggregate: AggregateBoard!
+}
+
+input BoardCreateInput {
+  id: ID
+  name: String
+  catelog: StudyCatelogCreateOneWithoutBoardsInput!
+}
+
+input BoardCreateManyWithoutCatelogInput {
+  create: [BoardCreateWithoutCatelogInput!]
+  connect: [BoardWhereUniqueInput!]
+}
+
+input BoardCreateWithoutCatelogInput {
+  id: ID
+  name: String
+}
+
+"""An edge in a connection."""
+type BoardEdge {
+  """The item at the end of the edge."""
+  node: Board!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BoardOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type BoardPreviousValues {
+  id: ID!
+  name: String
+}
+
+input BoardScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BoardScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BoardScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BoardScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type BoardSubscriptionPayload {
+  mutation: MutationType!
+  node: Board
+  updatedFields: [String!]
+  previousValues: BoardPreviousValues
+}
+
+input BoardSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BoardSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BoardSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BoardSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BoardWhereInput
+}
+
+input BoardUpdateInput {
+  name: String
+  catelog: StudyCatelogUpdateOneRequiredWithoutBoardsInput
+}
+
+input BoardUpdateManyDataInput {
+  name: String
+}
+
+input BoardUpdateManyMutationInput {
+  name: String
+}
+
+input BoardUpdateManyWithoutCatelogInput {
+  create: [BoardCreateWithoutCatelogInput!]
+  connect: [BoardWhereUniqueInput!]
+  set: [BoardWhereUniqueInput!]
+  disconnect: [BoardWhereUniqueInput!]
+  delete: [BoardWhereUniqueInput!]
+  update: [BoardUpdateWithWhereUniqueWithoutCatelogInput!]
+  updateMany: [BoardUpdateManyWithWhereNestedInput!]
+  deleteMany: [BoardScalarWhereInput!]
+  upsert: [BoardUpsertWithWhereUniqueWithoutCatelogInput!]
+}
+
+input BoardUpdateManyWithWhereNestedInput {
+  where: BoardScalarWhereInput!
+  data: BoardUpdateManyDataInput!
+}
+
+input BoardUpdateWithoutCatelogDataInput {
+  name: String
+}
+
+input BoardUpdateWithWhereUniqueWithoutCatelogInput {
+  where: BoardWhereUniqueInput!
+  data: BoardUpdateWithoutCatelogDataInput!
+}
+
+input BoardUpsertWithWhereUniqueWithoutCatelogInput {
+  where: BoardWhereUniqueInput!
+  update: BoardUpdateWithoutCatelogDataInput!
+  create: BoardCreateWithoutCatelogInput!
+}
+
+input BoardWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BoardWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BoardWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BoardWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  catelog: StudyCatelogWhereInput
+}
+
+input BoardWhereUniqueInput {
+  id: ID
+}
+
 type Comment implements Node {
   id: ID!
   text: String!
@@ -1768,11 +2110,333 @@ input CommentWhereUniqueInput {
   id: ID
 }
 
+type Competition implements Node {
+  id: ID!
+  name: String
+  catelog: StudyCatelog!
+}
+
+"""A connection to a list of items."""
+type CompetitionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CompetitionEdge]!
+  aggregate: AggregateCompetition!
+}
+
+input CompetitionCreateInput {
+  id: ID
+  name: String
+  catelog: StudyCatelogCreateOneWithoutCompetitionInput!
+}
+
+input CompetitionCreateManyWithoutCatelogInput {
+  create: [CompetitionCreateWithoutCatelogInput!]
+  connect: [CompetitionWhereUniqueInput!]
+}
+
+input CompetitionCreateWithoutCatelogInput {
+  id: ID
+  name: String
+}
+
+"""An edge in a connection."""
+type CompetitionEdge {
+  """The item at the end of the edge."""
+  node: Competition!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CompetitionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type CompetitionPreviousValues {
+  id: ID!
+  name: String
+}
+
+input CompetitionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompetitionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompetitionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompetitionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type CompetitionSubscriptionPayload {
+  mutation: MutationType!
+  node: Competition
+  updatedFields: [String!]
+  previousValues: CompetitionPreviousValues
+}
+
+input CompetitionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompetitionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompetitionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompetitionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CompetitionWhereInput
+}
+
+input CompetitionUpdateInput {
+  name: String
+  catelog: StudyCatelogUpdateOneRequiredWithoutCompetitionInput
+}
+
+input CompetitionUpdateManyDataInput {
+  name: String
+}
+
+input CompetitionUpdateManyMutationInput {
+  name: String
+}
+
+input CompetitionUpdateManyWithoutCatelogInput {
+  create: [CompetitionCreateWithoutCatelogInput!]
+  connect: [CompetitionWhereUniqueInput!]
+  set: [CompetitionWhereUniqueInput!]
+  disconnect: [CompetitionWhereUniqueInput!]
+  delete: [CompetitionWhereUniqueInput!]
+  update: [CompetitionUpdateWithWhereUniqueWithoutCatelogInput!]
+  updateMany: [CompetitionUpdateManyWithWhereNestedInput!]
+  deleteMany: [CompetitionScalarWhereInput!]
+  upsert: [CompetitionUpsertWithWhereUniqueWithoutCatelogInput!]
+}
+
+input CompetitionUpdateManyWithWhereNestedInput {
+  where: CompetitionScalarWhereInput!
+  data: CompetitionUpdateManyDataInput!
+}
+
+input CompetitionUpdateWithoutCatelogDataInput {
+  name: String
+}
+
+input CompetitionUpdateWithWhereUniqueWithoutCatelogInput {
+  where: CompetitionWhereUniqueInput!
+  data: CompetitionUpdateWithoutCatelogDataInput!
+}
+
+input CompetitionUpsertWithWhereUniqueWithoutCatelogInput {
+  where: CompetitionWhereUniqueInput!
+  update: CompetitionUpdateWithoutCatelogDataInput!
+  create: CompetitionCreateWithoutCatelogInput!
+}
+
+input CompetitionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompetitionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompetitionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompetitionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  catelog: StudyCatelogWhereInput
+}
+
+input CompetitionWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type File implements Node {
   id: ID!
-  path: String!
+  path: String
   filename: String!
   mimetype: String!
   encoding: String!
@@ -1790,7 +2454,7 @@ type FileConnection {
 
 input FileCreateInput {
   id: ID
-  path: String!
+  path: String
   filename: String!
   mimetype: String!
   encoding: String!
@@ -1820,7 +2484,7 @@ enum FileOrderByInput {
 
 type FilePreviousValues {
   id: ID!
-  path: String!
+  path: String
   filename: String!
   mimetype: String!
   encoding: String!
@@ -2108,36 +2772,66 @@ type Mutation {
   createAddress(data: AddressCreateInput!): Address!
   createBaseAddress(data: BaseAddressCreateInput!): BaseAddress!
   createFile(data: FileCreateInput!): File!
+  createSubject(data: SubjectCreateInput!): Subject!
+  createBoard(data: BoardCreateInput!): Board!
+  createCompetition(data: CompetitionCreateInput!): Competition!
+  createStudyCatelog(data: StudyCatelogCreateInput!): StudyCatelog!
+  createSpecialization(data: SpecializationCreateInput!): Specialization!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateAddress(data: AddressUpdateInput!, where: AddressWhereUniqueInput!): Address
   updateBaseAddress(data: BaseAddressUpdateInput!, where: BaseAddressWhereUniqueInput!): BaseAddress
   updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
+  updateSubject(data: SubjectUpdateInput!, where: SubjectWhereUniqueInput!): Subject
+  updateBoard(data: BoardUpdateInput!, where: BoardWhereUniqueInput!): Board
+  updateCompetition(data: CompetitionUpdateInput!, where: CompetitionWhereUniqueInput!): Competition
+  updateStudyCatelog(data: StudyCatelogUpdateInput!, where: StudyCatelogWhereUniqueInput!): StudyCatelog
+  updateSpecialization(data: SpecializationUpdateInput!, where: SpecializationWhereUniqueInput!): Specialization
   deleteUser(where: UserWhereUniqueInput!): User
   deletePost(where: PostWhereUniqueInput!): Post
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteAddress(where: AddressWhereUniqueInput!): Address
   deleteBaseAddress(where: BaseAddressWhereUniqueInput!): BaseAddress
   deleteFile(where: FileWhereUniqueInput!): File
+  deleteSubject(where: SubjectWhereUniqueInput!): Subject
+  deleteBoard(where: BoardWhereUniqueInput!): Board
+  deleteCompetition(where: CompetitionWhereUniqueInput!): Competition
+  deleteStudyCatelog(where: StudyCatelogWhereUniqueInput!): StudyCatelog
+  deleteSpecialization(where: SpecializationWhereUniqueInput!): Specialization
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   upsertAddress(where: AddressWhereUniqueInput!, create: AddressCreateInput!, update: AddressUpdateInput!): Address!
   upsertBaseAddress(where: BaseAddressWhereUniqueInput!, create: BaseAddressCreateInput!, update: BaseAddressUpdateInput!): BaseAddress!
   upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
+  upsertSubject(where: SubjectWhereUniqueInput!, create: SubjectCreateInput!, update: SubjectUpdateInput!): Subject!
+  upsertBoard(where: BoardWhereUniqueInput!, create: BoardCreateInput!, update: BoardUpdateInput!): Board!
+  upsertCompetition(where: CompetitionWhereUniqueInput!, create: CompetitionCreateInput!, update: CompetitionUpdateInput!): Competition!
+  upsertStudyCatelog(where: StudyCatelogWhereUniqueInput!, create: StudyCatelogCreateInput!, update: StudyCatelogUpdateInput!): StudyCatelog!
+  upsertSpecialization(where: SpecializationWhereUniqueInput!, create: SpecializationCreateInput!, update: SpecializationUpdateInput!): Specialization!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
   updateManyAddresses(data: AddressUpdateManyMutationInput!, where: AddressWhereInput): BatchPayload!
   updateManyBaseAddresses(data: BaseAddressUpdateManyMutationInput!, where: BaseAddressWhereInput): BatchPayload!
   updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
+  updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
+  updateManyBoards(data: BoardUpdateManyMutationInput!, where: BoardWhereInput): BatchPayload!
+  updateManyCompetitions(data: CompetitionUpdateManyMutationInput!, where: CompetitionWhereInput): BatchPayload!
+  updateManyStudyCatelogs(data: StudyCatelogUpdateManyMutationInput!, where: StudyCatelogWhereInput): BatchPayload!
+  updateManySpecializations(data: SpecializationUpdateManyMutationInput!, where: SpecializationWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
   deleteManyAddresses(where: AddressWhereInput): BatchPayload!
   deleteManyBaseAddresses(where: BaseAddressWhereInput): BatchPayload!
   deleteManyFiles(where: FileWhereInput): BatchPayload!
+  deleteManySubjects(where: SubjectWhereInput): BatchPayload!
+  deleteManyBoards(where: BoardWhereInput): BatchPayload!
+  deleteManyCompetitions(where: CompetitionWhereInput): BatchPayload!
+  deleteManyStudyCatelogs(where: StudyCatelogWhereInput): BatchPayload!
+  deleteManySpecializations(where: SpecializationWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -2745,24 +3439,1185 @@ type Query {
   addresses(where: AddressWhereInput, orderBy: AddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Address]!
   baseAddresses(where: BaseAddressWhereInput, orderBy: BaseAddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BaseAddress]!
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
+  boards(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Board]!
+  competitions(where: CompetitionWhereInput, orderBy: CompetitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Competition]!
+  studyCatelogs(where: StudyCatelogWhereInput, orderBy: StudyCatelogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudyCatelog]!
+  specializations(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization]!
   user(where: UserWhereUniqueInput!): User
   post(where: PostWhereUniqueInput!): Post
   comment(where: CommentWhereUniqueInput!): Comment
   address(where: AddressWhereUniqueInput!): Address
   baseAddress(where: BaseAddressWhereUniqueInput!): BaseAddress
   file(where: FileWhereUniqueInput!): File
+  subject(where: SubjectWhereUniqueInput!): Subject
+  board(where: BoardWhereUniqueInput!): Board
+  competition(where: CompetitionWhereUniqueInput!): Competition
+  studyCatelog(where: StudyCatelogWhereUniqueInput!): StudyCatelog
+  specialization(where: SpecializationWhereUniqueInput!): Specialization
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
   addressesConnection(where: AddressWhereInput, orderBy: AddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AddressConnection!
   baseAddressesConnection(where: BaseAddressWhereInput, orderBy: BaseAddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BaseAddressConnection!
   filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
+  subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
+  boardsConnection(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BoardConnection!
+  competitionsConnection(where: CompetitionWhereInput, orderBy: CompetitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompetitionConnection!
+  studyCatelogsConnection(where: StudyCatelogWhereInput, orderBy: StudyCatelogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudyCatelogConnection!
+  specializationsConnection(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecializationConnection!
 
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
     id: ID!
   ): Node
+}
+
+type Specialization implements Node {
+  id: ID!
+  name: String
+  catelog: StudyCatelog!
+}
+
+"""A connection to a list of items."""
+type SpecializationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SpecializationEdge]!
+  aggregate: AggregateSpecialization!
+}
+
+input SpecializationCreateInput {
+  id: ID
+  name: String
+  catelog: StudyCatelogCreateOneInput!
+}
+
+input SpecializationCreateManyInput {
+  create: [SpecializationCreateInput!]
+  connect: [SpecializationWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type SpecializationEdge {
+  """The item at the end of the edge."""
+  node: Specialization!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SpecializationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type SpecializationPreviousValues {
+  id: ID!
+  name: String
+}
+
+input SpecializationScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SpecializationScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SpecializationScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SpecializationScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type SpecializationSubscriptionPayload {
+  mutation: MutationType!
+  node: Specialization
+  updatedFields: [String!]
+  previousValues: SpecializationPreviousValues
+}
+
+input SpecializationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SpecializationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SpecializationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SpecializationSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SpecializationWhereInput
+}
+
+input SpecializationUpdateDataInput {
+  name: String
+  catelog: StudyCatelogUpdateOneRequiredInput
+}
+
+input SpecializationUpdateInput {
+  name: String
+  catelog: StudyCatelogUpdateOneRequiredInput
+}
+
+input SpecializationUpdateManyDataInput {
+  name: String
+}
+
+input SpecializationUpdateManyInput {
+  create: [SpecializationCreateInput!]
+  connect: [SpecializationWhereUniqueInput!]
+  set: [SpecializationWhereUniqueInput!]
+  disconnect: [SpecializationWhereUniqueInput!]
+  delete: [SpecializationWhereUniqueInput!]
+  update: [SpecializationUpdateWithWhereUniqueNestedInput!]
+  updateMany: [SpecializationUpdateManyWithWhereNestedInput!]
+  deleteMany: [SpecializationScalarWhereInput!]
+  upsert: [SpecializationUpsertWithWhereUniqueNestedInput!]
+}
+
+input SpecializationUpdateManyMutationInput {
+  name: String
+}
+
+input SpecializationUpdateManyWithWhereNestedInput {
+  where: SpecializationScalarWhereInput!
+  data: SpecializationUpdateManyDataInput!
+}
+
+input SpecializationUpdateWithWhereUniqueNestedInput {
+  where: SpecializationWhereUniqueInput!
+  data: SpecializationUpdateDataInput!
+}
+
+input SpecializationUpsertWithWhereUniqueNestedInput {
+  where: SpecializationWhereUniqueInput!
+  update: SpecializationUpdateDataInput!
+  create: SpecializationCreateInput!
+}
+
+input SpecializationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SpecializationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SpecializationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SpecializationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  catelog: StudyCatelogWhereInput
+}
+
+input SpecializationWhereUniqueInput {
+  id: ID
+}
+
+type StudyCatelog implements Node {
+  id: ID!
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
+  boards(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Board!]
+  specialization(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization!]
+  competition(where: CompetitionWhereInput, orderBy: CompetitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Competition!]
+  published: Boolean
+}
+
+"""A connection to a list of items."""
+type StudyCatelogConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StudyCatelogEdge]!
+  aggregate: AggregateStudyCatelog!
+}
+
+input StudyCatelogCreateInput {
+  id: ID
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectCreateManyWithoutCatelogInput
+  boards: BoardCreateManyWithoutCatelogInput
+  specialization: SpecializationCreateManyInput
+  competition: CompetitionCreateManyWithoutCatelogInput
+}
+
+input StudyCatelogCreateOneInput {
+  create: StudyCatelogCreateInput
+  connect: StudyCatelogWhereUniqueInput
+}
+
+input StudyCatelogCreateOneWithoutBoardsInput {
+  create: StudyCatelogCreateWithoutBoardsInput
+  connect: StudyCatelogWhereUniqueInput
+}
+
+input StudyCatelogCreateOneWithoutCompetitionInput {
+  create: StudyCatelogCreateWithoutCompetitionInput
+  connect: StudyCatelogWhereUniqueInput
+}
+
+input StudyCatelogCreateOneWithoutSubjectsInput {
+  create: StudyCatelogCreateWithoutSubjectsInput
+  connect: StudyCatelogWhereUniqueInput
+}
+
+input StudyCatelogCreateWithoutBoardsInput {
+  id: ID
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectCreateManyWithoutCatelogInput
+  specialization: SpecializationCreateManyInput
+  competition: CompetitionCreateManyWithoutCatelogInput
+}
+
+input StudyCatelogCreateWithoutCompetitionInput {
+  id: ID
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectCreateManyWithoutCatelogInput
+  boards: BoardCreateManyWithoutCatelogInput
+  specialization: SpecializationCreateManyInput
+}
+
+input StudyCatelogCreateWithoutSubjectsInput {
+  id: ID
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  boards: BoardCreateManyWithoutCatelogInput
+  specialization: SpecializationCreateManyInput
+  competition: CompetitionCreateManyWithoutCatelogInput
+}
+
+"""An edge in a connection."""
+type StudyCatelogEdge {
+  """The item at the end of the edge."""
+  node: StudyCatelog!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum StudyCatelogOrderByInput {
+  id_ASC
+  id_DESC
+  std_ASC
+  std_DESC
+  substd_ASC
+  substd_DESC
+  academic_ASC
+  academic_DESC
+  subacademic_ASC
+  subacademic_DESC
+  published_ASC
+  published_DESC
+}
+
+type StudyCatelogPreviousValues {
+  id: ID!
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+}
+
+type StudyCatelogSubscriptionPayload {
+  mutation: MutationType!
+  node: StudyCatelog
+  updatedFields: [String!]
+  previousValues: StudyCatelogPreviousValues
+}
+
+input StudyCatelogSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudyCatelogSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudyCatelogSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudyCatelogSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: StudyCatelogWhereInput
+}
+
+input StudyCatelogUpdateDataInput {
+  std: String
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectUpdateManyWithoutCatelogInput
+  boards: BoardUpdateManyWithoutCatelogInput
+  specialization: SpecializationUpdateManyInput
+  competition: CompetitionUpdateManyWithoutCatelogInput
+}
+
+input StudyCatelogUpdateInput {
+  std: String
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectUpdateManyWithoutCatelogInput
+  boards: BoardUpdateManyWithoutCatelogInput
+  specialization: SpecializationUpdateManyInput
+  competition: CompetitionUpdateManyWithoutCatelogInput
+}
+
+input StudyCatelogUpdateManyMutationInput {
+  std: String
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+}
+
+input StudyCatelogUpdateOneRequiredInput {
+  create: StudyCatelogCreateInput
+  connect: StudyCatelogWhereUniqueInput
+  update: StudyCatelogUpdateDataInput
+  upsert: StudyCatelogUpsertNestedInput
+}
+
+input StudyCatelogUpdateOneRequiredWithoutBoardsInput {
+  create: StudyCatelogCreateWithoutBoardsInput
+  connect: StudyCatelogWhereUniqueInput
+  update: StudyCatelogUpdateWithoutBoardsDataInput
+  upsert: StudyCatelogUpsertWithoutBoardsInput
+}
+
+input StudyCatelogUpdateOneRequiredWithoutCompetitionInput {
+  create: StudyCatelogCreateWithoutCompetitionInput
+  connect: StudyCatelogWhereUniqueInput
+  update: StudyCatelogUpdateWithoutCompetitionDataInput
+  upsert: StudyCatelogUpsertWithoutCompetitionInput
+}
+
+input StudyCatelogUpdateOneRequiredWithoutSubjectsInput {
+  create: StudyCatelogCreateWithoutSubjectsInput
+  connect: StudyCatelogWhereUniqueInput
+  update: StudyCatelogUpdateWithoutSubjectsDataInput
+  upsert: StudyCatelogUpsertWithoutSubjectsInput
+}
+
+input StudyCatelogUpdateWithoutBoardsDataInput {
+  std: String
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectUpdateManyWithoutCatelogInput
+  specialization: SpecializationUpdateManyInput
+  competition: CompetitionUpdateManyWithoutCatelogInput
+}
+
+input StudyCatelogUpdateWithoutCompetitionDataInput {
+  std: String
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  subjects: SubjectUpdateManyWithoutCatelogInput
+  boards: BoardUpdateManyWithoutCatelogInput
+  specialization: SpecializationUpdateManyInput
+}
+
+input StudyCatelogUpdateWithoutSubjectsDataInput {
+  std: String
+  substd: String
+  academic: String
+  subacademic: String
+  published: Boolean
+  boards: BoardUpdateManyWithoutCatelogInput
+  specialization: SpecializationUpdateManyInput
+  competition: CompetitionUpdateManyWithoutCatelogInput
+}
+
+input StudyCatelogUpsertNestedInput {
+  update: StudyCatelogUpdateDataInput!
+  create: StudyCatelogCreateInput!
+}
+
+input StudyCatelogUpsertWithoutBoardsInput {
+  update: StudyCatelogUpdateWithoutBoardsDataInput!
+  create: StudyCatelogCreateWithoutBoardsInput!
+}
+
+input StudyCatelogUpsertWithoutCompetitionInput {
+  update: StudyCatelogUpdateWithoutCompetitionDataInput!
+  create: StudyCatelogCreateWithoutCompetitionInput!
+}
+
+input StudyCatelogUpsertWithoutSubjectsInput {
+  update: StudyCatelogUpdateWithoutSubjectsDataInput!
+  create: StudyCatelogCreateWithoutSubjectsInput!
+}
+
+input StudyCatelogWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudyCatelogWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudyCatelogWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudyCatelogWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  std: String
+
+  """All values that are not equal to given value."""
+  std_not: String
+
+  """All values that are contained in given list."""
+  std_in: [String!]
+
+  """All values that are not contained in given list."""
+  std_not_in: [String!]
+
+  """All values less than the given value."""
+  std_lt: String
+
+  """All values less than or equal the given value."""
+  std_lte: String
+
+  """All values greater than the given value."""
+  std_gt: String
+
+  """All values greater than or equal the given value."""
+  std_gte: String
+
+  """All values containing the given string."""
+  std_contains: String
+
+  """All values not containing the given string."""
+  std_not_contains: String
+
+  """All values starting with the given string."""
+  std_starts_with: String
+
+  """All values not starting with the given string."""
+  std_not_starts_with: String
+
+  """All values ending with the given string."""
+  std_ends_with: String
+
+  """All values not ending with the given string."""
+  std_not_ends_with: String
+  substd: String
+
+  """All values that are not equal to given value."""
+  substd_not: String
+
+  """All values that are contained in given list."""
+  substd_in: [String!]
+
+  """All values that are not contained in given list."""
+  substd_not_in: [String!]
+
+  """All values less than the given value."""
+  substd_lt: String
+
+  """All values less than or equal the given value."""
+  substd_lte: String
+
+  """All values greater than the given value."""
+  substd_gt: String
+
+  """All values greater than or equal the given value."""
+  substd_gte: String
+
+  """All values containing the given string."""
+  substd_contains: String
+
+  """All values not containing the given string."""
+  substd_not_contains: String
+
+  """All values starting with the given string."""
+  substd_starts_with: String
+
+  """All values not starting with the given string."""
+  substd_not_starts_with: String
+
+  """All values ending with the given string."""
+  substd_ends_with: String
+
+  """All values not ending with the given string."""
+  substd_not_ends_with: String
+  academic: String
+
+  """All values that are not equal to given value."""
+  academic_not: String
+
+  """All values that are contained in given list."""
+  academic_in: [String!]
+
+  """All values that are not contained in given list."""
+  academic_not_in: [String!]
+
+  """All values less than the given value."""
+  academic_lt: String
+
+  """All values less than or equal the given value."""
+  academic_lte: String
+
+  """All values greater than the given value."""
+  academic_gt: String
+
+  """All values greater than or equal the given value."""
+  academic_gte: String
+
+  """All values containing the given string."""
+  academic_contains: String
+
+  """All values not containing the given string."""
+  academic_not_contains: String
+
+  """All values starting with the given string."""
+  academic_starts_with: String
+
+  """All values not starting with the given string."""
+  academic_not_starts_with: String
+
+  """All values ending with the given string."""
+  academic_ends_with: String
+
+  """All values not ending with the given string."""
+  academic_not_ends_with: String
+  subacademic: String
+
+  """All values that are not equal to given value."""
+  subacademic_not: String
+
+  """All values that are contained in given list."""
+  subacademic_in: [String!]
+
+  """All values that are not contained in given list."""
+  subacademic_not_in: [String!]
+
+  """All values less than the given value."""
+  subacademic_lt: String
+
+  """All values less than or equal the given value."""
+  subacademic_lte: String
+
+  """All values greater than the given value."""
+  subacademic_gt: String
+
+  """All values greater than or equal the given value."""
+  subacademic_gte: String
+
+  """All values containing the given string."""
+  subacademic_contains: String
+
+  """All values not containing the given string."""
+  subacademic_not_contains: String
+
+  """All values starting with the given string."""
+  subacademic_starts_with: String
+
+  """All values not starting with the given string."""
+  subacademic_not_starts_with: String
+
+  """All values ending with the given string."""
+  subacademic_ends_with: String
+
+  """All values not ending with the given string."""
+  subacademic_not_ends_with: String
+  published: Boolean
+
+  """All values that are not equal to given value."""
+  published_not: Boolean
+  subjects_every: SubjectWhereInput
+  subjects_some: SubjectWhereInput
+  subjects_none: SubjectWhereInput
+  boards_every: BoardWhereInput
+  boards_some: BoardWhereInput
+  boards_none: BoardWhereInput
+  specialization_every: SpecializationWhereInput
+  specialization_some: SpecializationWhereInput
+  specialization_none: SpecializationWhereInput
+  competition_every: CompetitionWhereInput
+  competition_some: CompetitionWhereInput
+  competition_none: CompetitionWhereInput
+}
+
+input StudyCatelogWhereUniqueInput {
+  id: ID
+}
+
+type Subject implements Node {
+  id: ID!
+  name: String
+  catelog: StudyCatelog!
+}
+
+"""A connection to a list of items."""
+type SubjectConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SubjectEdge]!
+  aggregate: AggregateSubject!
+}
+
+input SubjectCreateInput {
+  id: ID
+  name: String
+  catelog: StudyCatelogCreateOneWithoutSubjectsInput!
+}
+
+input SubjectCreateManyWithoutCatelogInput {
+  create: [SubjectCreateWithoutCatelogInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input SubjectCreateWithoutCatelogInput {
+  id: ID
+  name: String
+}
+
+"""An edge in a connection."""
+type SubjectEdge {
+  """The item at the end of the edge."""
+  node: Subject!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SubjectOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type SubjectPreviousValues {
+  id: ID!
+  name: String
+}
+
+input SubjectScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type SubjectSubscriptionPayload {
+  mutation: MutationType!
+  node: Subject
+  updatedFields: [String!]
+  previousValues: SubjectPreviousValues
+}
+
+input SubjectSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SubjectWhereInput
+}
+
+input SubjectUpdateInput {
+  name: String
+  catelog: StudyCatelogUpdateOneRequiredWithoutSubjectsInput
+}
+
+input SubjectUpdateManyDataInput {
+  name: String
+}
+
+input SubjectUpdateManyMutationInput {
+  name: String
+}
+
+input SubjectUpdateManyWithoutCatelogInput {
+  create: [SubjectCreateWithoutCatelogInput!]
+  connect: [SubjectWhereUniqueInput!]
+  set: [SubjectWhereUniqueInput!]
+  disconnect: [SubjectWhereUniqueInput!]
+  delete: [SubjectWhereUniqueInput!]
+  update: [SubjectUpdateWithWhereUniqueWithoutCatelogInput!]
+  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubjectScalarWhereInput!]
+  upsert: [SubjectUpsertWithWhereUniqueWithoutCatelogInput!]
+}
+
+input SubjectUpdateManyWithWhereNestedInput {
+  where: SubjectScalarWhereInput!
+  data: SubjectUpdateManyDataInput!
+}
+
+input SubjectUpdateWithoutCatelogDataInput {
+  name: String
+}
+
+input SubjectUpdateWithWhereUniqueWithoutCatelogInput {
+  where: SubjectWhereUniqueInput!
+  data: SubjectUpdateWithoutCatelogDataInput!
+}
+
+input SubjectUpsertWithWhereUniqueWithoutCatelogInput {
+  where: SubjectWhereUniqueInput!
+  update: SubjectUpdateWithoutCatelogDataInput!
+  create: SubjectCreateWithoutCatelogInput!
+}
+
+input SubjectWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  catelog: StudyCatelogWhereInput
+}
+
+input SubjectWhereUniqueInput {
+  id: ID
 }
 
 type Subscription {
@@ -2772,6 +4627,11 @@ type Subscription {
   address(where: AddressSubscriptionWhereInput): AddressSubscriptionPayload
   baseAddress(where: BaseAddressSubscriptionWhereInput): BaseAddressSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
+  subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
+  board(where: BoardSubscriptionWhereInput): BoardSubscriptionPayload
+  competition(where: CompetitionSubscriptionWhereInput): CompetitionSubscriptionPayload
+  studyCatelog(where: StudyCatelogSubscriptionWhereInput): StudyCatelogSubscriptionPayload
+  specialization(where: SpecializationSubscriptionWhereInput): SpecializationSubscriptionPayload
 }
 
 type User implements Node {
