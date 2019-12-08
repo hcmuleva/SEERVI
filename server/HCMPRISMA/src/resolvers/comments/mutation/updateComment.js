@@ -1,5 +1,5 @@
     
-import getUserId from '../../utils/getUserId'
+import getUserId from '../../../utils/getUserId'
 async function updateComment(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
     const commentExists = await prisma.exists.Comment({

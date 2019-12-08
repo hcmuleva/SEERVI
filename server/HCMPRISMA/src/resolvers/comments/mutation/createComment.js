@@ -1,4 +1,4 @@
-import getUserId from '../../utils/getUserId'
+import getUserId from '../../../utils/getUserId'
 
 export default function createComment(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)

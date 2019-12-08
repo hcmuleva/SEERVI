@@ -1,5 +1,4 @@
-import getUserId from '../../utils/getUserId'
-import hashPassword from '../../utils/hashPassword'
+import hashPassword from '../../../utils/hashPassword'
 import jwt from 'jsonwebtoken'
 async function createUser(parent, args, { prisma }, info) {
     const password = await hashPassword(args.data.password)

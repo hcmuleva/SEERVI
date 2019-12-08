@@ -1,5 +1,4 @@
-import getUserId from '../../utils/getUserId'
-    
+import getUserId from '../../../utils/getUserId'   
 async function updateUser(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
     if(typeof args.data.password === 'string'){

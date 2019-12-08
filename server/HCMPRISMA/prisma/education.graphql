@@ -1,0 +1,33 @@
+
+type Subject{
+  id:ID! @id
+  name:String
+  catelog:StudyCatelog! @relation(name: "SubjectToStudyCatelog", onDelete: SET_NULL)
+}
+type Board{
+  id:ID! @id
+  name:String
+  catelog:StudyCatelog! @relation(name: "BoardToStudyCatelog", onDelete: SET_NULL)
+}
+type Specialization{
+  id:ID! @id
+  name:String
+  catelog:StudyCatelog! @relation(name: "SpecializationToStudyCatelog", onDelete: SET_NULL)
+}
+type Competition{
+  id:ID! @id
+  name:String
+  catelog:StudyCatelog! @relation(name: "CompetitionToStudyCatelog", onDelete: SET_NULL)
+}
+type StudyCatelog{
+  id:ID! @id
+  std:String!
+  substd:String
+  academic:String
+  subacademic:String
+  subjects:[Subject!]! @relation(name: "SubjectToStudyCatelog", onDelete: CASCADE)
+  boards:[Board!]!     @relation(name: "BoardToStudyCatelog", onDelete: CASCADE)
+  specialization:[Specialization!]! @relation(name: "SpecilizationToStudyCatelog", onDelete: CASCADE)
+  competition:[Competition!]! @relation(name: "CompetitionToStudyCatelog", onDelete: CASCADE)
+  published:Boolean
+}

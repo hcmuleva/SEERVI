@@ -1,80 +1,8 @@
-type User {
-  id: ID! @id
-  name: String!
-  email: String! @unique
-  password: String!
-  posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
-  comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
-  updatedAt:DateTime!  @updatedAt
-  createdAt:DateTime!  @createdAt
-  addresses:[Address!]! @relation(name: "AddressToUser", onDelete: CASCADE)
-}
 
-type Post {
-  id: ID! @id
-  title: String!
-  body: String!
-  published: Boolean!
-  author: User! @relation(name: "PostToUser", onDelete: SET_NULL)
-  comments: [Comment!]! @relation(name: "CommentToPost", onDelete: CASCADE)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-}
-
-type Comment {
-  id: ID! @id
-  text: String!
-  author: User! @relation(name: "CommentToUser", onDelete: SET_NULL)
-  post: Post!@relation(name: "CommentToPost", onDelete: SET_NULL)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-}
-
-type Address{
-  id: ID! @id
-  house:String
-  published:Boolean!
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-  author:User! @relation(name: "AddressToUser", onDelete: SET_NULL)
-
-}
-
-type BaseAddress{
-  id:ID! @id
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String,
-  latitude: String 
-}
 type File {
   id: ID! @id
   path: String
   filename: String!
   mimetype: String!
   encoding: String!
-}
-
-type StudyCatelog{
-  id:ID! @id
-  std:String!
-  substd:String
-  academic:String
-  subacademic:String
-  subjects:[Subject!]! @relation(name: "SubjectToStudyCatelog", onDelete: CASCADE)
-  boards:[Board!]!     @relation(name: "BoardToStudyCatelog", onDelete: CASCADE)
-  specialization:[Specialization!]! @relation(name: "SpecilizationToStudyCatelog", onDelete: CASCADE)
-  competition:[Competition!]! @relation(name: "CompetitionToStudyCatelog", onDelete: CASCADE)
-  published:Boolean
 }

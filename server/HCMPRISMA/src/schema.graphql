@@ -7,7 +7,7 @@ type Query {
     addresses(query:String):[Address!]!
     uploads: [File]
     getPhoto(url:String!):File
-    getStudyCatelog:[StudyCatelog]
+    getStudyCatelogs:[StudyCatelog]
 }
 
 type Mutation {
@@ -100,20 +100,26 @@ input StudyCatelogInput{
   published:Boolean
 }
 type Subject{
-    id:ID!
-    name:String!
+  name:String
+  catelog:StudyCatelog!
 }
 type Board{
-    id:ID!
-    name:String!
+  id:ID! 
+  name:String
+  catelog:StudyCatelog!
+  
 }
 type Specialization{
-    id:ID!
-    name:String!
+  id:ID! 
+  name:String
+  catelog:StudyCatelog! 
+  
 }
 type Competition{
-    id:ID!
-    name:String!
+  id:ID! 
+  name:String
+  catelog:StudyCatelog! 
+  
 }
 type StudyCatelog{
   id:ID! 

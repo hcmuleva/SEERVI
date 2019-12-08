@@ -1,4 +1,4 @@
-import getUserId from '../../utils/getUserId'
+import getUserId from '../../../utils/getUserId'
 
 async function deleteComment(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)

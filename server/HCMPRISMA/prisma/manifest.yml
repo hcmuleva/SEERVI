@@ -1,0 +1,12 @@
+applications:
+- name: hcm-access
+  disk_quota: 1G
+  docker:
+    image: docker.eu1.hsdp.io/hsi-tst/tst-repo/hcm-hsi-test:hcm
+    username: hmuleva
+  instances: 1
+  memory: 2G
+  routes:
+  - route: hcm-access.cloud.pcftest.com
+  stack: cflinuxfs3
+    
