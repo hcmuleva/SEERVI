@@ -1,18 +1,19 @@
-function posts(parent, args, { prisma }, info) {
-    const opArgs = {
+async function posts(parent, args, { prisma }, info) {
+    const userId = getUserId(request, false)
+
+    const posts = await prisma.query.posts({
         where: {
-            published: true
+            id: args.id,
+            OR: [{
+                published: true
+            }, {
+                author: {
+                    id: userId
+                }
+            }]
         }
-    }
+    }, info)
 
-    if (args.query) {
-        opArgs.where.OR = [{
-            title_contains: args.query
-        }, {
-            body_contains: args.query
-        }]
-    }
-
-    return prisma.query.posts(opArgs, info)
+    return posts
 }
 export default posts;

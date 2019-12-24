@@ -2,11 +2,12 @@
 type Address{
   id: ID! @id
   house:String
+  landmark:String
   published:Boolean!
   updatedAt:DateTime! @updatedAt
   createdAt:DateTime! @createdAt
   author:User! @relation(name: "AddressToUser", onDelete: SET_NULL)
-
+  baseAddress:BaseAddress
 }
 
 type BaseAddress{

@@ -1,11 +1,31 @@
+type Organization{
+  id:ID! @id
+  name:String!
+  description:String
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
+  author:[User!]!@relation(name: "UserToOrg", onDelete: CASCADE)
+  roles:[Role!]! @relation(name: "RoleToOrg", onDelete: CASCADE)
+}
 type User {
   id: ID! @id
-  name: String!
+  firstname: String!
+  lastname: String!
   email: String! @unique
   password: String!
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
+  addresses:[Address!]! @relation(name: "AddressToUser", onDelete: CASCADE)
+  org:Organization! @relation(name: "UserToOrg", onDelete: SET_NULL)
+  roles:[Role!]! @relation(name: "RoleToUser", onDelete: CASCADE)
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt
-  addresses:[Address!]! @relation(name: "AddressToUser", onDelete: CASCADE)
+  createdBy:String
+}
+type Role{
+  id:ID! @id
+  roleName:String!
+  createdBy:String!
+  users: User! @relation(name: "RoleToUser", onDelete: SET_NULL)
+  orgs:Organization! @relation(name: "RoleToOrg", onDelete: SET_NULL)
 }

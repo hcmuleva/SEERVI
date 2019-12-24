@@ -1,18 +1,15 @@
 # import Query.*, Mutation.* from "posts.graphql"
 # import Query.*, Mutation.* from "users.graphql"
 # import Query.*, Mutation.* from "comments.graphql"
+# import Query.*, Mutation.* from "address.graphql"
 scalar Upload
 type Query {  
-    address(id:ID!):Address!
-    addresses(query:String):[Address!]!
     uploads: [File]
     getPhoto(url:String!):File
     getStudyCatelogs:[StudyCatelog]
 }
 
 type Mutation {
-    createAddress(data:createAddressInput!):Address!
-    createBaseAddress(data:baseAddressInput):BaseAddress
     uploadFile(file: Upload!): Boolean!
     singleUpload(file: Upload!): File!
     createStudyCatelog(data:StudyCatelogInput):StudyCatelog!
@@ -35,52 +32,6 @@ type CommentSubscriptionPayload {
     node: Comment
 }
 
-input createAddressInput{
-    house:String
-    published:Boolean
-    
-}
-type Address{
-    id: ID!
-    house:String
-    published:Boolean
-    
-}
-input baseAddressInput{
-     officename: String
-    pincode: String
-    officeType: String
-    Deliverystatus: String
-    divisionname: String
-    regionname: String
-    circlename: String
-    taluk: String
-    districtname: String
-    statename: String
-    telephone: String
-    relatedSuboffice: String
-    relatedHeadoffice: String
-    longitude: String
-    latitude: String 
-}
-type BaseAddress{
-    id:ID! 
-    officename: String
-    pincode: String
-    officeType: String
-    Deliverystatus: String
-    divisionname: String
-    regionname: String
-    circlename: String
-    taluk: String
-    districtname: String
-    statename: String
-    telephone: String
-    relatedSuboffice: String
-    relatedHeadoffice: String
-    longitude: String
-    latitude: String 
-}
 type File {
   id: ID!
   path: String

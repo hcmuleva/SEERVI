@@ -1,45 +1,89 @@
 type Query {
-    
     users(query: String): [User!]!
     me: User!
+    usersForAdmin:[User!]! 
+    roles:[Role!]!
+    myRoles:[Role!]!
+    orgs: [Organization!]!  
 }
 type Mutation {
+    createOrganization(data: CreateOrganizationInput!): Organization!
     createUser(data: CreateUserInput!): AuthPayload!
+    createUserByAdmin(data:CreateUserInput!): AuthPayload!
     login(data: LoginUserInput!): AuthPayload!
     deleteUser: User!
     updateUser(data: UpdateUserInput!): User!
+    createRole(data:CreateRoleInput!): Role! 
 }
 
+type Organization{
+  id:ID!
+  name:String!
+  description:String
+  author:[User!]
+}
+
+input CreateOrganizationInput{
+  name:String!
+  description:String 
+}
 type User {
     id: ID!
-    name: String!
+    firstname: String!
+    lastname: String!
     email: String!
     password: String!
+    createdBy:ID
     posts: [Post!]!
     comments: [Comment!]!
     createdAt:String!
     updatedAt:String!
+    org:Organization!  
+    roles:[Role!]!
 }
-
 type AuthPayload {
     token: String!
-    user: User!
-    
+    user: User!   
 }
-
 input CreateUserInput {
-    name: String!
+    firstname:String!
+    lastname: String!
     email: String!
     password: String!
+    org:String
 }
 
+input UpdateUserInputByAdmin{
+    firstname:String
+    lastname: String
+    email: String
+    password: String
+    org:String  
+}
 input LoginUserInput {
     email: String!
     password: String!
 }
-
 input UpdateUserInput {
-    name: String
+    firstName:String
+    lastName: String
     email: String
     password:String
+}
+type Role{
+    id:ID! 
+    roleName:String!
+    users: User!
+    orgs:Organization!
+    createdBy:String! 
+    createdAt:String
+    updatedAt:String
+}
+input CreateRoleInput{
+    roleName:String!
+    users: String!
+    orgs:String! 
+    createdBy:String!
+    createdAt:String!
+    updatedAt:String!
 }

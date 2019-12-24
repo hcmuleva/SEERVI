@@ -1,0 +1,64 @@
+type Query {  
+    address(id:ID!):Address!
+    addresses(query:String):[Address!]!
+    baseAddresses:[BaseAddress!]!
+    
+}
+
+type Mutation {
+    createAddress(data:createAddressInput!):Address!
+    createBaseAddress(data:baseAddressInput):BaseAddress
+}
+type Address{
+  id: ID! 
+  house:String
+  landmark:String
+  published:Boolean!
+  updatedAt:String
+  createdAt:String
+  author:User! 
+  baseAddress:BaseAddress
+}
+
+input createAddressInput{
+    house:String
+    published:Boolean
+    landmark:String 
+    baseAddress:ID! 
+}
+
+input baseAddressInput{
+    officename: String
+    pincode: String
+    officeType: String
+    Deliverystatus: String
+    divisionname: String
+    regionname: String
+    circlename: String
+    taluk: String
+    districtname: String
+    statename: String
+    telephone: String
+    relatedSuboffice: String
+    relatedHeadoffice: String
+    longitude: String
+    latitude: String 
+}
+type BaseAddress{
+    id:ID! 
+    officename: String
+    pincode: String
+    officeType: String
+    Deliverystatus: String
+    divisionname: String
+    regionname: String
+    circlename: String
+    taluk: String
+    districtname: String
+    statename: String
+    telephone: String
+    relatedSuboffice: String
+    relatedHeadoffice: String
+    longitude: String
+    latitude: String 
+}

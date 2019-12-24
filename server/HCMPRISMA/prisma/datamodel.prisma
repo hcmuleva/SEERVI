@@ -1,0 +1,121 @@
+type File {
+  id: ID! @id
+  path: String
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type User {
+  id: ID! @id
+  firstname: String!
+  lastname: String!
+  email: String! @unique
+  password: String!
+  posts: [Post] @relation(name: "PostToUser")
+  comments: [Comment] @relation(name: "CommentToUser")
+  roles: [String] @scalarList(strategy: RELATION)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  addresses: [Address] @relation(name: "AddressToUser")
+  org: [Organization] @relation(name: "OrgToUser")
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  body: String!
+  published: Boolean!
+  author: User @relation(name: "PostToUser")
+  comments: [Comment] @relation(name: "CommentToPost")
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}
+
+type Comment {
+  id: ID! @id
+  text: String!
+  author: User @relation(name: "CommentToUser")
+  post: Post @relation(name: "CommentToPost")
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}
+
+type Address {
+  id: ID! @id
+  house: String
+  landmark: String
+  published: Boolean!
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  author: User @relation(name: "AddressToUser")
+  baseAddress: BaseAddress
+}
+
+type BaseAddress {
+  id: ID! @id
+  officename: String
+  pincode: String
+  officeType: String
+  Deliverystatus: String
+  divisionname: String
+  regionname: String
+  circlename: String
+  taluk: String
+  districtname: String
+  statename: String
+  telephone: String
+  relatedSuboffice: String
+  relatedHeadoffice: String
+  longitude: String
+  latitude: String
+}
+
+type Subject {
+  id: ID! @id
+  name: String
+  catelog: StudyCatelog @relation(name: "SubjectToStudyCatelog")
+}
+
+type Board {
+  id: ID! @id
+  name: String
+  catelog: StudyCatelog @relation(name: "BoardToStudyCatelog")
+}
+
+type Specialization {
+  id: ID! @id
+  name: String
+  catelog: StudyCatelog @relation(name: "SpecializationToStudyCatelog")
+  studyCatelog: [StudyCatelog] @db(name: "StudyCatelog") @relation(name: "SpecilizationToStudyCatelog")
+}
+
+type Competition {
+  id: ID! @id
+  name: String
+  catelog: StudyCatelog @relation(name: "CompetitionToStudyCatelog")
+}
+
+type StudyCatelog {
+  id: ID! @id
+  std: String!
+  substd: String
+  academic: String
+  subacademic: String
+  subjects: [Subject] @relation(name: "SubjectToStudyCatelog")
+  boards: [Board] @relation(name: "BoardToStudyCatelog")
+  specialization: [Specialization] @relation(name: "SpecilizationToStudyCatelog")
+  competition: [Competition] @relation(name: "CompetitionToStudyCatelog")
+  published: Boolean
+  # Field name normalization failed because of a conflicting field name.
+  Specialization: [Specialization] @relation(name: "SpecilizationToStudyCatelog")
+}
+
+type Organization {
+  id: ID! @id
+  name: String!
+  description: String
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  author: [User] @relation(name: "OrgToUser")
+}

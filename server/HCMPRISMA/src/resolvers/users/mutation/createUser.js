@@ -2,10 +2,20 @@ import hashPassword from '../../../utils/hashPassword'
 import jwt from 'jsonwebtoken'
 async function createUser(parent, args, { prisma }, info) {
     const password = await hashPassword(args.data.password)
+    console.log("User data",args)
+
+    
     const user = await prisma.mutation.createUser({
         data: {
-            ...args.data,
-            password
+            firstname:args.data.firstname,
+            lastname:args.data.lastname,
+            email:args.data.email,
+            password,
+            org:{
+                connect: {
+                    id: args.data.org,
+                }
+            }
         }
     })
     console.log("CREATE USER has been called")
