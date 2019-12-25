@@ -9,7 +9,7 @@ function myPosts(parent, args, { prisma, request }, info) {
             }
         }
     }
-
+    console.log("ARGS ",args, "and opArgs",opArgs)
     if (args.query) {
         opArgs.where.OR = [{
             title_contains: args.query
