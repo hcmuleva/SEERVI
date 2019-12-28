@@ -1,0 +1,56 @@
+type Board{
+  id: ID! @id
+  name:String!
+  published:Boolean!
+  stds:[Std!]! @relation(name: "StdToBoard", onDelete: CASCADE)
+  specializations:[Specialization!]! @relation(name: "SpecializationToBoard", onDelete: CASCADE)
+  subjects:[Subject!]! @relation(name: "SubjectToBoard", onDelete: CASCADE)
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
+}
+
+type Std{
+    id: ID! @id
+    name:String!
+    board:Board! @relation(name: "StdToBoard", onDelete: SET_NULL)
+    specializations:Specialization! @relation(name: "SpecializationToStd", onDelete: CASCADE)
+    subjects:[Subject!]! @relation(name: "SubjectToStd", onDelete: CASCADE)
+    updatedAt:DateTime! @updatedAt
+    createdAt:DateTime! @createdAt
+}
+type Specialization{
+     id: ID! @id
+     name:String!
+     board:Board! @relation(name: "SpecializationToBoard", onDelete: SET_NULL)
+     std:Std! @relation(name: "SpecializationToStd", onDelete: SET_NULL)
+     subjects:[Subject!]! @relation(name: "SubjectToSpecialization", onDelete: CASCADE)
+     updatedAt:DateTime! @updatedAt
+     createdAt:DateTime! @createdAt
+}
+type Subject{
+     id: ID! @id
+     name:String!
+     board:Board! @relation(name: "SubjectToBoard", onDelete: SET_NULL)
+     std:Std! @relation(name: "SubjectToStd", onDelete: SET_NULL)
+     specialization:Specialization! @relation(name: "SubjectToSpecialization", onDelete: SET_NULL)
+     units:[Unit!]! @relation(name: "UnitToSubject", onDelete: CASCADE)
+     topics:[Topic!]! @relation(name: "TopicToSubject", onDelete: CASCADE)
+     updatedAt:DateTime! @updatedAt
+     createdAt:DateTime! @createdAt
+}
+type Unit{
+     id: ID! @id
+     name:String!
+     subject:Subject! @relation(name: "UnitToSubject", onDelete: SET_NULL)
+     topics:[Topic!]! @relation(name: "TopicToUnit", onDelete: CASCADE)
+     updatedAt:DateTime! @updatedAt
+     createdAt:DateTime! @createdAt
+}
+type Topic{
+     id: ID! @id
+     name:String!
+     subject:Subject! @relation(name: "TopicToSubject", onDelete: SET_NULL)
+     unit:Unit! @relation(name: "TopicToUnit", onDelete: SET_NULL)
+     updatedAt:DateTime! @updatedAt
+     createdAt:DateTime! @createdAt
+}

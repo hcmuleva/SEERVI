@@ -10,7 +10,6 @@ import {CommentsMutationFunction} from './comments/CommentsMutationFunction'
 import createAddress from './address/mutation/createAddress'
 import createBaseAddress from './baseAddress/mutation/createBaseAddress'
 import uploadFile from './files/uploadFile'
-import createStudyCatelog from './education/student/mutation/createStudyCatelog'
 const Mutation = {
     /** Users */
     ...UserMutationFunction,
@@ -20,11 +19,7 @@ const Mutation = {
     createBaseAddress,createAddress,
     /** Fileupload */
     singleUpload,uploadFile,
-    /** Education Student*/
-    createStudyCatelog, 
- 
     
- 
     
 }
 

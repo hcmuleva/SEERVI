@@ -1,0 +1,85 @@
+type Query {
+    boards: [Board!]! 
+    stds:[Std!]!
+    specializations:[Specialization!]!
+    subjects:[Subject!]!
+    units:[Unit!]!
+    topics:[Topic!]!
+}
+type Mutation {
+    createBoard(data: SyllabusInput!): Board!
+    deleteBoard(id: ID!): Board!
+    updateBoard(id: ID!, data: SyllabusInput!): Board!
+   
+    createStd(data:SyllabusInput!): Std!
+    deleteStd(id:ID!): Std!
+    updateStd(id:ID!, data:SyllabusInput!): Std!
+   
+    createSpecialization(data:SyllabusInput!): Specialization!
+    updateSpecialization(id:ID!,data:SyllabusInput!): Specialization!
+    deleteSpecialization(id:ID!): Specialization!
+   
+    createSubject(data:SyllabusInput!): Subject!
+    updateSubject(id:ID!, data:SyllabusInput!): Subject!
+    deleteSubject(id:ID!,data:SyllabusInput!): Subject!
+   
+    createUnit(data:SyllabusInput!): Unit!
+    updateUnit(id:ID!, data:SyllabusInput!): Unit!
+    deleteUnit(id:ID!): Unit!
+    
+    createTopic(data:SyllabusInput!): Topic!
+    updateTopic(id:ID!,data:SyllabusInput!): Topic!
+    deleteTopic(id:ID!): Topic!
+
+
+}
+
+type Board{
+  id: ID! 
+  name:String!
+  published:Boolean!
+  stds:[Std!]!
+  specializations:[Specialization!]! 
+  subjects:[Subject!]! 
+}
+input SyllabusInput{
+  name:String!
+}
+
+type Std{
+    id: ID!
+    name:String!
+    board:Board! 
+    specializations:[Specialization!]!
+    subjects:[Subject!]!
+}
+type Specialization{
+     id: ID! 
+     name:String!
+     board:Board![Specialization!]!
+     std:Std!
+     subjects:[Subject!]! 
+}
+type Subject{
+     id: ID! 
+     name:String!
+     units:[Unit!]!
+     topics:[Topic!]!
+     board:Board!
+     std:Std! 
+     specialization:Specialization! 
+     units:[Unit!]!
+     topics:[Topic!]!
+}
+type Unit{
+     id: ID!
+     name:String!
+     subject:Subject! 
+     topics:[Topic!]! 
+}
+type Topic{
+    id: ID!
+     name:String!
+     subject:Subject! 
+     unit:Unit!
+}

@@ -5,15 +5,20 @@ type Query {
     roles:[Role!]!
     myRoles:[Role!]!
     orgs: [Organization!]!  
+    groups:[Group!]!
 }
 type Mutation {
     createOrganization(data: CreateOrganizationInput!): Organization!
+    createSubOrg(data:CreateSubOrganizationInput!):SubOrg!
+    createGroup(data:CreateGroupInput!):Group!
     createUser(data: CreateUserInput!): AuthPayload!
     createUserByAdmin(data:CreateUserInput!): AuthPayload!
     login(data: LoginUserInput!): AuthPayload!
     deleteUser: User!
     updateUser(data: UpdateUserInput!): User!
+    updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
     createRole(data:CreateRoleInput!): Role! 
+    createUserRole(data:UserRoleInput):UserRole!
 }
 
 type Organization{
@@ -21,11 +26,29 @@ type Organization{
   name:String!
   description:String
   author:[User!]
+  subOrg:[SubOrg!]
 }
 
 input CreateOrganizationInput{
   name:String!
   description:String 
+}
+type SubOrg{
+    id:ID!
+    name:String!
+    author:[User!]
+    org:Organization!
+}
+input CreateSubOrganizationInput{
+    name:String!
+    org:String!
+}
+type Group{
+    id:ID!
+    name:String!
+}
+input CreateGroupInput{
+    name:String!
 }
 type User {
     id: ID!
@@ -33,13 +56,14 @@ type User {
     lastname: String!
     email: String!
     password: String!
-    createdBy:ID
     posts: [Post!]!
     comments: [Comment!]!
+    org:Organization!  
+    subOrgs:[SubOrg!]! 
+    userRoles:[UserRole!]!
+    createdBy:ID
     createdAt:String!
     updatedAt:String!
-    org:Organization!  
-    roles:[Role!]!
 }
 type AuthPayload {
     token: String!
@@ -50,7 +74,8 @@ input CreateUserInput {
     lastname: String!
     email: String!
     password: String!
-    org:String
+    org:String!
+    subOrg:String!
 }
 
 input UpdateUserInputByAdmin{
@@ -58,7 +83,8 @@ input UpdateUserInputByAdmin{
     lastname: String
     email: String
     password: String
-    org:String  
+    org:String
+    subOrg:String
 }
 input LoginUserInput {
     email: String!
@@ -70,20 +96,21 @@ input UpdateUserInput {
     email: String
     password:String
 }
+type UserRole{
+    id:ID!
+    user:User!
+    role:Role!
+    group:Group!
+}
+input UserRoleInput{
+    user:String!
+    role:String!
+    group:String!
+}
 type Role{
     id:ID! 
     roleName:String!
-    users: User!
-    orgs:Organization!
-    createdBy:String! 
-    createdAt:String
-    updatedAt:String
 }
 input CreateRoleInput{
     roleName:String!
-    users: String!
-    orgs:String! 
-    createdBy:String!
-    createdAt:String!
-    updatedAt:String!
 }

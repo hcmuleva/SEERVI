@@ -2,6 +2,7 @@ import getUserId from '../../../utils/getUserId'
 
 async function updatePost(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
+    console.log("userId",userId,"postid",args.id)
     const postExists = await prisma.exists.Post({
         id: args.id,
         author: {

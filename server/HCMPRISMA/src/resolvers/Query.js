@@ -1,6 +1,5 @@
 
 import address from '../resolvers/address/query/address'
-import getStudyCatelogs from '../resolvers/education/student/query/getStudyCatelogs'
 import getPhoto from '../resolvers/files/getPhoto'
 import baseAddresses from './baseAddress/query/baseAddress'
 import {UserQueryFunction} from '../resolvers/users/UserQuery'
@@ -12,7 +11,6 @@ const Query = {
     ...CommentsQuery,
     address,
     baseAddresses,
-    getStudyCatelogs,
     getPhoto
     
 }

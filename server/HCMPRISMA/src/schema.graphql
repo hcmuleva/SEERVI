@@ -1,18 +1,17 @@
-# import Query.*, Mutation.* from "posts.graphql"
-# import Query.*, Mutation.* from "users.graphql"
-# import Query.*, Mutation.* from "comments.graphql"
+# import Query.*, Mutation.* from "graphql/users/posts.graphql"
+# import Query.*, Mutation.* from "graphql/users/users.graphql"
+# import Query.*, Mutation.* from "graphql/users/comments.graphql"
 # import Query.*, Mutation.* from "address.graphql"
+
 scalar Upload
 type Query {  
     uploads: [File]
     getPhoto(url:String!):File
-    getStudyCatelogs:[StudyCatelog]
 }
 
 type Mutation {
     uploadFile(file: Upload!): Boolean!
     singleUpload(file: Upload!): File!
-    createStudyCatelog(data:StudyCatelogInput):StudyCatelog!
 }
 
 type Subscription {
@@ -38,49 +37,4 @@ type File {
   filename: String!
   mimetype: String!
   encoding: String!
-}
-input StudyCatelogInput{
-  std:String!
-  substd:String
-  academic:String
-  subacademic:String
-  subjects:[String]
-  boards:[String]
-  specialization:[String]
-  competition:[String]
-  published:Boolean
-}
-type Subject{
-  name:String
-  catelog:StudyCatelog!
-}
-type Board{
-  id:ID! 
-  name:String
-  catelog:StudyCatelog!
-  
-}
-type Specialization{
-  id:ID! 
-  name:String
-  catelog:StudyCatelog! 
-  
-}
-type Competition{
-  id:ID! 
-  name:String
-  catelog:StudyCatelog! 
-  
-}
-type StudyCatelog{
-  id:ID! 
-  std:String!
-  substd:String
-  academic:String
-  subacademic:String
-  subjects:[Subject!]!
-  boards:[Board!]!
-  specialization:[Specialization!]!
-  competition:[Competition!]!
-  published:Boolean
 }

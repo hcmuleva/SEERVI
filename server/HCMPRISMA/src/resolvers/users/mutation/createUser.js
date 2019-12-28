@@ -15,10 +15,15 @@ async function createUser(parent, args, { prisma }, info) {
                 connect: {
                     id: args.data.org,
                 }
+            },
+            subOrgs:{
+                connect: {
+                    id: args.data.subOrg,
+                }
             }
         }
     })
-    console.log("CREATE USER has been called")
+    console.log("CREATE USER has been called",user)
     return {
         user,
         token: jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
