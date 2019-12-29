@@ -2,34 +2,48 @@ type Board{
   id: ID! @id
   name:String!
   published:Boolean!
+  org:Organization! @relation(name: "BoardToOrg", onDelete: SET_NULL)
+  subOrg:SubOrg! @relation(name: "BoardToSubOrg", onDelete: SET_NULL)
   stds:[Std!]! @relation(name: "StdToBoard", onDelete: CASCADE)
   specializations:[Specialization!]! @relation(name: "SpecializationToBoard", onDelete: CASCADE)
   subjects:[Subject!]! @relation(name: "SubjectToBoard", onDelete: CASCADE)
+  units:[Unit!]! @relation(name: "UnitToBoard", onDelete: CASCADE)
+  topics:[Topic!]! @relation(name: "TopicToBoard", onDelete: CASCADE)
   updatedAt:DateTime! @updatedAt
   createdAt:DateTime! @createdAt
-}
 
+}
 type Std{
     id: ID! @id
     name:String!
+    org:Organization! @relation(name: "StdToOrg", onDelete: SET_NULL)
+    subOrg:SubOrg! @relation(name: "StdToSubOrg", onDelete: SET_NULL)
     board:Board! @relation(name: "StdToBoard", onDelete: SET_NULL)
-    specializations:Specialization! @relation(name: "SpecializationToStd", onDelete: CASCADE)
+    specializations:[Specialization!]! @relation(name: "SpecializationToStd", onDelete: CASCADE)
     subjects:[Subject!]! @relation(name: "SubjectToStd", onDelete: CASCADE)
+    units:[Unit]! @relation(name: "UnitToStd", onDelete: CASCADE)
+    topics:[Topic!]! @relation(name: "TopicToStd", onDelete: SET_NULL)
     updatedAt:DateTime! @updatedAt
     createdAt:DateTime! @createdAt
 }
 type Specialization{
      id: ID! @id
      name:String!
+     org:Organization! @relation(name: "SpecializationToOrg", onDelete: SET_NULL)
+     subOrg:SubOrg! @relation(name: "SpecializationToSubOrg", onDelete: SET_NULL)
      board:Board! @relation(name: "SpecializationToBoard", onDelete: SET_NULL)
      std:Std! @relation(name: "SpecializationToStd", onDelete: SET_NULL)
      subjects:[Subject!]! @relation(name: "SubjectToSpecialization", onDelete: CASCADE)
+     unit:[Unit!] @relation(name: "UnitToSpecialization", onDelete: CASCADE)
+     topic:[Topic!]!  @relation(name: "TopicToSpecialization", onDelete: CASCADE)
      updatedAt:DateTime! @updatedAt
      createdAt:DateTime! @createdAt
 }
 type Subject{
      id: ID! @id
      name:String!
+     org:Organization! @relation(name: "SubjectToOrg", onDelete: SET_NULL)
+     subOrg:SubOrg! @relation(name: "SubjectToSubOrg", onDelete: SET_NULL)
      board:Board! @relation(name: "SubjectToBoard", onDelete: SET_NULL)
      std:Std! @relation(name: "SubjectToStd", onDelete: SET_NULL)
      specialization:Specialization! @relation(name: "SubjectToSpecialization", onDelete: SET_NULL)
@@ -41,6 +55,11 @@ type Subject{
 type Unit{
      id: ID! @id
      name:String!
+      org:Organization! @relation(name: "UnitToOrg", onDelete: SET_NULL)
+     subOrg:SubOrg! @relation(name: "UnitToSubOrg", onDelete: SET_NULL)
+     board:Board!  @relation(name: "UnitToBoard", onDelete: SET_NULL)
+     std:Std! @relation(name: "UnitToStd", onDelete: SET_NULL)
+     specialization:Specialization! @relation(name: "UnitToSpecialization", onDelete: SET_NULL)
      subject:Subject! @relation(name: "UnitToSubject", onDelete: SET_NULL)
      topics:[Topic!]! @relation(name: "TopicToUnit", onDelete: CASCADE)
      updatedAt:DateTime! @updatedAt
@@ -49,8 +68,13 @@ type Unit{
 type Topic{
      id: ID! @id
      name:String!
+     org:Organization! @relation(name: "TopicToOrg", onDelete: SET_NULL)
+     subOrg:SubOrg! @relation(name: "TopicToSubOrg", onDelete: SET_NULL)
+     board:Board!  @relation(name: "TopicToBoard", onDelete: SET_NULL)
      subject:Subject! @relation(name: "TopicToSubject", onDelete: SET_NULL)
+     specialization:Specialization! @relation(name: "TopicToSpecialization", onDelete: SET_NULL) 
      unit:Unit! @relation(name: "TopicToUnit", onDelete: SET_NULL)
+     std:Std!  @relation(name: "TopicToStd", onDelete: SET_NULL)
      updatedAt:DateTime! @updatedAt
      createdAt:DateTime! @createdAt
 }

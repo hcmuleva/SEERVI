@@ -1,8 +1,9 @@
 # import Query.*, Mutation.* from "graphql/users/posts.graphql"
 # import Query.*, Mutation.* from "graphql/users/users.graphql"
 # import Query.*, Mutation.* from "graphql/users/comments.graphql"
-# import Query.*, Mutation.* from "address.graphql"
+# import Query.*, Mutation.* from "graphql/course/eduBoard.graphql"
 
+# import Query.*, Mutation.* from "address.graphql"
 scalar Upload
 type Query {  
     uploads: [File]

@@ -4,8 +4,9 @@ datamodel:
   - users/users.graphql
   - users/posts.graphql
   - users/comments.graphql
-  - education/courses/cources.graphql
+  - boards/cources.graphql
   - address.graphql
+  
 secret: ${env:PRISMA_SECRET}
 generate:
     - generator: javascript-client

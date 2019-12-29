@@ -62,3 +62,4 @@ type BaseAddress{
     longitude: String
     latitude: String 
 }
+

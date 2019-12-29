@@ -4,14 +4,27 @@ type Organization{
   description:String
   author:[User!]!@relation(name: "UserToOrg", onDelete: CASCADE)
   subOrgs:[SubOrg!]! @relation(name: "SubOrgToOrg", onDelete: CASCADE)
+  board:[Board!]! @relation(name: "BoardToOrg", onDelete: CASCADE)
+  stds:[Std!]! @relation(name: "StdToOrg", onDelete: CASCADE)
+  specializations:[Specialization!]! @relation(name: "SpecializationToOrg", onDelete: CASCADE)
+  subjects:[Subject!]! @relation(name: "SubjectToOrg", onDelete: CASCADE)
+  units:[Unit!]! @relation(name: "UnitToOrg", onDelete: CASCADE)
+  topics:[Topic!]! @relation(name: "TopicToOrg", onDelete: CASCADE)
   updatedAt:DateTime! @updatedAt
   createdAt:DateTime! @createdAt
 }
 type SubOrg{
   id: ID! @id
   name:String!
+  board:[Board!]! @relation(name: "BoardToSubOrg", onDelete: CASCADE) 
   author:[User!]!@relation(name: "UserToSubOrg", onDelete: CASCADE)
-  org:Organization! @relation(name: "SubOrgToOrg", onDelete: SET_NULL)
+  org:Organization! @relation(name: "SubOrgToOrg", onDelete: CASCADE)
+  stds:[Std!]! @relation(name: "StdToSubOrg", onDelete: CASCADE)
+  specializations:[Specialization!]! @relation(name: "SpecializationToSubOrg", onDelete: CASCADE)
+  subjects:[Subject!]! @relation(name: "SubjectToSubOrg", onDelete: CASCADE)
+  units:[Unit!]! @relation(name: "UnitToSubOrg", onDelete: CASCADE)
+  topics:[Topic!]! @relation(name: "TopicToSubOrg", onDelete: CASCADE)
+
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt
 }

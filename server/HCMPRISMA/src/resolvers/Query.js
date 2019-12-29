@@ -5,10 +5,12 @@ import baseAddresses from './baseAddress/query/baseAddress'
 import {UserQueryFunction} from '../resolvers/users/UserQuery'
 import {PostQuery} from '../resolvers/posts/PostQuery'
 import {CommentsQuery} from '../resolvers/comments/CommentsQuery'
+import {BoardQueryFunctions} from '../resolvers/education/CourcesQuery'
 const Query = {
     ...UserQueryFunction,
     ...PostQuery,
     ...CommentsQuery,
+    ...BoardQueryFunctions,
     address,
     baseAddresses,
     getPhoto

@@ -9,7 +9,9 @@ import createGroup from './mutation/createGroup'
 import updateUserByAdmin from './mutation/updateUserByAdmin'
 import createUserRole from './mutation/createUserRole'
 export const UserMutationFunction = {
-    createUser,login,deleteUser,updateUser,createOrganization,createRole,createSubOrg,createGroup,updateUserByAdmin,createUserRole
+    createUser,login,deleteUser,updateUser,
+    createOrganization,createRole,createSubOrg,
+    createGroup,updateUserByAdmin,createUserRole
     
 }
 

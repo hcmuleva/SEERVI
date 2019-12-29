@@ -26,7 +26,8 @@ type Organization{
   name:String!
   description:String
   author:[User!]
-  subOrg:[SubOrg!]
+  subOrgs:[SubOrg!]
+  
 }
 
 input CreateOrganizationInput{
@@ -35,6 +36,7 @@ input CreateOrganizationInput{
 }
 type SubOrg{
     id:ID!
+    
     name:String!
     author:[User!]
     org:Organization!
