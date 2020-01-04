@@ -1,16 +1,18 @@
-import React from "react";
+import React, {userState}from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import routes from "./routes";
+import routes from "./views/routes";
 import withTracker from "./withTracker";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
-
-const Routing=() => (
+export default function Routing(props) {
+  return(
   <Router basename={process.env.REACT_APP_BASENAME || ""}>
+
     <div>
       {routes.map((route, index) => {
+       
         return (
           <Route
             key={index}
@@ -28,6 +30,6 @@ const Routing=() => (
       })}
     </div>
   </Router>
-);
+  )
+    }
 
-export default Routing

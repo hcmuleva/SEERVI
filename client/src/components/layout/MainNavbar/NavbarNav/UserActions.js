@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+
 import {
   Dropdown,
   DropdownToggle,
@@ -9,6 +11,7 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
+import Auth from "../../../../modules/Auth";
 
 export default class UserActions extends React.Component {
   constructor(props) {
@@ -26,7 +29,12 @@ export default class UserActions extends React.Component {
       visible: !this.state.visible
     });
   }
+  handleClick = (eventRef) => {
+    console.log('toogle event ref', eventRef);
+    Auth.deauthenticateUser()
+    this.props.history.push("/");
 
+}
   render() {
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
@@ -52,7 +60,7 @@ export default class UserActions extends React.Component {
             <i className="material-icons">&#xE896;</i> Transactions
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem tag={Link} to="/" className="text-danger">
+          <DropdownItem tag={Link} to="/" className="text-danger" onClick={this.handleClick.bind(this)}>
             <i className="material-icons text-danger">&#xE879;</i> Logout
           </DropdownItem>
         </Collapse>

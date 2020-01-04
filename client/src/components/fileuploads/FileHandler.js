@@ -4,6 +4,7 @@ import Files from './Files'
 import UploadFile from './UploadFile'
 import GraphqlUploader from './GraphqlUploader'
 import SingleFile from './SingleFile'
+import DropZoneUploader from './DropZoneUploader'
 function FileHandler(props) {
     return (
         <div>
@@ -11,7 +12,7 @@ function FileHandler(props) {
        
       <UploadFile />
       <h1>Above for Upload function</h1>
-      
+      <DropZoneUploader/>
     </div>
     )
 }

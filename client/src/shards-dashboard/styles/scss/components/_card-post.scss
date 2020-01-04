@@ -79,7 +79,12 @@
       position: absolute;
       bottom: 0;
     }
-
+    .card-post__notes {
+      transform: $card-post-v1-author-transform;
+      margin-left: $card-post-v1-author-margin-left;
+      position: absolute;
+      bottom: 1;
+    }
     .card-post__category {
       top: $card-post-v1-category-top;
       right: $card-post-v1-category-right;

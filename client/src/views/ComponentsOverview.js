@@ -127,7 +127,7 @@ const ComponentsOverview = () => (
           {/* Groups */}
           <Card small className="mb-4">
             <CardHeader className="border-bottom">
-              <h6 className="m-0">Groups</h6>
+              <h6 className="m-0">HCM Groups</h6>
             </CardHeader>
 
             <ListGroup flush>
@@ -136,6 +136,7 @@ const ComponentsOverview = () => (
                   <strong className="text-muted d-block mb-3">
                     Button Groups
                   </strong>
+                  <h4>Harish</h4>
                   <ButtonGroups />
 
                   <strong className="text-muted d-block mb-2">

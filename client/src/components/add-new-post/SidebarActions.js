@@ -11,10 +11,12 @@ import {
   Button
 } from "shards-react";
 
-const SidebarActions = ({ title }) => (
+const SidebarActions = (props) => (
+  
   <Card small className="mb-3">
+  <div><h1>{props.action}</h1></div>
     <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
+      <h6 className="m-0">{props.title}</h6>
     </CardHeader>
 
     <CardBody className="p-0">
@@ -38,7 +40,11 @@ const SidebarActions = ({ title }) => (
           <span className="d-flex mb-2">
             <i className="material-icons mr-1">calendar_today</i>
             <strong className="mr-1">Schedule:</strong> Now{" "}
-            <a className="ml-auto" href="#">
+            <a className="ml-auto" href="#" onClick={(e,prop)=>{
+              e.preventDefault()
+              //visibility="harish"
+              console.log("Clicked me",prop)
+            }}>
               Edit
             </a>
           </span>
@@ -71,5 +77,8 @@ SidebarActions.propTypes = {
 SidebarActions.defaultProps = {
   title: "Actions"
 };
-
+function handleClick(e) {
+  e.preventDefault();
+  console.log('SidebarActions The link was clicked.');
+};
 export default SidebarActions;

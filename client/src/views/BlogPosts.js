@@ -181,14 +181,14 @@ class BlogPosts extends React.Component {
       PostsListThree,
       PostsListFour
     } = this.state;
-
+    console.log("PostsListOne",PostsListOne)
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
           <PageTitle sm="4" title="Blog Posts" subtitle="Components" className="text-sm-left" />
         </Row>
-
+      
         {/* First Row of Posts */}
         <Row>
           {PostsListOne.map((post, idx) => (
@@ -205,6 +205,16 @@ class BlogPosts extends React.Component {
                     {post.category}
                   </Badge>
                   <div className="card-post__author d-flex">
+                    <a
+                      href="#"
+                      className="card-post__author-avatar card-post__author-avatar--small"
+                      style={{ backgroundImage: `url('${post.authorAvatar}')` }}
+                    >
+                      Written by {post.author}
+                    </a>
+                  </div>
+                  <div className="card-post__notes d-flex">
+                    <h1>"" </h1>
                     <a
                       href="#"
                       className="card-post__author-avatar card-post__author-avatar--small"

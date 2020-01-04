@@ -5,10 +5,12 @@ import { Container, Row, Col } from "shards-react";
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
 import MainFooter from "../components/layout/MainFooter";
-
+import Auth from "../modules/Auth"
+import LoginMd from "../components/authentication/LoginMd";
 const DefaultLayout = ({ children, noNavbar, noFooter }) => (
   <Container fluid>
     <Row>
+     
       <MainSidebar />
       <Col
         className="main-content p-0"
@@ -16,11 +18,13 @@ const DefaultLayout = ({ children, noNavbar, noFooter }) => (
         md={{ size: 9, offset: 3 }}
         sm="12"
         tag="main"
-      >
+      > 
+        
         {!noNavbar && <MainNavbar />}
         {children}
         {!noFooter && <MainFooter />}
       </Col>
+      
     </Row>
   </Container>
 );

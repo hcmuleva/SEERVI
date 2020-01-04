@@ -12,6 +12,8 @@ class SidebarMainNavbar extends React.Component {
   }
 
   handleToggleSidebar() {
+    console.log("MAINSIDE BARNAVBAR TOGGER.js discpatcher action")
+
     Dispatcher.dispatch({
       actionType: Constants.TOGGLE_SIDEBAR
     });
@@ -36,11 +38,11 @@ class SidebarMainNavbar extends React.Component {
                 className="d-inline-block align-top mr-1"
                 style={{ maxWidth: "25px" }}
                 src={require("../../../images/shards-dashboards-logo.svg")}
-                alt="Shards Dashboard"
+                alt="ZB Learning System"
               />
               {!hideLogoText && (
                 <span className="d-none d-md-inline ml-1">
-                  Shards Dashboard
+                ZB Learning System
                 </span>
               )}
             </div>

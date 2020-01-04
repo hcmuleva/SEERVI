@@ -7,6 +7,11 @@ export default function() {
       htmlAfter: ""
     },
     {
+      title: "Seervi",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/Seervi",
+    },
+    {
       title: "Blog Posts",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
       to: "/blog-posts",
@@ -35,6 +40,12 @@ export default function() {
       title: "Errors",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
-    }
+    },
+    {
+      title: "AdminPage",
+      htmlBefore: '<i class="material-icons">person</i>',
+      to: "/admin",
+    },
+    
   ];
 }

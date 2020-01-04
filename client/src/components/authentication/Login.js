@@ -3,7 +3,8 @@ import { useApolloClient, useMutation } from '@apollo/react-hooks';
 
 import gql from 'graphql-tag';
 import { Redirect,Router } from 'react-router-dom';
-
+import Auth from '../../modules/Auth'
+import { Store } from "../../flux";
 export const LOGIN_USER = gql`
    mutation LOGIN($email:String!, $password:String!){
   login(data:{
@@ -30,8 +31,13 @@ export default function Login() {
     const authValue=()=>{
         const isLoggedIn=localStorage.get('isLoggedIn')
         const token=localStorage.get('token')
+        
+        console.log("token",token)
         if(isLoggedIn|| token){
             setIsAuthenticated(true)
+            Auth.authenticateUser(token)
+            Auth.isUserAuthenticated(true)  
+            
         }else {
             setIsAuthenticated(false)
         }
@@ -43,12 +49,13 @@ export default function Login() {
         const email = event.target.email.value;
         const password=event.target.password.value
         userLogin({ variables: { email,password } }).then((res)=>{
-             
+            const myauthdata=JSON.parse(res.data.login.myAuthinfo)
+            Auth.setRoles(myauthdata.roleAndGroup)
             console.log("Local Storage",res.data.login.token)
             localStorage.setItem('token', res.data.login.token);
             localStorage.setItem('isLoggedIn', true);
             setIsAuthenticated(true)
-           
+            Auth.authenticateUser(res.data.login.token)
         }).catch(err=>{
             setIsAuthenticated(false)
 
@@ -60,7 +67,7 @@ export default function Login() {
 
     return (
         <div>
-        { isAuthenticated
+        {/*{ isAuthenticated
           ? <Redirect to="blog-overview"/>
           :  <section className="hero is-success is-fullheight">
           <div className="hero-body">
@@ -106,7 +113,7 @@ export default function Login() {
           </div>
           
       </section>
-        }
+        }*/}
       </div>
       
         

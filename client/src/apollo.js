@@ -1,13 +1,19 @@
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client'
-// Instantiate required constructor fields
-const cache = new InMemoryCache();
-
+import Auth from './modules/Auth'
 
 export const client = new ApolloClient({
   // Provide required constructor fields
-  cache: cache,
-  link: createUploadLink({ uri: 'http://localhost:4000'})
+ 
+  link: createUploadLink(
+    { uri: 'http://localhost:4000',
+    headers: {
+      authorization: Auth.getToken()
+    }
+    }
+    ),
+    cache: new InMemoryCache()
+
 });
 

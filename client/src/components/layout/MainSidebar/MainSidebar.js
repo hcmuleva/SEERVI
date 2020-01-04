@@ -8,11 +8,11 @@ import SidebarSearch from "./SidebarSearch";
 import SidebarNavItems from "./SidebarNavItems";
 
 import { Store } from "../../../flux";
-
+import Auth from "../../../modules/Auth"
 class MainSidebar extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log("Roles in main sidebar",Auth.getRoles())
     this.state = {
       menuVisible: false,
       sidebarNavItems: Store.getSidebarItems()
@@ -22,11 +22,14 @@ class MainSidebar extends React.Component {
   }
 
   componentWillMount() {
+    Store.setSideBarItem()
     Store.addChangeListener(this.onChange);
   }
 
   componentWillUnmount() {
     Store.removeChangeListener(this.onChange);
+    
+    
   }
 
   onChange() {
@@ -35,6 +38,7 @@ class MainSidebar extends React.Component {
       menuVisible: Store.getMenuState(),
       sidebarNavItems: Store.getSidebarItems()
     });
+    Store.setSideBarItem()
   }
 
   render() {
@@ -52,6 +56,7 @@ class MainSidebar extends React.Component {
         lg={{ size: 2 }}
         md={{ size: 3 }}
       >
+        
         <SidebarMainNavbar hideLogoText={this.props.hideLogoText} />
         <SidebarSearch />
         <SidebarNavItems />
