@@ -36,6 +36,7 @@ class Auth {
      *
      */
     static deauthenticateUser() {
+      localStorage.removeItem('authdata')
       localStorage.removeItem('token');
     }
     
@@ -46,6 +47,7 @@ class Auth {
      */
     
     static getToken() {
+      console.log("Token value =",localStorage.getItem('token'))
       return localStorage.getItem('token');
     }
   

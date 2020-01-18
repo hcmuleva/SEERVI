@@ -3,7 +3,7 @@ require('@babel/polyfill/noConflict')
 const server = require('../../src/server').default
 
 module.exports = async () => {
-    console.log("Server starting")
+    console.log("TEST Server starting")
     global.httpServer = await server.start({ port: 4000 })
 
 }

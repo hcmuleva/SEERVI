@@ -13,7 +13,7 @@ import {
 
 const Discussions = ({ title, discussions }) => (
   <Card small className="blog-comments">
-  <img src="https://hcmbucket.s3.amazonaws.com/Arpita.jpeg?AWSAccessKeyId=AKIAZWDLXOQX6WJOQQEI&Expires=1575134560&Signature=pyVsX2Exa8zR9FqUGCU4JnF14Ws%3D"/>
+  {/*<img src="https://hcmbucket.s3.amazonaws.com/Arpita.jpeg?AWSAccessKeyId=AKIAZWDLXOQX6WJOQQEI&Expires=1575134560&Signature=pyVsX2Exa8zR9FqUGCU4JnF14Ws%3D"/>*/}
     <CardHeader className="border-bottom">
       <h6 className="m-0">{title}</h6>
     </CardHeader>

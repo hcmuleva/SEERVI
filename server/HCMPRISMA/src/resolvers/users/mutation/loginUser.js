@@ -18,9 +18,21 @@ async function login(parent, args, { prisma }, info) {
     if (!isMatch) {
         throw new Error('Unable to login')
     }
-
+    console.log("USER ID",user.id)
+    const roles=await prisma.query.roles({
+       where: {
+       
+        userid:{
+            id:user.id
+        }
+    }
+    })
+    console.log("\n********* Warning ******** \n")
+    console.log("ROLES1 ",roles)
+    console.log("\n********* Login should return Groups also ******** \n")
     return {
         user,
+        roles,
         token: jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
     }
 }

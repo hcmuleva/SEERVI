@@ -26,8 +26,9 @@ npm-debug.log*
 coverage
 
 .history/
-
+keys.js 
 #mac files
+.vscode
 .DS_Store
 .DS_Store?
 ._.DS_Store

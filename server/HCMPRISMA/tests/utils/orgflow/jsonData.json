@@ -1,0 +1,9 @@
+{
+    "orgs":[
+        {"name":"SEEDORG1","description":"SEEDORG1 with description"
+        }, 
+        {"name":"SEEDORG2","description":"SEEDORG2 with description"
+        
+        }
+    ]
+}

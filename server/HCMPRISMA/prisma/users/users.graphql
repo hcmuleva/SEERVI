@@ -17,14 +17,13 @@ type SubOrg{
   id: ID! @id
   name:String!
   board:[Board!]! @relation(name: "BoardToSubOrg", onDelete: CASCADE) 
-  author:[User!]!@relation(name: "UserToSubOrg", onDelete: CASCADE)
-  org:Organization! @relation(name: "SubOrgToOrg", onDelete: CASCADE)
+  author:[User]  @relation(name: "UserToSubOrg", onDelete: CASCADE)
+  org:Organization! @relation(name: "SubOrgToOrg", onDelete: SET_NULL)
   stds:[Std!]! @relation(name: "StdToSubOrg", onDelete: CASCADE)
   specializations:[Specialization!]! @relation(name: "SpecializationToSubOrg", onDelete: CASCADE)
   subjects:[Subject!]! @relation(name: "SubjectToSubOrg", onDelete: CASCADE)
   units:[Unit!]! @relation(name: "UnitToSubOrg", onDelete: CASCADE)
   topics:[Topic!]! @relation(name: "TopicToSubOrg", onDelete: CASCADE)
-
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt
 }
@@ -38,24 +37,23 @@ type User {
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
   org:Organization! @relation(name: "UserToOrg", onDelete: SET_NULL)
-  subOrgs:[SubOrg!]! @relation(name: "UserToSubOrg", onDelete: SET_NULL)
+  subOrgs:SubOrg! @relation(name: "UserToSubOrg", onDelete: SET_NULL)
   createdBy:String
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt
-  userRoles:[UserRole!] @relation(name: "UserRoleToUser", onDelete: CASCADE)
+
 }
-type UserRole{
-  id:ID! @id
-  user:User! @relation(name: "UserRoleToUser", onDelete: SET_NULL)
-  role:Role!
-  group:Group! 
-}
+
 type Role{
   id:ID! @id
-  roleName:String!
+  rolename:String!
+  rolelevel:String!
+  levelname:String
+  userid:User! 
 }
 
 type Group{
   id:ID! @id
   name:String!
+
 }

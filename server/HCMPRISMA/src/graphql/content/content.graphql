@@ -1,0 +1,45 @@
+type Query{
+  allContent:[Content!]!
+}
+type Mutation {
+    createContent(data:ContentInput!):Content!
+}
+type Content {
+    id: ID! 
+    contentType: ContentType!
+    url:String
+    mimetype:String
+    encoding:String
+    filename:String
+    textContent:String
+    medium:MEDIUM 
+    level:Int 
+    isPublished: Boolean 
+    createdBy: User! 
+    subject:Subject
+    unit:Unit 
+    topic:Topic 
+    std:Std  
+}
+ input ContentInput {
+    contentType: String!
+    url:String
+    mimetype:String
+    encoding:String
+    filename:String
+    textContent:String
+    medium:String 
+    level:Int 
+    isPublished: Boolean 
+    createdBy: String! 
+    subject:String
+    unit:String 
+    topic:String 
+    std:String
+}
+enum ContentType{
+    YOUTUBE, IMAGE,DOC,VDO,WYSIWYG, TEXT   
+}
+enum MEDIUM{
+    ENGLISH,HINDI
+}

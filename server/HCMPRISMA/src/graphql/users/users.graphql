@@ -1,11 +1,16 @@
+
 type Query {
     users(query: String): [User!]!
     me: User!
     usersForAdmin:[User!]! 
     roles:[Role!]!
-    myRoles:[Role!]!
-    orgs: [Organization!]!  
+    getUserRoles(userid:String,groupid:String):[Role!]!
+    myRoles:[UserRole!]!
+    getOrg: [Organization!]! 
+    orgByname(name:String!):Organization! 
+    getSubOrgs:[SubOrg!]!
     groups:[Group!]!
+    suborgToGroup(query:String!):[SubOrgGroup]
 }
 type Mutation {
     createOrganization(data: CreateOrganizationInput!): Organization!
@@ -18,7 +23,8 @@ type Mutation {
     updateUser(data: UpdateUserInput!): User!
     updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
     createRole(data:CreateRoleInput!): Role! 
-    createUserRole(data:UserRoleInput):UserRole!
+    createGroupsToSubOrg(data:SubOrgGroupInput!):SubOrgGroup!
+    deleteOrganization(id:ID!):Organization!
 }
 
 type Organization{
@@ -36,19 +42,31 @@ input CreateOrganizationInput{
 }
 type SubOrg{
     id:ID!
-    
     name:String!
     author:[User!]
     org:Organization!
+    
 }
+
 input CreateSubOrganizationInput{
     name:String!
     org:String!
+
 }
 type Group{
     id:ID!
     name:String!
 }
+type SubOrgGroup{
+  id:ID!
+  suborg:SubOrg! 
+  group:[Group!] 
+}
+input SubOrgGroupInput{
+    suborg:String!
+    group:String!
+}
+
 input CreateGroupInput{
     name:String!
 }
@@ -61,8 +79,8 @@ type User {
     posts: [Post!]!
     comments: [Comment!]!
     org:Organization!  
-    subOrgs:[SubOrg!]! 
-    userRoles:[UserRole!]!
+    subOrgs:SubOrg! 
+    roles:[Role!]!
     createdBy:ID
     createdAt:String!
     updatedAt:String!
@@ -70,14 +88,15 @@ type User {
 type AuthPayload {
     token: String!
     user: User!   
+    roles:[Json]
 }
 input CreateUserInput {
     firstname:String!
     lastname: String!
     email: String!
     password: String!
-    org:String!
     subOrg:String!
+    org:String!
 }
 
 input UpdateUserInputByAdmin{
@@ -104,15 +123,17 @@ type UserRole{
     role:Role!
     group:Group!
 }
-input UserRoleInput{
-    user:String!
-    role:String!
-    group:String!
-}
+
 type Role{
     id:ID! 
-    roleName:String!
+    rolename:String!
+    rolelevel:String!
+    levelname:String
+    userid:User!
 }
 input CreateRoleInput{
-    roleName:String!
+    rolename:String!
+    rolelevel:String!
+    levelname:String
+    userid:String!
 }

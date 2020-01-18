@@ -1,6 +1,6 @@
 
-import React from "react";
 import LoginMd from "../components/authentication/LoginMd";
+import Profile from "../components/authentication/Profile"
 import Register from "../components/authentication/Register";
 import {CreateContent,CreateGroup,CreateRole,CreateSubOrg,CreateUser} from "./common"
 import UserOnBoard from './admin/UserOnBoard'
@@ -25,6 +25,13 @@ export default [
       layout: DefaultLayout, 
       component: Register
     },
+    {
+      path: "/profile",
+      exact: true,
+      layout: DefaultLayout, 
+      component: Profile
+    },
+    
     {
       path: "/createorg",
       exact: true,

@@ -4,6 +4,8 @@
 # import Query.*, Mutation.* from "graphql/course/eduBoard.graphql"
 
 # import Query.*, Mutation.* from "address.graphql"
+# import * from "generated/prisma.graphql"
+
 scalar Upload
 type Query {  
     uploads: [File]

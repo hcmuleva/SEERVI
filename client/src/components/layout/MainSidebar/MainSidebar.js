@@ -8,11 +8,9 @@ import SidebarSearch from "./SidebarSearch";
 import SidebarNavItems from "./SidebarNavItems";
 
 import { Store } from "../../../flux";
-import Auth from "../../../modules/Auth"
 class MainSidebar extends React.Component {
   constructor(props) {
     super(props);
-    console.log("Roles in main sidebar",Auth.getRoles())
     this.state = {
       menuVisible: false,
       sidebarNavItems: Store.getSidebarItems()

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router'
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Auth from '../../modules/Auth';
-import Register from './Register';
+import Register from './Register'
 import Constants from "../../flux/constants"
 import Dispatcher from "../../flux/dispatcher"
 
@@ -13,7 +13,7 @@ export const LOGIN_USER = gql`
         login(data:{email:$email,password:$password}){
             user{id firstname email}
             token,
-            myAuthinfo
+            roles
         }}`;
 export default function LoginMd() {
 
@@ -32,15 +32,13 @@ export default function LoginMd() {
         const email = event.target.email.value;
         const password=event.target.password.value
         userLogin({ variables: { email,password } }).then((res)=>{
+            console.log("RES",res)
             const token=res.data.login.token
-            console.log("Auth Data",JSON.stringify(res.data))
-            const authdata =res.data.login.myAuthinfo
+            const authdata =res.data.login.roles
             console.log(authdata)
-            const myauthdata=JSON.parse(res.data.login.myAuthinfo)
-            console.log("myauthdata",myauthdata)
-            const roleVal=myauthdata['roleAndGroup'][0]['role']
-            console.log("MY ROLE ,",roleVal)
-            switch(roleVal.rolename){
+            console.log("\n********WARNING********\n")
+            console.log("\n********Login does handle only single role, where as user can have multiple role********\n")
+            switch(authdata[0].rolename){
                 case Constants.EDUCATION_ROLE_SUPERADMIN:
                     Dispatcher.dispatch({
                         actionType: Constants.EDUCATION_ROLE_SUPERADMIN,
@@ -65,18 +63,21 @@ export default function LoginMd() {
                     payload:"THis is simply hardcoded from Harish"
                     });
                     break;
+                default:
+
             }
            /**
             *  
             */
-            Auth.setRoles(myauthdata.roleAndGroup)
+           
             console.log("Local Storage",token)
             localStorage.setItem('token', token);
+            localStorage.setItem("authdata",JSON.stringify(authdata))
             Auth.authenticateUser(token)
             Auth.isUserAuthenticated(true)  
             setIsAuthenticated(true)
         }).catch(err=>{
-           
+           console.log(err)
             console.log(err.message)
         })
         
@@ -87,8 +88,8 @@ export default function LoginMd() {
             
             switch(compType) {
               case 'register':
-                 
                  return <Redirect to="/register" />
+            default:
             }
           })()}
   {isAuthenticated ? <Redirect to="/blog-overview" />: 
@@ -115,7 +116,8 @@ export default function LoginMd() {
                                 <input type="submit" name="submit" className="btn btn-info btn-md" value="submit"/>
                             </div>
 
-                            <div id="register-link" className="text-right">           
+                            <div id="register-link" className="text-right">   
+                                {register?<Register/>:<div></div>}        
                                 <a href="/register" className="text-info" onClick={handleRegister}>Register here</a>
                             </div>
                         </form>
