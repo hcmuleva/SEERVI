@@ -16,21 +16,10 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  address: (where?: AddressWhereInput) => Promise<boolean>;
-  baseAddress: (where?: BaseAddressWhereInput) => Promise<boolean>;
-  board: (where?: BoardWhereInput) => Promise<boolean>;
   comment: (where?: CommentWhereInput) => Promise<boolean>;
-  file: (where?: FileWhereInput) => Promise<boolean>;
-  group: (where?: GroupWhereInput) => Promise<boolean>;
   organization: (where?: OrganizationWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
-  role: (where?: RoleWhereInput) => Promise<boolean>;
-  specialization: (where?: SpecializationWhereInput) => Promise<boolean>;
-  std: (where?: StdWhereInput) => Promise<boolean>;
-  subOrg: (where?: SubOrgWhereInput) => Promise<boolean>;
-  subject: (where?: SubjectWhereInput) => Promise<boolean>;
-  topic: (where?: TopicWhereInput) => Promise<boolean>;
-  unit: (where?: UnitWhereInput) => Promise<boolean>;
+  suborg: (where?: SuborgWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -53,65 +42,6 @@ export interface Prisma {
    * Queries
    */
 
-  address: (where: AddressWhereUniqueInput) => AddressNullablePromise;
-  addresses: (args?: {
-    where?: AddressWhereInput;
-    orderBy?: AddressOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Address>;
-  addressesConnection: (args?: {
-    where?: AddressWhereInput;
-    orderBy?: AddressOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => AddressConnectionPromise;
-  baseAddress: (
-    where: BaseAddressWhereUniqueInput
-  ) => BaseAddressNullablePromise;
-  baseAddresses: (args?: {
-    where?: BaseAddressWhereInput;
-    orderBy?: BaseAddressOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<BaseAddress>;
-  baseAddressesConnection: (args?: {
-    where?: BaseAddressWhereInput;
-    orderBy?: BaseAddressOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => BaseAddressConnectionPromise;
-  board: (where: BoardWhereUniqueInput) => BoardNullablePromise;
-  boards: (args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Board>;
-  boardsConnection: (args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => BoardConnectionPromise;
   comment: (where: CommentWhereUniqueInput) => CommentNullablePromise;
   comments: (args?: {
     where?: CommentWhereInput;
@@ -131,44 +61,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CommentConnectionPromise;
-  file: (where: FileWhereUniqueInput) => FileNullablePromise;
-  files: (args?: {
-    where?: FileWhereInput;
-    orderBy?: FileOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<File>;
-  filesConnection: (args?: {
-    where?: FileWhereInput;
-    orderBy?: FileOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FileConnectionPromise;
-  group: (where: GroupWhereUniqueInput) => GroupNullablePromise;
-  groups: (args?: {
-    where?: GroupWhereInput;
-    orderBy?: GroupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Group>;
-  groupsConnection: (args?: {
-    where?: GroupWhereInput;
-    orderBy?: GroupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => GroupConnectionPromise;
   organization: (
     where: OrganizationWhereUniqueInput
   ) => OrganizationNullablePromise;
@@ -209,141 +101,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => PostConnectionPromise;
-  role: (where: RoleWhereUniqueInput) => RoleNullablePromise;
-  roles: (args?: {
-    where?: RoleWhereInput;
-    orderBy?: RoleOrderByInput;
+  suborg: (where: SuborgWhereUniqueInput) => SuborgNullablePromise;
+  suborgs: (args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Role>;
-  rolesConnection: (args?: {
-    where?: RoleWhereInput;
-    orderBy?: RoleOrderByInput;
+  }) => FragmentableArray<Suborg>;
+  suborgsConnection: (args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => RoleConnectionPromise;
-  specialization: (
-    where: SpecializationWhereUniqueInput
-  ) => SpecializationNullablePromise;
-  specializations: (args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Specialization>;
-  specializationsConnection: (args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => SpecializationConnectionPromise;
-  std: (where: StdWhereUniqueInput) => StdNullablePromise;
-  stds: (args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Std>;
-  stdsConnection: (args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => StdConnectionPromise;
-  subOrg: (where: SubOrgWhereUniqueInput) => SubOrgNullablePromise;
-  subOrgs: (args?: {
-    where?: SubOrgWhereInput;
-    orderBy?: SubOrgOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<SubOrg>;
-  subOrgsConnection: (args?: {
-    where?: SubOrgWhereInput;
-    orderBy?: SubOrgOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => SubOrgConnectionPromise;
-  subject: (where: SubjectWhereUniqueInput) => SubjectNullablePromise;
-  subjects: (args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Subject>;
-  subjectsConnection: (args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => SubjectConnectionPromise;
-  topic: (where: TopicWhereUniqueInput) => TopicNullablePromise;
-  topics: (args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Topic>;
-  topicsConnection: (args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => TopicConnectionPromise;
-  unit: (where: UnitWhereUniqueInput) => UnitNullablePromise;
-  units: (args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Unit>;
-  unitsConnection: (args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => UnitConnectionPromise;
+  }) => SuborgConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -369,56 +145,6 @@ export interface Prisma {
    * Mutations
    */
 
-  createAddress: (data: AddressCreateInput) => AddressPromise;
-  updateAddress: (args: {
-    data: AddressUpdateInput;
-    where: AddressWhereUniqueInput;
-  }) => AddressPromise;
-  updateManyAddresses: (args: {
-    data: AddressUpdateManyMutationInput;
-    where?: AddressWhereInput;
-  }) => BatchPayloadPromise;
-  upsertAddress: (args: {
-    where: AddressWhereUniqueInput;
-    create: AddressCreateInput;
-    update: AddressUpdateInput;
-  }) => AddressPromise;
-  deleteAddress: (where: AddressWhereUniqueInput) => AddressPromise;
-  deleteManyAddresses: (where?: AddressWhereInput) => BatchPayloadPromise;
-  createBaseAddress: (data: BaseAddressCreateInput) => BaseAddressPromise;
-  updateBaseAddress: (args: {
-    data: BaseAddressUpdateInput;
-    where: BaseAddressWhereUniqueInput;
-  }) => BaseAddressPromise;
-  updateManyBaseAddresses: (args: {
-    data: BaseAddressUpdateManyMutationInput;
-    where?: BaseAddressWhereInput;
-  }) => BatchPayloadPromise;
-  upsertBaseAddress: (args: {
-    where: BaseAddressWhereUniqueInput;
-    create: BaseAddressCreateInput;
-    update: BaseAddressUpdateInput;
-  }) => BaseAddressPromise;
-  deleteBaseAddress: (where: BaseAddressWhereUniqueInput) => BaseAddressPromise;
-  deleteManyBaseAddresses: (
-    where?: BaseAddressWhereInput
-  ) => BatchPayloadPromise;
-  createBoard: (data: BoardCreateInput) => BoardPromise;
-  updateBoard: (args: {
-    data: BoardUpdateInput;
-    where: BoardWhereUniqueInput;
-  }) => BoardPromise;
-  updateManyBoards: (args: {
-    data: BoardUpdateManyMutationInput;
-    where?: BoardWhereInput;
-  }) => BatchPayloadPromise;
-  upsertBoard: (args: {
-    where: BoardWhereUniqueInput;
-    create: BoardCreateInput;
-    update: BoardUpdateInput;
-  }) => BoardPromise;
-  deleteBoard: (where: BoardWhereUniqueInput) => BoardPromise;
-  deleteManyBoards: (where?: BoardWhereInput) => BatchPayloadPromise;
   createComment: (data: CommentCreateInput) => CommentPromise;
   updateComment: (args: {
     data: CommentUpdateInput;
@@ -435,38 +161,6 @@ export interface Prisma {
   }) => CommentPromise;
   deleteComment: (where: CommentWhereUniqueInput) => CommentPromise;
   deleteManyComments: (where?: CommentWhereInput) => BatchPayloadPromise;
-  createFile: (data: FileCreateInput) => FilePromise;
-  updateFile: (args: {
-    data: FileUpdateInput;
-    where: FileWhereUniqueInput;
-  }) => FilePromise;
-  updateManyFiles: (args: {
-    data: FileUpdateManyMutationInput;
-    where?: FileWhereInput;
-  }) => BatchPayloadPromise;
-  upsertFile: (args: {
-    where: FileWhereUniqueInput;
-    create: FileCreateInput;
-    update: FileUpdateInput;
-  }) => FilePromise;
-  deleteFile: (where: FileWhereUniqueInput) => FilePromise;
-  deleteManyFiles: (where?: FileWhereInput) => BatchPayloadPromise;
-  createGroup: (data: GroupCreateInput) => GroupPromise;
-  updateGroup: (args: {
-    data: GroupUpdateInput;
-    where: GroupWhereUniqueInput;
-  }) => GroupPromise;
-  updateManyGroups: (args: {
-    data: GroupUpdateManyMutationInput;
-    where?: GroupWhereInput;
-  }) => BatchPayloadPromise;
-  upsertGroup: (args: {
-    where: GroupWhereUniqueInput;
-    create: GroupCreateInput;
-    update: GroupUpdateInput;
-  }) => GroupPromise;
-  deleteGroup: (where: GroupWhereUniqueInput) => GroupPromise;
-  deleteManyGroups: (where?: GroupWhereInput) => BatchPayloadPromise;
   createOrganization: (data: OrganizationCreateInput) => OrganizationPromise;
   updateOrganization: (args: {
     data: OrganizationUpdateInput;
@@ -503,124 +197,22 @@ export interface Prisma {
   }) => PostPromise;
   deletePost: (where: PostWhereUniqueInput) => PostPromise;
   deleteManyPosts: (where?: PostWhereInput) => BatchPayloadPromise;
-  createRole: (data: RoleCreateInput) => RolePromise;
-  updateRole: (args: {
-    data: RoleUpdateInput;
-    where: RoleWhereUniqueInput;
-  }) => RolePromise;
-  updateManyRoles: (args: {
-    data: RoleUpdateManyMutationInput;
-    where?: RoleWhereInput;
+  createSuborg: (data: SuborgCreateInput) => SuborgPromise;
+  updateSuborg: (args: {
+    data: SuborgUpdateInput;
+    where: SuborgWhereUniqueInput;
+  }) => SuborgPromise;
+  updateManySuborgs: (args: {
+    data: SuborgUpdateManyMutationInput;
+    where?: SuborgWhereInput;
   }) => BatchPayloadPromise;
-  upsertRole: (args: {
-    where: RoleWhereUniqueInput;
-    create: RoleCreateInput;
-    update: RoleUpdateInput;
-  }) => RolePromise;
-  deleteRole: (where: RoleWhereUniqueInput) => RolePromise;
-  deleteManyRoles: (where?: RoleWhereInput) => BatchPayloadPromise;
-  createSpecialization: (
-    data: SpecializationCreateInput
-  ) => SpecializationPromise;
-  updateSpecialization: (args: {
-    data: SpecializationUpdateInput;
-    where: SpecializationWhereUniqueInput;
-  }) => SpecializationPromise;
-  updateManySpecializations: (args: {
-    data: SpecializationUpdateManyMutationInput;
-    where?: SpecializationWhereInput;
-  }) => BatchPayloadPromise;
-  upsertSpecialization: (args: {
-    where: SpecializationWhereUniqueInput;
-    create: SpecializationCreateInput;
-    update: SpecializationUpdateInput;
-  }) => SpecializationPromise;
-  deleteSpecialization: (
-    where: SpecializationWhereUniqueInput
-  ) => SpecializationPromise;
-  deleteManySpecializations: (
-    where?: SpecializationWhereInput
-  ) => BatchPayloadPromise;
-  createStd: (data: StdCreateInput) => StdPromise;
-  updateStd: (args: {
-    data: StdUpdateInput;
-    where: StdWhereUniqueInput;
-  }) => StdPromise;
-  updateManyStds: (args: {
-    data: StdUpdateManyMutationInput;
-    where?: StdWhereInput;
-  }) => BatchPayloadPromise;
-  upsertStd: (args: {
-    where: StdWhereUniqueInput;
-    create: StdCreateInput;
-    update: StdUpdateInput;
-  }) => StdPromise;
-  deleteStd: (where: StdWhereUniqueInput) => StdPromise;
-  deleteManyStds: (where?: StdWhereInput) => BatchPayloadPromise;
-  createSubOrg: (data: SubOrgCreateInput) => SubOrgPromise;
-  updateSubOrg: (args: {
-    data: SubOrgUpdateInput;
-    where: SubOrgWhereUniqueInput;
-  }) => SubOrgPromise;
-  updateManySubOrgs: (args: {
-    data: SubOrgUpdateManyMutationInput;
-    where?: SubOrgWhereInput;
-  }) => BatchPayloadPromise;
-  upsertSubOrg: (args: {
-    where: SubOrgWhereUniqueInput;
-    create: SubOrgCreateInput;
-    update: SubOrgUpdateInput;
-  }) => SubOrgPromise;
-  deleteSubOrg: (where: SubOrgWhereUniqueInput) => SubOrgPromise;
-  deleteManySubOrgs: (where?: SubOrgWhereInput) => BatchPayloadPromise;
-  createSubject: (data: SubjectCreateInput) => SubjectPromise;
-  updateSubject: (args: {
-    data: SubjectUpdateInput;
-    where: SubjectWhereUniqueInput;
-  }) => SubjectPromise;
-  updateManySubjects: (args: {
-    data: SubjectUpdateManyMutationInput;
-    where?: SubjectWhereInput;
-  }) => BatchPayloadPromise;
-  upsertSubject: (args: {
-    where: SubjectWhereUniqueInput;
-    create: SubjectCreateInput;
-    update: SubjectUpdateInput;
-  }) => SubjectPromise;
-  deleteSubject: (where: SubjectWhereUniqueInput) => SubjectPromise;
-  deleteManySubjects: (where?: SubjectWhereInput) => BatchPayloadPromise;
-  createTopic: (data: TopicCreateInput) => TopicPromise;
-  updateTopic: (args: {
-    data: TopicUpdateInput;
-    where: TopicWhereUniqueInput;
-  }) => TopicPromise;
-  updateManyTopics: (args: {
-    data: TopicUpdateManyMutationInput;
-    where?: TopicWhereInput;
-  }) => BatchPayloadPromise;
-  upsertTopic: (args: {
-    where: TopicWhereUniqueInput;
-    create: TopicCreateInput;
-    update: TopicUpdateInput;
-  }) => TopicPromise;
-  deleteTopic: (where: TopicWhereUniqueInput) => TopicPromise;
-  deleteManyTopics: (where?: TopicWhereInput) => BatchPayloadPromise;
-  createUnit: (data: UnitCreateInput) => UnitPromise;
-  updateUnit: (args: {
-    data: UnitUpdateInput;
-    where: UnitWhereUniqueInput;
-  }) => UnitPromise;
-  updateManyUnits: (args: {
-    data: UnitUpdateManyMutationInput;
-    where?: UnitWhereInput;
-  }) => BatchPayloadPromise;
-  upsertUnit: (args: {
-    where: UnitWhereUniqueInput;
-    create: UnitCreateInput;
-    update: UnitUpdateInput;
-  }) => UnitPromise;
-  deleteUnit: (where: UnitWhereUniqueInput) => UnitPromise;
-  deleteManyUnits: (where?: UnitWhereInput) => BatchPayloadPromise;
+  upsertSuborg: (args: {
+    where: SuborgWhereUniqueInput;
+    create: SuborgCreateInput;
+    update: SuborgUpdateInput;
+  }) => SuborgPromise;
+  deleteSuborg: (where: SuborgWhereUniqueInput) => SuborgPromise;
+  deleteManySuborgs: (where?: SuborgWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -646,51 +238,18 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  address: (
-    where?: AddressSubscriptionWhereInput
-  ) => AddressSubscriptionPayloadSubscription;
-  baseAddress: (
-    where?: BaseAddressSubscriptionWhereInput
-  ) => BaseAddressSubscriptionPayloadSubscription;
-  board: (
-    where?: BoardSubscriptionWhereInput
-  ) => BoardSubscriptionPayloadSubscription;
   comment: (
     where?: CommentSubscriptionWhereInput
   ) => CommentSubscriptionPayloadSubscription;
-  file: (
-    where?: FileSubscriptionWhereInput
-  ) => FileSubscriptionPayloadSubscription;
-  group: (
-    where?: GroupSubscriptionWhereInput
-  ) => GroupSubscriptionPayloadSubscription;
   organization: (
     where?: OrganizationSubscriptionWhereInput
   ) => OrganizationSubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
-  role: (
-    where?: RoleSubscriptionWhereInput
-  ) => RoleSubscriptionPayloadSubscription;
-  specialization: (
-    where?: SpecializationSubscriptionWhereInput
-  ) => SpecializationSubscriptionPayloadSubscription;
-  std: (
-    where?: StdSubscriptionWhereInput
-  ) => StdSubscriptionPayloadSubscription;
-  subOrg: (
-    where?: SubOrgSubscriptionWhereInput
-  ) => SubOrgSubscriptionPayloadSubscription;
-  subject: (
-    where?: SubjectSubscriptionWhereInput
-  ) => SubjectSubscriptionPayloadSubscription;
-  topic: (
-    where?: TopicSubscriptionWhereInput
-  ) => TopicSubscriptionPayloadSubscription;
-  unit: (
-    where?: UnitSubscriptionWhereInput
-  ) => UnitSubscriptionPayloadSubscription;
+  suborg: (
+    where?: SuborgSubscriptionWhereInput
+  ) => SuborgSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -703,6 +262,36 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type UserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "firstname_ASC"
+  | "firstname_DESC"
+  | "lastname_ASC"
+  | "lastname_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "createdBy_ASC"
+  | "createdBy_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type SuborgOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type PostOrderByInput =
   | "id_ASC"
@@ -728,158 +317,6 @@ export type CommentOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
-export type UserOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "firstname_ASC"
-  | "firstname_DESC"
-  | "lastname_ASC"
-  | "lastname_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "password_ASC"
-  | "password_DESC"
-  | "createdBy_ASC"
-  | "createdBy_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type SubOrgOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type BoardOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "published_ASC"
-  | "published_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type StdOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type SpecializationOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type SubjectOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type UnitOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type TopicOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type AddressOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "house_ASC"
-  | "house_DESC"
-  | "landmark_ASC"
-  | "landmark_DESC"
-  | "published_ASC"
-  | "published_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type BaseAddressOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "officename_ASC"
-  | "officename_DESC"
-  | "pincode_ASC"
-  | "pincode_DESC"
-  | "officeType_ASC"
-  | "officeType_DESC"
-  | "Deliverystatus_ASC"
-  | "Deliverystatus_DESC"
-  | "divisionname_ASC"
-  | "divisionname_DESC"
-  | "regionname_ASC"
-  | "regionname_DESC"
-  | "circlename_ASC"
-  | "circlename_DESC"
-  | "taluk_ASC"
-  | "taluk_DESC"
-  | "districtname_ASC"
-  | "districtname_DESC"
-  | "statename_ASC"
-  | "statename_DESC"
-  | "telephone_ASC"
-  | "telephone_DESC"
-  | "relatedSuboffice_ASC"
-  | "relatedSuboffice_DESC"
-  | "relatedHeadoffice_ASC"
-  | "relatedHeadoffice_DESC"
-  | "longitude_ASC"
-  | "longitude_DESC"
-  | "latitude_ASC"
-  | "latitude_DESC";
-
-export type FileOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "path_ASC"
-  | "path_DESC"
-  | "filename_ASC"
-  | "filename_DESC"
-  | "mimetype_ASC"
-  | "mimetype_DESC"
-  | "encoding_ASC"
-  | "encoding_DESC";
-
-export type GroupOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
-
 export type OrganizationOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -892,91 +329,11 @@ export type OrganizationOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
-export type RoleOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "rolename_ASC"
-  | "rolename_DESC"
-  | "rolelevel_ASC"
-  | "rolelevel_DESC"
-  | "levelname_ASC"
-  | "levelname_DESC";
-
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type AddressWhereUniqueInput = AtLeastOne<{
+export type CommentWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface PostWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  body?: Maybe<String>;
-  body_not?: Maybe<String>;
-  body_in?: Maybe<String[] | String>;
-  body_not_in?: Maybe<String[] | String>;
-  body_lt?: Maybe<String>;
-  body_lte?: Maybe<String>;
-  body_gt?: Maybe<String>;
-  body_gte?: Maybe<String>;
-  body_contains?: Maybe<String>;
-  body_not_contains?: Maybe<String>;
-  body_starts_with?: Maybe<String>;
-  body_not_starts_with?: Maybe<String>;
-  body_ends_with?: Maybe<String>;
-  body_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  author?: Maybe<UserWhereInput>;
-  comments_every?: Maybe<CommentWhereInput>;
-  comments_some?: Maybe<CommentWhereInput>;
-  comments_none?: Maybe<CommentWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
-  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
-  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
-}
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -1049,14 +406,14 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
+  myorg?: Maybe<OrganizationWhereInput>;
+  mysuborg?: Maybe<SuborgWhereInput>;
   posts_every?: Maybe<PostWhereInput>;
   posts_some?: Maybe<PostWhereInput>;
   posts_none?: Maybe<PostWhereInput>;
   comments_every?: Maybe<CommentWhereInput>;
   comments_some?: Maybe<CommentWhereInput>;
   comments_none?: Maybe<CommentWhereInput>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrgs?: Maybe<SubOrgWhereInput>;
   createdBy?: Maybe<String>;
   createdBy_not?: Maybe<String>;
   createdBy_in?: Maybe<String[] | String>;
@@ -1090,6 +447,214 @@ export interface UserWhereInput {
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface OrganizationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  author_every?: Maybe<UserWhereInput>;
+  author_some?: Maybe<UserWhereInput>;
+  author_none?: Maybe<UserWhereInput>;
+  suborgs_every?: Maybe<SuborgWhereInput>;
+  suborgs_some?: Maybe<SuborgWhereInput>;
+  suborgs_none?: Maybe<SuborgWhereInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<OrganizationWhereInput[] | OrganizationWhereInput>;
+  OR?: Maybe<OrganizationWhereInput[] | OrganizationWhereInput>;
+  NOT?: Maybe<OrganizationWhereInput[] | OrganizationWhereInput>;
+}
+
+export interface SuborgWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  author_every?: Maybe<UserWhereInput>;
+  author_some?: Maybe<UserWhereInput>;
+  author_none?: Maybe<UserWhereInput>;
+  org?: Maybe<OrganizationWhereInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<SuborgWhereInput[] | SuborgWhereInput>;
+  OR?: Maybe<SuborgWhereInput[] | SuborgWhereInput>;
+  NOT?: Maybe<SuborgWhereInput[] | SuborgWhereInput>;
+}
+
+export interface PostWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  body?: Maybe<String>;
+  body_not?: Maybe<String>;
+  body_in?: Maybe<String[] | String>;
+  body_not_in?: Maybe<String[] | String>;
+  body_lt?: Maybe<String>;
+  body_lte?: Maybe<String>;
+  body_gt?: Maybe<String>;
+  body_gte?: Maybe<String>;
+  body_contains?: Maybe<String>;
+  body_not_contains?: Maybe<String>;
+  body_starts_with?: Maybe<String>;
+  body_not_starts_with?: Maybe<String>;
+  body_ends_with?: Maybe<String>;
+  body_not_ends_with?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  author?: Maybe<UserWhereInput>;
+  comments_every?: Maybe<CommentWhereInput>;
+  comments_some?: Maybe<CommentWhereInput>;
+  comments_none?: Maybe<CommentWhereInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
+  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
+  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
 }
 
 export interface CommentWhereInput {
@@ -1144,968 +709,6 @@ export interface CommentWhereInput {
   NOT?: Maybe<CommentWhereInput[] | CommentWhereInput>;
 }
 
-export interface OrganizationWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  author_every?: Maybe<UserWhereInput>;
-  author_some?: Maybe<UserWhereInput>;
-  author_none?: Maybe<UserWhereInput>;
-  subOrgs_every?: Maybe<SubOrgWhereInput>;
-  subOrgs_some?: Maybe<SubOrgWhereInput>;
-  subOrgs_none?: Maybe<SubOrgWhereInput>;
-  board_every?: Maybe<BoardWhereInput>;
-  board_some?: Maybe<BoardWhereInput>;
-  board_none?: Maybe<BoardWhereInput>;
-  stds_every?: Maybe<StdWhereInput>;
-  stds_some?: Maybe<StdWhereInput>;
-  stds_none?: Maybe<StdWhereInput>;
-  specializations_every?: Maybe<SpecializationWhereInput>;
-  specializations_some?: Maybe<SpecializationWhereInput>;
-  specializations_none?: Maybe<SpecializationWhereInput>;
-  subjects_every?: Maybe<SubjectWhereInput>;
-  subjects_some?: Maybe<SubjectWhereInput>;
-  subjects_none?: Maybe<SubjectWhereInput>;
-  units_every?: Maybe<UnitWhereInput>;
-  units_some?: Maybe<UnitWhereInput>;
-  units_none?: Maybe<UnitWhereInput>;
-  topics_every?: Maybe<TopicWhereInput>;
-  topics_some?: Maybe<TopicWhereInput>;
-  topics_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<OrganizationWhereInput[] | OrganizationWhereInput>;
-  OR?: Maybe<OrganizationWhereInput[] | OrganizationWhereInput>;
-  NOT?: Maybe<OrganizationWhereInput[] | OrganizationWhereInput>;
-}
-
-export interface SubOrgWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  board_every?: Maybe<BoardWhereInput>;
-  board_some?: Maybe<BoardWhereInput>;
-  board_none?: Maybe<BoardWhereInput>;
-  author_every?: Maybe<UserWhereInput>;
-  author_some?: Maybe<UserWhereInput>;
-  author_none?: Maybe<UserWhereInput>;
-  org?: Maybe<OrganizationWhereInput>;
-  stds_every?: Maybe<StdWhereInput>;
-  stds_some?: Maybe<StdWhereInput>;
-  stds_none?: Maybe<StdWhereInput>;
-  specializations_every?: Maybe<SpecializationWhereInput>;
-  specializations_some?: Maybe<SpecializationWhereInput>;
-  specializations_none?: Maybe<SpecializationWhereInput>;
-  subjects_every?: Maybe<SubjectWhereInput>;
-  subjects_some?: Maybe<SubjectWhereInput>;
-  subjects_none?: Maybe<SubjectWhereInput>;
-  units_every?: Maybe<UnitWhereInput>;
-  units_some?: Maybe<UnitWhereInput>;
-  units_none?: Maybe<UnitWhereInput>;
-  topics_every?: Maybe<TopicWhereInput>;
-  topics_some?: Maybe<TopicWhereInput>;
-  topics_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<SubOrgWhereInput[] | SubOrgWhereInput>;
-  OR?: Maybe<SubOrgWhereInput[] | SubOrgWhereInput>;
-  NOT?: Maybe<SubOrgWhereInput[] | SubOrgWhereInput>;
-}
-
-export interface BoardWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrg?: Maybe<SubOrgWhereInput>;
-  stds_every?: Maybe<StdWhereInput>;
-  stds_some?: Maybe<StdWhereInput>;
-  stds_none?: Maybe<StdWhereInput>;
-  specializations_every?: Maybe<SpecializationWhereInput>;
-  specializations_some?: Maybe<SpecializationWhereInput>;
-  specializations_none?: Maybe<SpecializationWhereInput>;
-  subjects_every?: Maybe<SubjectWhereInput>;
-  subjects_some?: Maybe<SubjectWhereInput>;
-  subjects_none?: Maybe<SubjectWhereInput>;
-  units_every?: Maybe<UnitWhereInput>;
-  units_some?: Maybe<UnitWhereInput>;
-  units_none?: Maybe<UnitWhereInput>;
-  topics_every?: Maybe<TopicWhereInput>;
-  topics_some?: Maybe<TopicWhereInput>;
-  topics_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<BoardWhereInput[] | BoardWhereInput>;
-  OR?: Maybe<BoardWhereInput[] | BoardWhereInput>;
-  NOT?: Maybe<BoardWhereInput[] | BoardWhereInput>;
-}
-
-export interface StdWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrg?: Maybe<SubOrgWhereInput>;
-  board?: Maybe<BoardWhereInput>;
-  specializations_every?: Maybe<SpecializationWhereInput>;
-  specializations_some?: Maybe<SpecializationWhereInput>;
-  specializations_none?: Maybe<SpecializationWhereInput>;
-  subjects_every?: Maybe<SubjectWhereInput>;
-  subjects_some?: Maybe<SubjectWhereInput>;
-  subjects_none?: Maybe<SubjectWhereInput>;
-  units_every?: Maybe<UnitWhereInput>;
-  units_some?: Maybe<UnitWhereInput>;
-  units_none?: Maybe<UnitWhereInput>;
-  topics_every?: Maybe<TopicWhereInput>;
-  topics_some?: Maybe<TopicWhereInput>;
-  topics_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<StdWhereInput[] | StdWhereInput>;
-  OR?: Maybe<StdWhereInput[] | StdWhereInput>;
-  NOT?: Maybe<StdWhereInput[] | StdWhereInput>;
-}
-
-export interface SpecializationWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrg?: Maybe<SubOrgWhereInput>;
-  board?: Maybe<BoardWhereInput>;
-  std?: Maybe<StdWhereInput>;
-  subjects_every?: Maybe<SubjectWhereInput>;
-  subjects_some?: Maybe<SubjectWhereInput>;
-  subjects_none?: Maybe<SubjectWhereInput>;
-  unit_every?: Maybe<UnitWhereInput>;
-  unit_some?: Maybe<UnitWhereInput>;
-  unit_none?: Maybe<UnitWhereInput>;
-  topic_every?: Maybe<TopicWhereInput>;
-  topic_some?: Maybe<TopicWhereInput>;
-  topic_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<SpecializationWhereInput[] | SpecializationWhereInput>;
-  OR?: Maybe<SpecializationWhereInput[] | SpecializationWhereInput>;
-  NOT?: Maybe<SpecializationWhereInput[] | SpecializationWhereInput>;
-}
-
-export interface SubjectWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrg?: Maybe<SubOrgWhereInput>;
-  board?: Maybe<BoardWhereInput>;
-  std?: Maybe<StdWhereInput>;
-  specialization?: Maybe<SpecializationWhereInput>;
-  units_every?: Maybe<UnitWhereInput>;
-  units_some?: Maybe<UnitWhereInput>;
-  units_none?: Maybe<UnitWhereInput>;
-  topics_every?: Maybe<TopicWhereInput>;
-  topics_some?: Maybe<TopicWhereInput>;
-  topics_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<SubjectWhereInput[] | SubjectWhereInput>;
-  OR?: Maybe<SubjectWhereInput[] | SubjectWhereInput>;
-  NOT?: Maybe<SubjectWhereInput[] | SubjectWhereInput>;
-}
-
-export interface UnitWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrg?: Maybe<SubOrgWhereInput>;
-  board?: Maybe<BoardWhereInput>;
-  std?: Maybe<StdWhereInput>;
-  specialization?: Maybe<SpecializationWhereInput>;
-  subject?: Maybe<SubjectWhereInput>;
-  topics_every?: Maybe<TopicWhereInput>;
-  topics_some?: Maybe<TopicWhereInput>;
-  topics_none?: Maybe<TopicWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<UnitWhereInput[] | UnitWhereInput>;
-  OR?: Maybe<UnitWhereInput[] | UnitWhereInput>;
-  NOT?: Maybe<UnitWhereInput[] | UnitWhereInput>;
-}
-
-export interface TopicWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  org?: Maybe<OrganizationWhereInput>;
-  subOrg?: Maybe<SubOrgWhereInput>;
-  board?: Maybe<BoardWhereInput>;
-  subject?: Maybe<SubjectWhereInput>;
-  specialization?: Maybe<SpecializationWhereInput>;
-  unit?: Maybe<UnitWhereInput>;
-  std?: Maybe<StdWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TopicWhereInput[] | TopicWhereInput>;
-  OR?: Maybe<TopicWhereInput[] | TopicWhereInput>;
-  NOT?: Maybe<TopicWhereInput[] | TopicWhereInput>;
-}
-
-export interface AddressWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  house?: Maybe<String>;
-  house_not?: Maybe<String>;
-  house_in?: Maybe<String[] | String>;
-  house_not_in?: Maybe<String[] | String>;
-  house_lt?: Maybe<String>;
-  house_lte?: Maybe<String>;
-  house_gt?: Maybe<String>;
-  house_gte?: Maybe<String>;
-  house_contains?: Maybe<String>;
-  house_not_contains?: Maybe<String>;
-  house_starts_with?: Maybe<String>;
-  house_not_starts_with?: Maybe<String>;
-  house_ends_with?: Maybe<String>;
-  house_not_ends_with?: Maybe<String>;
-  landmark?: Maybe<String>;
-  landmark_not?: Maybe<String>;
-  landmark_in?: Maybe<String[] | String>;
-  landmark_not_in?: Maybe<String[] | String>;
-  landmark_lt?: Maybe<String>;
-  landmark_lte?: Maybe<String>;
-  landmark_gt?: Maybe<String>;
-  landmark_gte?: Maybe<String>;
-  landmark_contains?: Maybe<String>;
-  landmark_not_contains?: Maybe<String>;
-  landmark_starts_with?: Maybe<String>;
-  landmark_not_starts_with?: Maybe<String>;
-  landmark_ends_with?: Maybe<String>;
-  landmark_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  author?: Maybe<UserWhereInput>;
-  baseAddress?: Maybe<BaseAddressWhereInput>;
-  AND?: Maybe<AddressWhereInput[] | AddressWhereInput>;
-  OR?: Maybe<AddressWhereInput[] | AddressWhereInput>;
-  NOT?: Maybe<AddressWhereInput[] | AddressWhereInput>;
-}
-
-export interface BaseAddressWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  officename?: Maybe<String>;
-  officename_not?: Maybe<String>;
-  officename_in?: Maybe<String[] | String>;
-  officename_not_in?: Maybe<String[] | String>;
-  officename_lt?: Maybe<String>;
-  officename_lte?: Maybe<String>;
-  officename_gt?: Maybe<String>;
-  officename_gte?: Maybe<String>;
-  officename_contains?: Maybe<String>;
-  officename_not_contains?: Maybe<String>;
-  officename_starts_with?: Maybe<String>;
-  officename_not_starts_with?: Maybe<String>;
-  officename_ends_with?: Maybe<String>;
-  officename_not_ends_with?: Maybe<String>;
-  pincode?: Maybe<String>;
-  pincode_not?: Maybe<String>;
-  pincode_in?: Maybe<String[] | String>;
-  pincode_not_in?: Maybe<String[] | String>;
-  pincode_lt?: Maybe<String>;
-  pincode_lte?: Maybe<String>;
-  pincode_gt?: Maybe<String>;
-  pincode_gte?: Maybe<String>;
-  pincode_contains?: Maybe<String>;
-  pincode_not_contains?: Maybe<String>;
-  pincode_starts_with?: Maybe<String>;
-  pincode_not_starts_with?: Maybe<String>;
-  pincode_ends_with?: Maybe<String>;
-  pincode_not_ends_with?: Maybe<String>;
-  officeType?: Maybe<String>;
-  officeType_not?: Maybe<String>;
-  officeType_in?: Maybe<String[] | String>;
-  officeType_not_in?: Maybe<String[] | String>;
-  officeType_lt?: Maybe<String>;
-  officeType_lte?: Maybe<String>;
-  officeType_gt?: Maybe<String>;
-  officeType_gte?: Maybe<String>;
-  officeType_contains?: Maybe<String>;
-  officeType_not_contains?: Maybe<String>;
-  officeType_starts_with?: Maybe<String>;
-  officeType_not_starts_with?: Maybe<String>;
-  officeType_ends_with?: Maybe<String>;
-  officeType_not_ends_with?: Maybe<String>;
-  Deliverystatus?: Maybe<String>;
-  Deliverystatus_not?: Maybe<String>;
-  Deliverystatus_in?: Maybe<String[] | String>;
-  Deliverystatus_not_in?: Maybe<String[] | String>;
-  Deliverystatus_lt?: Maybe<String>;
-  Deliverystatus_lte?: Maybe<String>;
-  Deliverystatus_gt?: Maybe<String>;
-  Deliverystatus_gte?: Maybe<String>;
-  Deliverystatus_contains?: Maybe<String>;
-  Deliverystatus_not_contains?: Maybe<String>;
-  Deliverystatus_starts_with?: Maybe<String>;
-  Deliverystatus_not_starts_with?: Maybe<String>;
-  Deliverystatus_ends_with?: Maybe<String>;
-  Deliverystatus_not_ends_with?: Maybe<String>;
-  divisionname?: Maybe<String>;
-  divisionname_not?: Maybe<String>;
-  divisionname_in?: Maybe<String[] | String>;
-  divisionname_not_in?: Maybe<String[] | String>;
-  divisionname_lt?: Maybe<String>;
-  divisionname_lte?: Maybe<String>;
-  divisionname_gt?: Maybe<String>;
-  divisionname_gte?: Maybe<String>;
-  divisionname_contains?: Maybe<String>;
-  divisionname_not_contains?: Maybe<String>;
-  divisionname_starts_with?: Maybe<String>;
-  divisionname_not_starts_with?: Maybe<String>;
-  divisionname_ends_with?: Maybe<String>;
-  divisionname_not_ends_with?: Maybe<String>;
-  regionname?: Maybe<String>;
-  regionname_not?: Maybe<String>;
-  regionname_in?: Maybe<String[] | String>;
-  regionname_not_in?: Maybe<String[] | String>;
-  regionname_lt?: Maybe<String>;
-  regionname_lte?: Maybe<String>;
-  regionname_gt?: Maybe<String>;
-  regionname_gte?: Maybe<String>;
-  regionname_contains?: Maybe<String>;
-  regionname_not_contains?: Maybe<String>;
-  regionname_starts_with?: Maybe<String>;
-  regionname_not_starts_with?: Maybe<String>;
-  regionname_ends_with?: Maybe<String>;
-  regionname_not_ends_with?: Maybe<String>;
-  circlename?: Maybe<String>;
-  circlename_not?: Maybe<String>;
-  circlename_in?: Maybe<String[] | String>;
-  circlename_not_in?: Maybe<String[] | String>;
-  circlename_lt?: Maybe<String>;
-  circlename_lte?: Maybe<String>;
-  circlename_gt?: Maybe<String>;
-  circlename_gte?: Maybe<String>;
-  circlename_contains?: Maybe<String>;
-  circlename_not_contains?: Maybe<String>;
-  circlename_starts_with?: Maybe<String>;
-  circlename_not_starts_with?: Maybe<String>;
-  circlename_ends_with?: Maybe<String>;
-  circlename_not_ends_with?: Maybe<String>;
-  taluk?: Maybe<String>;
-  taluk_not?: Maybe<String>;
-  taluk_in?: Maybe<String[] | String>;
-  taluk_not_in?: Maybe<String[] | String>;
-  taluk_lt?: Maybe<String>;
-  taluk_lte?: Maybe<String>;
-  taluk_gt?: Maybe<String>;
-  taluk_gte?: Maybe<String>;
-  taluk_contains?: Maybe<String>;
-  taluk_not_contains?: Maybe<String>;
-  taluk_starts_with?: Maybe<String>;
-  taluk_not_starts_with?: Maybe<String>;
-  taluk_ends_with?: Maybe<String>;
-  taluk_not_ends_with?: Maybe<String>;
-  districtname?: Maybe<String>;
-  districtname_not?: Maybe<String>;
-  districtname_in?: Maybe<String[] | String>;
-  districtname_not_in?: Maybe<String[] | String>;
-  districtname_lt?: Maybe<String>;
-  districtname_lte?: Maybe<String>;
-  districtname_gt?: Maybe<String>;
-  districtname_gte?: Maybe<String>;
-  districtname_contains?: Maybe<String>;
-  districtname_not_contains?: Maybe<String>;
-  districtname_starts_with?: Maybe<String>;
-  districtname_not_starts_with?: Maybe<String>;
-  districtname_ends_with?: Maybe<String>;
-  districtname_not_ends_with?: Maybe<String>;
-  statename?: Maybe<String>;
-  statename_not?: Maybe<String>;
-  statename_in?: Maybe<String[] | String>;
-  statename_not_in?: Maybe<String[] | String>;
-  statename_lt?: Maybe<String>;
-  statename_lte?: Maybe<String>;
-  statename_gt?: Maybe<String>;
-  statename_gte?: Maybe<String>;
-  statename_contains?: Maybe<String>;
-  statename_not_contains?: Maybe<String>;
-  statename_starts_with?: Maybe<String>;
-  statename_not_starts_with?: Maybe<String>;
-  statename_ends_with?: Maybe<String>;
-  statename_not_ends_with?: Maybe<String>;
-  telephone?: Maybe<String>;
-  telephone_not?: Maybe<String>;
-  telephone_in?: Maybe<String[] | String>;
-  telephone_not_in?: Maybe<String[] | String>;
-  telephone_lt?: Maybe<String>;
-  telephone_lte?: Maybe<String>;
-  telephone_gt?: Maybe<String>;
-  telephone_gte?: Maybe<String>;
-  telephone_contains?: Maybe<String>;
-  telephone_not_contains?: Maybe<String>;
-  telephone_starts_with?: Maybe<String>;
-  telephone_not_starts_with?: Maybe<String>;
-  telephone_ends_with?: Maybe<String>;
-  telephone_not_ends_with?: Maybe<String>;
-  relatedSuboffice?: Maybe<String>;
-  relatedSuboffice_not?: Maybe<String>;
-  relatedSuboffice_in?: Maybe<String[] | String>;
-  relatedSuboffice_not_in?: Maybe<String[] | String>;
-  relatedSuboffice_lt?: Maybe<String>;
-  relatedSuboffice_lte?: Maybe<String>;
-  relatedSuboffice_gt?: Maybe<String>;
-  relatedSuboffice_gte?: Maybe<String>;
-  relatedSuboffice_contains?: Maybe<String>;
-  relatedSuboffice_not_contains?: Maybe<String>;
-  relatedSuboffice_starts_with?: Maybe<String>;
-  relatedSuboffice_not_starts_with?: Maybe<String>;
-  relatedSuboffice_ends_with?: Maybe<String>;
-  relatedSuboffice_not_ends_with?: Maybe<String>;
-  relatedHeadoffice?: Maybe<String>;
-  relatedHeadoffice_not?: Maybe<String>;
-  relatedHeadoffice_in?: Maybe<String[] | String>;
-  relatedHeadoffice_not_in?: Maybe<String[] | String>;
-  relatedHeadoffice_lt?: Maybe<String>;
-  relatedHeadoffice_lte?: Maybe<String>;
-  relatedHeadoffice_gt?: Maybe<String>;
-  relatedHeadoffice_gte?: Maybe<String>;
-  relatedHeadoffice_contains?: Maybe<String>;
-  relatedHeadoffice_not_contains?: Maybe<String>;
-  relatedHeadoffice_starts_with?: Maybe<String>;
-  relatedHeadoffice_not_starts_with?: Maybe<String>;
-  relatedHeadoffice_ends_with?: Maybe<String>;
-  relatedHeadoffice_not_ends_with?: Maybe<String>;
-  longitude?: Maybe<String>;
-  longitude_not?: Maybe<String>;
-  longitude_in?: Maybe<String[] | String>;
-  longitude_not_in?: Maybe<String[] | String>;
-  longitude_lt?: Maybe<String>;
-  longitude_lte?: Maybe<String>;
-  longitude_gt?: Maybe<String>;
-  longitude_gte?: Maybe<String>;
-  longitude_contains?: Maybe<String>;
-  longitude_not_contains?: Maybe<String>;
-  longitude_starts_with?: Maybe<String>;
-  longitude_not_starts_with?: Maybe<String>;
-  longitude_ends_with?: Maybe<String>;
-  longitude_not_ends_with?: Maybe<String>;
-  latitude?: Maybe<String>;
-  latitude_not?: Maybe<String>;
-  latitude_in?: Maybe<String[] | String>;
-  latitude_not_in?: Maybe<String[] | String>;
-  latitude_lt?: Maybe<String>;
-  latitude_lte?: Maybe<String>;
-  latitude_gt?: Maybe<String>;
-  latitude_gte?: Maybe<String>;
-  latitude_contains?: Maybe<String>;
-  latitude_not_contains?: Maybe<String>;
-  latitude_starts_with?: Maybe<String>;
-  latitude_not_starts_with?: Maybe<String>;
-  latitude_ends_with?: Maybe<String>;
-  latitude_not_ends_with?: Maybe<String>;
-  AND?: Maybe<BaseAddressWhereInput[] | BaseAddressWhereInput>;
-  OR?: Maybe<BaseAddressWhereInput[] | BaseAddressWhereInput>;
-  NOT?: Maybe<BaseAddressWhereInput[] | BaseAddressWhereInput>;
-}
-
-export type BaseAddressWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type BoardWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type CommentWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type FileWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface FileWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  path?: Maybe<String>;
-  path_not?: Maybe<String>;
-  path_in?: Maybe<String[] | String>;
-  path_not_in?: Maybe<String[] | String>;
-  path_lt?: Maybe<String>;
-  path_lte?: Maybe<String>;
-  path_gt?: Maybe<String>;
-  path_gte?: Maybe<String>;
-  path_contains?: Maybe<String>;
-  path_not_contains?: Maybe<String>;
-  path_starts_with?: Maybe<String>;
-  path_not_starts_with?: Maybe<String>;
-  path_ends_with?: Maybe<String>;
-  path_not_ends_with?: Maybe<String>;
-  filename?: Maybe<String>;
-  filename_not?: Maybe<String>;
-  filename_in?: Maybe<String[] | String>;
-  filename_not_in?: Maybe<String[] | String>;
-  filename_lt?: Maybe<String>;
-  filename_lte?: Maybe<String>;
-  filename_gt?: Maybe<String>;
-  filename_gte?: Maybe<String>;
-  filename_contains?: Maybe<String>;
-  filename_not_contains?: Maybe<String>;
-  filename_starts_with?: Maybe<String>;
-  filename_not_starts_with?: Maybe<String>;
-  filename_ends_with?: Maybe<String>;
-  filename_not_ends_with?: Maybe<String>;
-  mimetype?: Maybe<String>;
-  mimetype_not?: Maybe<String>;
-  mimetype_in?: Maybe<String[] | String>;
-  mimetype_not_in?: Maybe<String[] | String>;
-  mimetype_lt?: Maybe<String>;
-  mimetype_lte?: Maybe<String>;
-  mimetype_gt?: Maybe<String>;
-  mimetype_gte?: Maybe<String>;
-  mimetype_contains?: Maybe<String>;
-  mimetype_not_contains?: Maybe<String>;
-  mimetype_starts_with?: Maybe<String>;
-  mimetype_not_starts_with?: Maybe<String>;
-  mimetype_ends_with?: Maybe<String>;
-  mimetype_not_ends_with?: Maybe<String>;
-  encoding?: Maybe<String>;
-  encoding_not?: Maybe<String>;
-  encoding_in?: Maybe<String[] | String>;
-  encoding_not_in?: Maybe<String[] | String>;
-  encoding_lt?: Maybe<String>;
-  encoding_lte?: Maybe<String>;
-  encoding_gt?: Maybe<String>;
-  encoding_gte?: Maybe<String>;
-  encoding_contains?: Maybe<String>;
-  encoding_not_contains?: Maybe<String>;
-  encoding_starts_with?: Maybe<String>;
-  encoding_not_starts_with?: Maybe<String>;
-  encoding_ends_with?: Maybe<String>;
-  encoding_not_ends_with?: Maybe<String>;
-  AND?: Maybe<FileWhereInput[] | FileWhereInput>;
-  OR?: Maybe<FileWhereInput[] | FileWhereInput>;
-  NOT?: Maybe<FileWhereInput[] | FileWhereInput>;
-}
-
-export type GroupWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface GroupWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<GroupWhereInput[] | GroupWhereInput>;
-  OR?: Maybe<GroupWhereInput[] | GroupWhereInput>;
-  NOT?: Maybe<GroupWhereInput[] | GroupWhereInput>;
-}
-
 export type OrganizationWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -2114,94 +717,7 @@ export type PostWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type RoleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface RoleWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  rolename?: Maybe<String>;
-  rolename_not?: Maybe<String>;
-  rolename_in?: Maybe<String[] | String>;
-  rolename_not_in?: Maybe<String[] | String>;
-  rolename_lt?: Maybe<String>;
-  rolename_lte?: Maybe<String>;
-  rolename_gt?: Maybe<String>;
-  rolename_gte?: Maybe<String>;
-  rolename_contains?: Maybe<String>;
-  rolename_not_contains?: Maybe<String>;
-  rolename_starts_with?: Maybe<String>;
-  rolename_not_starts_with?: Maybe<String>;
-  rolename_ends_with?: Maybe<String>;
-  rolename_not_ends_with?: Maybe<String>;
-  rolelevel?: Maybe<String>;
-  rolelevel_not?: Maybe<String>;
-  rolelevel_in?: Maybe<String[] | String>;
-  rolelevel_not_in?: Maybe<String[] | String>;
-  rolelevel_lt?: Maybe<String>;
-  rolelevel_lte?: Maybe<String>;
-  rolelevel_gt?: Maybe<String>;
-  rolelevel_gte?: Maybe<String>;
-  rolelevel_contains?: Maybe<String>;
-  rolelevel_not_contains?: Maybe<String>;
-  rolelevel_starts_with?: Maybe<String>;
-  rolelevel_not_starts_with?: Maybe<String>;
-  rolelevel_ends_with?: Maybe<String>;
-  rolelevel_not_ends_with?: Maybe<String>;
-  levelname?: Maybe<String>;
-  levelname_not?: Maybe<String>;
-  levelname_in?: Maybe<String[] | String>;
-  levelname_not_in?: Maybe<String[] | String>;
-  levelname_lt?: Maybe<String>;
-  levelname_lte?: Maybe<String>;
-  levelname_gt?: Maybe<String>;
-  levelname_gte?: Maybe<String>;
-  levelname_contains?: Maybe<String>;
-  levelname_not_contains?: Maybe<String>;
-  levelname_starts_with?: Maybe<String>;
-  levelname_not_starts_with?: Maybe<String>;
-  levelname_ends_with?: Maybe<String>;
-  levelname_not_ends_with?: Maybe<String>;
-  userid?: Maybe<UserWhereInput>;
-  AND?: Maybe<RoleWhereInput[] | RoleWhereInput>;
-  OR?: Maybe<RoleWhereInput[] | RoleWhereInput>;
-  NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
-}
-
-export type SpecializationWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type StdWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type SubOrgWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type SubjectWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type TopicWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type UnitWhereUniqueInput = AtLeastOne<{
+export type SuborgWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -2210,30 +726,70 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface AddressCreateInput {
+export interface CommentCreateInput {
   id?: Maybe<ID_Input>;
-  house?: Maybe<String>;
-  landmark?: Maybe<String>;
-  published: Boolean;
-  author: UserCreateOneInput;
-  baseAddress?: Maybe<BaseAddressCreateOneInput>;
+  text: String;
+  author: UserCreateOneWithoutCommentsInput;
+  post: PostCreateOneWithoutCommentsInput;
 }
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
+export interface UserCreateOneWithoutCommentsInput {
+  create?: Maybe<UserCreateWithoutCommentsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateInput {
+export interface UserCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
   firstname: String;
   lastname: String;
   email: String;
   password: String;
+  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
+  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  createdBy?: Maybe<String>;
+}
+
+export interface OrganizationCreateOneWithoutAuthorInput {
+  create?: Maybe<OrganizationCreateWithoutAuthorInput>;
+  connect?: Maybe<OrganizationWhereUniqueInput>;
+}
+
+export interface OrganizationCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  suborgs?: Maybe<SuborgCreateManyWithoutOrgInput>;
+}
+
+export interface SuborgCreateManyWithoutOrgInput {
+  create?: Maybe<SuborgCreateWithoutOrgInput[] | SuborgCreateWithoutOrgInput>;
+  connect?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+}
+
+export interface SuborgCreateWithoutOrgInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  author?: Maybe<UserCreateManyWithoutMysuborgInput>;
+}
+
+export interface UserCreateManyWithoutMysuborgInput {
+  create?: Maybe<
+    UserCreateWithoutMysuborgInput[] | UserCreateWithoutMysuborgInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutMysuborgInput {
+  id?: Maybe<ID_Input>;
+  firstname: String;
+  lastname: String;
+  email: String;
+  password: String;
+  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  org: OrganizationCreateOneWithoutAuthorInput;
-  subOrgs: SubOrgCreateOneWithoutAuthorInput;
   createdBy?: Maybe<String>;
 }
 
@@ -2261,112 +817,6 @@ export interface CommentCreateWithoutPostInput {
   id?: Maybe<ID_Input>;
   text: String;
   author: UserCreateOneWithoutCommentsInput;
-}
-
-export interface UserCreateOneWithoutCommentsInput {
-  create?: Maybe<UserCreateWithoutCommentsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutCommentsInput {
-  id?: Maybe<ID_Input>;
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
-  org: OrganizationCreateOneWithoutAuthorInput;
-  subOrgs: SubOrgCreateOneWithoutAuthorInput;
-  createdBy?: Maybe<String>;
-}
-
-export interface OrganizationCreateOneWithoutAuthorInput {
-  create?: Maybe<OrganizationCreateWithoutAuthorInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
-}
-
-export interface SubOrgCreateManyWithoutOrgInput {
-  create?: Maybe<SubOrgCreateWithoutOrgInput[] | SubOrgCreateWithoutOrgInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput[] | SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface BoardCreateManyWithoutSubOrgInput {
-  create?: Maybe<
-    BoardCreateWithoutSubOrgInput[] | BoardCreateWithoutSubOrgInput
-  >;
-  connect?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-}
-
-export interface BoardCreateWithoutSubOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
-}
-
-export interface OrganizationCreateOneWithoutBoardInput {
-  create?: Maybe<OrganizationCreateWithoutBoardInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
-}
-
-export interface UserCreateManyWithoutOrgInput {
-  create?: Maybe<UserCreateWithoutOrgInput[] | UserCreateWithoutOrgInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  subOrgs: SubOrgCreateOneWithoutAuthorInput;
-  createdBy?: Maybe<String>;
 }
 
 export interface CommentCreateManyWithoutAuthorInput {
@@ -2406,1005 +856,159 @@ export interface UserCreateWithoutPostsInput {
   lastname: String;
   email: String;
   password: String;
+  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  org: OrganizationCreateOneWithoutAuthorInput;
-  subOrgs: SubOrgCreateOneWithoutAuthorInput;
   createdBy?: Maybe<String>;
 }
 
-export interface SubOrgCreateOneWithoutAuthorInput {
-  create?: Maybe<SubOrgCreateWithoutAuthorInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
+export interface SuborgCreateOneWithoutAuthorInput {
+  create?: Maybe<SuborgCreateWithoutAuthorInput>;
+  connect?: Maybe<SuborgWhereUniqueInput>;
 }
 
-export interface SubOrgCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface OrganizationCreateOneWithoutSubOrgsInput {
-  create?: Maybe<OrganizationCreateWithoutSubOrgsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutSubOrgsInput {
+export interface SuborgCreateWithoutAuthorInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
+  org: OrganizationCreateOneWithoutSuborgsInput;
 }
 
-export interface BoardCreateManyWithoutOrgInput {
-  create?: Maybe<BoardCreateWithoutOrgInput[] | BoardCreateWithoutOrgInput>;
-  connect?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
+export interface OrganizationCreateOneWithoutSuborgsInput {
+  create?: Maybe<OrganizationCreateWithoutSuborgsInput>;
+  connect?: Maybe<OrganizationWhereUniqueInput>;
 }
 
-export interface BoardCreateWithoutOrgInput {
+export interface OrganizationCreateWithoutSuborgsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  published: Boolean;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
+  description?: Maybe<String>;
+  author?: Maybe<UserCreateManyWithoutMyorgInput>;
 }
 
-export interface SubOrgCreateOneWithoutBoardInput {
-  create?: Maybe<SubOrgCreateWithoutBoardInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface UserCreateManyWithoutSubOrgsInput {
-  create?: Maybe<
-    UserCreateWithoutSubOrgsInput[] | UserCreateWithoutSubOrgsInput
-  >;
+export interface UserCreateManyWithoutMyorgInput {
+  create?: Maybe<UserCreateWithoutMyorgInput[] | UserCreateWithoutMyorgInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutSubOrgsInput {
+export interface UserCreateWithoutMyorgInput {
   id?: Maybe<ID_Input>;
   firstname: String;
   lastname: String;
   email: String;
   password: String;
+  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  org: OrganizationCreateOneWithoutAuthorInput;
   createdBy?: Maybe<String>;
 }
 
-export interface StdCreateManyWithoutSubOrgInput {
-  create?: Maybe<StdCreateWithoutSubOrgInput[] | StdCreateWithoutSubOrgInput>;
-  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutSubOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface OrganizationCreateOneWithoutStdsInput {
-  create?: Maybe<OrganizationCreateWithoutStdsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutStdsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
-}
-
-export interface SpecializationCreateManyWithoutOrgInput {
-  create?: Maybe<
-    SpecializationCreateWithoutOrgInput[] | SpecializationCreateWithoutOrgInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-}
-
-export interface SpecializationCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
-}
-
-export interface SubOrgCreateOneWithoutSpecializationsInput {
-  create?: Maybe<SubOrgCreateWithoutSpecializationsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutSpecializationsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface SubjectCreateManyWithoutSubOrgInput {
-  create?: Maybe<
-    SubjectCreateWithoutSubOrgInput[] | SubjectCreateWithoutSubOrgInput
-  >;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutSubOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface OrganizationCreateOneWithoutSubjectsInput {
-  create?: Maybe<OrganizationCreateWithoutSubjectsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutSubjectsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
-}
-
-export interface StdCreateManyWithoutOrgInput {
-  create?: Maybe<StdCreateWithoutOrgInput[] | StdCreateWithoutOrgInput>;
-  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface SubOrgCreateOneWithoutStdsInput {
-  create?: Maybe<SubOrgCreateWithoutStdsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutStdsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface SpecializationCreateManyWithoutSubOrgInput {
-  create?: Maybe<
-    | SpecializationCreateWithoutSubOrgInput[]
-    | SpecializationCreateWithoutSubOrgInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-}
-
-export interface SpecializationCreateWithoutSubOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
-}
-
-export interface OrganizationCreateOneWithoutSpecializationsInput {
-  create?: Maybe<OrganizationCreateWithoutSpecializationsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutSpecializationsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
-}
-
-export interface SubjectCreateManyWithoutOrgInput {
-  create?: Maybe<SubjectCreateWithoutOrgInput[] | SubjectCreateWithoutOrgInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface SubOrgCreateOneWithoutSubjectsInput {
-  create?: Maybe<SubOrgCreateWithoutSubjectsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutSubjectsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface UnitCreateManyWithoutSubOrgInput {
-  create?: Maybe<UnitCreateWithoutSubOrgInput[] | UnitCreateWithoutSubOrgInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutSubOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface OrganizationCreateOneWithoutUnitsInput {
-  create?: Maybe<OrganizationCreateWithoutUnitsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutUnitsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
-}
-
-export interface TopicCreateManyWithoutOrgInput {
-  create?: Maybe<TopicCreateWithoutOrgInput[] | TopicCreateWithoutOrgInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface SubOrgCreateOneWithoutTopicsInput {
-  create?: Maybe<SubOrgCreateWithoutTopicsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutTopicsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-}
-
-export interface BoardCreateOneWithoutTopicsInput {
-  create?: Maybe<BoardCreateWithoutTopicsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardCreateWithoutTopicsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-}
-
-export interface StdCreateManyWithoutBoardInput {
-  create?: Maybe<StdCreateWithoutBoardInput[] | StdCreateWithoutBoardInput>;
-  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface SpecializationCreateManyWithoutStdInput {
-  create?: Maybe<
-    SpecializationCreateWithoutStdInput[] | SpecializationCreateWithoutStdInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-}
-
-export interface SpecializationCreateWithoutStdInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
-}
-
-export interface BoardCreateOneWithoutSpecializationsInput {
-  create?: Maybe<BoardCreateWithoutSpecializationsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardCreateWithoutSpecializationsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
-}
-
-export interface SubjectCreateManyWithoutBoardInput {
-  create?: Maybe<
-    SubjectCreateWithoutBoardInput[] | SubjectCreateWithoutBoardInput
-  >;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface StdCreateOneWithoutSubjectsInput {
-  create?: Maybe<StdCreateWithoutSubjectsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutSubjectsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface BoardCreateOneWithoutStdsInput {
-  create?: Maybe<BoardCreateWithoutStdsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardCreateWithoutStdsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
-}
-
-export interface SpecializationCreateManyWithoutBoardInput {
-  create?: Maybe<
-    | SpecializationCreateWithoutBoardInput[]
-    | SpecializationCreateWithoutBoardInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-}
-
-export interface SpecializationCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
-}
-
-export interface StdCreateOneWithoutSpecializationsInput {
-  create?: Maybe<StdCreateWithoutSpecializationsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutSpecializationsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface SubjectCreateManyWithoutStdInput {
-  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutStdInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface BoardCreateOneWithoutSubjectsInput {
-  create?: Maybe<BoardCreateWithoutSubjectsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardCreateWithoutSubjectsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
-}
-
-export interface UnitCreateManyWithoutBoardInput {
-  create?: Maybe<UnitCreateWithoutBoardInput[] | UnitCreateWithoutBoardInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface SubOrgCreateOneWithoutUnitsInput {
-  create?: Maybe<SubOrgCreateWithoutUnitsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgCreateWithoutUnitsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface TopicCreateManyWithoutSubOrgInput {
-  create?: Maybe<
-    TopicCreateWithoutSubOrgInput[] | TopicCreateWithoutSubOrgInput
-  >;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutSubOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface OrganizationCreateOneWithoutTopicsInput {
-  create?: Maybe<OrganizationCreateWithoutTopicsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutTopicsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-}
-
-export interface UnitCreateManyWithoutOrgInput {
-  create?: Maybe<UnitCreateWithoutOrgInput[] | UnitCreateWithoutOrgInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutOrgInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface BoardCreateOneWithoutUnitsInput {
-  create?: Maybe<BoardCreateWithoutUnitsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardCreateWithoutUnitsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
-}
-
-export interface TopicCreateManyWithoutBoardInput {
-  create?: Maybe<TopicCreateWithoutBoardInput[] | TopicCreateWithoutBoardInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutBoardInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface SubjectCreateOneWithoutTopicsInput {
-  create?: Maybe<SubjectCreateWithoutTopicsInput>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutTopicsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-}
-
-export interface SpecializationCreateOneWithoutSubjectsInput {
-  create?: Maybe<SpecializationCreateWithoutSubjectsInput>;
-  connect?: Maybe<SpecializationWhereUniqueInput>;
-}
-
-export interface SpecializationCreateWithoutSubjectsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
-}
-
-export interface UnitCreateManyWithoutSpecializationInput {
-  create?: Maybe<
-    | UnitCreateWithoutSpecializationInput[]
-    | UnitCreateWithoutSpecializationInput
-  >;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutSpecializationInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface StdCreateOneWithoutUnitsInput {
-  create?: Maybe<StdCreateWithoutUnitsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutUnitsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface TopicCreateManyWithoutStdInput {
-  create?: Maybe<TopicCreateWithoutStdInput[] | TopicCreateWithoutStdInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutStdInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-}
-
-export interface SpecializationCreateOneWithoutTopicInput {
-  create?: Maybe<SpecializationCreateWithoutTopicInput>;
-  connect?: Maybe<SpecializationWhereUniqueInput>;
-}
-
-export interface SpecializationCreateWithoutTopicInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-}
-
-export interface SubjectCreateManyWithoutSpecializationInput {
-  create?: Maybe<
-    | SubjectCreateWithoutSpecializationInput[]
-    | SubjectCreateWithoutSpecializationInput
-  >;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutSpecializationInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface UnitCreateManyWithoutSubjectInput {
-  create?: Maybe<
-    UnitCreateWithoutSubjectInput[] | UnitCreateWithoutSubjectInput
-  >;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutSubjectInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface SpecializationCreateOneWithoutUnitInput {
-  create?: Maybe<SpecializationCreateWithoutUnitInput>;
-  connect?: Maybe<SpecializationWhereUniqueInput>;
-}
-
-export interface SpecializationCreateWithoutUnitInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
-}
-
-export interface TopicCreateManyWithoutSpecializationInput {
-  create?: Maybe<
-    | TopicCreateWithoutSpecializationInput[]
-    | TopicCreateWithoutSpecializationInput
-  >;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutSpecializationInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface UnitCreateOneWithoutTopicsInput {
-  create?: Maybe<UnitCreateWithoutTopicsInput>;
-  connect?: Maybe<UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutTopicsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-}
-
-export interface SubjectCreateOneWithoutUnitsInput {
-  create?: Maybe<SubjectCreateWithoutUnitsInput>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutUnitsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface TopicCreateManyWithoutSubjectInput {
-  create?: Maybe<
-    TopicCreateWithoutSubjectInput[] | TopicCreateWithoutSubjectInput
-  >;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutSubjectInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface StdCreateOneWithoutTopicsInput {
-  create?: Maybe<StdCreateWithoutTopicsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdCreateWithoutTopicsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-}
-
-export interface UnitCreateManyWithoutStdInput {
-  create?: Maybe<UnitCreateWithoutStdInput[] | UnitCreateWithoutStdInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-}
-
-export interface UnitCreateWithoutStdInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface TopicCreateManyWithoutUnitInput {
-  create?: Maybe<TopicCreateWithoutUnitInput[] | TopicCreateWithoutUnitInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutUnitInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface BaseAddressCreateOneInput {
-  create?: Maybe<BaseAddressCreateInput>;
-  connect?: Maybe<BaseAddressWhereUniqueInput>;
-}
-
-export interface BaseAddressCreateInput {
-  id?: Maybe<ID_Input>;
-  officename?: Maybe<String>;
-  pincode?: Maybe<String>;
-  officeType?: Maybe<String>;
-  Deliverystatus?: Maybe<String>;
-  divisionname?: Maybe<String>;
-  regionname?: Maybe<String>;
-  circlename?: Maybe<String>;
-  taluk?: Maybe<String>;
-  districtname?: Maybe<String>;
-  statename?: Maybe<String>;
-  telephone?: Maybe<String>;
-  relatedSuboffice?: Maybe<String>;
-  relatedHeadoffice?: Maybe<String>;
-  longitude?: Maybe<String>;
-  latitude?: Maybe<String>;
-}
-
-export interface AddressUpdateInput {
-  house?: Maybe<String>;
-  landmark?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  author?: Maybe<UserUpdateOneRequiredInput>;
-  baseAddress?: Maybe<BaseAddressUpdateOneInput>;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
+export interface CommentUpdateInput {
+  text?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
+  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutCommentsInput {
+  create?: Maybe<UserCreateWithoutCommentsInput>;
+  update?: Maybe<UserUpdateWithoutCommentsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCommentsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateDataInput {
+export interface UserUpdateWithoutCommentsDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  createdBy?: Maybe<String>;
+}
+
+export interface OrganizationUpdateOneWithoutAuthorInput {
+  create?: Maybe<OrganizationCreateWithoutAuthorInput>;
+  update?: Maybe<OrganizationUpdateWithoutAuthorDataInput>;
+  upsert?: Maybe<OrganizationUpsertWithoutAuthorInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<OrganizationWhereUniqueInput>;
+}
+
+export interface OrganizationUpdateWithoutAuthorDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  suborgs?: Maybe<SuborgUpdateManyWithoutOrgInput>;
+}
+
+export interface SuborgUpdateManyWithoutOrgInput {
+  create?: Maybe<SuborgCreateWithoutOrgInput[] | SuborgCreateWithoutOrgInput>;
+  delete?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  connect?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  set?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  disconnect?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  update?: Maybe<
+    | SuborgUpdateWithWhereUniqueWithoutOrgInput[]
+    | SuborgUpdateWithWhereUniqueWithoutOrgInput
+  >;
+  upsert?: Maybe<
+    | SuborgUpsertWithWhereUniqueWithoutOrgInput[]
+    | SuborgUpsertWithWhereUniqueWithoutOrgInput
+  >;
+  deleteMany?: Maybe<SuborgScalarWhereInput[] | SuborgScalarWhereInput>;
+  updateMany?: Maybe<
+    | SuborgUpdateManyWithWhereNestedInput[]
+    | SuborgUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SuborgUpdateWithWhereUniqueWithoutOrgInput {
+  where: SuborgWhereUniqueInput;
+  data: SuborgUpdateWithoutOrgDataInput;
+}
+
+export interface SuborgUpdateWithoutOrgDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  author?: Maybe<UserUpdateManyWithoutMysuborgInput>;
+}
+
+export interface UserUpdateManyWithoutMysuborgInput {
+  create?: Maybe<
+    UserCreateWithoutMysuborgInput[] | UserCreateWithoutMysuborgInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutMysuborgInput[]
+    | UserUpdateWithWhereUniqueWithoutMysuborgInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutMysuborgInput[]
+    | UserUpsertWithWhereUniqueWithoutMysuborgInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutMysuborgInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutMysuborgDataInput;
+}
+
+export interface UserUpdateWithoutMysuborgDataInput {
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutAuthorInput>;
-  subOrgs?: Maybe<SubOrgUpdateOneRequiredWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
@@ -3473,171 +1077,152 @@ export interface CommentUpdateWithoutPostDataInput {
   author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutCommentsInput {
-  create?: Maybe<UserCreateWithoutCommentsInput>;
-  update?: Maybe<UserUpdateWithoutCommentsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCommentsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutPostDataInput;
+  create: CommentCreateWithoutPostInput;
 }
 
-export interface UserUpdateWithoutCommentsDataInput {
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutAuthorInput>;
-  subOrgs?: Maybe<SubOrgUpdateOneRequiredWithoutAuthorInput>;
-  createdBy?: Maybe<String>;
+export interface CommentScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
 }
 
-export interface OrganizationUpdateOneRequiredWithoutAuthorInput {
-  create?: Maybe<OrganizationCreateWithoutAuthorInput>;
-  update?: Maybe<OrganizationUpdateWithoutAuthorDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutAuthorInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
+export interface CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput;
+  data: CommentUpdateManyDataInput;
 }
 
-export interface OrganizationUpdateWithoutAuthorDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
+export interface CommentUpdateManyDataInput {
+  text?: Maybe<String>;
 }
 
-export interface SubOrgUpdateManyWithoutOrgInput {
-  create?: Maybe<SubOrgCreateWithoutOrgInput[] | SubOrgCreateWithoutOrgInput>;
-  delete?: Maybe<SubOrgWhereUniqueInput[] | SubOrgWhereUniqueInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput[] | SubOrgWhereUniqueInput>;
-  set?: Maybe<SubOrgWhereUniqueInput[] | SubOrgWhereUniqueInput>;
-  disconnect?: Maybe<SubOrgWhereUniqueInput[] | SubOrgWhereUniqueInput>;
-  update?: Maybe<
-    | SubOrgUpdateWithWhereUniqueWithoutOrgInput[]
-    | SubOrgUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | SubOrgUpsertWithWhereUniqueWithoutOrgInput[]
-    | SubOrgUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<SubOrgScalarWhereInput[] | SubOrgScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubOrgUpdateManyWithWhereNestedInput[]
-    | SubOrgUpdateManyWithWhereNestedInput
-  >;
+export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutAuthorDataInput;
+  create: PostCreateWithoutAuthorInput;
 }
 
-export interface SubOrgUpdateWithWhereUniqueWithoutOrgInput {
-  where: SubOrgWhereUniqueInput;
-  data: SubOrgUpdateWithoutOrgDataInput;
-}
-
-export interface SubOrgUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface BoardUpdateManyWithoutSubOrgInput {
-  create?: Maybe<
-    BoardCreateWithoutSubOrgInput[] | BoardCreateWithoutSubOrgInput
-  >;
-  delete?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  connect?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  set?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  disconnect?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  update?: Maybe<
-    | BoardUpdateWithWhereUniqueWithoutSubOrgInput[]
-    | BoardUpdateWithWhereUniqueWithoutSubOrgInput
-  >;
-  upsert?: Maybe<
-    | BoardUpsertWithWhereUniqueWithoutSubOrgInput[]
-    | BoardUpsertWithWhereUniqueWithoutSubOrgInput
-  >;
-  deleteMany?: Maybe<BoardScalarWhereInput[] | BoardScalarWhereInput>;
-  updateMany?: Maybe<
-    BoardUpdateManyWithWhereNestedInput[] | BoardUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface BoardUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: BoardWhereUniqueInput;
-  data: BoardUpdateWithoutSubOrgDataInput;
-}
-
-export interface BoardUpdateWithoutSubOrgDataInput {
-  name?: Maybe<String>;
+export interface PostScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  body?: Maybe<String>;
+  body_not?: Maybe<String>;
+  body_in?: Maybe<String[] | String>;
+  body_not_in?: Maybe<String[] | String>;
+  body_lt?: Maybe<String>;
+  body_lte?: Maybe<String>;
+  body_gt?: Maybe<String>;
+  body_gte?: Maybe<String>;
+  body_contains?: Maybe<String>;
+  body_not_contains?: Maybe<String>;
+  body_starts_with?: Maybe<String>;
+  body_not_starts_with?: Maybe<String>;
+  body_ends_with?: Maybe<String>;
+  body_not_ends_with?: Maybe<String>;
   published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
+  published_not?: Maybe<Boolean>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
 }
 
-export interface OrganizationUpdateOneRequiredWithoutBoardInput {
-  create?: Maybe<OrganizationCreateWithoutBoardInput>;
-  update?: Maybe<OrganizationUpdateWithoutBoardDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutBoardInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
 }
 
-export interface OrganizationUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
-}
-
-export interface UserUpdateManyWithoutOrgInput {
-  create?: Maybe<UserCreateWithoutOrgInput[] | UserCreateWithoutOrgInput>;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutOrgInput[]
-    | UserUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutOrgInput[]
-    | UserUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutOrgInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutOrgDataInput;
-}
-
-export interface UserUpdateWithoutOrgDataInput {
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  subOrgs?: Maybe<SubOrgUpdateOneRequiredWithoutAuthorInput>;
-  createdBy?: Maybe<String>;
+export interface PostUpdateManyDataInput {
+  title?: Maybe<String>;
+  body?: Maybe<String>;
+  published?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateManyWithoutAuthorInput {
@@ -3699,118 +1284,53 @@ export interface UserUpdateWithoutPostsDataInput {
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutAuthorInput>;
-  subOrgs?: Maybe<SubOrgUpdateOneRequiredWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
-export interface SubOrgUpdateOneRequiredWithoutAuthorInput {
-  create?: Maybe<SubOrgCreateWithoutAuthorInput>;
-  update?: Maybe<SubOrgUpdateWithoutAuthorDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutAuthorInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
+export interface SuborgUpdateOneWithoutAuthorInput {
+  create?: Maybe<SuborgCreateWithoutAuthorInput>;
+  update?: Maybe<SuborgUpdateWithoutAuthorDataInput>;
+  upsert?: Maybe<SuborgUpsertWithoutAuthorInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<SuborgWhereUniqueInput>;
 }
 
-export interface SubOrgUpdateWithoutAuthorDataInput {
+export interface SuborgUpdateWithoutAuthorDataInput {
   name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
+  description?: Maybe<String>;
+  org?: Maybe<OrganizationUpdateOneRequiredWithoutSuborgsInput>;
 }
 
-export interface OrganizationUpdateOneRequiredWithoutSubOrgsInput {
-  create?: Maybe<OrganizationCreateWithoutSubOrgsInput>;
-  update?: Maybe<OrganizationUpdateWithoutSubOrgsDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutSubOrgsInput>;
+export interface OrganizationUpdateOneRequiredWithoutSuborgsInput {
+  create?: Maybe<OrganizationCreateWithoutSuborgsInput>;
+  update?: Maybe<OrganizationUpdateWithoutSuborgsDataInput>;
+  upsert?: Maybe<OrganizationUpsertWithoutSuborgsInput>;
   connect?: Maybe<OrganizationWhereUniqueInput>;
 }
 
-export interface OrganizationUpdateWithoutSubOrgsDataInput {
+export interface OrganizationUpdateWithoutSuborgsDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
+  author?: Maybe<UserUpdateManyWithoutMyorgInput>;
 }
 
-export interface BoardUpdateManyWithoutOrgInput {
-  create?: Maybe<BoardCreateWithoutOrgInput[] | BoardCreateWithoutOrgInput>;
-  delete?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  connect?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  set?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  disconnect?: Maybe<BoardWhereUniqueInput[] | BoardWhereUniqueInput>;
-  update?: Maybe<
-    | BoardUpdateWithWhereUniqueWithoutOrgInput[]
-    | BoardUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | BoardUpsertWithWhereUniqueWithoutOrgInput[]
-    | BoardUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<BoardScalarWhereInput[] | BoardScalarWhereInput>;
-  updateMany?: Maybe<
-    BoardUpdateManyWithWhereNestedInput[] | BoardUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface BoardUpdateWithWhereUniqueWithoutOrgInput {
-  where: BoardWhereUniqueInput;
-  data: BoardUpdateWithoutOrgDataInput;
-}
-
-export interface BoardUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
-}
-
-export interface SubOrgUpdateOneRequiredWithoutBoardInput {
-  create?: Maybe<SubOrgCreateWithoutBoardInput>;
-  update?: Maybe<SubOrgUpdateWithoutBoardDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutBoardInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface UserUpdateManyWithoutSubOrgsInput {
-  create?: Maybe<
-    UserCreateWithoutSubOrgsInput[] | UserCreateWithoutSubOrgsInput
-  >;
+export interface UserUpdateManyWithoutMyorgInput {
+  create?: Maybe<UserCreateWithoutMyorgInput[] | UserCreateWithoutMyorgInput>;
   delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutSubOrgsInput[]
-    | UserUpdateWithWhereUniqueWithoutSubOrgsInput
+    | UserUpdateWithWhereUniqueWithoutMyorgInput[]
+    | UserUpdateWithWhereUniqueWithoutMyorgInput
   >;
   upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutSubOrgsInput[]
-    | UserUpsertWithWhereUniqueWithoutSubOrgsInput
+    | UserUpsertWithWhereUniqueWithoutMyorgInput[]
+    | UserUpsertWithWhereUniqueWithoutMyorgInput
   >;
   deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   updateMany?: Maybe<
@@ -3818,26 +1338,26 @@ export interface UserUpdateManyWithoutSubOrgsInput {
   >;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutSubOrgsInput {
+export interface UserUpdateWithWhereUniqueWithoutMyorgInput {
   where: UserWhereUniqueInput;
-  data: UserUpdateWithoutSubOrgsDataInput;
+  data: UserUpdateWithoutMyorgDataInput;
 }
 
-export interface UserUpdateWithoutSubOrgsDataInput {
+export interface UserUpdateWithoutMyorgDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutSubOrgsInput {
+export interface UserUpsertWithWhereUniqueWithoutMyorgInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutSubOrgsDataInput;
-  create: UserCreateWithoutSubOrgsInput;
+  update: UserUpdateWithoutMyorgDataInput;
+  create: UserCreateWithoutMyorgInput;
 }
 
 export interface UserScalarWhereInput {
@@ -3959,2059 +1479,14 @@ export interface UserUpdateManyDataInput {
   createdBy?: Maybe<String>;
 }
 
-export interface StdUpdateManyWithoutSubOrgInput {
-  create?: Maybe<StdCreateWithoutSubOrgInput[] | StdCreateWithoutSubOrgInput>;
-  delete?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  set?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  disconnect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  update?: Maybe<
-    | StdUpdateWithWhereUniqueWithoutSubOrgInput[]
-    | StdUpdateWithWhereUniqueWithoutSubOrgInput
-  >;
-  upsert?: Maybe<
-    | StdUpsertWithWhereUniqueWithoutSubOrgInput[]
-    | StdUpsertWithWhereUniqueWithoutSubOrgInput
-  >;
-  deleteMany?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
-  updateMany?: Maybe<
-    StdUpdateManyWithWhereNestedInput[] | StdUpdateManyWithWhereNestedInput
-  >;
+export interface OrganizationUpsertWithoutSuborgsInput {
+  update: OrganizationUpdateWithoutSuborgsDataInput;
+  create: OrganizationCreateWithoutSuborgsInput;
 }
 
-export interface StdUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: StdWhereUniqueInput;
-  data: StdUpdateWithoutSubOrgDataInput;
-}
-
-export interface StdUpdateWithoutSubOrgDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface OrganizationUpdateOneRequiredWithoutStdsInput {
-  create?: Maybe<OrganizationCreateWithoutStdsInput>;
-  update?: Maybe<OrganizationUpdateWithoutStdsDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutStdsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationUpdateWithoutStdsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
-}
-
-export interface SpecializationUpdateManyWithoutOrgInput {
-  create?: Maybe<
-    SpecializationCreateWithoutOrgInput[] | SpecializationCreateWithoutOrgInput
-  >;
-  delete?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  set?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | SpecializationUpdateWithWhereUniqueWithoutOrgInput[]
-    | SpecializationUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | SpecializationUpsertWithWhereUniqueWithoutOrgInput[]
-    | SpecializationUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<
-    SpecializationScalarWhereInput[] | SpecializationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | SpecializationUpdateManyWithWhereNestedInput[]
-    | SpecializationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SpecializationUpdateWithWhereUniqueWithoutOrgInput {
-  where: SpecializationWhereUniqueInput;
-  data: SpecializationUpdateWithoutOrgDataInput;
-}
-
-export interface SpecializationUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
-}
-
-export interface SubOrgUpdateOneRequiredWithoutSpecializationsInput {
-  create?: Maybe<SubOrgCreateWithoutSpecializationsInput>;
-  update?: Maybe<SubOrgUpdateWithoutSpecializationsDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutSpecializationsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgUpdateWithoutSpecializationsDataInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface SubjectUpdateManyWithoutSubOrgInput {
-  create?: Maybe<
-    SubjectCreateWithoutSubOrgInput[] | SubjectCreateWithoutSubOrgInput
-  >;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutSubOrgInput[]
-    | SubjectUpdateWithWhereUniqueWithoutSubOrgInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutSubOrgInput[]
-    | SubjectUpsertWithWhereUniqueWithoutSubOrgInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutSubOrgDataInput;
-}
-
-export interface SubjectUpdateWithoutSubOrgDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface OrganizationUpdateOneRequiredWithoutSubjectsInput {
-  create?: Maybe<OrganizationCreateWithoutSubjectsInput>;
-  update?: Maybe<OrganizationUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutSubjectsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationUpdateWithoutSubjectsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
-}
-
-export interface StdUpdateManyWithoutOrgInput {
-  create?: Maybe<StdCreateWithoutOrgInput[] | StdCreateWithoutOrgInput>;
-  delete?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  set?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  disconnect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  update?: Maybe<
-    | StdUpdateWithWhereUniqueWithoutOrgInput[]
-    | StdUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | StdUpsertWithWhereUniqueWithoutOrgInput[]
-    | StdUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
-  updateMany?: Maybe<
-    StdUpdateManyWithWhereNestedInput[] | StdUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface StdUpdateWithWhereUniqueWithoutOrgInput {
-  where: StdWhereUniqueInput;
-  data: StdUpdateWithoutOrgDataInput;
-}
-
-export interface StdUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface SubOrgUpdateOneRequiredWithoutStdsInput {
-  create?: Maybe<SubOrgCreateWithoutStdsInput>;
-  update?: Maybe<SubOrgUpdateWithoutStdsDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutStdsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgUpdateWithoutStdsDataInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface SpecializationUpdateManyWithoutSubOrgInput {
-  create?: Maybe<
-    | SpecializationCreateWithoutSubOrgInput[]
-    | SpecializationCreateWithoutSubOrgInput
-  >;
-  delete?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  set?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | SpecializationUpdateWithWhereUniqueWithoutSubOrgInput[]
-    | SpecializationUpdateWithWhereUniqueWithoutSubOrgInput
-  >;
-  upsert?: Maybe<
-    | SpecializationUpsertWithWhereUniqueWithoutSubOrgInput[]
-    | SpecializationUpsertWithWhereUniqueWithoutSubOrgInput
-  >;
-  deleteMany?: Maybe<
-    SpecializationScalarWhereInput[] | SpecializationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | SpecializationUpdateManyWithWhereNestedInput[]
-    | SpecializationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SpecializationUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: SpecializationWhereUniqueInput;
-  data: SpecializationUpdateWithoutSubOrgDataInput;
-}
-
-export interface SpecializationUpdateWithoutSubOrgDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
-}
-
-export interface OrganizationUpdateOneRequiredWithoutSpecializationsInput {
-  create?: Maybe<OrganizationCreateWithoutSpecializationsInput>;
-  update?: Maybe<OrganizationUpdateWithoutSpecializationsDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutSpecializationsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationUpdateWithoutSpecializationsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
-}
-
-export interface SubjectUpdateManyWithoutOrgInput {
-  create?: Maybe<SubjectCreateWithoutOrgInput[] | SubjectCreateWithoutOrgInput>;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutOrgInput[]
-    | SubjectUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutOrgInput[]
-    | SubjectUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutOrgInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutOrgDataInput;
-}
-
-export interface SubjectUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface SubOrgUpdateOneRequiredWithoutSubjectsInput {
-  create?: Maybe<SubOrgCreateWithoutSubjectsInput>;
-  update?: Maybe<SubOrgUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutSubjectsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgUpdateWithoutSubjectsDataInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface UnitUpdateManyWithoutSubOrgInput {
-  create?: Maybe<UnitCreateWithoutSubOrgInput[] | UnitCreateWithoutSubOrgInput>;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutSubOrgInput[]
-    | UnitUpdateWithWhereUniqueWithoutSubOrgInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutSubOrgInput[]
-    | UnitUpsertWithWhereUniqueWithoutSubOrgInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UnitUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutSubOrgDataInput;
-}
-
-export interface UnitUpdateWithoutSubOrgDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface OrganizationUpdateOneRequiredWithoutUnitsInput {
-  create?: Maybe<OrganizationCreateWithoutUnitsInput>;
-  update?: Maybe<OrganizationUpdateWithoutUnitsDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutUnitsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationUpdateWithoutUnitsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
-}
-
-export interface TopicUpdateManyWithoutOrgInput {
-  create?: Maybe<TopicCreateWithoutOrgInput[] | TopicCreateWithoutOrgInput>;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutOrgInput[]
-    | TopicUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutOrgInput[]
-    | TopicUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutOrgInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutOrgDataInput;
-}
-
-export interface TopicUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface SubOrgUpdateOneRequiredWithoutTopicsInput {
-  create?: Maybe<SubOrgCreateWithoutTopicsInput>;
-  update?: Maybe<SubOrgUpdateWithoutTopicsDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutTopicsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgUpdateWithoutTopicsDataInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-}
-
-export interface SubOrgUpsertWithoutTopicsInput {
-  update: SubOrgUpdateWithoutTopicsDataInput;
-  create: SubOrgCreateWithoutTopicsInput;
-}
-
-export interface BoardUpdateOneRequiredWithoutTopicsInput {
-  create?: Maybe<BoardCreateWithoutTopicsInput>;
-  update?: Maybe<BoardUpdateWithoutTopicsDataInput>;
-  upsert?: Maybe<BoardUpsertWithoutTopicsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardUpdateWithoutTopicsDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-}
-
-export interface StdUpdateManyWithoutBoardInput {
-  create?: Maybe<StdCreateWithoutBoardInput[] | StdCreateWithoutBoardInput>;
-  delete?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  set?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  disconnect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
-  update?: Maybe<
-    | StdUpdateWithWhereUniqueWithoutBoardInput[]
-    | StdUpdateWithWhereUniqueWithoutBoardInput
-  >;
-  upsert?: Maybe<
-    | StdUpsertWithWhereUniqueWithoutBoardInput[]
-    | StdUpsertWithWhereUniqueWithoutBoardInput
-  >;
-  deleteMany?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
-  updateMany?: Maybe<
-    StdUpdateManyWithWhereNestedInput[] | StdUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface StdUpdateWithWhereUniqueWithoutBoardInput {
-  where: StdWhereUniqueInput;
-  data: StdUpdateWithoutBoardDataInput;
-}
-
-export interface StdUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface SpecializationUpdateManyWithoutStdInput {
-  create?: Maybe<
-    SpecializationCreateWithoutStdInput[] | SpecializationCreateWithoutStdInput
-  >;
-  delete?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  set?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | SpecializationUpdateWithWhereUniqueWithoutStdInput[]
-    | SpecializationUpdateWithWhereUniqueWithoutStdInput
-  >;
-  upsert?: Maybe<
-    | SpecializationUpsertWithWhereUniqueWithoutStdInput[]
-    | SpecializationUpsertWithWhereUniqueWithoutStdInput
-  >;
-  deleteMany?: Maybe<
-    SpecializationScalarWhereInput[] | SpecializationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | SpecializationUpdateManyWithWhereNestedInput[]
-    | SpecializationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SpecializationUpdateWithWhereUniqueWithoutStdInput {
-  where: SpecializationWhereUniqueInput;
-  data: SpecializationUpdateWithoutStdDataInput;
-}
-
-export interface SpecializationUpdateWithoutStdDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
-}
-
-export interface BoardUpdateOneRequiredWithoutSpecializationsInput {
-  create?: Maybe<BoardCreateWithoutSpecializationsInput>;
-  update?: Maybe<BoardUpdateWithoutSpecializationsDataInput>;
-  upsert?: Maybe<BoardUpsertWithoutSpecializationsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardUpdateWithoutSpecializationsDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
-}
-
-export interface SubjectUpdateManyWithoutBoardInput {
-  create?: Maybe<
-    SubjectCreateWithoutBoardInput[] | SubjectCreateWithoutBoardInput
-  >;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutBoardInput[]
-    | SubjectUpdateWithWhereUniqueWithoutBoardInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutBoardInput[]
-    | SubjectUpsertWithWhereUniqueWithoutBoardInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutBoardInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutBoardDataInput;
-}
-
-export interface SubjectUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface StdUpdateOneRequiredWithoutSubjectsInput {
-  create?: Maybe<StdCreateWithoutSubjectsInput>;
-  update?: Maybe<StdUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<StdUpsertWithoutSubjectsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdUpdateWithoutSubjectsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface BoardUpdateOneRequiredWithoutStdsInput {
-  create?: Maybe<BoardCreateWithoutStdsInput>;
-  update?: Maybe<BoardUpdateWithoutStdsDataInput>;
-  upsert?: Maybe<BoardUpsertWithoutStdsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardUpdateWithoutStdsDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
-}
-
-export interface SpecializationUpdateManyWithoutBoardInput {
-  create?: Maybe<
-    | SpecializationCreateWithoutBoardInput[]
-    | SpecializationCreateWithoutBoardInput
-  >;
-  delete?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  connect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  set?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    SpecializationWhereUniqueInput[] | SpecializationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | SpecializationUpdateWithWhereUniqueWithoutBoardInput[]
-    | SpecializationUpdateWithWhereUniqueWithoutBoardInput
-  >;
-  upsert?: Maybe<
-    | SpecializationUpsertWithWhereUniqueWithoutBoardInput[]
-    | SpecializationUpsertWithWhereUniqueWithoutBoardInput
-  >;
-  deleteMany?: Maybe<
-    SpecializationScalarWhereInput[] | SpecializationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | SpecializationUpdateManyWithWhereNestedInput[]
-    | SpecializationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SpecializationUpdateWithWhereUniqueWithoutBoardInput {
-  where: SpecializationWhereUniqueInput;
-  data: SpecializationUpdateWithoutBoardDataInput;
-}
-
-export interface SpecializationUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
-}
-
-export interface StdUpdateOneRequiredWithoutSpecializationsInput {
-  create?: Maybe<StdCreateWithoutSpecializationsInput>;
-  update?: Maybe<StdUpdateWithoutSpecializationsDataInput>;
-  upsert?: Maybe<StdUpsertWithoutSpecializationsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdUpdateWithoutSpecializationsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface SubjectUpdateManyWithoutStdInput {
-  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutStdInput[]
-    | SubjectUpdateWithWhereUniqueWithoutStdInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutStdInput[]
-    | SubjectUpsertWithWhereUniqueWithoutStdInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutStdInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutStdDataInput;
-}
-
-export interface SubjectUpdateWithoutStdDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface BoardUpdateOneRequiredWithoutSubjectsInput {
-  create?: Maybe<BoardCreateWithoutSubjectsInput>;
-  update?: Maybe<BoardUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<BoardUpsertWithoutSubjectsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardUpdateWithoutSubjectsDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
-}
-
-export interface UnitUpdateManyWithoutBoardInput {
-  create?: Maybe<UnitCreateWithoutBoardInput[] | UnitCreateWithoutBoardInput>;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutBoardInput[]
-    | UnitUpdateWithWhereUniqueWithoutBoardInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutBoardInput[]
-    | UnitUpsertWithWhereUniqueWithoutBoardInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UnitUpdateWithWhereUniqueWithoutBoardInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutBoardDataInput;
-}
-
-export interface UnitUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface SubOrgUpdateOneRequiredWithoutUnitsInput {
-  create?: Maybe<SubOrgCreateWithoutUnitsInput>;
-  update?: Maybe<SubOrgUpdateWithoutUnitsDataInput>;
-  upsert?: Maybe<SubOrgUpsertWithoutUnitsInput>;
-  connect?: Maybe<SubOrgWhereUniqueInput>;
-}
-
-export interface SubOrgUpdateWithoutUnitsDataInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface TopicUpdateManyWithoutSubOrgInput {
-  create?: Maybe<
-    TopicCreateWithoutSubOrgInput[] | TopicCreateWithoutSubOrgInput
-  >;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutSubOrgInput[]
-    | TopicUpdateWithWhereUniqueWithoutSubOrgInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutSubOrgInput[]
-    | TopicUpsertWithWhereUniqueWithoutSubOrgInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutSubOrgDataInput;
-}
-
-export interface TopicUpdateWithoutSubOrgDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface OrganizationUpdateOneRequiredWithoutTopicsInput {
-  create?: Maybe<OrganizationCreateWithoutTopicsInput>;
-  update?: Maybe<OrganizationUpdateWithoutTopicsDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutTopicsInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationUpdateWithoutTopicsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-}
-
-export interface UnitUpdateManyWithoutOrgInput {
-  create?: Maybe<UnitCreateWithoutOrgInput[] | UnitCreateWithoutOrgInput>;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutOrgInput[]
-    | UnitUpdateWithWhereUniqueWithoutOrgInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutOrgInput[]
-    | UnitUpsertWithWhereUniqueWithoutOrgInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UnitUpdateWithWhereUniqueWithoutOrgInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutOrgDataInput;
-}
-
-export interface UnitUpdateWithoutOrgDataInput {
-  name?: Maybe<String>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface BoardUpdateOneRequiredWithoutUnitsInput {
-  create?: Maybe<BoardCreateWithoutUnitsInput>;
-  update?: Maybe<BoardUpdateWithoutUnitsDataInput>;
-  upsert?: Maybe<BoardUpsertWithoutUnitsInput>;
-  connect?: Maybe<BoardWhereUniqueInput>;
-}
-
-export interface BoardUpdateWithoutUnitsDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
-}
-
-export interface TopicUpdateManyWithoutBoardInput {
-  create?: Maybe<TopicCreateWithoutBoardInput[] | TopicCreateWithoutBoardInput>;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutBoardInput[]
-    | TopicUpdateWithWhereUniqueWithoutBoardInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutBoardInput[]
-    | TopicUpsertWithWhereUniqueWithoutBoardInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutBoardInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutBoardDataInput;
-}
-
-export interface TopicUpdateWithoutBoardDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface SubjectUpdateOneRequiredWithoutTopicsInput {
-  create?: Maybe<SubjectCreateWithoutTopicsInput>;
-  update?: Maybe<SubjectUpdateWithoutTopicsDataInput>;
-  upsert?: Maybe<SubjectUpsertWithoutTopicsInput>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectUpdateWithoutTopicsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-}
-
-export interface SpecializationUpdateOneRequiredWithoutSubjectsInput {
-  create?: Maybe<SpecializationCreateWithoutSubjectsInput>;
-  update?: Maybe<SpecializationUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<SpecializationUpsertWithoutSubjectsInput>;
-  connect?: Maybe<SpecializationWhereUniqueInput>;
-}
-
-export interface SpecializationUpdateWithoutSubjectsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
-}
-
-export interface UnitUpdateManyWithoutSpecializationInput {
-  create?: Maybe<
-    | UnitCreateWithoutSpecializationInput[]
-    | UnitCreateWithoutSpecializationInput
-  >;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutSpecializationInput[]
-    | UnitUpdateWithWhereUniqueWithoutSpecializationInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutSpecializationInput[]
-    | UnitUpsertWithWhereUniqueWithoutSpecializationInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UnitUpdateWithWhereUniqueWithoutSpecializationInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutSpecializationDataInput;
-}
-
-export interface UnitUpdateWithoutSpecializationDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface StdUpdateOneRequiredWithoutUnitsInput {
-  create?: Maybe<StdCreateWithoutUnitsInput>;
-  update?: Maybe<StdUpdateWithoutUnitsDataInput>;
-  upsert?: Maybe<StdUpsertWithoutUnitsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdUpdateWithoutUnitsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface TopicUpdateManyWithoutStdInput {
-  create?: Maybe<TopicCreateWithoutStdInput[] | TopicCreateWithoutStdInput>;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutStdInput[]
-    | TopicUpdateWithWhereUniqueWithoutStdInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutStdInput[]
-    | TopicUpsertWithWhereUniqueWithoutStdInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutStdInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutStdDataInput;
-}
-
-export interface TopicUpdateWithoutStdDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface SpecializationUpdateOneRequiredWithoutTopicInput {
-  create?: Maybe<SpecializationCreateWithoutTopicInput>;
-  update?: Maybe<SpecializationUpdateWithoutTopicDataInput>;
-  upsert?: Maybe<SpecializationUpsertWithoutTopicInput>;
-  connect?: Maybe<SpecializationWhereUniqueInput>;
-}
-
-export interface SpecializationUpdateWithoutTopicDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-}
-
-export interface SubjectUpdateManyWithoutSpecializationInput {
-  create?: Maybe<
-    | SubjectCreateWithoutSpecializationInput[]
-    | SubjectCreateWithoutSpecializationInput
-  >;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutSpecializationInput[]
-    | SubjectUpdateWithWhereUniqueWithoutSpecializationInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutSpecializationInput[]
-    | SubjectUpsertWithWhereUniqueWithoutSpecializationInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutSpecializationInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutSpecializationDataInput;
-}
-
-export interface SubjectUpdateWithoutSpecializationDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface UnitUpdateManyWithoutSubjectInput {
-  create?: Maybe<
-    UnitCreateWithoutSubjectInput[] | UnitCreateWithoutSubjectInput
-  >;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutSubjectInput[]
-    | UnitUpdateWithWhereUniqueWithoutSubjectInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutSubjectInput[]
-    | UnitUpsertWithWhereUniqueWithoutSubjectInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UnitUpdateWithWhereUniqueWithoutSubjectInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutSubjectDataInput;
-}
-
-export interface UnitUpdateWithoutSubjectDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface SpecializationUpdateOneRequiredWithoutUnitInput {
-  create?: Maybe<SpecializationCreateWithoutUnitInput>;
-  update?: Maybe<SpecializationUpdateWithoutUnitDataInput>;
-  upsert?: Maybe<SpecializationUpsertWithoutUnitInput>;
-  connect?: Maybe<SpecializationWhereUniqueInput>;
-}
-
-export interface SpecializationUpdateWithoutUnitDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
-}
-
-export interface TopicUpdateManyWithoutSpecializationInput {
-  create?: Maybe<
-    | TopicCreateWithoutSpecializationInput[]
-    | TopicCreateWithoutSpecializationInput
-  >;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutSpecializationInput[]
-    | TopicUpdateWithWhereUniqueWithoutSpecializationInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutSpecializationInput[]
-    | TopicUpsertWithWhereUniqueWithoutSpecializationInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutSpecializationInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutSpecializationDataInput;
-}
-
-export interface TopicUpdateWithoutSpecializationDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface UnitUpdateOneRequiredWithoutTopicsInput {
-  create?: Maybe<UnitCreateWithoutTopicsInput>;
-  update?: Maybe<UnitUpdateWithoutTopicsDataInput>;
-  upsert?: Maybe<UnitUpsertWithoutTopicsInput>;
-  connect?: Maybe<UnitWhereUniqueInput>;
-}
-
-export interface UnitUpdateWithoutTopicsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-}
-
-export interface SubjectUpdateOneRequiredWithoutUnitsInput {
-  create?: Maybe<SubjectCreateWithoutUnitsInput>;
-  update?: Maybe<SubjectUpdateWithoutUnitsDataInput>;
-  upsert?: Maybe<SubjectUpsertWithoutUnitsInput>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectUpdateWithoutUnitsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface TopicUpdateManyWithoutSubjectInput {
-  create?: Maybe<
-    TopicCreateWithoutSubjectInput[] | TopicCreateWithoutSubjectInput
-  >;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutSubjectInput[]
-    | TopicUpdateWithWhereUniqueWithoutSubjectInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutSubjectInput[]
-    | TopicUpsertWithWhereUniqueWithoutSubjectInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutSubjectInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutSubjectDataInput;
-}
-
-export interface TopicUpdateWithoutSubjectDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface StdUpdateOneRequiredWithoutTopicsInput {
-  create?: Maybe<StdCreateWithoutTopicsInput>;
-  update?: Maybe<StdUpdateWithoutTopicsDataInput>;
-  upsert?: Maybe<StdUpsertWithoutTopicsInput>;
-  connect?: Maybe<StdWhereUniqueInput>;
-}
-
-export interface StdUpdateWithoutTopicsDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-}
-
-export interface UnitUpdateManyWithoutStdInput {
-  create?: Maybe<UnitCreateWithoutStdInput[] | UnitCreateWithoutStdInput>;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutStdInput[]
-    | UnitUpdateWithWhereUniqueWithoutStdInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutStdInput[]
-    | UnitUpsertWithWhereUniqueWithoutStdInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UnitUpdateWithWhereUniqueWithoutStdInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutStdDataInput;
-}
-
-export interface UnitUpdateWithoutStdDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface TopicUpdateManyWithoutUnitInput {
-  create?: Maybe<TopicCreateWithoutUnitInput[] | TopicCreateWithoutUnitInput>;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutUnitInput[]
-    | TopicUpdateWithWhereUniqueWithoutUnitInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutUnitInput[]
-    | TopicUpsertWithWhereUniqueWithoutUnitInput
-  >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TopicUpdateWithWhereUniqueWithoutUnitInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutUnitDataInput;
-}
-
-export interface TopicUpdateWithoutUnitDataInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutUnitInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutUnitDataInput;
-  create: TopicCreateWithoutUnitInput;
-}
-
-export interface TopicScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  OR?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  NOT?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-}
-
-export interface TopicUpdateManyWithWhereNestedInput {
-  where: TopicScalarWhereInput;
-  data: TopicUpdateManyDataInput;
-}
-
-export interface TopicUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface UnitUpsertWithWhereUniqueWithoutStdInput {
-  where: UnitWhereUniqueInput;
-  update: UnitUpdateWithoutStdDataInput;
-  create: UnitCreateWithoutStdInput;
-}
-
-export interface UnitScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  OR?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  NOT?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-}
-
-export interface UnitUpdateManyWithWhereNestedInput {
-  where: UnitScalarWhereInput;
-  data: UnitUpdateManyDataInput;
-}
-
-export interface UnitUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface StdUpsertWithoutTopicsInput {
-  update: StdUpdateWithoutTopicsDataInput;
-  create: StdCreateWithoutTopicsInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutSubjectInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutSubjectDataInput;
-  create: TopicCreateWithoutSubjectInput;
-}
-
-export interface SubjectUpsertWithoutUnitsInput {
-  update: SubjectUpdateWithoutUnitsDataInput;
-  create: SubjectCreateWithoutUnitsInput;
-}
-
-export interface UnitUpsertWithoutTopicsInput {
-  update: UnitUpdateWithoutTopicsDataInput;
-  create: UnitCreateWithoutTopicsInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutSpecializationInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutSpecializationDataInput;
-  create: TopicCreateWithoutSpecializationInput;
-}
-
-export interface SpecializationUpsertWithoutUnitInput {
-  update: SpecializationUpdateWithoutUnitDataInput;
-  create: SpecializationCreateWithoutUnitInput;
-}
-
-export interface UnitUpsertWithWhereUniqueWithoutSubjectInput {
-  where: UnitWhereUniqueInput;
-  update: UnitUpdateWithoutSubjectDataInput;
-  create: UnitCreateWithoutSubjectInput;
-}
-
-export interface SubjectUpsertWithWhereUniqueWithoutSpecializationInput {
-  where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutSpecializationDataInput;
-  create: SubjectCreateWithoutSpecializationInput;
-}
-
-export interface SubjectScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  OR?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  NOT?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-}
-
-export interface SubjectUpdateManyWithWhereNestedInput {
-  where: SubjectScalarWhereInput;
-  data: SubjectUpdateManyDataInput;
-}
-
-export interface SubjectUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface SpecializationUpsertWithoutTopicInput {
-  update: SpecializationUpdateWithoutTopicDataInput;
-  create: SpecializationCreateWithoutTopicInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutStdInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutStdDataInput;
-  create: TopicCreateWithoutStdInput;
-}
-
-export interface StdUpsertWithoutUnitsInput {
-  update: StdUpdateWithoutUnitsDataInput;
-  create: StdCreateWithoutUnitsInput;
-}
-
-export interface UnitUpsertWithWhereUniqueWithoutSpecializationInput {
-  where: UnitWhereUniqueInput;
-  update: UnitUpdateWithoutSpecializationDataInput;
-  create: UnitCreateWithoutSpecializationInput;
-}
-
-export interface SpecializationUpsertWithoutSubjectsInput {
-  update: SpecializationUpdateWithoutSubjectsDataInput;
-  create: SpecializationCreateWithoutSubjectsInput;
-}
-
-export interface SubjectUpsertWithoutTopicsInput {
-  update: SubjectUpdateWithoutTopicsDataInput;
-  create: SubjectCreateWithoutTopicsInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutBoardInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutBoardDataInput;
-  create: TopicCreateWithoutBoardInput;
-}
-
-export interface BoardUpsertWithoutUnitsInput {
-  update: BoardUpdateWithoutUnitsDataInput;
-  create: BoardCreateWithoutUnitsInput;
-}
-
-export interface UnitUpsertWithWhereUniqueWithoutOrgInput {
-  where: UnitWhereUniqueInput;
-  update: UnitUpdateWithoutOrgDataInput;
-  create: UnitCreateWithoutOrgInput;
-}
-
-export interface OrganizationUpsertWithoutTopicsInput {
-  update: OrganizationUpdateWithoutTopicsDataInput;
-  create: OrganizationCreateWithoutTopicsInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutSubOrgDataInput;
-  create: TopicCreateWithoutSubOrgInput;
-}
-
-export interface SubOrgUpsertWithoutUnitsInput {
-  update: SubOrgUpdateWithoutUnitsDataInput;
-  create: SubOrgCreateWithoutUnitsInput;
-}
-
-export interface UnitUpsertWithWhereUniqueWithoutBoardInput {
-  where: UnitWhereUniqueInput;
-  update: UnitUpdateWithoutBoardDataInput;
-  create: UnitCreateWithoutBoardInput;
-}
-
-export interface BoardUpsertWithoutSubjectsInput {
-  update: BoardUpdateWithoutSubjectsDataInput;
-  create: BoardCreateWithoutSubjectsInput;
-}
-
-export interface SubjectUpsertWithWhereUniqueWithoutStdInput {
-  where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutStdDataInput;
-  create: SubjectCreateWithoutStdInput;
-}
-
-export interface StdUpsertWithoutSpecializationsInput {
-  update: StdUpdateWithoutSpecializationsDataInput;
-  create: StdCreateWithoutSpecializationsInput;
-}
-
-export interface SpecializationUpsertWithWhereUniqueWithoutBoardInput {
-  where: SpecializationWhereUniqueInput;
-  update: SpecializationUpdateWithoutBoardDataInput;
-  create: SpecializationCreateWithoutBoardInput;
-}
-
-export interface SpecializationScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<
-    SpecializationScalarWhereInput[] | SpecializationScalarWhereInput
-  >;
-  OR?: Maybe<SpecializationScalarWhereInput[] | SpecializationScalarWhereInput>;
-  NOT?: Maybe<
-    SpecializationScalarWhereInput[] | SpecializationScalarWhereInput
-  >;
-}
-
-export interface SpecializationUpdateManyWithWhereNestedInput {
-  where: SpecializationScalarWhereInput;
-  data: SpecializationUpdateManyDataInput;
-}
-
-export interface SpecializationUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface BoardUpsertWithoutStdsInput {
-  update: BoardUpdateWithoutStdsDataInput;
-  create: BoardCreateWithoutStdsInput;
-}
-
-export interface StdUpsertWithoutSubjectsInput {
-  update: StdUpdateWithoutSubjectsDataInput;
-  create: StdCreateWithoutSubjectsInput;
-}
-
-export interface SubjectUpsertWithWhereUniqueWithoutBoardInput {
-  where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutBoardDataInput;
-  create: SubjectCreateWithoutBoardInput;
-}
-
-export interface BoardUpsertWithoutSpecializationsInput {
-  update: BoardUpdateWithoutSpecializationsDataInput;
-  create: BoardCreateWithoutSpecializationsInput;
-}
-
-export interface SpecializationUpsertWithWhereUniqueWithoutStdInput {
-  where: SpecializationWhereUniqueInput;
-  update: SpecializationUpdateWithoutStdDataInput;
-  create: SpecializationCreateWithoutStdInput;
-}
-
-export interface StdUpsertWithWhereUniqueWithoutBoardInput {
-  where: StdWhereUniqueInput;
-  update: StdUpdateWithoutBoardDataInput;
-  create: StdCreateWithoutBoardInput;
-}
-
-export interface StdScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
-  OR?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
-  NOT?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
-}
-
-export interface StdUpdateManyWithWhereNestedInput {
-  where: StdScalarWhereInput;
-  data: StdUpdateManyDataInput;
-}
-
-export interface StdUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface BoardUpsertWithoutTopicsInput {
-  update: BoardUpdateWithoutTopicsDataInput;
-  create: BoardCreateWithoutTopicsInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutOrgInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutOrgDataInput;
-  create: TopicCreateWithoutOrgInput;
-}
-
-export interface OrganizationUpsertWithoutUnitsInput {
-  update: OrganizationUpdateWithoutUnitsDataInput;
-  create: OrganizationCreateWithoutUnitsInput;
-}
-
-export interface UnitUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: UnitWhereUniqueInput;
-  update: UnitUpdateWithoutSubOrgDataInput;
-  create: UnitCreateWithoutSubOrgInput;
-}
-
-export interface SubOrgUpsertWithoutSubjectsInput {
-  update: SubOrgUpdateWithoutSubjectsDataInput;
-  create: SubOrgCreateWithoutSubjectsInput;
-}
-
-export interface SubjectUpsertWithWhereUniqueWithoutOrgInput {
-  where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutOrgDataInput;
-  create: SubjectCreateWithoutOrgInput;
-}
-
-export interface OrganizationUpsertWithoutSpecializationsInput {
-  update: OrganizationUpdateWithoutSpecializationsDataInput;
-  create: OrganizationCreateWithoutSpecializationsInput;
-}
-
-export interface SpecializationUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: SpecializationWhereUniqueInput;
-  update: SpecializationUpdateWithoutSubOrgDataInput;
-  create: SpecializationCreateWithoutSubOrgInput;
-}
-
-export interface SubOrgUpsertWithoutStdsInput {
-  update: SubOrgUpdateWithoutStdsDataInput;
-  create: SubOrgCreateWithoutStdsInput;
-}
-
-export interface StdUpsertWithWhereUniqueWithoutOrgInput {
-  where: StdWhereUniqueInput;
-  update: StdUpdateWithoutOrgDataInput;
-  create: StdCreateWithoutOrgInput;
-}
-
-export interface OrganizationUpsertWithoutSubjectsInput {
-  update: OrganizationUpdateWithoutSubjectsDataInput;
-  create: OrganizationCreateWithoutSubjectsInput;
-}
-
-export interface SubjectUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutSubOrgDataInput;
-  create: SubjectCreateWithoutSubOrgInput;
-}
-
-export interface SubOrgUpsertWithoutSpecializationsInput {
-  update: SubOrgUpdateWithoutSpecializationsDataInput;
-  create: SubOrgCreateWithoutSpecializationsInput;
-}
-
-export interface SpecializationUpsertWithWhereUniqueWithoutOrgInput {
-  where: SpecializationWhereUniqueInput;
-  update: SpecializationUpdateWithoutOrgDataInput;
-  create: SpecializationCreateWithoutOrgInput;
-}
-
-export interface OrganizationUpsertWithoutStdsInput {
-  update: OrganizationUpdateWithoutStdsDataInput;
-  create: OrganizationCreateWithoutStdsInput;
-}
-
-export interface StdUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: StdWhereUniqueInput;
-  update: StdUpdateWithoutSubOrgDataInput;
-  create: StdCreateWithoutSubOrgInput;
-}
-
-export interface SubOrgUpsertWithoutBoardInput {
-  update: SubOrgUpdateWithoutBoardDataInput;
-  create: SubOrgCreateWithoutBoardInput;
-}
-
-export interface BoardUpsertWithWhereUniqueWithoutOrgInput {
-  where: BoardWhereUniqueInput;
-  update: BoardUpdateWithoutOrgDataInput;
-  create: BoardCreateWithoutOrgInput;
-}
-
-export interface BoardScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<BoardScalarWhereInput[] | BoardScalarWhereInput>;
-  OR?: Maybe<BoardScalarWhereInput[] | BoardScalarWhereInput>;
-  NOT?: Maybe<BoardScalarWhereInput[] | BoardScalarWhereInput>;
-}
-
-export interface BoardUpdateManyWithWhereNestedInput {
-  where: BoardScalarWhereInput;
-  data: BoardUpdateManyDataInput;
-}
-
-export interface BoardUpdateManyDataInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface OrganizationUpsertWithoutSubOrgsInput {
-  update: OrganizationUpdateWithoutSubOrgsDataInput;
-  create: OrganizationCreateWithoutSubOrgsInput;
-}
-
-export interface SubOrgUpsertWithoutAuthorInput {
-  update: SubOrgUpdateWithoutAuthorDataInput;
-  create: SubOrgCreateWithoutAuthorInput;
+export interface SuborgUpsertWithoutAuthorInput {
+  update: SuborgUpdateWithoutAuthorDataInput;
+  create: SuborgCreateWithoutAuthorInput;
 }
 
 export interface UserUpsertWithoutPostsInput {
@@ -6030,89 +1505,19 @@ export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
   create: CommentCreateWithoutAuthorInput;
 }
 
-export interface CommentScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-}
-
-export interface CommentUpdateManyWithWhereNestedInput {
-  where: CommentScalarWhereInput;
-  data: CommentUpdateManyDataInput;
-}
-
-export interface CommentUpdateManyDataInput {
-  text?: Maybe<String>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutOrgInput {
+export interface UserUpsertWithWhereUniqueWithoutMysuborgInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutOrgDataInput;
-  create: UserCreateWithoutOrgInput;
+  update: UserUpdateWithoutMysuborgDataInput;
+  create: UserCreateWithoutMysuborgInput;
 }
 
-export interface OrganizationUpsertWithoutBoardInput {
-  update: OrganizationUpdateWithoutBoardDataInput;
-  create: OrganizationCreateWithoutBoardInput;
+export interface SuborgUpsertWithWhereUniqueWithoutOrgInput {
+  where: SuborgWhereUniqueInput;
+  update: SuborgUpdateWithoutOrgDataInput;
+  create: SuborgCreateWithoutOrgInput;
 }
 
-export interface BoardUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: BoardWhereUniqueInput;
-  update: BoardUpdateWithoutSubOrgDataInput;
-  create: BoardCreateWithoutSubOrgInput;
-}
-
-export interface SubOrgUpsertWithWhereUniqueWithoutOrgInput {
-  where: SubOrgWhereUniqueInput;
-  update: SubOrgUpdateWithoutOrgDataInput;
-  create: SubOrgCreateWithoutOrgInput;
-}
-
-export interface SubOrgScalarWhereInput {
+export interface SuborgScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -6141,6 +1546,20 @@ export interface SubOrgScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   updatedAt?: Maybe<DateTimeInput>;
   updatedAt_not?: Maybe<DateTimeInput>;
   updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -6157,18 +1576,19 @@ export interface SubOrgScalarWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<SubOrgScalarWhereInput[] | SubOrgScalarWhereInput>;
-  OR?: Maybe<SubOrgScalarWhereInput[] | SubOrgScalarWhereInput>;
-  NOT?: Maybe<SubOrgScalarWhereInput[] | SubOrgScalarWhereInput>;
+  AND?: Maybe<SuborgScalarWhereInput[] | SuborgScalarWhereInput>;
+  OR?: Maybe<SuborgScalarWhereInput[] | SuborgScalarWhereInput>;
+  NOT?: Maybe<SuborgScalarWhereInput[] | SuborgScalarWhereInput>;
 }
 
-export interface SubOrgUpdateManyWithWhereNestedInput {
-  where: SubOrgScalarWhereInput;
-  data: SubOrgUpdateManyDataInput;
+export interface SuborgUpdateManyWithWhereNestedInput {
+  where: SuborgScalarWhereInput;
+  data: SuborgUpdateManyDataInput;
 }
 
-export interface SubOrgUpdateManyDataInput {
+export interface SuborgUpdateManyDataInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface OrganizationUpsertWithoutAuthorInput {
@@ -6181,281 +1601,23 @@ export interface UserUpsertWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutPostInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutPostDataInput;
-  create: CommentCreateWithoutPostInput;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutAuthorDataInput;
-  create: PostCreateWithoutAuthorInput;
-}
-
-export interface PostScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  body?: Maybe<String>;
-  body_not?: Maybe<String>;
-  body_in?: Maybe<String[] | String>;
-  body_not_in?: Maybe<String[] | String>;
-  body_lt?: Maybe<String>;
-  body_lte?: Maybe<String>;
-  body_gt?: Maybe<String>;
-  body_gte?: Maybe<String>;
-  body_contains?: Maybe<String>;
-  body_not_contains?: Maybe<String>;
-  body_starts_with?: Maybe<String>;
-  body_not_starts_with?: Maybe<String>;
-  body_ends_with?: Maybe<String>;
-  body_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-}
-
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
-}
-
-export interface PostUpdateManyDataInput {
-  title?: Maybe<String>;
-  body?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface BaseAddressUpdateOneInput {
-  create?: Maybe<BaseAddressCreateInput>;
-  update?: Maybe<BaseAddressUpdateDataInput>;
-  upsert?: Maybe<BaseAddressUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<BaseAddressWhereUniqueInput>;
-}
-
-export interface BaseAddressUpdateDataInput {
-  officename?: Maybe<String>;
-  pincode?: Maybe<String>;
-  officeType?: Maybe<String>;
-  Deliverystatus?: Maybe<String>;
-  divisionname?: Maybe<String>;
-  regionname?: Maybe<String>;
-  circlename?: Maybe<String>;
-  taluk?: Maybe<String>;
-  districtname?: Maybe<String>;
-  statename?: Maybe<String>;
-  telephone?: Maybe<String>;
-  relatedSuboffice?: Maybe<String>;
-  relatedHeadoffice?: Maybe<String>;
-  longitude?: Maybe<String>;
-  latitude?: Maybe<String>;
-}
-
-export interface BaseAddressUpsertNestedInput {
-  update: BaseAddressUpdateDataInput;
-  create: BaseAddressCreateInput;
-}
-
-export interface AddressUpdateManyMutationInput {
-  house?: Maybe<String>;
-  landmark?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface BaseAddressUpdateInput {
-  officename?: Maybe<String>;
-  pincode?: Maybe<String>;
-  officeType?: Maybe<String>;
-  Deliverystatus?: Maybe<String>;
-  divisionname?: Maybe<String>;
-  regionname?: Maybe<String>;
-  circlename?: Maybe<String>;
-  taluk?: Maybe<String>;
-  districtname?: Maybe<String>;
-  statename?: Maybe<String>;
-  telephone?: Maybe<String>;
-  relatedSuboffice?: Maybe<String>;
-  relatedHeadoffice?: Maybe<String>;
-  longitude?: Maybe<String>;
-  latitude?: Maybe<String>;
-}
-
-export interface BaseAddressUpdateManyMutationInput {
-  officename?: Maybe<String>;
-  pincode?: Maybe<String>;
-  officeType?: Maybe<String>;
-  Deliverystatus?: Maybe<String>;
-  divisionname?: Maybe<String>;
-  regionname?: Maybe<String>;
-  circlename?: Maybe<String>;
-  taluk?: Maybe<String>;
-  districtname?: Maybe<String>;
-  statename?: Maybe<String>;
-  telephone?: Maybe<String>;
-  relatedSuboffice?: Maybe<String>;
-  relatedHeadoffice?: Maybe<String>;
-  longitude?: Maybe<String>;
-  latitude?: Maybe<String>;
-}
-
-export interface BoardCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  published: Boolean;
-  org: OrganizationCreateOneWithoutBoardInput;
-  subOrg: SubOrgCreateOneWithoutBoardInput;
-  stds?: Maybe<StdCreateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutBoardInput>;
-  units?: Maybe<UnitCreateManyWithoutBoardInput>;
-  topics?: Maybe<TopicCreateManyWithoutBoardInput>;
-}
-
-export interface BoardUpdateInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutBoardInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutBoardInput>;
-  stds?: Maybe<StdUpdateManyWithoutBoardInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutBoardInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutBoardInput>;
-  units?: Maybe<UnitUpdateManyWithoutBoardInput>;
-  topics?: Maybe<TopicUpdateManyWithoutBoardInput>;
-}
-
-export interface BoardUpdateManyMutationInput {
-  name?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface CommentCreateInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  author: UserCreateOneWithoutCommentsInput;
-  post: PostCreateOneWithoutCommentsInput;
-}
-
-export interface CommentUpdateInput {
-  text?: Maybe<String>;
-  author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
-  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
-}
-
 export interface CommentUpdateManyMutationInput {
   text?: Maybe<String>;
-}
-
-export interface FileCreateInput {
-  id?: Maybe<ID_Input>;
-  path?: Maybe<String>;
-  filename: String;
-  mimetype: String;
-  encoding: String;
-}
-
-export interface FileUpdateInput {
-  path?: Maybe<String>;
-  filename?: Maybe<String>;
-  mimetype?: Maybe<String>;
-  encoding?: Maybe<String>;
-}
-
-export interface FileUpdateManyMutationInput {
-  path?: Maybe<String>;
-  filename?: Maybe<String>;
-  mimetype?: Maybe<String>;
-  encoding?: Maybe<String>;
-}
-
-export interface GroupCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface GroupUpdateInput {
-  name?: Maybe<String>;
-}
-
-export interface GroupUpdateManyMutationInput {
-  name?: Maybe<String>;
 }
 
 export interface OrganizationCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgCreateManyWithoutOrgInput>;
-  board?: Maybe<BoardCreateManyWithoutOrgInput>;
-  stds?: Maybe<StdCreateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutOrgInput>;
+  author?: Maybe<UserCreateManyWithoutMyorgInput>;
+  suborgs?: Maybe<SuborgCreateManyWithoutOrgInput>;
 }
 
 export interface OrganizationUpdateInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutOrgInput>;
-  subOrgs?: Maybe<SubOrgUpdateManyWithoutOrgInput>;
-  board?: Maybe<BoardUpdateManyWithoutOrgInput>;
-  stds?: Maybe<StdUpdateManyWithoutOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutOrgInput>;
+  author?: Maybe<UserUpdateManyWithoutMyorgInput>;
+  suborgs?: Maybe<SuborgUpdateManyWithoutOrgInput>;
 }
 
 export interface OrganizationUpdateManyMutationInput {
@@ -6486,189 +1648,37 @@ export interface PostUpdateManyMutationInput {
   published?: Maybe<Boolean>;
 }
 
-export interface RoleCreateInput {
-  id?: Maybe<ID_Input>;
-  rolename: String;
-  rolelevel: String;
-  levelname?: Maybe<String>;
-  userid: UserCreateOneInput;
-}
-
-export interface RoleUpdateInput {
-  rolename?: Maybe<String>;
-  rolelevel?: Maybe<String>;
-  levelname?: Maybe<String>;
-  userid?: Maybe<UserUpdateOneRequiredInput>;
-}
-
-export interface RoleUpdateManyMutationInput {
-  rolename?: Maybe<String>;
-  rolelevel?: Maybe<String>;
-  levelname?: Maybe<String>;
-}
-
-export interface SpecializationCreateInput {
+export interface SuborgCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  org: OrganizationCreateOneWithoutSpecializationsInput;
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput;
-  board: BoardCreateOneWithoutSpecializationsInput;
-  std: StdCreateOneWithoutSpecializationsInput;
-  subjects?: Maybe<SubjectCreateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitCreateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicCreateManyWithoutSpecializationInput>;
+  description?: Maybe<String>;
+  author?: Maybe<UserCreateManyWithoutMysuborgInput>;
+  org: OrganizationCreateOneWithoutSuborgsInput;
 }
 
-export interface SpecializationUpdateInput {
+export interface SuborgUpdateInput {
   name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSpecializationsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSpecializationsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSpecializationsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSpecializationsInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSpecializationInput>;
-  unit?: Maybe<UnitUpdateManyWithoutSpecializationInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSpecializationInput>;
+  description?: Maybe<String>;
+  author?: Maybe<UserUpdateManyWithoutMysuborgInput>;
+  org?: Maybe<OrganizationUpdateOneRequiredWithoutSuborgsInput>;
 }
 
-export interface SpecializationUpdateManyMutationInput {
+export interface SuborgUpdateManyMutationInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
-export interface StdCreateInput {
+export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutStdsInput;
-  subOrg: SubOrgCreateOneWithoutStdsInput;
-  board: BoardCreateOneWithoutStdsInput;
-  specializations?: Maybe<SpecializationCreateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
-  units?: Maybe<UnitCreateManyWithoutStdInput>;
-  topics?: Maybe<TopicCreateManyWithoutStdInput>;
-}
-
-export interface StdUpdateInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutStdsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutStdsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutStdsInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutStdInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
-  units?: Maybe<UnitUpdateManyWithoutStdInput>;
-  topics?: Maybe<TopicUpdateManyWithoutStdInput>;
-}
-
-export interface StdUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface SubOrgCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  board?: Maybe<BoardCreateManyWithoutSubOrgInput>;
-  author?: Maybe<UserCreateManyWithoutSubOrgsInput>;
-  org: OrganizationCreateOneWithoutSubOrgsInput;
-  stds?: Maybe<StdCreateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationCreateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitCreateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubOrgInput>;
-}
-
-export interface SubOrgUpdateInput {
-  name?: Maybe<String>;
-  board?: Maybe<BoardUpdateManyWithoutSubOrgInput>;
-  author?: Maybe<UserUpdateManyWithoutSubOrgsInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubOrgsInput>;
-  stds?: Maybe<StdUpdateManyWithoutSubOrgInput>;
-  specializations?: Maybe<SpecializationUpdateManyWithoutSubOrgInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubOrgInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubOrgInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubOrgInput>;
-}
-
-export interface SubOrgUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface SubjectCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutSubjectsInput;
-  subOrg: SubOrgCreateOneWithoutSubjectsInput;
-  board: BoardCreateOneWithoutSubjectsInput;
-  std: StdCreateOneWithoutSubjectsInput;
-  specialization: SpecializationCreateOneWithoutSubjectsInput;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicCreateManyWithoutSubjectInput>;
-}
-
-export interface SubjectUpdateInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutSubjectsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutSubjectsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topics?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-}
-
-export interface SubjectUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface TopicCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutTopicsInput;
-  subOrg: SubOrgCreateOneWithoutTopicsInput;
-  board: BoardCreateOneWithoutTopicsInput;
-  subject: SubjectCreateOneWithoutTopicsInput;
-  specialization: SpecializationCreateOneWithoutTopicInput;
-  unit: UnitCreateOneWithoutTopicsInput;
-  std: StdCreateOneWithoutTopicsInput;
-}
-
-export interface TopicUpdateInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutTopicsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutTopicsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutTopicsInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutTopicsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneRequiredWithoutTopicsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutTopicsInput>;
-}
-
-export interface TopicUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface UnitCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  org: OrganizationCreateOneWithoutUnitsInput;
-  subOrg: SubOrgCreateOneWithoutUnitsInput;
-  board: BoardCreateOneWithoutUnitsInput;
-  std: StdCreateOneWithoutUnitsInput;
-  specialization: SpecializationCreateOneWithoutUnitInput;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-}
-
-export interface UnitUpdateInput {
-  name?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutUnitsInput>;
-  subOrg?: Maybe<SubOrgUpdateOneRequiredWithoutUnitsInput>;
-  board?: Maybe<BoardUpdateOneRequiredWithoutUnitsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutUnitsInput>;
-  specialization?: Maybe<SpecializationUpdateOneRequiredWithoutUnitInput>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-}
-
-export interface UnitUpdateManyMutationInput {
-  name?: Maybe<String>;
+  firstname: String;
+  lastname: String;
+  email: String;
+  password: String;
+  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
+  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
+  createdBy?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
@@ -6676,10 +1686,10 @@ export interface UserUpdateInput {
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  org?: Maybe<OrganizationUpdateOneRequiredWithoutAuthorInput>;
-  subOrgs?: Maybe<SubOrgUpdateOneRequiredWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
@@ -6691,45 +1701,6 @@ export interface UserUpdateManyMutationInput {
   createdBy?: Maybe<String>;
 }
 
-export interface AddressSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<AddressWhereInput>;
-  AND?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>;
-  OR?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>;
-  NOT?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>;
-}
-
-export interface BaseAddressSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<BaseAddressWhereInput>;
-  AND?: Maybe<
-    BaseAddressSubscriptionWhereInput[] | BaseAddressSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    BaseAddressSubscriptionWhereInput[] | BaseAddressSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    BaseAddressSubscriptionWhereInput[] | BaseAddressSubscriptionWhereInput
-  >;
-}
-
-export interface BoardSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<BoardWhereInput>;
-  AND?: Maybe<BoardSubscriptionWhereInput[] | BoardSubscriptionWhereInput>;
-  OR?: Maybe<BoardSubscriptionWhereInput[] | BoardSubscriptionWhereInput>;
-  NOT?: Maybe<BoardSubscriptionWhereInput[] | BoardSubscriptionWhereInput>;
-}
-
 export interface CommentSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -6739,28 +1710,6 @@ export interface CommentSubscriptionWhereInput {
   AND?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
   OR?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
   NOT?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
-}
-
-export interface FileSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<FileWhereInput>;
-  AND?: Maybe<FileSubscriptionWhereInput[] | FileSubscriptionWhereInput>;
-  OR?: Maybe<FileSubscriptionWhereInput[] | FileSubscriptionWhereInput>;
-  NOT?: Maybe<FileSubscriptionWhereInput[] | FileSubscriptionWhereInput>;
-}
-
-export interface GroupSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<GroupWhereInput>;
-  AND?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
-  OR?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
-  NOT?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
 }
 
 export interface OrganizationSubscriptionWhereInput {
@@ -6791,90 +1740,15 @@ export interface PostSubscriptionWhereInput {
   NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
 }
 
-export interface RoleSubscriptionWhereInput {
+export interface SuborgSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<RoleWhereInput>;
-  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-}
-
-export interface SpecializationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SpecializationWhereInput>;
-  AND?: Maybe<
-    | SpecializationSubscriptionWhereInput[]
-    | SpecializationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    | SpecializationSubscriptionWhereInput[]
-    | SpecializationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    | SpecializationSubscriptionWhereInput[]
-    | SpecializationSubscriptionWhereInput
-  >;
-}
-
-export interface StdSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StdWhereInput>;
-  AND?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
-  OR?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
-  NOT?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
-}
-
-export interface SubOrgSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SubOrgWhereInput>;
-  AND?: Maybe<SubOrgSubscriptionWhereInput[] | SubOrgSubscriptionWhereInput>;
-  OR?: Maybe<SubOrgSubscriptionWhereInput[] | SubOrgSubscriptionWhereInput>;
-  NOT?: Maybe<SubOrgSubscriptionWhereInput[] | SubOrgSubscriptionWhereInput>;
-}
-
-export interface SubjectSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SubjectWhereInput>;
-  AND?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-  OR?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-  NOT?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-}
-
-export interface TopicSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TopicWhereInput>;
-  AND?: Maybe<TopicSubscriptionWhereInput[] | TopicSubscriptionWhereInput>;
-  OR?: Maybe<TopicSubscriptionWhereInput[] | TopicSubscriptionWhereInput>;
-  NOT?: Maybe<TopicSubscriptionWhereInput[] | TopicSubscriptionWhereInput>;
-}
-
-export interface UnitSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UnitWhereInput>;
-  AND?: Maybe<UnitSubscriptionWhereInput[] | UnitSubscriptionWhereInput>;
-  OR?: Maybe<UnitSubscriptionWhereInput[] | UnitSubscriptionWhereInput>;
-  NOT?: Maybe<UnitSubscriptionWhereInput[] | UnitSubscriptionWhereInput>;
+  node?: Maybe<SuborgWhereInput>;
+  AND?: Maybe<SuborgSubscriptionWhereInput[] | SuborgSubscriptionWhereInput>;
+  OR?: Maybe<SuborgSubscriptionWhereInput[] | SuborgSubscriptionWhereInput>;
+  NOT?: Maybe<SuborgSubscriptionWhereInput[] | SuborgSubscriptionWhereInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -6892,50 +1766,42 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Address {
+export interface Comment {
   id: ID_Output;
-  house?: String;
-  landmark?: String;
-  published: Boolean;
+  text: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
 
-export interface AddressPromise extends Promise<Address>, Fragmentable {
+export interface CommentPromise extends Promise<Comment>, Fragmentable {
   id: () => Promise<ID_Output>;
-  house: () => Promise<String>;
-  landmark: () => Promise<String>;
-  published: () => Promise<Boolean>;
+  text: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
-  author: <T = UserPromise>() => T;
-  baseAddress: <T = BaseAddressPromise>() => T;
 }
 
-export interface AddressSubscription
-  extends Promise<AsyncIterator<Address>>,
+export interface CommentSubscription
+  extends Promise<AsyncIterator<Comment>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  house: () => Promise<AsyncIterator<String>>;
-  landmark: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
+  text: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  post: <T = PostSubscription>() => T;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  author: <T = UserSubscription>() => T;
-  baseAddress: <T = BaseAddressSubscription>() => T;
 }
 
-export interface AddressNullablePromise
-  extends Promise<Address | null>,
+export interface CommentNullablePromise
+  extends Promise<Comment | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  house: () => Promise<String>;
-  landmark: () => Promise<String>;
-  published: () => Promise<Boolean>;
+  text: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
-  author: <T = UserPromise>() => T;
-  baseAddress: <T = BaseAddressPromise>() => T;
 }
 
 export interface User {
@@ -6955,6 +1821,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   lastname: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  myorg: <T = OrganizationPromise>() => T;
+  mysuborg: <T = SuborgPromise>() => T;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -6973,8 +1841,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  org: <T = OrganizationPromise>() => T;
-  subOrgs: <T = SubOrgPromise>() => T;
   createdBy: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -6988,6 +1854,8 @@ export interface UserSubscription
   lastname: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  myorg: <T = OrganizationSubscription>() => T;
+  mysuborg: <T = SuborgSubscription>() => T;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -7006,8 +1874,6 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  org: <T = OrganizationSubscription>() => T;
-  subOrgs: <T = SubOrgSubscription>() => T;
   createdBy: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -7021,6 +1887,8 @@ export interface UserNullablePromise
   lastname: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  myorg: <T = OrganizationPromise>() => T;
+  mysuborg: <T = SuborgPromise>() => T;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -7039,9 +1907,165 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  org: <T = OrganizationPromise>() => T;
-  subOrgs: <T = SubOrgPromise>() => T;
   createdBy: () => Promise<String>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface Organization {
+  id: ID_Output;
+  name: String;
+  description?: String;
+  updatedAt: DateTimeOutput;
+  createdAt: DateTimeOutput;
+}
+
+export interface OrganizationPromise
+  extends Promise<Organization>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  author: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  suborgs: <T = FragmentableArray<Suborg>>(args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface OrganizationSubscription
+  extends Promise<AsyncIterator<Organization>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  author: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  suborgs: <T = Promise<AsyncIterator<SuborgSubscription>>>(args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface OrganizationNullablePromise
+  extends Promise<Organization | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  author: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  suborgs: <T = FragmentableArray<Suborg>>(args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface Suborg {
+  id: ID_Output;
+  name: String;
+  description?: String;
+  updatedAt: DateTimeOutput;
+  createdAt: DateTimeOutput;
+}
+
+export interface SuborgPromise extends Promise<Suborg>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  author: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  org: <T = OrganizationPromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface SuborgSubscription
+  extends Promise<AsyncIterator<Suborg>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  author: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  org: <T = OrganizationSubscription>() => T;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface SuborgNullablePromise
+  extends Promise<Suborg | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  author: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  org: <T = OrganizationPromise>() => T;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -7116,1311 +2140,25 @@ export interface PostNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface Comment {
-  id: ID_Output;
-  text: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface CommentPromise extends Promise<Comment>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  author: <T = UserPromise>() => T;
-  post: <T = PostPromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface CommentSubscription
-  extends Promise<AsyncIterator<Comment>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  author: <T = UserSubscription>() => T;
-  post: <T = PostSubscription>() => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface CommentNullablePromise
-  extends Promise<Comment | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  author: <T = UserPromise>() => T;
-  post: <T = PostPromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Organization {
-  id: ID_Output;
-  name: String;
-  description?: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface OrganizationPromise
-  extends Promise<Organization>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  description: () => Promise<String>;
-  author: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subOrgs: <T = FragmentableArray<SubOrg>>(args?: {
-    where?: SubOrgWhereInput;
-    orderBy?: SubOrgOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  board: <T = FragmentableArray<Board>>(args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  stds: <T = FragmentableArray<Std>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface OrganizationSubscription
-  extends Promise<AsyncIterator<Organization>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  author: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subOrgs: <T = Promise<AsyncIterator<SubOrgSubscription>>>(args?: {
-    where?: SubOrgWhereInput;
-    orderBy?: SubOrgOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  board: <T = Promise<AsyncIterator<BoardSubscription>>>(args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  stds: <T = Promise<AsyncIterator<StdSubscription>>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <
-    T = Promise<AsyncIterator<SpecializationSubscription>>
-  >(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface OrganizationNullablePromise
-  extends Promise<Organization | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  description: () => Promise<String>;
-  author: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subOrgs: <T = FragmentableArray<SubOrg>>(args?: {
-    where?: SubOrgWhereInput;
-    orderBy?: SubOrgOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  board: <T = FragmentableArray<Board>>(args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  stds: <T = FragmentableArray<Std>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface SubOrg {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface SubOrgPromise extends Promise<SubOrg>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  board: <T = FragmentableArray<Board>>(args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  author: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  org: <T = OrganizationPromise>() => T;
-  stds: <T = FragmentableArray<Std>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface SubOrgSubscription
-  extends Promise<AsyncIterator<SubOrg>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  board: <T = Promise<AsyncIterator<BoardSubscription>>>(args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  author: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  org: <T = OrganizationSubscription>() => T;
-  stds: <T = Promise<AsyncIterator<StdSubscription>>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <
-    T = Promise<AsyncIterator<SpecializationSubscription>>
-  >(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface SubOrgNullablePromise
-  extends Promise<SubOrg | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  board: <T = FragmentableArray<Board>>(args?: {
-    where?: BoardWhereInput;
-    orderBy?: BoardOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  author: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  org: <T = OrganizationPromise>() => T;
-  stds: <T = FragmentableArray<Std>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Board {
-  id: ID_Output;
-  name: String;
-  published: Boolean;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface BoardPromise extends Promise<Board>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  published: () => Promise<Boolean>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  stds: <T = FragmentableArray<Std>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface BoardSubscription
-  extends Promise<AsyncIterator<Board>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-  org: <T = OrganizationSubscription>() => T;
-  subOrg: <T = SubOrgSubscription>() => T;
-  stds: <T = Promise<AsyncIterator<StdSubscription>>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <
-    T = Promise<AsyncIterator<SpecializationSubscription>>
-  >(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface BoardNullablePromise
-  extends Promise<Board | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  published: () => Promise<Boolean>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  stds: <T = FragmentableArray<Std>>(args?: {
-    where?: StdWhereInput;
-    orderBy?: StdOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Std {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface StdPromise extends Promise<Std>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface StdSubscription
-  extends Promise<AsyncIterator<Std>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  org: <T = OrganizationSubscription>() => T;
-  subOrg: <T = SubOrgSubscription>() => T;
-  board: <T = BoardSubscription>() => T;
-  specializations: <
-    T = Promise<AsyncIterator<SpecializationSubscription>>
-  >(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface StdNullablePromise extends Promise<Std | null>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  specializations: <T = FragmentableArray<Specialization>>(args?: {
-    where?: SpecializationWhereInput;
-    orderBy?: SpecializationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Specialization {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface SpecializationPromise
-  extends Promise<Specialization>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  std: <T = StdPromise>() => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  unit: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topic: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface SpecializationSubscription
-  extends Promise<AsyncIterator<Specialization>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  org: <T = OrganizationSubscription>() => T;
-  subOrg: <T = SubOrgSubscription>() => T;
-  board: <T = BoardSubscription>() => T;
-  std: <T = StdSubscription>() => T;
-  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  unit: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topic: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface SpecializationNullablePromise
-  extends Promise<Specialization | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  std: <T = StdPromise>() => T;
-  subjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  unit: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topic: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Subject {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface SubjectPromise extends Promise<Subject>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  std: <T = StdPromise>() => T;
-  specialization: <T = SpecializationPromise>() => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface SubjectSubscription
-  extends Promise<AsyncIterator<Subject>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  org: <T = OrganizationSubscription>() => T;
-  subOrg: <T = SubOrgSubscription>() => T;
-  board: <T = BoardSubscription>() => T;
-  std: <T = StdSubscription>() => T;
-  specialization: <T = SpecializationSubscription>() => T;
-  units: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface SubjectNullablePromise
-  extends Promise<Subject | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  std: <T = StdPromise>() => T;
-  specialization: <T = SpecializationPromise>() => T;
-  units: <T = FragmentableArray<Unit>>(args?: {
-    where?: UnitWhereInput;
-    orderBy?: UnitOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Unit {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface UnitPromise extends Promise<Unit>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  std: <T = StdPromise>() => T;
-  specialization: <T = SpecializationPromise>() => T;
-  subject: <T = SubjectPromise>() => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UnitSubscription
-  extends Promise<AsyncIterator<Unit>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  org: <T = OrganizationSubscription>() => T;
-  subOrg: <T = SubOrgSubscription>() => T;
-  board: <T = BoardSubscription>() => T;
-  std: <T = StdSubscription>() => T;
-  specialization: <T = SpecializationSubscription>() => T;
-  subject: <T = SubjectSubscription>() => T;
-  topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UnitNullablePromise
-  extends Promise<Unit | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  std: <T = StdPromise>() => T;
-  specialization: <T = SpecializationPromise>() => T;
-  subject: <T = SubjectPromise>() => T;
-  topics: <T = FragmentableArray<Topic>>(args?: {
-    where?: TopicWhereInput;
-    orderBy?: TopicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Topic {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface TopicPromise extends Promise<Topic>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  subject: <T = SubjectPromise>() => T;
-  specialization: <T = SpecializationPromise>() => T;
-  unit: <T = UnitPromise>() => T;
-  std: <T = StdPromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface TopicSubscription
-  extends Promise<AsyncIterator<Topic>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  org: <T = OrganizationSubscription>() => T;
-  subOrg: <T = SubOrgSubscription>() => T;
-  board: <T = BoardSubscription>() => T;
-  subject: <T = SubjectSubscription>() => T;
-  specialization: <T = SpecializationSubscription>() => T;
-  unit: <T = UnitSubscription>() => T;
-  std: <T = StdSubscription>() => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface TopicNullablePromise
-  extends Promise<Topic | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  org: <T = OrganizationPromise>() => T;
-  subOrg: <T = SubOrgPromise>() => T;
-  board: <T = BoardPromise>() => T;
-  subject: <T = SubjectPromise>() => T;
-  specialization: <T = SpecializationPromise>() => T;
-  unit: <T = UnitPromise>() => T;
-  std: <T = StdPromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface BaseAddress {
-  id: ID_Output;
-  officename?: String;
-  pincode?: String;
-  officeType?: String;
-  Deliverystatus?: String;
-  divisionname?: String;
-  regionname?: String;
-  circlename?: String;
-  taluk?: String;
-  districtname?: String;
-  statename?: String;
-  telephone?: String;
-  relatedSuboffice?: String;
-  relatedHeadoffice?: String;
-  longitude?: String;
-  latitude?: String;
-}
-
-export interface BaseAddressPromise extends Promise<BaseAddress>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  officename: () => Promise<String>;
-  pincode: () => Promise<String>;
-  officeType: () => Promise<String>;
-  Deliverystatus: () => Promise<String>;
-  divisionname: () => Promise<String>;
-  regionname: () => Promise<String>;
-  circlename: () => Promise<String>;
-  taluk: () => Promise<String>;
-  districtname: () => Promise<String>;
-  statename: () => Promise<String>;
-  telephone: () => Promise<String>;
-  relatedSuboffice: () => Promise<String>;
-  relatedHeadoffice: () => Promise<String>;
-  longitude: () => Promise<String>;
-  latitude: () => Promise<String>;
-}
-
-export interface BaseAddressSubscription
-  extends Promise<AsyncIterator<BaseAddress>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  officename: () => Promise<AsyncIterator<String>>;
-  pincode: () => Promise<AsyncIterator<String>>;
-  officeType: () => Promise<AsyncIterator<String>>;
-  Deliverystatus: () => Promise<AsyncIterator<String>>;
-  divisionname: () => Promise<AsyncIterator<String>>;
-  regionname: () => Promise<AsyncIterator<String>>;
-  circlename: () => Promise<AsyncIterator<String>>;
-  taluk: () => Promise<AsyncIterator<String>>;
-  districtname: () => Promise<AsyncIterator<String>>;
-  statename: () => Promise<AsyncIterator<String>>;
-  telephone: () => Promise<AsyncIterator<String>>;
-  relatedSuboffice: () => Promise<AsyncIterator<String>>;
-  relatedHeadoffice: () => Promise<AsyncIterator<String>>;
-  longitude: () => Promise<AsyncIterator<String>>;
-  latitude: () => Promise<AsyncIterator<String>>;
-}
-
-export interface BaseAddressNullablePromise
-  extends Promise<BaseAddress | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  officename: () => Promise<String>;
-  pincode: () => Promise<String>;
-  officeType: () => Promise<String>;
-  Deliverystatus: () => Promise<String>;
-  divisionname: () => Promise<String>;
-  regionname: () => Promise<String>;
-  circlename: () => Promise<String>;
-  taluk: () => Promise<String>;
-  districtname: () => Promise<String>;
-  statename: () => Promise<String>;
-  telephone: () => Promise<String>;
-  relatedSuboffice: () => Promise<String>;
-  relatedHeadoffice: () => Promise<String>;
-  longitude: () => Promise<String>;
-  latitude: () => Promise<String>;
-}
-
-export interface AddressConnection {
+export interface CommentConnection {
   pageInfo: PageInfo;
-  edges: AddressEdge[];
+  edges: CommentEdge[];
 }
 
-export interface AddressConnectionPromise
-  extends Promise<AddressConnection>,
+export interface CommentConnectionPromise
+  extends Promise<CommentConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AddressEdge>>() => T;
-  aggregate: <T = AggregateAddressPromise>() => T;
+  edges: <T = FragmentableArray<CommentEdge>>() => T;
+  aggregate: <T = AggregateCommentPromise>() => T;
 }
 
-export interface AddressConnectionSubscription
-  extends Promise<AsyncIterator<AddressConnection>>,
+export interface CommentConnectionSubscription
+  extends Promise<AsyncIterator<CommentConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AddressEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAddressSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCommentSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -8444,170 +2182,6 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AddressEdge {
-  node: Address;
-  cursor: String;
-}
-
-export interface AddressEdgePromise extends Promise<AddressEdge>, Fragmentable {
-  node: <T = AddressPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AddressEdgeSubscription
-  extends Promise<AsyncIterator<AddressEdge>>,
-    Fragmentable {
-  node: <T = AddressSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateAddress {
-  count: Int;
-}
-
-export interface AggregateAddressPromise
-  extends Promise<AggregateAddress>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAddressSubscription
-  extends Promise<AsyncIterator<AggregateAddress>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BaseAddressConnection {
-  pageInfo: PageInfo;
-  edges: BaseAddressEdge[];
-}
-
-export interface BaseAddressConnectionPromise
-  extends Promise<BaseAddressConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<BaseAddressEdge>>() => T;
-  aggregate: <T = AggregateBaseAddressPromise>() => T;
-}
-
-export interface BaseAddressConnectionSubscription
-  extends Promise<AsyncIterator<BaseAddressConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<BaseAddressEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateBaseAddressSubscription>() => T;
-}
-
-export interface BaseAddressEdge {
-  node: BaseAddress;
-  cursor: String;
-}
-
-export interface BaseAddressEdgePromise
-  extends Promise<BaseAddressEdge>,
-    Fragmentable {
-  node: <T = BaseAddressPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BaseAddressEdgeSubscription
-  extends Promise<AsyncIterator<BaseAddressEdge>>,
-    Fragmentable {
-  node: <T = BaseAddressSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateBaseAddress {
-  count: Int;
-}
-
-export interface AggregateBaseAddressPromise
-  extends Promise<AggregateBaseAddress>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateBaseAddressSubscription
-  extends Promise<AsyncIterator<AggregateBaseAddress>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BoardConnection {
-  pageInfo: PageInfo;
-  edges: BoardEdge[];
-}
-
-export interface BoardConnectionPromise
-  extends Promise<BoardConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<BoardEdge>>() => T;
-  aggregate: <T = AggregateBoardPromise>() => T;
-}
-
-export interface BoardConnectionSubscription
-  extends Promise<AsyncIterator<BoardConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<BoardEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateBoardSubscription>() => T;
-}
-
-export interface BoardEdge {
-  node: Board;
-  cursor: String;
-}
-
-export interface BoardEdgePromise extends Promise<BoardEdge>, Fragmentable {
-  node: <T = BoardPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BoardEdgeSubscription
-  extends Promise<AsyncIterator<BoardEdge>>,
-    Fragmentable {
-  node: <T = BoardSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateBoard {
-  count: Int;
-}
-
-export interface AggregateBoardPromise
-  extends Promise<AggregateBoard>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateBoardSubscription
-  extends Promise<AsyncIterator<AggregateBoard>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CommentConnection {
-  pageInfo: PageInfo;
-  edges: CommentEdge[];
-}
-
-export interface CommentConnectionPromise
-  extends Promise<CommentConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CommentEdge>>() => T;
-  aggregate: <T = AggregateCommentPromise>() => T;
-}
-
-export interface CommentConnectionSubscription
-  extends Promise<AsyncIterator<CommentConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCommentSubscription>() => T;
 }
 
 export interface CommentEdge {
@@ -8639,174 +2213,6 @@ export interface AggregateCommentPromise
 
 export interface AggregateCommentSubscription
   extends Promise<AsyncIterator<AggregateComment>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface File {
-  id: ID_Output;
-  path?: String;
-  filename: String;
-  mimetype: String;
-  encoding: String;
-}
-
-export interface FilePromise extends Promise<File>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  path: () => Promise<String>;
-  filename: () => Promise<String>;
-  mimetype: () => Promise<String>;
-  encoding: () => Promise<String>;
-}
-
-export interface FileSubscription
-  extends Promise<AsyncIterator<File>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  path: () => Promise<AsyncIterator<String>>;
-  filename: () => Promise<AsyncIterator<String>>;
-  mimetype: () => Promise<AsyncIterator<String>>;
-  encoding: () => Promise<AsyncIterator<String>>;
-}
-
-export interface FileNullablePromise
-  extends Promise<File | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  path: () => Promise<String>;
-  filename: () => Promise<String>;
-  mimetype: () => Promise<String>;
-  encoding: () => Promise<String>;
-}
-
-export interface FileConnection {
-  pageInfo: PageInfo;
-  edges: FileEdge[];
-}
-
-export interface FileConnectionPromise
-  extends Promise<FileConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<FileEdge>>() => T;
-  aggregate: <T = AggregateFilePromise>() => T;
-}
-
-export interface FileConnectionSubscription
-  extends Promise<AsyncIterator<FileConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<FileEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateFileSubscription>() => T;
-}
-
-export interface FileEdge {
-  node: File;
-  cursor: String;
-}
-
-export interface FileEdgePromise extends Promise<FileEdge>, Fragmentable {
-  node: <T = FilePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface FileEdgeSubscription
-  extends Promise<AsyncIterator<FileEdge>>,
-    Fragmentable {
-  node: <T = FileSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateFile {
-  count: Int;
-}
-
-export interface AggregateFilePromise
-  extends Promise<AggregateFile>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateFileSubscription
-  extends Promise<AsyncIterator<AggregateFile>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Group {
-  id: ID_Output;
-  name: String;
-}
-
-export interface GroupPromise extends Promise<Group>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface GroupSubscription
-  extends Promise<AsyncIterator<Group>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface GroupNullablePromise
-  extends Promise<Group | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface GroupConnection {
-  pageInfo: PageInfo;
-  edges: GroupEdge[];
-}
-
-export interface GroupConnectionPromise
-  extends Promise<GroupConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GroupEdge>>() => T;
-  aggregate: <T = AggregateGroupPromise>() => T;
-}
-
-export interface GroupConnectionSubscription
-  extends Promise<AsyncIterator<GroupConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GroupEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGroupSubscription>() => T;
-}
-
-export interface GroupEdge {
-  node: Group;
-  cursor: String;
-}
-
-export interface GroupEdgePromise extends Promise<GroupEdge>, Fragmentable {
-  node: <T = GroupPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface GroupEdgeSubscription
-  extends Promise<AsyncIterator<GroupEdge>>,
-    Fragmentable {
-  node: <T = GroupSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateGroup {
-  count: Int;
-}
-
-export interface AggregateGroupPromise
-  extends Promise<AggregateGroup>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateGroupSubscription
-  extends Promise<AsyncIterator<AggregateGroup>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -8921,417 +2327,56 @@ export interface AggregatePostSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Role {
-  id: ID_Output;
-  rolename: String;
-  rolelevel: String;
-  levelname?: String;
-}
-
-export interface RolePromise extends Promise<Role>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  rolename: () => Promise<String>;
-  rolelevel: () => Promise<String>;
-  levelname: () => Promise<String>;
-  userid: <T = UserPromise>() => T;
-}
-
-export interface RoleSubscription
-  extends Promise<AsyncIterator<Role>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  rolename: () => Promise<AsyncIterator<String>>;
-  rolelevel: () => Promise<AsyncIterator<String>>;
-  levelname: () => Promise<AsyncIterator<String>>;
-  userid: <T = UserSubscription>() => T;
-}
-
-export interface RoleNullablePromise
-  extends Promise<Role | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  rolename: () => Promise<String>;
-  rolelevel: () => Promise<String>;
-  levelname: () => Promise<String>;
-  userid: <T = UserPromise>() => T;
-}
-
-export interface RoleConnection {
+export interface SuborgConnection {
   pageInfo: PageInfo;
-  edges: RoleEdge[];
+  edges: SuborgEdge[];
 }
 
-export interface RoleConnectionPromise
-  extends Promise<RoleConnection>,
+export interface SuborgConnectionPromise
+  extends Promise<SuborgConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<RoleEdge>>() => T;
-  aggregate: <T = AggregateRolePromise>() => T;
+  edges: <T = FragmentableArray<SuborgEdge>>() => T;
+  aggregate: <T = AggregateSuborgPromise>() => T;
 }
 
-export interface RoleConnectionSubscription
-  extends Promise<AsyncIterator<RoleConnection>>,
+export interface SuborgConnectionSubscription
+  extends Promise<AsyncIterator<SuborgConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<RoleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateRoleSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SuborgEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSuborgSubscription>() => T;
 }
 
-export interface RoleEdge {
-  node: Role;
+export interface SuborgEdge {
+  node: Suborg;
   cursor: String;
 }
 
-export interface RoleEdgePromise extends Promise<RoleEdge>, Fragmentable {
-  node: <T = RolePromise>() => T;
+export interface SuborgEdgePromise extends Promise<SuborgEdge>, Fragmentable {
+  node: <T = SuborgPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface RoleEdgeSubscription
-  extends Promise<AsyncIterator<RoleEdge>>,
+export interface SuborgEdgeSubscription
+  extends Promise<AsyncIterator<SuborgEdge>>,
     Fragmentable {
-  node: <T = RoleSubscription>() => T;
+  node: <T = SuborgSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateRole {
+export interface AggregateSuborg {
   count: Int;
 }
 
-export interface AggregateRolePromise
-  extends Promise<AggregateRole>,
+export interface AggregateSuborgPromise
+  extends Promise<AggregateSuborg>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateRoleSubscription
-  extends Promise<AsyncIterator<AggregateRole>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface SpecializationConnection {
-  pageInfo: PageInfo;
-  edges: SpecializationEdge[];
-}
-
-export interface SpecializationConnectionPromise
-  extends Promise<SpecializationConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SpecializationEdge>>() => T;
-  aggregate: <T = AggregateSpecializationPromise>() => T;
-}
-
-export interface SpecializationConnectionSubscription
-  extends Promise<AsyncIterator<SpecializationConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SpecializationEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSpecializationSubscription>() => T;
-}
-
-export interface SpecializationEdge {
-  node: Specialization;
-  cursor: String;
-}
-
-export interface SpecializationEdgePromise
-  extends Promise<SpecializationEdge>,
-    Fragmentable {
-  node: <T = SpecializationPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface SpecializationEdgeSubscription
-  extends Promise<AsyncIterator<SpecializationEdge>>,
-    Fragmentable {
-  node: <T = SpecializationSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSpecialization {
-  count: Int;
-}
-
-export interface AggregateSpecializationPromise
-  extends Promise<AggregateSpecialization>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSpecializationSubscription
-  extends Promise<AsyncIterator<AggregateSpecialization>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface StdConnection {
-  pageInfo: PageInfo;
-  edges: StdEdge[];
-}
-
-export interface StdConnectionPromise
-  extends Promise<StdConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<StdEdge>>() => T;
-  aggregate: <T = AggregateStdPromise>() => T;
-}
-
-export interface StdConnectionSubscription
-  extends Promise<AsyncIterator<StdConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StdEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStdSubscription>() => T;
-}
-
-export interface StdEdge {
-  node: Std;
-  cursor: String;
-}
-
-export interface StdEdgePromise extends Promise<StdEdge>, Fragmentable {
-  node: <T = StdPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface StdEdgeSubscription
-  extends Promise<AsyncIterator<StdEdge>>,
-    Fragmentable {
-  node: <T = StdSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateStd {
-  count: Int;
-}
-
-export interface AggregateStdPromise
-  extends Promise<AggregateStd>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStdSubscription
-  extends Promise<AsyncIterator<AggregateStd>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface SubOrgConnection {
-  pageInfo: PageInfo;
-  edges: SubOrgEdge[];
-}
-
-export interface SubOrgConnectionPromise
-  extends Promise<SubOrgConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SubOrgEdge>>() => T;
-  aggregate: <T = AggregateSubOrgPromise>() => T;
-}
-
-export interface SubOrgConnectionSubscription
-  extends Promise<AsyncIterator<SubOrgConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SubOrgEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSubOrgSubscription>() => T;
-}
-
-export interface SubOrgEdge {
-  node: SubOrg;
-  cursor: String;
-}
-
-export interface SubOrgEdgePromise extends Promise<SubOrgEdge>, Fragmentable {
-  node: <T = SubOrgPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface SubOrgEdgeSubscription
-  extends Promise<AsyncIterator<SubOrgEdge>>,
-    Fragmentable {
-  node: <T = SubOrgSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSubOrg {
-  count: Int;
-}
-
-export interface AggregateSubOrgPromise
-  extends Promise<AggregateSubOrg>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSubOrgSubscription
-  extends Promise<AsyncIterator<AggregateSubOrg>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface SubjectConnection {
-  pageInfo: PageInfo;
-  edges: SubjectEdge[];
-}
-
-export interface SubjectConnectionPromise
-  extends Promise<SubjectConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SubjectEdge>>() => T;
-  aggregate: <T = AggregateSubjectPromise>() => T;
-}
-
-export interface SubjectConnectionSubscription
-  extends Promise<AsyncIterator<SubjectConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SubjectEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSubjectSubscription>() => T;
-}
-
-export interface SubjectEdge {
-  node: Subject;
-  cursor: String;
-}
-
-export interface SubjectEdgePromise extends Promise<SubjectEdge>, Fragmentable {
-  node: <T = SubjectPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface SubjectEdgeSubscription
-  extends Promise<AsyncIterator<SubjectEdge>>,
-    Fragmentable {
-  node: <T = SubjectSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSubject {
-  count: Int;
-}
-
-export interface AggregateSubjectPromise
-  extends Promise<AggregateSubject>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSubjectSubscription
-  extends Promise<AsyncIterator<AggregateSubject>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TopicConnection {
-  pageInfo: PageInfo;
-  edges: TopicEdge[];
-}
-
-export interface TopicConnectionPromise
-  extends Promise<TopicConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TopicEdge>>() => T;
-  aggregate: <T = AggregateTopicPromise>() => T;
-}
-
-export interface TopicConnectionSubscription
-  extends Promise<AsyncIterator<TopicConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TopicEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTopicSubscription>() => T;
-}
-
-export interface TopicEdge {
-  node: Topic;
-  cursor: String;
-}
-
-export interface TopicEdgePromise extends Promise<TopicEdge>, Fragmentable {
-  node: <T = TopicPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TopicEdgeSubscription
-  extends Promise<AsyncIterator<TopicEdge>>,
-    Fragmentable {
-  node: <T = TopicSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateTopic {
-  count: Int;
-}
-
-export interface AggregateTopicPromise
-  extends Promise<AggregateTopic>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTopicSubscription
-  extends Promise<AsyncIterator<AggregateTopic>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UnitConnection {
-  pageInfo: PageInfo;
-  edges: UnitEdge[];
-}
-
-export interface UnitConnectionPromise
-  extends Promise<UnitConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UnitEdge>>() => T;
-  aggregate: <T = AggregateUnitPromise>() => T;
-}
-
-export interface UnitConnectionSubscription
-  extends Promise<AsyncIterator<UnitConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UnitEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUnitSubscription>() => T;
-}
-
-export interface UnitEdge {
-  node: Unit;
-  cursor: String;
-}
-
-export interface UnitEdgePromise extends Promise<UnitEdge>, Fragmentable {
-  node: <T = UnitPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UnitEdgeSubscription
-  extends Promise<AsyncIterator<UnitEdge>>,
-    Fragmentable {
-  node: <T = UnitSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUnit {
-  count: Int;
-}
-
-export interface AggregateUnitPromise
-  extends Promise<AggregateUnit>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUnitSubscription
-  extends Promise<AsyncIterator<AggregateUnit>>,
+export interface AggregateSuborgSubscription
+  extends Promise<AsyncIterator<AggregateSuborg>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -9406,201 +2451,6 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface AddressSubscriptionPayload {
-  mutation: MutationType;
-  node: Address;
-  updatedFields: String[];
-  previousValues: AddressPreviousValues;
-}
-
-export interface AddressSubscriptionPayloadPromise
-  extends Promise<AddressSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = AddressPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = AddressPreviousValuesPromise>() => T;
-}
-
-export interface AddressSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<AddressSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = AddressSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = AddressPreviousValuesSubscription>() => T;
-}
-
-export interface AddressPreviousValues {
-  id: ID_Output;
-  house?: String;
-  landmark?: String;
-  published: Boolean;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface AddressPreviousValuesPromise
-  extends Promise<AddressPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  house: () => Promise<String>;
-  landmark: () => Promise<String>;
-  published: () => Promise<Boolean>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AddressPreviousValuesSubscription
-  extends Promise<AsyncIterator<AddressPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  house: () => Promise<AsyncIterator<String>>;
-  landmark: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface BaseAddressSubscriptionPayload {
-  mutation: MutationType;
-  node: BaseAddress;
-  updatedFields: String[];
-  previousValues: BaseAddressPreviousValues;
-}
-
-export interface BaseAddressSubscriptionPayloadPromise
-  extends Promise<BaseAddressSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = BaseAddressPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = BaseAddressPreviousValuesPromise>() => T;
-}
-
-export interface BaseAddressSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BaseAddressSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BaseAddressSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BaseAddressPreviousValuesSubscription>() => T;
-}
-
-export interface BaseAddressPreviousValues {
-  id: ID_Output;
-  officename?: String;
-  pincode?: String;
-  officeType?: String;
-  Deliverystatus?: String;
-  divisionname?: String;
-  regionname?: String;
-  circlename?: String;
-  taluk?: String;
-  districtname?: String;
-  statename?: String;
-  telephone?: String;
-  relatedSuboffice?: String;
-  relatedHeadoffice?: String;
-  longitude?: String;
-  latitude?: String;
-}
-
-export interface BaseAddressPreviousValuesPromise
-  extends Promise<BaseAddressPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  officename: () => Promise<String>;
-  pincode: () => Promise<String>;
-  officeType: () => Promise<String>;
-  Deliverystatus: () => Promise<String>;
-  divisionname: () => Promise<String>;
-  regionname: () => Promise<String>;
-  circlename: () => Promise<String>;
-  taluk: () => Promise<String>;
-  districtname: () => Promise<String>;
-  statename: () => Promise<String>;
-  telephone: () => Promise<String>;
-  relatedSuboffice: () => Promise<String>;
-  relatedHeadoffice: () => Promise<String>;
-  longitude: () => Promise<String>;
-  latitude: () => Promise<String>;
-}
-
-export interface BaseAddressPreviousValuesSubscription
-  extends Promise<AsyncIterator<BaseAddressPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  officename: () => Promise<AsyncIterator<String>>;
-  pincode: () => Promise<AsyncIterator<String>>;
-  officeType: () => Promise<AsyncIterator<String>>;
-  Deliverystatus: () => Promise<AsyncIterator<String>>;
-  divisionname: () => Promise<AsyncIterator<String>>;
-  regionname: () => Promise<AsyncIterator<String>>;
-  circlename: () => Promise<AsyncIterator<String>>;
-  taluk: () => Promise<AsyncIterator<String>>;
-  districtname: () => Promise<AsyncIterator<String>>;
-  statename: () => Promise<AsyncIterator<String>>;
-  telephone: () => Promise<AsyncIterator<String>>;
-  relatedSuboffice: () => Promise<AsyncIterator<String>>;
-  relatedHeadoffice: () => Promise<AsyncIterator<String>>;
-  longitude: () => Promise<AsyncIterator<String>>;
-  latitude: () => Promise<AsyncIterator<String>>;
-}
-
-export interface BoardSubscriptionPayload {
-  mutation: MutationType;
-  node: Board;
-  updatedFields: String[];
-  previousValues: BoardPreviousValues;
-}
-
-export interface BoardSubscriptionPayloadPromise
-  extends Promise<BoardSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = BoardPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = BoardPreviousValuesPromise>() => T;
-}
-
-export interface BoardSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BoardSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BoardSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BoardPreviousValuesSubscription>() => T;
-}
-
-export interface BoardPreviousValues {
-  id: ID_Output;
-  name: String;
-  published: Boolean;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface BoardPreviousValuesPromise
-  extends Promise<BoardPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  published: () => Promise<Boolean>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface BoardPreviousValuesSubscription
-  extends Promise<AsyncIterator<BoardPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
 export interface CommentSubscriptionPayload {
   mutation: MutationType;
   node: Comment;
@@ -9649,103 +2499,6 @@ export interface CommentPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface FileSubscriptionPayload {
-  mutation: MutationType;
-  node: File;
-  updatedFields: String[];
-  previousValues: FilePreviousValues;
-}
-
-export interface FileSubscriptionPayloadPromise
-  extends Promise<FileSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = FilePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = FilePreviousValuesPromise>() => T;
-}
-
-export interface FileSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<FileSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = FileSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = FilePreviousValuesSubscription>() => T;
-}
-
-export interface FilePreviousValues {
-  id: ID_Output;
-  path?: String;
-  filename: String;
-  mimetype: String;
-  encoding: String;
-}
-
-export interface FilePreviousValuesPromise
-  extends Promise<FilePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  path: () => Promise<String>;
-  filename: () => Promise<String>;
-  mimetype: () => Promise<String>;
-  encoding: () => Promise<String>;
-}
-
-export interface FilePreviousValuesSubscription
-  extends Promise<AsyncIterator<FilePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  path: () => Promise<AsyncIterator<String>>;
-  filename: () => Promise<AsyncIterator<String>>;
-  mimetype: () => Promise<AsyncIterator<String>>;
-  encoding: () => Promise<AsyncIterator<String>>;
-}
-
-export interface GroupSubscriptionPayload {
-  mutation: MutationType;
-  node: Group;
-  updatedFields: String[];
-  previousValues: GroupPreviousValues;
-}
-
-export interface GroupSubscriptionPayloadPromise
-  extends Promise<GroupSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = GroupPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = GroupPreviousValuesPromise>() => T;
-}
-
-export interface GroupSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<GroupSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = GroupSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = GroupPreviousValuesSubscription>() => T;
-}
-
-export interface GroupPreviousValues {
-  id: ID_Output;
-  name: String;
-}
-
-export interface GroupPreviousValuesPromise
-  extends Promise<GroupPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface GroupPreviousValuesSubscription
-  extends Promise<AsyncIterator<GroupPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface OrganizationSubscriptionPayload {
@@ -9857,352 +2610,55 @@ export interface PostPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface RoleSubscriptionPayload {
+export interface SuborgSubscriptionPayload {
   mutation: MutationType;
-  node: Role;
+  node: Suborg;
   updatedFields: String[];
-  previousValues: RolePreviousValues;
+  previousValues: SuborgPreviousValues;
 }
 
-export interface RoleSubscriptionPayloadPromise
-  extends Promise<RoleSubscriptionPayload>,
+export interface SuborgSubscriptionPayloadPromise
+  extends Promise<SuborgSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = RolePromise>() => T;
+  node: <T = SuborgPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = RolePreviousValuesPromise>() => T;
+  previousValues: <T = SuborgPreviousValuesPromise>() => T;
 }
 
-export interface RoleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<RoleSubscriptionPayload>>,
+export interface SuborgSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SuborgSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = RoleSubscription>() => T;
+  node: <T = SuborgSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = RolePreviousValuesSubscription>() => T;
+  previousValues: <T = SuborgPreviousValuesSubscription>() => T;
 }
 
-export interface RolePreviousValues {
-  id: ID_Output;
-  rolename: String;
-  rolelevel: String;
-  levelname?: String;
-}
-
-export interface RolePreviousValuesPromise
-  extends Promise<RolePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  rolename: () => Promise<String>;
-  rolelevel: () => Promise<String>;
-  levelname: () => Promise<String>;
-}
-
-export interface RolePreviousValuesSubscription
-  extends Promise<AsyncIterator<RolePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  rolename: () => Promise<AsyncIterator<String>>;
-  rolelevel: () => Promise<AsyncIterator<String>>;
-  levelname: () => Promise<AsyncIterator<String>>;
-}
-
-export interface SpecializationSubscriptionPayload {
-  mutation: MutationType;
-  node: Specialization;
-  updatedFields: String[];
-  previousValues: SpecializationPreviousValues;
-}
-
-export interface SpecializationSubscriptionPayloadPromise
-  extends Promise<SpecializationSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = SpecializationPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = SpecializationPreviousValuesPromise>() => T;
-}
-
-export interface SpecializationSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SpecializationSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SpecializationSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = SpecializationPreviousValuesSubscription>() => T;
-}
-
-export interface SpecializationPreviousValues {
+export interface SuborgPreviousValues {
   id: ID_Output;
   name: String;
+  description?: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
 
-export interface SpecializationPreviousValuesPromise
-  extends Promise<SpecializationPreviousValues>,
+export interface SuborgPreviousValuesPromise
+  extends Promise<SuborgPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface SpecializationPreviousValuesSubscription
-  extends Promise<AsyncIterator<SpecializationPreviousValues>>,
+export interface SuborgPreviousValuesSubscription
+  extends Promise<AsyncIterator<SuborgPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface StdSubscriptionPayload {
-  mutation: MutationType;
-  node: Std;
-  updatedFields: String[];
-  previousValues: StdPreviousValues;
-}
-
-export interface StdSubscriptionPayloadPromise
-  extends Promise<StdSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StdPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StdPreviousValuesPromise>() => T;
-}
-
-export interface StdSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StdSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StdSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StdPreviousValuesSubscription>() => T;
-}
-
-export interface StdPreviousValues {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface StdPreviousValuesPromise
-  extends Promise<StdPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface StdPreviousValuesSubscription
-  extends Promise<AsyncIterator<StdPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface SubOrgSubscriptionPayload {
-  mutation: MutationType;
-  node: SubOrg;
-  updatedFields: String[];
-  previousValues: SubOrgPreviousValues;
-}
-
-export interface SubOrgSubscriptionPayloadPromise
-  extends Promise<SubOrgSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = SubOrgPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = SubOrgPreviousValuesPromise>() => T;
-}
-
-export interface SubOrgSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SubOrgSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SubOrgSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = SubOrgPreviousValuesSubscription>() => T;
-}
-
-export interface SubOrgPreviousValues {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface SubOrgPreviousValuesPromise
-  extends Promise<SubOrgPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface SubOrgPreviousValuesSubscription
-  extends Promise<AsyncIterator<SubOrgPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface SubjectSubscriptionPayload {
-  mutation: MutationType;
-  node: Subject;
-  updatedFields: String[];
-  previousValues: SubjectPreviousValues;
-}
-
-export interface SubjectSubscriptionPayloadPromise
-  extends Promise<SubjectSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = SubjectPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = SubjectPreviousValuesPromise>() => T;
-}
-
-export interface SubjectSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SubjectSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SubjectSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = SubjectPreviousValuesSubscription>() => T;
-}
-
-export interface SubjectPreviousValues {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface SubjectPreviousValuesPromise
-  extends Promise<SubjectPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface SubjectPreviousValuesSubscription
-  extends Promise<AsyncIterator<SubjectPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface TopicSubscriptionPayload {
-  mutation: MutationType;
-  node: Topic;
-  updatedFields: String[];
-  previousValues: TopicPreviousValues;
-}
-
-export interface TopicSubscriptionPayloadPromise
-  extends Promise<TopicSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TopicPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TopicPreviousValuesPromise>() => T;
-}
-
-export interface TopicSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TopicSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TopicSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TopicPreviousValuesSubscription>() => T;
-}
-
-export interface TopicPreviousValues {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface TopicPreviousValuesPromise
-  extends Promise<TopicPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface TopicPreviousValuesSubscription
-  extends Promise<AsyncIterator<TopicPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UnitSubscriptionPayload {
-  mutation: MutationType;
-  node: Unit;
-  updatedFields: String[];
-  previousValues: UnitPreviousValues;
-}
-
-export interface UnitSubscriptionPayloadPromise
-  extends Promise<UnitSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UnitPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UnitPreviousValuesPromise>() => T;
-}
-
-export interface UnitSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UnitSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UnitSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UnitPreviousValuesSubscription>() => T;
-}
-
-export interface UnitPreviousValues {
-  id: ID_Output;
-  name: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-}
-
-export interface UnitPreviousValuesPromise
-  extends Promise<UnitPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UnitPreviousValuesSubscription
-  extends Promise<AsyncIterator<UnitPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -10281,11 +2737,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -10294,6 +2745,11 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -10308,27 +2764,15 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: "File",
-    embedded: false
-  },
-  {
     name: "Organization",
     embedded: false
   },
   {
-    name: "SubOrg",
+    name: "Suborg",
     embedded: false
   },
   {
     name: "User",
-    embedded: false
-  },
-  {
-    name: "Role",
-    embedded: false
-  },
-  {
-    name: "Group",
     embedded: false
   },
   {
@@ -10337,38 +2781,6 @@ export const models: Model[] = [
   },
   {
     name: "Comment",
-    embedded: false
-  },
-  {
-    name: "Board",
-    embedded: false
-  },
-  {
-    name: "Std",
-    embedded: false
-  },
-  {
-    name: "Specialization",
-    embedded: false
-  },
-  {
-    name: "Subject",
-    embedded: false
-  },
-  {
-    name: "Unit",
-    embedded: false
-  },
-  {
-    name: "Topic",
-    embedded: false
-  },
-  {
-    name: "Address",
-    embedded: false
-  },
-  {
-    name: "BaseAddress",
     embedded: false
   }
 ];

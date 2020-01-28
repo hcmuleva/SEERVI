@@ -2,30 +2,19 @@ type Organization{
   id:ID! @id
   name:String!
   description:String
-  author:[User!]!@relation(name: "UserToOrg", onDelete: CASCADE)
-  subOrgs:[SubOrg!]! @relation(name: "SubOrgToOrg", onDelete: CASCADE)
-  board:[Board!]! @relation(name: "BoardToOrg", onDelete: CASCADE)
-  stds:[Std!]! @relation(name: "StdToOrg", onDelete: CASCADE)
-  specializations:[Specialization!]! @relation(name: "SpecializationToOrg", onDelete: CASCADE)
-  subjects:[Subject!]! @relation(name: "SubjectToOrg", onDelete: CASCADE)
-  units:[Unit!]! @relation(name: "UnitToOrg", onDelete: CASCADE)
-  topics:[Topic!]! @relation(name: "TopicToOrg", onDelete: CASCADE)
+  author:[User!]!     @relation(name: "UserToOrg", onDelete: CASCADE)
+  suborgs:[Suborg!]!  @relation(name: "SuborgToOrg", onDelete: CASCADE)
   updatedAt:DateTime! @updatedAt
   createdAt:DateTime! @createdAt
 }
-type SubOrg{
+type Suborg{
   id: ID! @id
   name:String!
-  board:[Board!]! @relation(name: "BoardToSubOrg", onDelete: CASCADE) 
-  author:[User]  @relation(name: "UserToSubOrg", onDelete: CASCADE)
-  org:Organization! @relation(name: "SubOrgToOrg", onDelete: SET_NULL)
-  stds:[Std!]! @relation(name: "StdToSubOrg", onDelete: CASCADE)
-  specializations:[Specialization!]! @relation(name: "SpecializationToSubOrg", onDelete: CASCADE)
-  subjects:[Subject!]! @relation(name: "SubjectToSubOrg", onDelete: CASCADE)
-  units:[Unit!]! @relation(name: "UnitToSubOrg", onDelete: CASCADE)
-  topics:[Topic!]! @relation(name: "TopicToSubOrg", onDelete: CASCADE)
-  updatedAt:DateTime!  @updatedAt
-  createdAt:DateTime!  @createdAt
+  description:String
+  author:[User]       @relation(name: "UserToSubOrg", onDelete: CASCADE)
+  org:Organization!   @relation(name: "SuborgToOrg", onDelete: SET_NULL)
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
 }
 
 type User {
@@ -34,26 +23,12 @@ type User {
   lastname: String!
   email: String! @unique
   password: String!
+  myorg:Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
+  mysuborg:Suborg @relation(name: "UserToSubOrg", onDelete: SET_NULL)
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
-  org:Organization! @relation(name: "UserToOrg", onDelete: SET_NULL)
-  subOrgs:SubOrg! @relation(name: "UserToSubOrg", onDelete: SET_NULL)
   createdBy:String
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt
-
-}
-
-type Role{
-  id:ID! @id
-  rolename:String!
-  rolelevel:String!
-  levelname:String
-  userid:User! 
-}
-
-type Group{
-  id:ID! @id
-  name:String!
 
 }

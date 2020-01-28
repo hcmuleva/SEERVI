@@ -1,4 +1,22 @@
-function getSubOrgs(parent, args, { prisma }, info) {
-    return prisma.query.subOrgs(null, info)
+function allsuborgs(parent, args, { prisma }, info) {
+
+    return prisma.query.suborgs(null, info)
 }
-export default  getSubOrgs
+
+
+
+async function suborgsoforg(parent, args, { prisma }, info) {
+console.log("getAllSubOrgOfOrg args",args.id,"parent",parent)
+const allSuborgs= await prisma.query.suborgs({
+    where :{
+        org:{connect:{id:args.id}}
+    }
+   
+    
+    
+}, info)
+
+return allSuborgs
+}
+
+export  {allsuborgs,suborgsoforg}

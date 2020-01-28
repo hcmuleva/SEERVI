@@ -5,27 +5,15 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
-    name: "File",
-    embedded: false
-  },
-  {
     name: "Organization",
     embedded: false
   },
   {
-    name: "SubOrg",
+    name: "Suborg",
     embedded: false
   },
   {
     name: "User",
-    embedded: false
-  },
-  {
-    name: "Role",
-    embedded: false
-  },
-  {
-    name: "Group",
     embedded: false
   },
   {
@@ -34,38 +22,6 @@ var models = [
   },
   {
     name: "Comment",
-    embedded: false
-  },
-  {
-    name: "Board",
-    embedded: false
-  },
-  {
-    name: "Std",
-    embedded: false
-  },
-  {
-    name: "Specialization",
-    embedded: false
-  },
-  {
-    name: "Subject",
-    embedded: false
-  },
-  {
-    name: "Unit",
-    embedded: false
-  },
-  {
-    name: "Topic",
-    embedded: false
-  },
-  {
-    name: "Address",
-    embedded: false
-  },
-  {
-    name: "BaseAddress",
     embedded: false
   }
 ];

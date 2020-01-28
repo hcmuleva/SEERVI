@@ -1,0 +1,49 @@
+type Query {
+    allorgs: [Organization!]! 
+    orgByname(name:String!):Organization! 
+    allsuborgs:[Suborg!]!
+    suborgsoforg(id:String!):[Suborg!]!
+}
+type Mutation{
+     createOrganization(data: CreateOrganizationInput!): Organization!
+     createSubOrg(data:CreateSubOrganizationInput!):Suborg!
+     deleteOrg(id:ID!):Organization!
+     updateOrg(id:ID! , data:UpdateOrganizationInpput): Organization!
+     deleteSubOrg(id:ID!):Suborg!
+     updateSuborg(id:ID!,data:UpdateSubOrgInpput!):Suborg!
+}
+type Organization{
+  id:ID!
+  name:String!
+  description:String!
+  
+  
+}
+
+input CreateOrganizationInput{
+  name:String!
+  description:String 
+}
+input UpdateOrganizationInpput{
+  name:String
+  description:String 
+}
+type Suborg{
+    id:ID!
+    name:String!
+    description:String
+    author:[User!]
+    orgid:Organization!
+    
+}
+
+input CreateSubOrganizationInput{
+    name:String!
+    description:String
+    orgid:String!
+
+}
+input UpdateSubOrgInpput{
+  name:String
+  description:String 
+}

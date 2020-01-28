@@ -7,22 +7,14 @@ import singleUpload from './files/singlefileupload'
 import {UserMutationFunction} from './users/UserMutationFunction'
 import {PostMutationFunctions} from './posts/PostMutationFunctions'
 import {CommentsMutationFunction} from './comments/CommentsMutationFunction'
-import {CourcesMutationFunctions} from './education/CourcesMutation'
-import createAddress from './address/mutation/createAddress'
-import createBaseAddress from './baseAddress/mutation/createBaseAddress'
-import uploadFile from './files/uploadFile'
+import {AdminMutation} from './administration/adminMutation'
 const Mutation = {
-    ...CourcesMutationFunctions,
+    /** Administrator mutations */
+    ...AdminMutation,
     /** Users */
     ...UserMutationFunction,
     /** Posts  and comments*/
     ...PostMutationFunctions,...CommentsMutationFunction,
-    /** Address */
-    createBaseAddress,createAddress,
-    /** Fileupload */
-    singleUpload,uploadFile
-
-    
     
 }
 

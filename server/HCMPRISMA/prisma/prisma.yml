@@ -1,12 +1,9 @@
 endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: 
-  - datamodel.graphql
   - users/users.graphql
   - users/posts.graphql
   - users/comments.graphql
-  - boards/cources.graphql
-  - address.graphql
-  
+   
 secret: ${env:PRISMA_SECRET}
 generate:
     - generator: javascript-client

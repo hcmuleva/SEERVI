@@ -1,0 +1,119 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 5,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 3,
+  "numTotalTests": 5,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1580177352019,
+  "success": false,
+  "testResults": [
+    {
+      "failureMessage": null,
+      "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "perfStats": {
+        "end": 1580177354970,
+        "start": 1580177352730
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/org.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Org Create "
+          ],
+          "duration": 93,
+          "failureMessages": [],
+          "fullName": "Org Create  create Org Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "create Org Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Org delete "
+          ],
+          "duration": 71,
+          "failureMessages": [],
+          "fullName": "Org delete  Delete Org Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Delete Org Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Org update "
+          ],
+          "duration": 65,
+          "failureMessages": [],
+          "fullName": "Org update  Update Org Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Update Org Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Org Suite for full test "
+          ],
+          "duration": 36,
+          "failureMessages": [],
+          "fullName": "Org Suite for full test  create Org Positive Case WithoutDescription",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "create Org Positive Case WithoutDescription"
+        },
+        {
+          "ancestorTitles": [
+            "Org Suite for full test "
+          ],
+          "duration": 39,
+          "failureMessages": [],
+          "fullName": "Org Suite for full test  create Org Negative: Org withoutname",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "create Org Negative: Org withoutname"
+        }
+      ],
+      "skipped": false,
+      "leaks": false
+    }
+  ],
+  "wasInterrupted": false
+}

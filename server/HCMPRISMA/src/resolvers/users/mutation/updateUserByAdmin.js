@@ -5,13 +5,7 @@ async function updateUserByAdmin(parent, args, { prisma, request }, info) {
     if(typeof args.data.password === 'string'){
         args.data.password=await hashPassword(args.data.password)
     }
-    console.log("typeof args.data.roles",typeof args.data.roles)
-    if (args.data.roles instanceof Array) {
-        console.log("IF and array and value",args.data.roles,"userId",userId)
-    } else {
-        console.log("else  and not array")
-    }
-    
+   
     return prisma.mutation.updateUser({
         where: {
             id: userId

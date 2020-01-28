@@ -4,6 +4,6 @@ const server = require('../../src/server').default
 
 module.exports = async () => {
     console.log("TEST Server starting")
-    global.httpServer = await server.start({ port: 4000 })
+    global.httpServer = await server.start({ port: 5000 })
 
 }

@@ -1,8 +1,0 @@
-
-type File {
-  id: ID! @id
-  path: String
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
