@@ -5,14 +5,29 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
-    "test": "env-cmd -f ./config/dev.env jest --watch",
+    "dev": "env-cmd -f ./config/test.env nodemon src/index.js --ext js,graphql --exec babel-node",
+    "test": "env-cmd -f ./config/test.env jest  --reporters=default --reporters=jest-stare --group=suborg/querySubOrg",
+    "devdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/dev.env",
+    "testdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/test.env",
     "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",
     "test-schema": "graphql get-schema -p prisma --dotenv config/test.env"
   },
   "jest": {
     "globalSetup": "./tests/jest/globalSetup.js",
-    "globalTeardown": "./tests/jest/globalTeardown.js"
+    "globalTeardown": "./tests/jest/globalTeardown.js",
+    "runner": "groups",
+    "reporters": [
+      "default",
+      [
+        "default",
+        [
+          "./node_modules/jest-html-reporter",
+          {
+            "pageTitle": "Test Report"
+          }
+        ]
+      ]
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +37,7 @@
     "@babel/polyfill": "^7.6.0",
     "@babel/runtime": "^7.7.2",
     "apollo-boost": "^0.4.7",
+    "apollo-errors": "^1.9.0",
     "aws-sdk": "^2.580.0",
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
@@ -34,10 +50,13 @@
     "graphql-middleware-apollo-upload-server": "^1.0.10",
     "graphql-yoga": "^1.14.10",
     "jest": "^24.9.0",
+    "jest-runner-groups": "^1.0.0",
+    "jest-stare": "^1.26.0",
     "jsonwebtoken": "^8.5.1",
     "lowdb": "^1.0.0",
     "mkdirp": "^0.5.1",
     "prisma-binding": "^2.3.16",
+    "prisma-client-lib": "^1.34.10",
     "shortid": "^2.2.15",
     "uuid": "^3.3.3"
   },

@@ -2,85 +2,28 @@
 type Query {
     users(query: String): [User!]!
     me: User!
-    usersForAdmin:[User!]! 
-    roles:[Role!]!
-    getUserRoles(userid:String,groupid:String):[Role!]!
-    myRoles:[UserRole!]!
-    getOrg: [Organization!]! 
-    orgByname(name:String!):Organization! 
-    getSubOrgs:[SubOrg!]!
-    groups:[Group!]!
-    suborgToGroup(query:String!):[SubOrgGroup]
+    usersForAdmin:[User!]!    
 }
 type Mutation {
-    createOrganization(data: CreateOrganizationInput!): Organization!
-    createSubOrg(data:CreateSubOrganizationInput!):SubOrg!
-    createGroup(data:CreateGroupInput!):Group!
     createUser(data: CreateUserInput!): AuthPayload!
     createUserByAdmin(data:CreateUserInput!): AuthPayload!
     login(data: LoginUserInput!): AuthPayload!
     deleteUser: User!
     updateUser(data: UpdateUserInput!): User!
     updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
-    createRole(data:CreateRoleInput!): Role! 
-    createGroupsToSubOrg(data:SubOrgGroupInput!):SubOrgGroup!
-    deleteOrganization(id:ID!):Organization!
+   
 }
 
-type Organization{
-  id:ID!
-  name:String!
-  description:String
-  author:[User!]
-  subOrgs:[SubOrg!]
-  
-}
-
-input CreateOrganizationInput{
-  name:String!
-  description:String 
-}
-type SubOrg{
-    id:ID!
-    name:String!
-    author:[User!]
-    org:Organization!
-    
-}
-
-input CreateSubOrganizationInput{
-    name:String!
-    org:String!
-
-}
-type Group{
-    id:ID!
-    name:String!
-}
-type SubOrgGroup{
-  id:ID!
-  suborg:SubOrg! 
-  group:[Group!] 
-}
-input SubOrgGroupInput{
-    suborg:String!
-    group:String!
-}
-
-input CreateGroupInput{
-    name:String!
-}
 type User {
     id: ID!
     firstname: String!
     lastname: String!
     email: String!
-    password: String!
-    posts: [Post!]!
+    password: String!   
+    myorg:Organization  
+    mysuborg:Suborg 
+    posts: [Post!]! 
     comments: [Comment!]!
-    org:Organization!  
-    subOrgs:SubOrg! 
-    roles:[Role!]!
     createdBy:ID
     createdAt:String!
     updatedAt:String!
@@ -88,15 +31,14 @@ type User {
 type AuthPayload {
     token: String!
     user: User!   
-    roles:[Json]
 }
 input CreateUserInput {
     firstname:String!
     lastname: String!
     email: String!
     password: String!
-    subOrg:String!
-    org:String!
+    myorg:String
+    mysuborg:String
 }
 
 input UpdateUserInputByAdmin{
@@ -104,8 +46,8 @@ input UpdateUserInputByAdmin{
     lastname: String
     email: String
     password: String
-    org:String
-    subOrg:String
+    myorg:String
+    mysuborg:String
 }
 input LoginUserInput {
     email: String!
@@ -116,24 +58,6 @@ input UpdateUserInput {
     lastName: String
     email: String
     password:String
-}
-type UserRole{
-    id:ID!
-    user:User!
-    role:Role!
-    group:Group!
-}
-
-type Role{
-    id:ID! 
-    rolename:String!
-    rolelevel:String!
-    levelname:String
-    userid:User!
-}
-input CreateRoleInput{
-    rolename:String!
-    rolelevel:String!
-    levelname:String
-    userid:String!
+    myorg:String
+    mysuborg:String
 }

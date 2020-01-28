@@ -7,7 +7,7 @@ import { ApolloLink, Observable } from 'apollo-link'
 import { WebSocketLink } from "apollo-link-ws"
 import { getMainDefinition } from 'apollo-utilities'
 
-const getClient = (jwt, httpURL = 'http://localhost:4000', websocketURL = 'ws://localhost:4000') => {
+const getClient = (jwt, httpURL = 'http://localhost:5000', websocketURL = 'ws://localhost:5000') => {
     // Setup the authorization header for the http client
     const request = async (operation) => {
         if (jwt) {
@@ -79,14 +79,17 @@ const getClient = (jwt, httpURL = 'http://localhost:4000', websocketURL = 'ws://
     const httpLink = ApolloLink.from([
         onError(({ graphQLErrors, networkError }) => {
             if (graphQLErrors) {
-                graphQLErrors.map(({ message, locations, path }) =>
+                graphQLErrors.map(({ message, locations, path }) =>{
+                    console.log("Location", JSON.stringify(location))
                     console.log(
-                        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-                    ),
+                        `[GraphQL error]: Message: ${message}, Path: ${path}`,
+                    )
+                }
                 )
             }
             if (networkError) {
-                console.log(`[Network error]: ${networkError}`)
+                throw new Error(`[Network error]: ${networkError}`)
+                //console.log(`[Network error]: ${networkError}`)
             }
         }),
         requestLink,

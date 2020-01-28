@@ -3,186 +3,7 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type Address {
-  id: ID!
-  house: String
-  landmark: String
-  published: Boolean!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-  author: User!
-  baseAddress: BaseAddress
-}
-
-type AddressConnection {
-  pageInfo: PageInfo!
-  edges: [AddressEdge]!
-  aggregate: AggregateAddress!
-}
-
-input AddressCreateInput {
-  id: ID
-  house: String
-  landmark: String
-  published: Boolean!
-  author: UserCreateOneInput!
-  baseAddress: BaseAddressCreateOneInput
-}
-
-type AddressEdge {
-  node: Address!
-  cursor: String!
-}
-
-enum AddressOrderByInput {
-  id_ASC
-  id_DESC
-  house_ASC
-  house_DESC
-  landmark_ASC
-  landmark_DESC
-  published_ASC
-  published_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type AddressPreviousValues {
-  id: ID!
-  house: String
-  landmark: String
-  published: Boolean!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type AddressSubscriptionPayload {
-  mutation: MutationType!
-  node: Address
-  updatedFields: [String!]
-  previousValues: AddressPreviousValues
-}
-
-input AddressSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: AddressWhereInput
-  AND: [AddressSubscriptionWhereInput!]
-  OR: [AddressSubscriptionWhereInput!]
-  NOT: [AddressSubscriptionWhereInput!]
-}
-
-input AddressUpdateInput {
-  house: String
-  landmark: String
-  published: Boolean
-  author: UserUpdateOneRequiredInput
-  baseAddress: BaseAddressUpdateOneInput
-}
-
-input AddressUpdateManyMutationInput {
-  house: String
-  landmark: String
-  published: Boolean
-}
-
-input AddressWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  house: String
-  house_not: String
-  house_in: [String!]
-  house_not_in: [String!]
-  house_lt: String
-  house_lte: String
-  house_gt: String
-  house_gte: String
-  house_contains: String
-  house_not_contains: String
-  house_starts_with: String
-  house_not_starts_with: String
-  house_ends_with: String
-  house_not_ends_with: String
-  landmark: String
-  landmark_not: String
-  landmark_in: [String!]
-  landmark_not_in: [String!]
-  landmark_lt: String
-  landmark_lte: String
-  landmark_gt: String
-  landmark_gte: String
-  landmark_contains: String
-  landmark_not_contains: String
-  landmark_starts_with: String
-  landmark_not_starts_with: String
-  landmark_ends_with: String
-  landmark_not_ends_with: String
-  published: Boolean
-  published_not: Boolean
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  author: UserWhereInput
-  baseAddress: BaseAddressWhereInput
-  AND: [AddressWhereInput!]
-  OR: [AddressWhereInput!]
-  NOT: [AddressWhereInput!]
-}
-
-input AddressWhereUniqueInput {
-  id: ID
-}
-
-type AggregateAddress {
-  count: Int!
-}
-
-type AggregateBaseAddress {
-  count: Int!
-}
-
-type AggregateBoard {
-  count: Int!
-}
-
-type AggregateComment {
-  count: Int!
-}
-
-type AggregateFile {
-  count: Int!
-}
-
-type AggregateGroup {
+/* GraphQL */ `type AggregateComment {
   count: Int!
 }
 
@@ -194,31 +15,7 @@ type AggregatePost {
   count: Int!
 }
 
-type AggregateRole {
-  count: Int!
-}
-
-type AggregateSpecialization {
-  count: Int!
-}
-
-type AggregateStd {
-  count: Int!
-}
-
-type AggregateSubject {
-  count: Int!
-}
-
-type AggregateSubOrg {
-  count: Int!
-}
-
-type AggregateTopic {
-  count: Int!
-}
-
-type AggregateUnit {
+type AggregateSuborg {
   count: Int!
 }
 
@@ -226,968 +23,8 @@ type AggregateUser {
   count: Int!
 }
 
-type BaseAddress {
-  id: ID!
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String
-  latitude: String
-}
-
-type BaseAddressConnection {
-  pageInfo: PageInfo!
-  edges: [BaseAddressEdge]!
-  aggregate: AggregateBaseAddress!
-}
-
-input BaseAddressCreateInput {
-  id: ID
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String
-  latitude: String
-}
-
-input BaseAddressCreateOneInput {
-  create: BaseAddressCreateInput
-  connect: BaseAddressWhereUniqueInput
-}
-
-type BaseAddressEdge {
-  node: BaseAddress!
-  cursor: String!
-}
-
-enum BaseAddressOrderByInput {
-  id_ASC
-  id_DESC
-  officename_ASC
-  officename_DESC
-  pincode_ASC
-  pincode_DESC
-  officeType_ASC
-  officeType_DESC
-  Deliverystatus_ASC
-  Deliverystatus_DESC
-  divisionname_ASC
-  divisionname_DESC
-  regionname_ASC
-  regionname_DESC
-  circlename_ASC
-  circlename_DESC
-  taluk_ASC
-  taluk_DESC
-  districtname_ASC
-  districtname_DESC
-  statename_ASC
-  statename_DESC
-  telephone_ASC
-  telephone_DESC
-  relatedSuboffice_ASC
-  relatedSuboffice_DESC
-  relatedHeadoffice_ASC
-  relatedHeadoffice_DESC
-  longitude_ASC
-  longitude_DESC
-  latitude_ASC
-  latitude_DESC
-}
-
-type BaseAddressPreviousValues {
-  id: ID!
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String
-  latitude: String
-}
-
-type BaseAddressSubscriptionPayload {
-  mutation: MutationType!
-  node: BaseAddress
-  updatedFields: [String!]
-  previousValues: BaseAddressPreviousValues
-}
-
-input BaseAddressSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: BaseAddressWhereInput
-  AND: [BaseAddressSubscriptionWhereInput!]
-  OR: [BaseAddressSubscriptionWhereInput!]
-  NOT: [BaseAddressSubscriptionWhereInput!]
-}
-
-input BaseAddressUpdateDataInput {
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String
-  latitude: String
-}
-
-input BaseAddressUpdateInput {
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String
-  latitude: String
-}
-
-input BaseAddressUpdateManyMutationInput {
-  officename: String
-  pincode: String
-  officeType: String
-  Deliverystatus: String
-  divisionname: String
-  regionname: String
-  circlename: String
-  taluk: String
-  districtname: String
-  statename: String
-  telephone: String
-  relatedSuboffice: String
-  relatedHeadoffice: String
-  longitude: String
-  latitude: String
-}
-
-input BaseAddressUpdateOneInput {
-  create: BaseAddressCreateInput
-  update: BaseAddressUpdateDataInput
-  upsert: BaseAddressUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: BaseAddressWhereUniqueInput
-}
-
-input BaseAddressUpsertNestedInput {
-  update: BaseAddressUpdateDataInput!
-  create: BaseAddressCreateInput!
-}
-
-input BaseAddressWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  officename: String
-  officename_not: String
-  officename_in: [String!]
-  officename_not_in: [String!]
-  officename_lt: String
-  officename_lte: String
-  officename_gt: String
-  officename_gte: String
-  officename_contains: String
-  officename_not_contains: String
-  officename_starts_with: String
-  officename_not_starts_with: String
-  officename_ends_with: String
-  officename_not_ends_with: String
-  pincode: String
-  pincode_not: String
-  pincode_in: [String!]
-  pincode_not_in: [String!]
-  pincode_lt: String
-  pincode_lte: String
-  pincode_gt: String
-  pincode_gte: String
-  pincode_contains: String
-  pincode_not_contains: String
-  pincode_starts_with: String
-  pincode_not_starts_with: String
-  pincode_ends_with: String
-  pincode_not_ends_with: String
-  officeType: String
-  officeType_not: String
-  officeType_in: [String!]
-  officeType_not_in: [String!]
-  officeType_lt: String
-  officeType_lte: String
-  officeType_gt: String
-  officeType_gte: String
-  officeType_contains: String
-  officeType_not_contains: String
-  officeType_starts_with: String
-  officeType_not_starts_with: String
-  officeType_ends_with: String
-  officeType_not_ends_with: String
-  Deliverystatus: String
-  Deliverystatus_not: String
-  Deliverystatus_in: [String!]
-  Deliverystatus_not_in: [String!]
-  Deliverystatus_lt: String
-  Deliverystatus_lte: String
-  Deliverystatus_gt: String
-  Deliverystatus_gte: String
-  Deliverystatus_contains: String
-  Deliverystatus_not_contains: String
-  Deliverystatus_starts_with: String
-  Deliverystatus_not_starts_with: String
-  Deliverystatus_ends_with: String
-  Deliverystatus_not_ends_with: String
-  divisionname: String
-  divisionname_not: String
-  divisionname_in: [String!]
-  divisionname_not_in: [String!]
-  divisionname_lt: String
-  divisionname_lte: String
-  divisionname_gt: String
-  divisionname_gte: String
-  divisionname_contains: String
-  divisionname_not_contains: String
-  divisionname_starts_with: String
-  divisionname_not_starts_with: String
-  divisionname_ends_with: String
-  divisionname_not_ends_with: String
-  regionname: String
-  regionname_not: String
-  regionname_in: [String!]
-  regionname_not_in: [String!]
-  regionname_lt: String
-  regionname_lte: String
-  regionname_gt: String
-  regionname_gte: String
-  regionname_contains: String
-  regionname_not_contains: String
-  regionname_starts_with: String
-  regionname_not_starts_with: String
-  regionname_ends_with: String
-  regionname_not_ends_with: String
-  circlename: String
-  circlename_not: String
-  circlename_in: [String!]
-  circlename_not_in: [String!]
-  circlename_lt: String
-  circlename_lte: String
-  circlename_gt: String
-  circlename_gte: String
-  circlename_contains: String
-  circlename_not_contains: String
-  circlename_starts_with: String
-  circlename_not_starts_with: String
-  circlename_ends_with: String
-  circlename_not_ends_with: String
-  taluk: String
-  taluk_not: String
-  taluk_in: [String!]
-  taluk_not_in: [String!]
-  taluk_lt: String
-  taluk_lte: String
-  taluk_gt: String
-  taluk_gte: String
-  taluk_contains: String
-  taluk_not_contains: String
-  taluk_starts_with: String
-  taluk_not_starts_with: String
-  taluk_ends_with: String
-  taluk_not_ends_with: String
-  districtname: String
-  districtname_not: String
-  districtname_in: [String!]
-  districtname_not_in: [String!]
-  districtname_lt: String
-  districtname_lte: String
-  districtname_gt: String
-  districtname_gte: String
-  districtname_contains: String
-  districtname_not_contains: String
-  districtname_starts_with: String
-  districtname_not_starts_with: String
-  districtname_ends_with: String
-  districtname_not_ends_with: String
-  statename: String
-  statename_not: String
-  statename_in: [String!]
-  statename_not_in: [String!]
-  statename_lt: String
-  statename_lte: String
-  statename_gt: String
-  statename_gte: String
-  statename_contains: String
-  statename_not_contains: String
-  statename_starts_with: String
-  statename_not_starts_with: String
-  statename_ends_with: String
-  statename_not_ends_with: String
-  telephone: String
-  telephone_not: String
-  telephone_in: [String!]
-  telephone_not_in: [String!]
-  telephone_lt: String
-  telephone_lte: String
-  telephone_gt: String
-  telephone_gte: String
-  telephone_contains: String
-  telephone_not_contains: String
-  telephone_starts_with: String
-  telephone_not_starts_with: String
-  telephone_ends_with: String
-  telephone_not_ends_with: String
-  relatedSuboffice: String
-  relatedSuboffice_not: String
-  relatedSuboffice_in: [String!]
-  relatedSuboffice_not_in: [String!]
-  relatedSuboffice_lt: String
-  relatedSuboffice_lte: String
-  relatedSuboffice_gt: String
-  relatedSuboffice_gte: String
-  relatedSuboffice_contains: String
-  relatedSuboffice_not_contains: String
-  relatedSuboffice_starts_with: String
-  relatedSuboffice_not_starts_with: String
-  relatedSuboffice_ends_with: String
-  relatedSuboffice_not_ends_with: String
-  relatedHeadoffice: String
-  relatedHeadoffice_not: String
-  relatedHeadoffice_in: [String!]
-  relatedHeadoffice_not_in: [String!]
-  relatedHeadoffice_lt: String
-  relatedHeadoffice_lte: String
-  relatedHeadoffice_gt: String
-  relatedHeadoffice_gte: String
-  relatedHeadoffice_contains: String
-  relatedHeadoffice_not_contains: String
-  relatedHeadoffice_starts_with: String
-  relatedHeadoffice_not_starts_with: String
-  relatedHeadoffice_ends_with: String
-  relatedHeadoffice_not_ends_with: String
-  longitude: String
-  longitude_not: String
-  longitude_in: [String!]
-  longitude_not_in: [String!]
-  longitude_lt: String
-  longitude_lte: String
-  longitude_gt: String
-  longitude_gte: String
-  longitude_contains: String
-  longitude_not_contains: String
-  longitude_starts_with: String
-  longitude_not_starts_with: String
-  longitude_ends_with: String
-  longitude_not_ends_with: String
-  latitude: String
-  latitude_not: String
-  latitude_in: [String!]
-  latitude_not_in: [String!]
-  latitude_lt: String
-  latitude_lte: String
-  latitude_gt: String
-  latitude_gte: String
-  latitude_contains: String
-  latitude_not_contains: String
-  latitude_starts_with: String
-  latitude_not_starts_with: String
-  latitude_ends_with: String
-  latitude_not_ends_with: String
-  AND: [BaseAddressWhereInput!]
-  OR: [BaseAddressWhereInput!]
-  NOT: [BaseAddressWhereInput!]
-}
-
-input BaseAddressWhereUniqueInput {
-  id: ID
-}
-
 type BatchPayload {
   count: Long!
-}
-
-type Board {
-  id: ID!
-  name: String!
-  published: Boolean!
-  org: Organization!
-  subOrg: SubOrg!
-  stds(where: StdWhereInput, orderBy: StdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Std!]
-  specializations(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization!]
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type BoardConnection {
-  pageInfo: PageInfo!
-  edges: [BoardEdge]!
-  aggregate: AggregateBoard!
-}
-
-input BoardCreateInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  specializations: SpecializationCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-input BoardCreateManyWithoutOrgInput {
-  create: [BoardCreateWithoutOrgInput!]
-  connect: [BoardWhereUniqueInput!]
-}
-
-input BoardCreateManyWithoutSubOrgInput {
-  create: [BoardCreateWithoutSubOrgInput!]
-  connect: [BoardWhereUniqueInput!]
-}
-
-input BoardCreateOneWithoutSpecializationsInput {
-  create: BoardCreateWithoutSpecializationsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardCreateOneWithoutStdsInput {
-  create: BoardCreateWithoutStdsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardCreateOneWithoutSubjectsInput {
-  create: BoardCreateWithoutSubjectsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardCreateOneWithoutTopicsInput {
-  create: BoardCreateWithoutTopicsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardCreateOneWithoutUnitsInput {
-  create: BoardCreateWithoutUnitsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  specializations: SpecializationCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-input BoardCreateWithoutSpecializationsInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-input BoardCreateWithoutStdsInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  specializations: SpecializationCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-input BoardCreateWithoutSubjectsInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  specializations: SpecializationCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-input BoardCreateWithoutSubOrgInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  specializations: SpecializationCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-input BoardCreateWithoutTopicsInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  specializations: SpecializationCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  units: UnitCreateManyWithoutBoardInput
-}
-
-input BoardCreateWithoutUnitsInput {
-  id: ID
-  name: String!
-  published: Boolean!
-  org: OrganizationCreateOneWithoutBoardInput!
-  subOrg: SubOrgCreateOneWithoutBoardInput!
-  stds: StdCreateManyWithoutBoardInput
-  specializations: SpecializationCreateManyWithoutBoardInput
-  subjects: SubjectCreateManyWithoutBoardInput
-  topics: TopicCreateManyWithoutBoardInput
-}
-
-type BoardEdge {
-  node: Board!
-  cursor: String!
-}
-
-enum BoardOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  published_ASC
-  published_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type BoardPreviousValues {
-  id: ID!
-  name: String!
-  published: Boolean!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input BoardScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  published: Boolean
-  published_not: Boolean
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [BoardScalarWhereInput!]
-  OR: [BoardScalarWhereInput!]
-  NOT: [BoardScalarWhereInput!]
-}
-
-type BoardSubscriptionPayload {
-  mutation: MutationType!
-  node: Board
-  updatedFields: [String!]
-  previousValues: BoardPreviousValues
-}
-
-input BoardSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: BoardWhereInput
-  AND: [BoardSubscriptionWhereInput!]
-  OR: [BoardSubscriptionWhereInput!]
-  NOT: [BoardSubscriptionWhereInput!]
-}
-
-input BoardUpdateInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateManyDataInput {
-  name: String
-  published: Boolean
-}
-
-input BoardUpdateManyMutationInput {
-  name: String
-  published: Boolean
-}
-
-input BoardUpdateManyWithoutOrgInput {
-  create: [BoardCreateWithoutOrgInput!]
-  delete: [BoardWhereUniqueInput!]
-  connect: [BoardWhereUniqueInput!]
-  set: [BoardWhereUniqueInput!]
-  disconnect: [BoardWhereUniqueInput!]
-  update: [BoardUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [BoardUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [BoardScalarWhereInput!]
-  updateMany: [BoardUpdateManyWithWhereNestedInput!]
-}
-
-input BoardUpdateManyWithoutSubOrgInput {
-  create: [BoardCreateWithoutSubOrgInput!]
-  delete: [BoardWhereUniqueInput!]
-  connect: [BoardWhereUniqueInput!]
-  set: [BoardWhereUniqueInput!]
-  disconnect: [BoardWhereUniqueInput!]
-  update: [BoardUpdateWithWhereUniqueWithoutSubOrgInput!]
-  upsert: [BoardUpsertWithWhereUniqueWithoutSubOrgInput!]
-  deleteMany: [BoardScalarWhereInput!]
-  updateMany: [BoardUpdateManyWithWhereNestedInput!]
-}
-
-input BoardUpdateManyWithWhereNestedInput {
-  where: BoardScalarWhereInput!
-  data: BoardUpdateManyDataInput!
-}
-
-input BoardUpdateOneRequiredWithoutSpecializationsInput {
-  create: BoardCreateWithoutSpecializationsInput
-  update: BoardUpdateWithoutSpecializationsDataInput
-  upsert: BoardUpsertWithoutSpecializationsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardUpdateOneRequiredWithoutStdsInput {
-  create: BoardCreateWithoutStdsInput
-  update: BoardUpdateWithoutStdsDataInput
-  upsert: BoardUpsertWithoutStdsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardUpdateOneRequiredWithoutSubjectsInput {
-  create: BoardCreateWithoutSubjectsInput
-  update: BoardUpdateWithoutSubjectsDataInput
-  upsert: BoardUpsertWithoutSubjectsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardUpdateOneRequiredWithoutTopicsInput {
-  create: BoardCreateWithoutTopicsInput
-  update: BoardUpdateWithoutTopicsDataInput
-  upsert: BoardUpsertWithoutTopicsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardUpdateOneRequiredWithoutUnitsInput {
-  create: BoardCreateWithoutUnitsInput
-  update: BoardUpdateWithoutUnitsDataInput
-  upsert: BoardUpsertWithoutUnitsInput
-  connect: BoardWhereUniqueInput
-}
-
-input BoardUpdateWithoutOrgDataInput {
-  name: String
-  published: Boolean
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithoutSpecializationsDataInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithoutStdsDataInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithoutSubjectsDataInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithoutSubOrgDataInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithoutTopicsDataInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  units: UnitUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithoutUnitsDataInput {
-  name: String
-  published: Boolean
-  org: OrganizationUpdateOneRequiredWithoutBoardInput
-  subOrg: SubOrgUpdateOneRequiredWithoutBoardInput
-  stds: StdUpdateManyWithoutBoardInput
-  specializations: SpecializationUpdateManyWithoutBoardInput
-  subjects: SubjectUpdateManyWithoutBoardInput
-  topics: TopicUpdateManyWithoutBoardInput
-}
-
-input BoardUpdateWithWhereUniqueWithoutOrgInput {
-  where: BoardWhereUniqueInput!
-  data: BoardUpdateWithoutOrgDataInput!
-}
-
-input BoardUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: BoardWhereUniqueInput!
-  data: BoardUpdateWithoutSubOrgDataInput!
-}
-
-input BoardUpsertWithoutSpecializationsInput {
-  update: BoardUpdateWithoutSpecializationsDataInput!
-  create: BoardCreateWithoutSpecializationsInput!
-}
-
-input BoardUpsertWithoutStdsInput {
-  update: BoardUpdateWithoutStdsDataInput!
-  create: BoardCreateWithoutStdsInput!
-}
-
-input BoardUpsertWithoutSubjectsInput {
-  update: BoardUpdateWithoutSubjectsDataInput!
-  create: BoardCreateWithoutSubjectsInput!
-}
-
-input BoardUpsertWithoutTopicsInput {
-  update: BoardUpdateWithoutTopicsDataInput!
-  create: BoardCreateWithoutTopicsInput!
-}
-
-input BoardUpsertWithoutUnitsInput {
-  update: BoardUpdateWithoutUnitsDataInput!
-  create: BoardCreateWithoutUnitsInput!
-}
-
-input BoardUpsertWithWhereUniqueWithoutOrgInput {
-  where: BoardWhereUniqueInput!
-  update: BoardUpdateWithoutOrgDataInput!
-  create: BoardCreateWithoutOrgInput!
-}
-
-input BoardUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: BoardWhereUniqueInput!
-  update: BoardUpdateWithoutSubOrgDataInput!
-  create: BoardCreateWithoutSubOrgInput!
-}
-
-input BoardWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  published: Boolean
-  published_not: Boolean
-  org: OrganizationWhereInput
-  subOrg: SubOrgWhereInput
-  stds_every: StdWhereInput
-  stds_some: StdWhereInput
-  stds_none: StdWhereInput
-  specializations_every: SpecializationWhereInput
-  specializations_some: SpecializationWhereInput
-  specializations_none: SpecializationWhereInput
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
-  units_every: UnitWhereInput
-  units_some: UnitWhereInput
-  units_none: UnitWhereInput
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [BoardWhereInput!]
-  OR: [BoardWhereInput!]
-  NOT: [BoardWhereInput!]
-}
-
-input BoardWhereUniqueInput {
-  id: ID
 }
 
 type Comment {
@@ -1458,302 +295,15 @@ input CommentWhereUniqueInput {
 
 scalar DateTime
 
-type File {
-  id: ID!
-  path: String
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
-
-type FileConnection {
-  pageInfo: PageInfo!
-  edges: [FileEdge]!
-  aggregate: AggregateFile!
-}
-
-input FileCreateInput {
-  id: ID
-  path: String
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
-
-type FileEdge {
-  node: File!
-  cursor: String!
-}
-
-enum FileOrderByInput {
-  id_ASC
-  id_DESC
-  path_ASC
-  path_DESC
-  filename_ASC
-  filename_DESC
-  mimetype_ASC
-  mimetype_DESC
-  encoding_ASC
-  encoding_DESC
-}
-
-type FilePreviousValues {
-  id: ID!
-  path: String
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
-
-type FileSubscriptionPayload {
-  mutation: MutationType!
-  node: File
-  updatedFields: [String!]
-  previousValues: FilePreviousValues
-}
-
-input FileSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: FileWhereInput
-  AND: [FileSubscriptionWhereInput!]
-  OR: [FileSubscriptionWhereInput!]
-  NOT: [FileSubscriptionWhereInput!]
-}
-
-input FileUpdateInput {
-  path: String
-  filename: String
-  mimetype: String
-  encoding: String
-}
-
-input FileUpdateManyMutationInput {
-  path: String
-  filename: String
-  mimetype: String
-  encoding: String
-}
-
-input FileWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  path: String
-  path_not: String
-  path_in: [String!]
-  path_not_in: [String!]
-  path_lt: String
-  path_lte: String
-  path_gt: String
-  path_gte: String
-  path_contains: String
-  path_not_contains: String
-  path_starts_with: String
-  path_not_starts_with: String
-  path_ends_with: String
-  path_not_ends_with: String
-  filename: String
-  filename_not: String
-  filename_in: [String!]
-  filename_not_in: [String!]
-  filename_lt: String
-  filename_lte: String
-  filename_gt: String
-  filename_gte: String
-  filename_contains: String
-  filename_not_contains: String
-  filename_starts_with: String
-  filename_not_starts_with: String
-  filename_ends_with: String
-  filename_not_ends_with: String
-  mimetype: String
-  mimetype_not: String
-  mimetype_in: [String!]
-  mimetype_not_in: [String!]
-  mimetype_lt: String
-  mimetype_lte: String
-  mimetype_gt: String
-  mimetype_gte: String
-  mimetype_contains: String
-  mimetype_not_contains: String
-  mimetype_starts_with: String
-  mimetype_not_starts_with: String
-  mimetype_ends_with: String
-  mimetype_not_ends_with: String
-  encoding: String
-  encoding_not: String
-  encoding_in: [String!]
-  encoding_not_in: [String!]
-  encoding_lt: String
-  encoding_lte: String
-  encoding_gt: String
-  encoding_gte: String
-  encoding_contains: String
-  encoding_not_contains: String
-  encoding_starts_with: String
-  encoding_not_starts_with: String
-  encoding_ends_with: String
-  encoding_not_ends_with: String
-  AND: [FileWhereInput!]
-  OR: [FileWhereInput!]
-  NOT: [FileWhereInput!]
-}
-
-input FileWhereUniqueInput {
-  id: ID
-}
-
-type Group {
-  id: ID!
-  name: String!
-}
-
-type GroupConnection {
-  pageInfo: PageInfo!
-  edges: [GroupEdge]!
-  aggregate: AggregateGroup!
-}
-
-input GroupCreateInput {
-  id: ID
-  name: String!
-}
-
-type GroupEdge {
-  node: Group!
-  cursor: String!
-}
-
-enum GroupOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-}
-
-type GroupPreviousValues {
-  id: ID!
-  name: String!
-}
-
-type GroupSubscriptionPayload {
-  mutation: MutationType!
-  node: Group
-  updatedFields: [String!]
-  previousValues: GroupPreviousValues
-}
-
-input GroupSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: GroupWhereInput
-  AND: [GroupSubscriptionWhereInput!]
-  OR: [GroupSubscriptionWhereInput!]
-  NOT: [GroupSubscriptionWhereInput!]
-}
-
-input GroupUpdateInput {
-  name: String
-}
-
-input GroupUpdateManyMutationInput {
-  name: String
-}
-
-input GroupWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  AND: [GroupWhereInput!]
-  OR: [GroupWhereInput!]
-  NOT: [GroupWhereInput!]
-}
-
-input GroupWhereUniqueInput {
-  id: ID
-}
-
 scalar Long
 
 type Mutation {
-  createAddress(data: AddressCreateInput!): Address!
-  updateAddress(data: AddressUpdateInput!, where: AddressWhereUniqueInput!): Address
-  updateManyAddresses(data: AddressUpdateManyMutationInput!, where: AddressWhereInput): BatchPayload!
-  upsertAddress(where: AddressWhereUniqueInput!, create: AddressCreateInput!, update: AddressUpdateInput!): Address!
-  deleteAddress(where: AddressWhereUniqueInput!): Address
-  deleteManyAddresses(where: AddressWhereInput): BatchPayload!
-  createBaseAddress(data: BaseAddressCreateInput!): BaseAddress!
-  updateBaseAddress(data: BaseAddressUpdateInput!, where: BaseAddressWhereUniqueInput!): BaseAddress
-  updateManyBaseAddresses(data: BaseAddressUpdateManyMutationInput!, where: BaseAddressWhereInput): BatchPayload!
-  upsertBaseAddress(where: BaseAddressWhereUniqueInput!, create: BaseAddressCreateInput!, update: BaseAddressUpdateInput!): BaseAddress!
-  deleteBaseAddress(where: BaseAddressWhereUniqueInput!): BaseAddress
-  deleteManyBaseAddresses(where: BaseAddressWhereInput): BatchPayload!
-  createBoard(data: BoardCreateInput!): Board!
-  updateBoard(data: BoardUpdateInput!, where: BoardWhereUniqueInput!): Board
-  updateManyBoards(data: BoardUpdateManyMutationInput!, where: BoardWhereInput): BatchPayload!
-  upsertBoard(where: BoardWhereUniqueInput!, create: BoardCreateInput!, update: BoardUpdateInput!): Board!
-  deleteBoard(where: BoardWhereUniqueInput!): Board
-  deleteManyBoards(where: BoardWhereInput): BatchPayload!
   createComment(data: CommentCreateInput!): Comment!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
-  createFile(data: FileCreateInput!): File!
-  updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
-  updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
-  upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
-  deleteFile(where: FileWhereUniqueInput!): File
-  deleteManyFiles(where: FileWhereInput): BatchPayload!
-  createGroup(data: GroupCreateInput!): Group!
-  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
-  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
-  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
-  deleteGroup(where: GroupWhereUniqueInput!): Group
-  deleteManyGroups(where: GroupWhereInput): BatchPayload!
   createOrganization(data: OrganizationCreateInput!): Organization!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
@@ -1766,48 +316,12 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   deletePost(where: PostWhereUniqueInput!): Post
   deleteManyPosts(where: PostWhereInput): BatchPayload!
-  createRole(data: RoleCreateInput!): Role!
-  updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
-  updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
-  upsertRole(where: RoleWhereUniqueInput!, create: RoleCreateInput!, update: RoleUpdateInput!): Role!
-  deleteRole(where: RoleWhereUniqueInput!): Role
-  deleteManyRoles(where: RoleWhereInput): BatchPayload!
-  createSpecialization(data: SpecializationCreateInput!): Specialization!
-  updateSpecialization(data: SpecializationUpdateInput!, where: SpecializationWhereUniqueInput!): Specialization
-  updateManySpecializations(data: SpecializationUpdateManyMutationInput!, where: SpecializationWhereInput): BatchPayload!
-  upsertSpecialization(where: SpecializationWhereUniqueInput!, create: SpecializationCreateInput!, update: SpecializationUpdateInput!): Specialization!
-  deleteSpecialization(where: SpecializationWhereUniqueInput!): Specialization
-  deleteManySpecializations(where: SpecializationWhereInput): BatchPayload!
-  createStd(data: StdCreateInput!): Std!
-  updateStd(data: StdUpdateInput!, where: StdWhereUniqueInput!): Std
-  updateManyStds(data: StdUpdateManyMutationInput!, where: StdWhereInput): BatchPayload!
-  upsertStd(where: StdWhereUniqueInput!, create: StdCreateInput!, update: StdUpdateInput!): Std!
-  deleteStd(where: StdWhereUniqueInput!): Std
-  deleteManyStds(where: StdWhereInput): BatchPayload!
-  createSubOrg(data: SubOrgCreateInput!): SubOrg!
-  updateSubOrg(data: SubOrgUpdateInput!, where: SubOrgWhereUniqueInput!): SubOrg
-  updateManySubOrgs(data: SubOrgUpdateManyMutationInput!, where: SubOrgWhereInput): BatchPayload!
-  upsertSubOrg(where: SubOrgWhereUniqueInput!, create: SubOrgCreateInput!, update: SubOrgUpdateInput!): SubOrg!
-  deleteSubOrg(where: SubOrgWhereUniqueInput!): SubOrg
-  deleteManySubOrgs(where: SubOrgWhereInput): BatchPayload!
-  createSubject(data: SubjectCreateInput!): Subject!
-  updateSubject(data: SubjectUpdateInput!, where: SubjectWhereUniqueInput!): Subject
-  updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
-  upsertSubject(where: SubjectWhereUniqueInput!, create: SubjectCreateInput!, update: SubjectUpdateInput!): Subject!
-  deleteSubject(where: SubjectWhereUniqueInput!): Subject
-  deleteManySubjects(where: SubjectWhereInput): BatchPayload!
-  createTopic(data: TopicCreateInput!): Topic!
-  updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
-  updateManyTopics(data: TopicUpdateManyMutationInput!, where: TopicWhereInput): BatchPayload!
-  upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
-  deleteTopic(where: TopicWhereUniqueInput!): Topic
-  deleteManyTopics(where: TopicWhereInput): BatchPayload!
-  createUnit(data: UnitCreateInput!): Unit!
-  updateUnit(data: UnitUpdateInput!, where: UnitWhereUniqueInput!): Unit
-  updateManyUnits(data: UnitUpdateManyMutationInput!, where: UnitWhereInput): BatchPayload!
-  upsertUnit(where: UnitWhereUniqueInput!, create: UnitCreateInput!, update: UnitUpdateInput!): Unit!
-  deleteUnit(where: UnitWhereUniqueInput!): Unit
-  deleteManyUnits(where: UnitWhereInput): BatchPayload!
+  createSuborg(data: SuborgCreateInput!): Suborg!
+  updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
+  updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
+  upsertSuborg(where: SuborgWhereUniqueInput!, create: SuborgCreateInput!, update: SuborgUpdateInput!): Suborg!
+  deleteSuborg(where: SuborgWhereUniqueInput!): Suborg
+  deleteManySuborgs(where: SuborgWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1831,13 +345,7 @@ type Organization {
   name: String!
   description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  subOrgs(where: SubOrgWhereInput, orderBy: SubOrgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubOrg!]
-  board(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Board!]
-  stds(where: StdWhereInput, orderBy: StdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Std!]
-  specializations(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization!]
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1852,14 +360,8 @@ input OrganizationCreateInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
+  author: UserCreateManyWithoutMyorgInput
+  suborgs: SuborgCreateManyWithoutOrgInput
 }
 
 input OrganizationCreateOneWithoutAuthorInput {
@@ -1867,38 +369,8 @@ input OrganizationCreateOneWithoutAuthorInput {
   connect: OrganizationWhereUniqueInput
 }
 
-input OrganizationCreateOneWithoutBoardInput {
-  create: OrganizationCreateWithoutBoardInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutSpecializationsInput {
-  create: OrganizationCreateWithoutSpecializationsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutStdsInput {
-  create: OrganizationCreateWithoutStdsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutSubjectsInput {
-  create: OrganizationCreateWithoutSubjectsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutSubOrgsInput {
-  create: OrganizationCreateWithoutSubOrgsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutTopicsInput {
-  create: OrganizationCreateWithoutTopicsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutUnitsInput {
-  create: OrganizationCreateWithoutUnitsInput
+input OrganizationCreateOneWithoutSuborgsInput {
+  create: OrganizationCreateWithoutSuborgsInput
   connect: OrganizationWhereUniqueInput
 }
 
@@ -1906,104 +378,14 @@ input OrganizationCreateWithoutAuthorInput {
   id: ID
   name: String!
   description: String
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
+  suborgs: SuborgCreateManyWithoutOrgInput
 }
 
-input OrganizationCreateWithoutBoardInput {
+input OrganizationCreateWithoutSuborgsInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
-}
-
-input OrganizationCreateWithoutSpecializationsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
-}
-
-input OrganizationCreateWithoutStdsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
-}
-
-input OrganizationCreateWithoutSubjectsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
-}
-
-input OrganizationCreateWithoutSubOrgsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
-}
-
-input OrganizationCreateWithoutTopicsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  units: UnitCreateManyWithoutOrgInput
-}
-
-input OrganizationCreateWithoutUnitsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutOrgInput
-  subOrgs: SubOrgCreateManyWithoutOrgInput
-  board: BoardCreateManyWithoutOrgInput
-  stds: StdCreateManyWithoutOrgInput
-  specializations: SpecializationCreateManyWithoutOrgInput
-  subjects: SubjectCreateManyWithoutOrgInput
-  topics: TopicCreateManyWithoutOrgInput
+  author: UserCreateManyWithoutMyorgInput
 }
 
 type OrganizationEdge {
@@ -2053,14 +435,8 @@ input OrganizationSubscriptionWhereInput {
 input OrganizationUpdateInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
+  author: UserUpdateManyWithoutMyorgInput
+  suborgs: SuborgUpdateManyWithoutOrgInput
 }
 
 input OrganizationUpdateManyMutationInput {
@@ -2068,156 +444,32 @@ input OrganizationUpdateManyMutationInput {
   description: String
 }
 
-input OrganizationUpdateOneRequiredWithoutAuthorInput {
+input OrganizationUpdateOneRequiredWithoutSuborgsInput {
+  create: OrganizationCreateWithoutSuborgsInput
+  update: OrganizationUpdateWithoutSuborgsDataInput
+  upsert: OrganizationUpsertWithoutSuborgsInput
+  connect: OrganizationWhereUniqueInput
+}
+
+input OrganizationUpdateOneWithoutAuthorInput {
   create: OrganizationCreateWithoutAuthorInput
   update: OrganizationUpdateWithoutAuthorDataInput
   upsert: OrganizationUpsertWithoutAuthorInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutBoardInput {
-  create: OrganizationCreateWithoutBoardInput
-  update: OrganizationUpdateWithoutBoardDataInput
-  upsert: OrganizationUpsertWithoutBoardInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutSpecializationsInput {
-  create: OrganizationCreateWithoutSpecializationsInput
-  update: OrganizationUpdateWithoutSpecializationsDataInput
-  upsert: OrganizationUpsertWithoutSpecializationsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutStdsInput {
-  create: OrganizationCreateWithoutStdsInput
-  update: OrganizationUpdateWithoutStdsDataInput
-  upsert: OrganizationUpsertWithoutStdsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutSubjectsInput {
-  create: OrganizationCreateWithoutSubjectsInput
-  update: OrganizationUpdateWithoutSubjectsDataInput
-  upsert: OrganizationUpsertWithoutSubjectsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutSubOrgsInput {
-  create: OrganizationCreateWithoutSubOrgsInput
-  update: OrganizationUpdateWithoutSubOrgsDataInput
-  upsert: OrganizationUpsertWithoutSubOrgsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutTopicsInput {
-  create: OrganizationCreateWithoutTopicsInput
-  update: OrganizationUpdateWithoutTopicsDataInput
-  upsert: OrganizationUpsertWithoutTopicsInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationUpdateOneRequiredWithoutUnitsInput {
-  create: OrganizationCreateWithoutUnitsInput
-  update: OrganizationUpdateWithoutUnitsDataInput
-  upsert: OrganizationUpsertWithoutUnitsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: OrganizationWhereUniqueInput
 }
 
 input OrganizationUpdateWithoutAuthorDataInput {
   name: String
   description: String
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
+  suborgs: SuborgUpdateManyWithoutOrgInput
 }
 
-input OrganizationUpdateWithoutBoardDataInput {
+input OrganizationUpdateWithoutSuborgsDataInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
-}
-
-input OrganizationUpdateWithoutSpecializationsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
-}
-
-input OrganizationUpdateWithoutStdsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
-}
-
-input OrganizationUpdateWithoutSubjectsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
-}
-
-input OrganizationUpdateWithoutSubOrgsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
-}
-
-input OrganizationUpdateWithoutTopicsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  units: UnitUpdateManyWithoutOrgInput
-}
-
-input OrganizationUpdateWithoutUnitsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutOrgInput
-  subOrgs: SubOrgUpdateManyWithoutOrgInput
-  board: BoardUpdateManyWithoutOrgInput
-  stds: StdUpdateManyWithoutOrgInput
-  specializations: SpecializationUpdateManyWithoutOrgInput
-  subjects: SubjectUpdateManyWithoutOrgInput
-  topics: TopicUpdateManyWithoutOrgInput
+  author: UserUpdateManyWithoutMyorgInput
 }
 
 input OrganizationUpsertWithoutAuthorInput {
@@ -2225,39 +477,9 @@ input OrganizationUpsertWithoutAuthorInput {
   create: OrganizationCreateWithoutAuthorInput!
 }
 
-input OrganizationUpsertWithoutBoardInput {
-  update: OrganizationUpdateWithoutBoardDataInput!
-  create: OrganizationCreateWithoutBoardInput!
-}
-
-input OrganizationUpsertWithoutSpecializationsInput {
-  update: OrganizationUpdateWithoutSpecializationsDataInput!
-  create: OrganizationCreateWithoutSpecializationsInput!
-}
-
-input OrganizationUpsertWithoutStdsInput {
-  update: OrganizationUpdateWithoutStdsDataInput!
-  create: OrganizationCreateWithoutStdsInput!
-}
-
-input OrganizationUpsertWithoutSubjectsInput {
-  update: OrganizationUpdateWithoutSubjectsDataInput!
-  create: OrganizationCreateWithoutSubjectsInput!
-}
-
-input OrganizationUpsertWithoutSubOrgsInput {
-  update: OrganizationUpdateWithoutSubOrgsDataInput!
-  create: OrganizationCreateWithoutSubOrgsInput!
-}
-
-input OrganizationUpsertWithoutTopicsInput {
-  update: OrganizationUpdateWithoutTopicsDataInput!
-  create: OrganizationCreateWithoutTopicsInput!
-}
-
-input OrganizationUpsertWithoutUnitsInput {
-  update: OrganizationUpdateWithoutUnitsDataInput!
-  create: OrganizationCreateWithoutUnitsInput!
+input OrganizationUpsertWithoutSuborgsInput {
+  update: OrganizationUpdateWithoutSuborgsDataInput!
+  create: OrganizationCreateWithoutSuborgsInput!
 }
 
 input OrganizationWhereInput {
@@ -2306,27 +528,9 @@ input OrganizationWhereInput {
   author_every: UserWhereInput
   author_some: UserWhereInput
   author_none: UserWhereInput
-  subOrgs_every: SubOrgWhereInput
-  subOrgs_some: SubOrgWhereInput
-  subOrgs_none: SubOrgWhereInput
-  board_every: BoardWhereInput
-  board_some: BoardWhereInput
-  board_none: BoardWhereInput
-  stds_every: StdWhereInput
-  stds_some: StdWhereInput
-  stds_none: StdWhereInput
-  specializations_every: SpecializationWhereInput
-  specializations_some: SpecializationWhereInput
-  specializations_none: SpecializationWhereInput
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
-  units_every: UnitWhereInput
-  units_some: UnitWhereInput
-  units_none: UnitWhereInput
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
+  suborgs_every: SuborgWhereInput
+  suborgs_some: SuborgWhereInput
+  suborgs_none: SuborgWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -2673,1966 +877,99 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  address(where: AddressWhereUniqueInput!): Address
-  addresses(where: AddressWhereInput, orderBy: AddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Address]!
-  addressesConnection(where: AddressWhereInput, orderBy: AddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AddressConnection!
-  baseAddress(where: BaseAddressWhereUniqueInput!): BaseAddress
-  baseAddresses(where: BaseAddressWhereInput, orderBy: BaseAddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BaseAddress]!
-  baseAddressesConnection(where: BaseAddressWhereInput, orderBy: BaseAddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BaseAddressConnection!
-  board(where: BoardWhereUniqueInput!): Board
-  boards(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Board]!
-  boardsConnection(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BoardConnection!
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
-  file(where: FileWhereUniqueInput!): File
-  files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
-  filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
-  group(where: GroupWhereUniqueInput!): Group
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
-  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   organization(where: OrganizationWhereUniqueInput!): Organization
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  role(where: RoleWhereUniqueInput!): Role
-  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
-  rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
-  specialization(where: SpecializationWhereUniqueInput!): Specialization
-  specializations(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization]!
-  specializationsConnection(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecializationConnection!
-  std(where: StdWhereUniqueInput!): Std
-  stds(where: StdWhereInput, orderBy: StdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Std]!
-  stdsConnection(where: StdWhereInput, orderBy: StdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StdConnection!
-  subOrg(where: SubOrgWhereUniqueInput!): SubOrg
-  subOrgs(where: SubOrgWhereInput, orderBy: SubOrgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubOrg]!
-  subOrgsConnection(where: SubOrgWhereInput, orderBy: SubOrgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubOrgConnection!
-  subject(where: SubjectWhereUniqueInput!): Subject
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
-  subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
-  topic(where: TopicWhereUniqueInput!): Topic
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
-  topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
-  unit(where: UnitWhereUniqueInput!): Unit
-  units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit]!
-  unitsConnection(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UnitConnection!
+  suborg(where: SuborgWhereUniqueInput!): Suborg
+  suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
+  suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
-type Role {
-  id: ID!
-  rolename: String!
-  rolelevel: String!
-  levelname: String
-  userid: User!
-}
-
-type RoleConnection {
-  pageInfo: PageInfo!
-  edges: [RoleEdge]!
-  aggregate: AggregateRole!
-}
-
-input RoleCreateInput {
-  id: ID
-  rolename: String!
-  rolelevel: String!
-  levelname: String
-  userid: UserCreateOneInput!
-}
-
-type RoleEdge {
-  node: Role!
-  cursor: String!
-}
-
-enum RoleOrderByInput {
-  id_ASC
-  id_DESC
-  rolename_ASC
-  rolename_DESC
-  rolelevel_ASC
-  rolelevel_DESC
-  levelname_ASC
-  levelname_DESC
-}
-
-type RolePreviousValues {
-  id: ID!
-  rolename: String!
-  rolelevel: String!
-  levelname: String
-}
-
-type RoleSubscriptionPayload {
-  mutation: MutationType!
-  node: Role
-  updatedFields: [String!]
-  previousValues: RolePreviousValues
-}
-
-input RoleSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: RoleWhereInput
-  AND: [RoleSubscriptionWhereInput!]
-  OR: [RoleSubscriptionWhereInput!]
-  NOT: [RoleSubscriptionWhereInput!]
-}
-
-input RoleUpdateInput {
-  rolename: String
-  rolelevel: String
-  levelname: String
-  userid: UserUpdateOneRequiredInput
-}
-
-input RoleUpdateManyMutationInput {
-  rolename: String
-  rolelevel: String
-  levelname: String
-}
-
-input RoleWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  rolename: String
-  rolename_not: String
-  rolename_in: [String!]
-  rolename_not_in: [String!]
-  rolename_lt: String
-  rolename_lte: String
-  rolename_gt: String
-  rolename_gte: String
-  rolename_contains: String
-  rolename_not_contains: String
-  rolename_starts_with: String
-  rolename_not_starts_with: String
-  rolename_ends_with: String
-  rolename_not_ends_with: String
-  rolelevel: String
-  rolelevel_not: String
-  rolelevel_in: [String!]
-  rolelevel_not_in: [String!]
-  rolelevel_lt: String
-  rolelevel_lte: String
-  rolelevel_gt: String
-  rolelevel_gte: String
-  rolelevel_contains: String
-  rolelevel_not_contains: String
-  rolelevel_starts_with: String
-  rolelevel_not_starts_with: String
-  rolelevel_ends_with: String
-  rolelevel_not_ends_with: String
-  levelname: String
-  levelname_not: String
-  levelname_in: [String!]
-  levelname_not_in: [String!]
-  levelname_lt: String
-  levelname_lte: String
-  levelname_gt: String
-  levelname_gte: String
-  levelname_contains: String
-  levelname_not_contains: String
-  levelname_starts_with: String
-  levelname_not_starts_with: String
-  levelname_ends_with: String
-  levelname_not_ends_with: String
-  userid: UserWhereInput
-  AND: [RoleWhereInput!]
-  OR: [RoleWhereInput!]
-  NOT: [RoleWhereInput!]
-}
-
-input RoleWhereUniqueInput {
-  id: ID
-}
-
-type Specialization {
+type Suborg {
   id: ID!
   name: String!
-  org: Organization!
-  subOrg: SubOrg!
-  board: Board!
-  std: Std!
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  unit(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
-  topic(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type SpecializationConnection {
-  pageInfo: PageInfo!
-  edges: [SpecializationEdge]!
-  aggregate: AggregateSpecialization!
-}
-
-input SpecializationCreateInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  unit: UnitCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateManyWithoutBoardInput {
-  create: [SpecializationCreateWithoutBoardInput!]
-  connect: [SpecializationWhereUniqueInput!]
-}
-
-input SpecializationCreateManyWithoutOrgInput {
-  create: [SpecializationCreateWithoutOrgInput!]
-  connect: [SpecializationWhereUniqueInput!]
-}
-
-input SpecializationCreateManyWithoutStdInput {
-  create: [SpecializationCreateWithoutStdInput!]
-  connect: [SpecializationWhereUniqueInput!]
-}
-
-input SpecializationCreateManyWithoutSubOrgInput {
-  create: [SpecializationCreateWithoutSubOrgInput!]
-  connect: [SpecializationWhereUniqueInput!]
-}
-
-input SpecializationCreateOneWithoutSubjectsInput {
-  create: SpecializationCreateWithoutSubjectsInput
-  connect: SpecializationWhereUniqueInput
-}
-
-input SpecializationCreateOneWithoutTopicInput {
-  create: SpecializationCreateWithoutTopicInput
-  connect: SpecializationWhereUniqueInput
-}
-
-input SpecializationCreateOneWithoutUnitInput {
-  create: SpecializationCreateWithoutUnitInput
-  connect: SpecializationWhereUniqueInput
-}
-
-input SpecializationCreateWithoutBoardInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  unit: UnitCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  unit: UnitCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateWithoutStdInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  unit: UnitCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateWithoutSubjectsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  unit: UnitCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateWithoutSubOrgInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  unit: UnitCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateWithoutTopicInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  unit: UnitCreateManyWithoutSpecializationInput
-}
-
-input SpecializationCreateWithoutUnitInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSpecializationsInput!
-  subOrg: SubOrgCreateOneWithoutSpecializationsInput!
-  board: BoardCreateOneWithoutSpecializationsInput!
-  std: StdCreateOneWithoutSpecializationsInput!
-  subjects: SubjectCreateManyWithoutSpecializationInput
-  topic: TopicCreateManyWithoutSpecializationInput
-}
-
-type SpecializationEdge {
-  node: Specialization!
-  cursor: String!
-}
-
-enum SpecializationOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type SpecializationPreviousValues {
-  id: ID!
-  name: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input SpecializationScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [SpecializationScalarWhereInput!]
-  OR: [SpecializationScalarWhereInput!]
-  NOT: [SpecializationScalarWhereInput!]
-}
-
-type SpecializationSubscriptionPayload {
-  mutation: MutationType!
-  node: Specialization
-  updatedFields: [String!]
-  previousValues: SpecializationPreviousValues
-}
-
-input SpecializationSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: SpecializationWhereInput
-  AND: [SpecializationSubscriptionWhereInput!]
-  OR: [SpecializationSubscriptionWhereInput!]
-  NOT: [SpecializationSubscriptionWhereInput!]
-}
-
-input SpecializationUpdateInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateManyDataInput {
-  name: String
-}
-
-input SpecializationUpdateManyMutationInput {
-  name: String
-}
-
-input SpecializationUpdateManyWithoutBoardInput {
-  create: [SpecializationCreateWithoutBoardInput!]
-  delete: [SpecializationWhereUniqueInput!]
-  connect: [SpecializationWhereUniqueInput!]
-  set: [SpecializationWhereUniqueInput!]
-  disconnect: [SpecializationWhereUniqueInput!]
-  update: [SpecializationUpdateWithWhereUniqueWithoutBoardInput!]
-  upsert: [SpecializationUpsertWithWhereUniqueWithoutBoardInput!]
-  deleteMany: [SpecializationScalarWhereInput!]
-  updateMany: [SpecializationUpdateManyWithWhereNestedInput!]
-}
-
-input SpecializationUpdateManyWithoutOrgInput {
-  create: [SpecializationCreateWithoutOrgInput!]
-  delete: [SpecializationWhereUniqueInput!]
-  connect: [SpecializationWhereUniqueInput!]
-  set: [SpecializationWhereUniqueInput!]
-  disconnect: [SpecializationWhereUniqueInput!]
-  update: [SpecializationUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [SpecializationUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [SpecializationScalarWhereInput!]
-  updateMany: [SpecializationUpdateManyWithWhereNestedInput!]
-}
-
-input SpecializationUpdateManyWithoutStdInput {
-  create: [SpecializationCreateWithoutStdInput!]
-  delete: [SpecializationWhereUniqueInput!]
-  connect: [SpecializationWhereUniqueInput!]
-  set: [SpecializationWhereUniqueInput!]
-  disconnect: [SpecializationWhereUniqueInput!]
-  update: [SpecializationUpdateWithWhereUniqueWithoutStdInput!]
-  upsert: [SpecializationUpsertWithWhereUniqueWithoutStdInput!]
-  deleteMany: [SpecializationScalarWhereInput!]
-  updateMany: [SpecializationUpdateManyWithWhereNestedInput!]
-}
-
-input SpecializationUpdateManyWithoutSubOrgInput {
-  create: [SpecializationCreateWithoutSubOrgInput!]
-  delete: [SpecializationWhereUniqueInput!]
-  connect: [SpecializationWhereUniqueInput!]
-  set: [SpecializationWhereUniqueInput!]
-  disconnect: [SpecializationWhereUniqueInput!]
-  update: [SpecializationUpdateWithWhereUniqueWithoutSubOrgInput!]
-  upsert: [SpecializationUpsertWithWhereUniqueWithoutSubOrgInput!]
-  deleteMany: [SpecializationScalarWhereInput!]
-  updateMany: [SpecializationUpdateManyWithWhereNestedInput!]
-}
-
-input SpecializationUpdateManyWithWhereNestedInput {
-  where: SpecializationScalarWhereInput!
-  data: SpecializationUpdateManyDataInput!
-}
-
-input SpecializationUpdateOneRequiredWithoutSubjectsInput {
-  create: SpecializationCreateWithoutSubjectsInput
-  update: SpecializationUpdateWithoutSubjectsDataInput
-  upsert: SpecializationUpsertWithoutSubjectsInput
-  connect: SpecializationWhereUniqueInput
-}
-
-input SpecializationUpdateOneRequiredWithoutTopicInput {
-  create: SpecializationCreateWithoutTopicInput
-  update: SpecializationUpdateWithoutTopicDataInput
-  upsert: SpecializationUpsertWithoutTopicInput
-  connect: SpecializationWhereUniqueInput
-}
-
-input SpecializationUpdateOneRequiredWithoutUnitInput {
-  create: SpecializationCreateWithoutUnitInput
-  update: SpecializationUpdateWithoutUnitDataInput
-  upsert: SpecializationUpsertWithoutUnitInput
-  connect: SpecializationWhereUniqueInput
-}
-
-input SpecializationUpdateWithoutBoardDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithoutOrgDataInput {
-  name: String
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithoutStdDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithoutSubjectsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithoutSubOrgDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithoutTopicDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  unit: UnitUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithoutUnitDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSpecializationsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSpecializationsInput
-  board: BoardUpdateOneRequiredWithoutSpecializationsInput
-  std: StdUpdateOneRequiredWithoutSpecializationsInput
-  subjects: SubjectUpdateManyWithoutSpecializationInput
-  topic: TopicUpdateManyWithoutSpecializationInput
-}
-
-input SpecializationUpdateWithWhereUniqueWithoutBoardInput {
-  where: SpecializationWhereUniqueInput!
-  data: SpecializationUpdateWithoutBoardDataInput!
-}
-
-input SpecializationUpdateWithWhereUniqueWithoutOrgInput {
-  where: SpecializationWhereUniqueInput!
-  data: SpecializationUpdateWithoutOrgDataInput!
-}
-
-input SpecializationUpdateWithWhereUniqueWithoutStdInput {
-  where: SpecializationWhereUniqueInput!
-  data: SpecializationUpdateWithoutStdDataInput!
-}
-
-input SpecializationUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: SpecializationWhereUniqueInput!
-  data: SpecializationUpdateWithoutSubOrgDataInput!
-}
-
-input SpecializationUpsertWithoutSubjectsInput {
-  update: SpecializationUpdateWithoutSubjectsDataInput!
-  create: SpecializationCreateWithoutSubjectsInput!
-}
-
-input SpecializationUpsertWithoutTopicInput {
-  update: SpecializationUpdateWithoutTopicDataInput!
-  create: SpecializationCreateWithoutTopicInput!
-}
-
-input SpecializationUpsertWithoutUnitInput {
-  update: SpecializationUpdateWithoutUnitDataInput!
-  create: SpecializationCreateWithoutUnitInput!
-}
-
-input SpecializationUpsertWithWhereUniqueWithoutBoardInput {
-  where: SpecializationWhereUniqueInput!
-  update: SpecializationUpdateWithoutBoardDataInput!
-  create: SpecializationCreateWithoutBoardInput!
-}
-
-input SpecializationUpsertWithWhereUniqueWithoutOrgInput {
-  where: SpecializationWhereUniqueInput!
-  update: SpecializationUpdateWithoutOrgDataInput!
-  create: SpecializationCreateWithoutOrgInput!
-}
-
-input SpecializationUpsertWithWhereUniqueWithoutStdInput {
-  where: SpecializationWhereUniqueInput!
-  update: SpecializationUpdateWithoutStdDataInput!
-  create: SpecializationCreateWithoutStdInput!
-}
-
-input SpecializationUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: SpecializationWhereUniqueInput!
-  update: SpecializationUpdateWithoutSubOrgDataInput!
-  create: SpecializationCreateWithoutSubOrgInput!
-}
-
-input SpecializationWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  org: OrganizationWhereInput
-  subOrg: SubOrgWhereInput
-  board: BoardWhereInput
-  std: StdWhereInput
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
-  unit_every: UnitWhereInput
-  unit_some: UnitWhereInput
-  unit_none: UnitWhereInput
-  topic_every: TopicWhereInput
-  topic_some: TopicWhereInput
-  topic_none: TopicWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [SpecializationWhereInput!]
-  OR: [SpecializationWhereInput!]
-  NOT: [SpecializationWhereInput!]
-}
-
-input SpecializationWhereUniqueInput {
-  id: ID
-}
-
-type Std {
-  id: ID!
-  name: String!
-  org: Organization!
-  subOrg: SubOrg!
-  board: Board!
-  specializations(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization!]
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type StdConnection {
-  pageInfo: PageInfo!
-  edges: [StdEdge]!
-  aggregate: AggregateStd!
-}
-
-input StdCreateInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  subjects: SubjectCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-input StdCreateManyWithoutBoardInput {
-  create: [StdCreateWithoutBoardInput!]
-  connect: [StdWhereUniqueInput!]
-}
-
-input StdCreateManyWithoutOrgInput {
-  create: [StdCreateWithoutOrgInput!]
-  connect: [StdWhereUniqueInput!]
-}
-
-input StdCreateManyWithoutSubOrgInput {
-  create: [StdCreateWithoutSubOrgInput!]
-  connect: [StdWhereUniqueInput!]
-}
-
-input StdCreateOneWithoutSpecializationsInput {
-  create: StdCreateWithoutSpecializationsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdCreateOneWithoutSubjectsInput {
-  create: StdCreateWithoutSubjectsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdCreateOneWithoutTopicsInput {
-  create: StdCreateWithoutTopicsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdCreateOneWithoutUnitsInput {
-  create: StdCreateWithoutUnitsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdCreateWithoutBoardInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  subjects: SubjectCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-input StdCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  subjects: SubjectCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-input StdCreateWithoutSpecializationsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  subjects: SubjectCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-input StdCreateWithoutSubjectsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-input StdCreateWithoutSubOrgInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  subjects: SubjectCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-input StdCreateWithoutTopicsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  subjects: SubjectCreateManyWithoutStdInput
-  units: UnitCreateManyWithoutStdInput
-}
-
-input StdCreateWithoutUnitsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutStdsInput!
-  subOrg: SubOrgCreateOneWithoutStdsInput!
-  board: BoardCreateOneWithoutStdsInput!
-  specializations: SpecializationCreateManyWithoutStdInput
-  subjects: SubjectCreateManyWithoutStdInput
-  topics: TopicCreateManyWithoutStdInput
-}
-
-type StdEdge {
-  node: Std!
-  cursor: String!
-}
-
-enum StdOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type StdPreviousValues {
-  id: ID!
-  name: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input StdScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [StdScalarWhereInput!]
-  OR: [StdScalarWhereInput!]
-  NOT: [StdScalarWhereInput!]
-}
-
-type StdSubscriptionPayload {
-  mutation: MutationType!
-  node: Std
-  updatedFields: [String!]
-  previousValues: StdPreviousValues
-}
-
-input StdSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: StdWhereInput
-  AND: [StdSubscriptionWhereInput!]
-  OR: [StdSubscriptionWhereInput!]
-  NOT: [StdSubscriptionWhereInput!]
-}
-
-input StdUpdateInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateManyDataInput {
-  name: String
-}
-
-input StdUpdateManyMutationInput {
-  name: String
-}
-
-input StdUpdateManyWithoutBoardInput {
-  create: [StdCreateWithoutBoardInput!]
-  delete: [StdWhereUniqueInput!]
-  connect: [StdWhereUniqueInput!]
-  set: [StdWhereUniqueInput!]
-  disconnect: [StdWhereUniqueInput!]
-  update: [StdUpdateWithWhereUniqueWithoutBoardInput!]
-  upsert: [StdUpsertWithWhereUniqueWithoutBoardInput!]
-  deleteMany: [StdScalarWhereInput!]
-  updateMany: [StdUpdateManyWithWhereNestedInput!]
-}
-
-input StdUpdateManyWithoutOrgInput {
-  create: [StdCreateWithoutOrgInput!]
-  delete: [StdWhereUniqueInput!]
-  connect: [StdWhereUniqueInput!]
-  set: [StdWhereUniqueInput!]
-  disconnect: [StdWhereUniqueInput!]
-  update: [StdUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [StdUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [StdScalarWhereInput!]
-  updateMany: [StdUpdateManyWithWhereNestedInput!]
-}
-
-input StdUpdateManyWithoutSubOrgInput {
-  create: [StdCreateWithoutSubOrgInput!]
-  delete: [StdWhereUniqueInput!]
-  connect: [StdWhereUniqueInput!]
-  set: [StdWhereUniqueInput!]
-  disconnect: [StdWhereUniqueInput!]
-  update: [StdUpdateWithWhereUniqueWithoutSubOrgInput!]
-  upsert: [StdUpsertWithWhereUniqueWithoutSubOrgInput!]
-  deleteMany: [StdScalarWhereInput!]
-  updateMany: [StdUpdateManyWithWhereNestedInput!]
-}
-
-input StdUpdateManyWithWhereNestedInput {
-  where: StdScalarWhereInput!
-  data: StdUpdateManyDataInput!
-}
-
-input StdUpdateOneRequiredWithoutSpecializationsInput {
-  create: StdCreateWithoutSpecializationsInput
-  update: StdUpdateWithoutSpecializationsDataInput
-  upsert: StdUpsertWithoutSpecializationsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdUpdateOneRequiredWithoutSubjectsInput {
-  create: StdCreateWithoutSubjectsInput
-  update: StdUpdateWithoutSubjectsDataInput
-  upsert: StdUpsertWithoutSubjectsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdUpdateOneRequiredWithoutTopicsInput {
-  create: StdCreateWithoutTopicsInput
-  update: StdUpdateWithoutTopicsDataInput
-  upsert: StdUpsertWithoutTopicsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdUpdateOneRequiredWithoutUnitsInput {
-  create: StdCreateWithoutUnitsInput
-  update: StdUpdateWithoutUnitsDataInput
-  upsert: StdUpsertWithoutUnitsInput
-  connect: StdWhereUniqueInput
-}
-
-input StdUpdateWithoutBoardDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithoutOrgDataInput {
-  name: String
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithoutSpecializationsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithoutSubjectsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithoutSubOrgDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithoutTopicsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  units: UnitUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithoutUnitsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutStdsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutStdsInput
-  board: BoardUpdateOneRequiredWithoutStdsInput
-  specializations: SpecializationUpdateManyWithoutStdInput
-  subjects: SubjectUpdateManyWithoutStdInput
-  topics: TopicUpdateManyWithoutStdInput
-}
-
-input StdUpdateWithWhereUniqueWithoutBoardInput {
-  where: StdWhereUniqueInput!
-  data: StdUpdateWithoutBoardDataInput!
-}
-
-input StdUpdateWithWhereUniqueWithoutOrgInput {
-  where: StdWhereUniqueInput!
-  data: StdUpdateWithoutOrgDataInput!
-}
-
-input StdUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: StdWhereUniqueInput!
-  data: StdUpdateWithoutSubOrgDataInput!
-}
-
-input StdUpsertWithoutSpecializationsInput {
-  update: StdUpdateWithoutSpecializationsDataInput!
-  create: StdCreateWithoutSpecializationsInput!
-}
-
-input StdUpsertWithoutSubjectsInput {
-  update: StdUpdateWithoutSubjectsDataInput!
-  create: StdCreateWithoutSubjectsInput!
-}
-
-input StdUpsertWithoutTopicsInput {
-  update: StdUpdateWithoutTopicsDataInput!
-  create: StdCreateWithoutTopicsInput!
-}
-
-input StdUpsertWithoutUnitsInput {
-  update: StdUpdateWithoutUnitsDataInput!
-  create: StdCreateWithoutUnitsInput!
-}
-
-input StdUpsertWithWhereUniqueWithoutBoardInput {
-  where: StdWhereUniqueInput!
-  update: StdUpdateWithoutBoardDataInput!
-  create: StdCreateWithoutBoardInput!
-}
-
-input StdUpsertWithWhereUniqueWithoutOrgInput {
-  where: StdWhereUniqueInput!
-  update: StdUpdateWithoutOrgDataInput!
-  create: StdCreateWithoutOrgInput!
-}
-
-input StdUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: StdWhereUniqueInput!
-  update: StdUpdateWithoutSubOrgDataInput!
-  create: StdCreateWithoutSubOrgInput!
-}
-
-input StdWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  org: OrganizationWhereInput
-  subOrg: SubOrgWhereInput
-  board: BoardWhereInput
-  specializations_every: SpecializationWhereInput
-  specializations_some: SpecializationWhereInput
-  specializations_none: SpecializationWhereInput
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
-  units_every: UnitWhereInput
-  units_some: UnitWhereInput
-  units_none: UnitWhereInput
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [StdWhereInput!]
-  OR: [StdWhereInput!]
-  NOT: [StdWhereInput!]
-}
-
-input StdWhereUniqueInput {
-  id: ID
-}
-
-type Subject {
-  id: ID!
-  name: String!
-  org: Organization!
-  subOrg: SubOrg!
-  board: Board!
-  std: Std!
-  specialization: Specialization!
-  units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type SubjectConnection {
-  pageInfo: PageInfo!
-  edges: [SubjectEdge]!
-  aggregate: AggregateSubject!
-}
-
-input SubjectCreateInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateManyWithoutBoardInput {
-  create: [SubjectCreateWithoutBoardInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutOrgInput {
-  create: [SubjectCreateWithoutOrgInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutSpecializationInput {
-  create: [SubjectCreateWithoutSpecializationInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutStdInput {
-  create: [SubjectCreateWithoutStdInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutSubOrgInput {
-  create: [SubjectCreateWithoutSubOrgInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateOneWithoutTopicsInput {
-  create: SubjectCreateWithoutTopicsInput
-  connect: SubjectWhereUniqueInput
-}
-
-input SubjectCreateOneWithoutUnitsInput {
-  create: SubjectCreateWithoutUnitsInput
-  connect: SubjectWhereUniqueInput
-}
-
-input SubjectCreateWithoutBoardInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutSpecializationInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutStdInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutSubOrgInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutTopicsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  units: UnitCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutUnitsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutSubjectsInput!
-  subOrg: SubOrgCreateOneWithoutSubjectsInput!
-  board: BoardCreateOneWithoutSubjectsInput!
-  std: StdCreateOneWithoutSubjectsInput!
-  specialization: SpecializationCreateOneWithoutSubjectsInput!
-  topics: TopicCreateManyWithoutSubjectInput
-}
-
-type SubjectEdge {
-  node: Subject!
-  cursor: String!
-}
-
-enum SubjectOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type SubjectPreviousValues {
-  id: ID!
-  name: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input SubjectScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [SubjectScalarWhereInput!]
-  OR: [SubjectScalarWhereInput!]
-  NOT: [SubjectScalarWhereInput!]
-}
-
-type SubjectSubscriptionPayload {
-  mutation: MutationType!
-  node: Subject
-  updatedFields: [String!]
-  previousValues: SubjectPreviousValues
-}
-
-input SubjectSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: SubjectWhereInput
-  AND: [SubjectSubscriptionWhereInput!]
-  OR: [SubjectSubscriptionWhereInput!]
-  NOT: [SubjectSubscriptionWhereInput!]
-}
-
-input SubjectUpdateInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateManyDataInput {
-  name: String
-}
-
-input SubjectUpdateManyMutationInput {
-  name: String
-}
-
-input SubjectUpdateManyWithoutBoardInput {
-  create: [SubjectCreateWithoutBoardInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutBoardInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutBoardInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithoutOrgInput {
-  create: [SubjectCreateWithoutOrgInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithoutSpecializationInput {
-  create: [SubjectCreateWithoutSpecializationInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutSpecializationInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutSpecializationInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithoutStdInput {
-  create: [SubjectCreateWithoutStdInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutStdInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutStdInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithoutSubOrgInput {
-  create: [SubjectCreateWithoutSubOrgInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutSubOrgInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutSubOrgInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithWhereNestedInput {
-  where: SubjectScalarWhereInput!
-  data: SubjectUpdateManyDataInput!
-}
-
-input SubjectUpdateOneRequiredWithoutTopicsInput {
-  create: SubjectCreateWithoutTopicsInput
-  update: SubjectUpdateWithoutTopicsDataInput
-  upsert: SubjectUpsertWithoutTopicsInput
-  connect: SubjectWhereUniqueInput
-}
-
-input SubjectUpdateOneRequiredWithoutUnitsInput {
-  create: SubjectCreateWithoutUnitsInput
-  update: SubjectUpdateWithoutUnitsDataInput
-  upsert: SubjectUpsertWithoutUnitsInput
-  connect: SubjectWhereUniqueInput
-}
-
-input SubjectUpdateWithoutBoardDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutOrgDataInput {
-  name: String
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutSpecializationDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutStdDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutSubOrgDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutTopicsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutUnitsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutSubjectsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutSubjectsInput
-  board: BoardUpdateOneRequiredWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  specialization: SpecializationUpdateOneRequiredWithoutSubjectsInput
-  topics: TopicUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithWhereUniqueWithoutBoardInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutBoardDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutOrgInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutOrgDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutSpecializationInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutSpecializationDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutStdInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutStdDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutSubOrgDataInput!
-}
-
-input SubjectUpsertWithoutTopicsInput {
-  update: SubjectUpdateWithoutTopicsDataInput!
-  create: SubjectCreateWithoutTopicsInput!
-}
-
-input SubjectUpsertWithoutUnitsInput {
-  update: SubjectUpdateWithoutUnitsDataInput!
-  create: SubjectCreateWithoutUnitsInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutBoardInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutBoardDataInput!
-  create: SubjectCreateWithoutBoardInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutOrgInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutOrgDataInput!
-  create: SubjectCreateWithoutOrgInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutSpecializationInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutSpecializationDataInput!
-  create: SubjectCreateWithoutSpecializationInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutStdInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutStdDataInput!
-  create: SubjectCreateWithoutStdInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutSubOrgDataInput!
-  create: SubjectCreateWithoutSubOrgInput!
-}
-
-input SubjectWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  org: OrganizationWhereInput
-  subOrg: SubOrgWhereInput
-  board: BoardWhereInput
-  std: StdWhereInput
-  specialization: SpecializationWhereInput
-  units_every: UnitWhereInput
-  units_some: UnitWhereInput
-  units_none: UnitWhereInput
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [SubjectWhereInput!]
-  OR: [SubjectWhereInput!]
-  NOT: [SubjectWhereInput!]
-}
-
-input SubjectWhereUniqueInput {
-  id: ID
-}
-
-type SubOrg {
-  id: ID!
-  name: String!
-  board(where: BoardWhereInput, orderBy: BoardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Board!]
+  description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   org: Organization!
-  stds(where: StdWhereInput, orderBy: StdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Std!]
-  specializations(where: SpecializationWhereInput, orderBy: SpecializationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialization!]
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
 
-type SubOrgConnection {
+type SuborgConnection {
   pageInfo: PageInfo!
-  edges: [SubOrgEdge]!
-  aggregate: AggregateSubOrg!
+  edges: [SuborgEdge]!
+  aggregate: AggregateSuborg!
 }
 
-input SubOrgCreateInput {
+input SuborgCreateInput {
   id: ID
   name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
+  description: String
+  author: UserCreateManyWithoutMysuborgInput
+  org: OrganizationCreateOneWithoutSuborgsInput!
 }
 
-input SubOrgCreateManyWithoutOrgInput {
-  create: [SubOrgCreateWithoutOrgInput!]
-  connect: [SubOrgWhereUniqueInput!]
+input SuborgCreateManyWithoutOrgInput {
+  create: [SuborgCreateWithoutOrgInput!]
+  connect: [SuborgWhereUniqueInput!]
 }
 
-input SubOrgCreateOneWithoutAuthorInput {
-  create: SubOrgCreateWithoutAuthorInput
-  connect: SubOrgWhereUniqueInput
+input SuborgCreateOneWithoutAuthorInput {
+  create: SuborgCreateWithoutAuthorInput
+  connect: SuborgWhereUniqueInput
 }
 
-input SubOrgCreateOneWithoutBoardInput {
-  create: SubOrgCreateWithoutBoardInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgCreateOneWithoutSpecializationsInput {
-  create: SubOrgCreateWithoutSpecializationsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgCreateOneWithoutStdsInput {
-  create: SubOrgCreateWithoutStdsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgCreateOneWithoutSubjectsInput {
-  create: SubOrgCreateWithoutSubjectsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgCreateOneWithoutTopicsInput {
-  create: SubOrgCreateWithoutTopicsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgCreateOneWithoutUnitsInput {
-  create: SubOrgCreateWithoutUnitsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgCreateWithoutAuthorInput {
+input SuborgCreateWithoutAuthorInput {
   id: ID
   name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
+  description: String
+  org: OrganizationCreateOneWithoutSuborgsInput!
 }
 
-input SubOrgCreateWithoutBoardInput {
+input SuborgCreateWithoutOrgInput {
   id: ID
   name: String!
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
+  description: String
+  author: UserCreateManyWithoutMysuborgInput
 }
 
-input SubOrgCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
-}
-
-input SubOrgCreateWithoutSpecializationsInput {
-  id: ID
-  name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
-}
-
-input SubOrgCreateWithoutStdsInput {
-  id: ID
-  name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
-}
-
-input SubOrgCreateWithoutSubjectsInput {
-  id: ID
-  name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
-}
-
-input SubOrgCreateWithoutTopicsInput {
-  id: ID
-  name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  units: UnitCreateManyWithoutSubOrgInput
-}
-
-input SubOrgCreateWithoutUnitsInput {
-  id: ID
-  name: String!
-  board: BoardCreateManyWithoutSubOrgInput
-  author: UserCreateManyWithoutSubOrgsInput
-  org: OrganizationCreateOneWithoutSubOrgsInput!
-  stds: StdCreateManyWithoutSubOrgInput
-  specializations: SpecializationCreateManyWithoutSubOrgInput
-  subjects: SubjectCreateManyWithoutSubOrgInput
-  topics: TopicCreateManyWithoutSubOrgInput
-}
-
-type SubOrgEdge {
-  node: SubOrg!
+type SuborgEdge {
+  node: Suborg!
   cursor: String!
 }
 
-enum SubOrgOrderByInput {
+enum SuborgOrderByInput {
   id_ASC
   id_DESC
   name_ASC
   name_DESC
+  description_ASC
+  description_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type SubOrgPreviousValues {
+type SuborgPreviousValues {
   id: ID!
   name: String!
+  description: String
   updatedAt: DateTime!
   createdAt: DateTime!
 }
 
-input SubOrgScalarWhereInput {
+input SuborgScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -4661,6 +998,20 @@ input SubOrgScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -4677,250 +1028,101 @@ input SubOrgScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  AND: [SubOrgScalarWhereInput!]
-  OR: [SubOrgScalarWhereInput!]
-  NOT: [SubOrgScalarWhereInput!]
+  AND: [SuborgScalarWhereInput!]
+  OR: [SuborgScalarWhereInput!]
+  NOT: [SuborgScalarWhereInput!]
 }
 
-type SubOrgSubscriptionPayload {
+type SuborgSubscriptionPayload {
   mutation: MutationType!
-  node: SubOrg
+  node: Suborg
   updatedFields: [String!]
-  previousValues: SubOrgPreviousValues
+  previousValues: SuborgPreviousValues
 }
 
-input SubOrgSubscriptionWhereInput {
+input SuborgSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: SubOrgWhereInput
-  AND: [SubOrgSubscriptionWhereInput!]
-  OR: [SubOrgSubscriptionWhereInput!]
-  NOT: [SubOrgSubscriptionWhereInput!]
+  node: SuborgWhereInput
+  AND: [SuborgSubscriptionWhereInput!]
+  OR: [SuborgSubscriptionWhereInput!]
+  NOT: [SuborgSubscriptionWhereInput!]
 }
 
-input SubOrgUpdateInput {
+input SuborgUpdateInput {
   name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
+  description: String
+  author: UserUpdateManyWithoutMysuborgInput
+  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
 }
 
-input SubOrgUpdateManyDataInput {
+input SuborgUpdateManyDataInput {
   name: String
+  description: String
 }
 
-input SubOrgUpdateManyMutationInput {
+input SuborgUpdateManyMutationInput {
   name: String
+  description: String
 }
 
-input SubOrgUpdateManyWithoutOrgInput {
-  create: [SubOrgCreateWithoutOrgInput!]
-  delete: [SubOrgWhereUniqueInput!]
-  connect: [SubOrgWhereUniqueInput!]
-  set: [SubOrgWhereUniqueInput!]
-  disconnect: [SubOrgWhereUniqueInput!]
-  update: [SubOrgUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [SubOrgUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [SubOrgScalarWhereInput!]
-  updateMany: [SubOrgUpdateManyWithWhereNestedInput!]
+input SuborgUpdateManyWithoutOrgInput {
+  create: [SuborgCreateWithoutOrgInput!]
+  delete: [SuborgWhereUniqueInput!]
+  connect: [SuborgWhereUniqueInput!]
+  set: [SuborgWhereUniqueInput!]
+  disconnect: [SuborgWhereUniqueInput!]
+  update: [SuborgUpdateWithWhereUniqueWithoutOrgInput!]
+  upsert: [SuborgUpsertWithWhereUniqueWithoutOrgInput!]
+  deleteMany: [SuborgScalarWhereInput!]
+  updateMany: [SuborgUpdateManyWithWhereNestedInput!]
 }
 
-input SubOrgUpdateManyWithWhereNestedInput {
-  where: SubOrgScalarWhereInput!
-  data: SubOrgUpdateManyDataInput!
+input SuborgUpdateManyWithWhereNestedInput {
+  where: SuborgScalarWhereInput!
+  data: SuborgUpdateManyDataInput!
 }
 
-input SubOrgUpdateOneRequiredWithoutAuthorInput {
-  create: SubOrgCreateWithoutAuthorInput
-  update: SubOrgUpdateWithoutAuthorDataInput
-  upsert: SubOrgUpsertWithoutAuthorInput
-  connect: SubOrgWhereUniqueInput
+input SuborgUpdateOneWithoutAuthorInput {
+  create: SuborgCreateWithoutAuthorInput
+  update: SuborgUpdateWithoutAuthorDataInput
+  upsert: SuborgUpsertWithoutAuthorInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: SuborgWhereUniqueInput
 }
 
-input SubOrgUpdateOneRequiredWithoutBoardInput {
-  create: SubOrgCreateWithoutBoardInput
-  update: SubOrgUpdateWithoutBoardDataInput
-  upsert: SubOrgUpsertWithoutBoardInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgUpdateOneRequiredWithoutSpecializationsInput {
-  create: SubOrgCreateWithoutSpecializationsInput
-  update: SubOrgUpdateWithoutSpecializationsDataInput
-  upsert: SubOrgUpsertWithoutSpecializationsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgUpdateOneRequiredWithoutStdsInput {
-  create: SubOrgCreateWithoutStdsInput
-  update: SubOrgUpdateWithoutStdsDataInput
-  upsert: SubOrgUpsertWithoutStdsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgUpdateOneRequiredWithoutSubjectsInput {
-  create: SubOrgCreateWithoutSubjectsInput
-  update: SubOrgUpdateWithoutSubjectsDataInput
-  upsert: SubOrgUpsertWithoutSubjectsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgUpdateOneRequiredWithoutTopicsInput {
-  create: SubOrgCreateWithoutTopicsInput
-  update: SubOrgUpdateWithoutTopicsDataInput
-  upsert: SubOrgUpsertWithoutTopicsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgUpdateOneRequiredWithoutUnitsInput {
-  create: SubOrgCreateWithoutUnitsInput
-  update: SubOrgUpdateWithoutUnitsDataInput
-  upsert: SubOrgUpsertWithoutUnitsInput
-  connect: SubOrgWhereUniqueInput
-}
-
-input SubOrgUpdateWithoutAuthorDataInput {
+input SuborgUpdateWithoutAuthorDataInput {
   name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
+  description: String
+  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
 }
 
-input SubOrgUpdateWithoutBoardDataInput {
+input SuborgUpdateWithoutOrgDataInput {
   name: String
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
+  description: String
+  author: UserUpdateManyWithoutMysuborgInput
 }
 
-input SubOrgUpdateWithoutOrgDataInput {
-  name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
+input SuborgUpdateWithWhereUniqueWithoutOrgInput {
+  where: SuborgWhereUniqueInput!
+  data: SuborgUpdateWithoutOrgDataInput!
 }
 
-input SubOrgUpdateWithoutSpecializationsDataInput {
-  name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
+input SuborgUpsertWithoutAuthorInput {
+  update: SuborgUpdateWithoutAuthorDataInput!
+  create: SuborgCreateWithoutAuthorInput!
 }
 
-input SubOrgUpdateWithoutStdsDataInput {
-  name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
+input SuborgUpsertWithWhereUniqueWithoutOrgInput {
+  where: SuborgWhereUniqueInput!
+  update: SuborgUpdateWithoutOrgDataInput!
+  create: SuborgCreateWithoutOrgInput!
 }
 
-input SubOrgUpdateWithoutSubjectsDataInput {
-  name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
-}
-
-input SubOrgUpdateWithoutTopicsDataInput {
-  name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  units: UnitUpdateManyWithoutSubOrgInput
-}
-
-input SubOrgUpdateWithoutUnitsDataInput {
-  name: String
-  board: BoardUpdateManyWithoutSubOrgInput
-  author: UserUpdateManyWithoutSubOrgsInput
-  org: OrganizationUpdateOneRequiredWithoutSubOrgsInput
-  stds: StdUpdateManyWithoutSubOrgInput
-  specializations: SpecializationUpdateManyWithoutSubOrgInput
-  subjects: SubjectUpdateManyWithoutSubOrgInput
-  topics: TopicUpdateManyWithoutSubOrgInput
-}
-
-input SubOrgUpdateWithWhereUniqueWithoutOrgInput {
-  where: SubOrgWhereUniqueInput!
-  data: SubOrgUpdateWithoutOrgDataInput!
-}
-
-input SubOrgUpsertWithoutAuthorInput {
-  update: SubOrgUpdateWithoutAuthorDataInput!
-  create: SubOrgCreateWithoutAuthorInput!
-}
-
-input SubOrgUpsertWithoutBoardInput {
-  update: SubOrgUpdateWithoutBoardDataInput!
-  create: SubOrgCreateWithoutBoardInput!
-}
-
-input SubOrgUpsertWithoutSpecializationsInput {
-  update: SubOrgUpdateWithoutSpecializationsDataInput!
-  create: SubOrgCreateWithoutSpecializationsInput!
-}
-
-input SubOrgUpsertWithoutStdsInput {
-  update: SubOrgUpdateWithoutStdsDataInput!
-  create: SubOrgCreateWithoutStdsInput!
-}
-
-input SubOrgUpsertWithoutSubjectsInput {
-  update: SubOrgUpdateWithoutSubjectsDataInput!
-  create: SubOrgCreateWithoutSubjectsInput!
-}
-
-input SubOrgUpsertWithoutTopicsInput {
-  update: SubOrgUpdateWithoutTopicsDataInput!
-  create: SubOrgCreateWithoutTopicsInput!
-}
-
-input SubOrgUpsertWithoutUnitsInput {
-  update: SubOrgUpdateWithoutUnitsDataInput!
-  create: SubOrgCreateWithoutUnitsInput!
-}
-
-input SubOrgUpsertWithWhereUniqueWithoutOrgInput {
-  where: SubOrgWhereUniqueInput!
-  update: SubOrgUpdateWithoutOrgDataInput!
-  create: SubOrgCreateWithoutOrgInput!
-}
-
-input SubOrgWhereInput {
+input SuborgWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -4949,28 +1151,24 @@ input SubOrgWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  board_every: BoardWhereInput
-  board_some: BoardWhereInput
-  board_none: BoardWhereInput
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   author_every: UserWhereInput
   author_some: UserWhereInput
   author_none: UserWhereInput
   org: OrganizationWhereInput
-  stds_every: StdWhereInput
-  stds_some: StdWhereInput
-  stds_none: StdWhereInput
-  specializations_every: SpecializationWhereInput
-  specializations_some: SpecializationWhereInput
-  specializations_none: SpecializationWhereInput
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
-  units_every: UnitWhereInput
-  units_some: UnitWhereInput
-  units_none: UnitWhereInput
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -4987,1125 +1185,21 @@ input SubOrgWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  AND: [SubOrgWhereInput!]
-  OR: [SubOrgWhereInput!]
-  NOT: [SubOrgWhereInput!]
+  AND: [SuborgWhereInput!]
+  OR: [SuborgWhereInput!]
+  NOT: [SuborgWhereInput!]
 }
 
-input SubOrgWhereUniqueInput {
+input SuborgWhereUniqueInput {
   id: ID
 }
 
 type Subscription {
-  address(where: AddressSubscriptionWhereInput): AddressSubscriptionPayload
-  baseAddress(where: BaseAddressSubscriptionWhereInput): BaseAddressSubscriptionPayload
-  board(where: BoardSubscriptionWhereInput): BoardSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
-  file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
-  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
-  role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
-  specialization(where: SpecializationSubscriptionWhereInput): SpecializationSubscriptionPayload
-  std(where: StdSubscriptionWhereInput): StdSubscriptionPayload
-  subOrg(where: SubOrgSubscriptionWhereInput): SubOrgSubscriptionPayload
-  subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
-  topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
-  unit(where: UnitSubscriptionWhereInput): UnitSubscriptionPayload
+  suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-}
-
-type Topic {
-  id: ID!
-  name: String!
-  org: Organization!
-  subOrg: SubOrg!
-  board: Board!
-  subject: Subject!
-  specialization: Specialization!
-  unit: Unit!
-  std: Std!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type TopicConnection {
-  pageInfo: PageInfo!
-  edges: [TopicEdge]!
-  aggregate: AggregateTopic!
-}
-
-input TopicCreateInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateManyWithoutBoardInput {
-  create: [TopicCreateWithoutBoardInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateManyWithoutOrgInput {
-  create: [TopicCreateWithoutOrgInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateManyWithoutSpecializationInput {
-  create: [TopicCreateWithoutSpecializationInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateManyWithoutStdInput {
-  create: [TopicCreateWithoutStdInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateManyWithoutSubjectInput {
-  create: [TopicCreateWithoutSubjectInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateManyWithoutSubOrgInput {
-  create: [TopicCreateWithoutSubOrgInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateManyWithoutUnitInput {
-  create: [TopicCreateWithoutUnitInput!]
-  connect: [TopicWhereUniqueInput!]
-}
-
-input TopicCreateWithoutBoardInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateWithoutSpecializationInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateWithoutStdInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateWithoutSubjectInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateWithoutSubOrgInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  unit: UnitCreateOneWithoutTopicsInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-input TopicCreateWithoutUnitInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutTopicsInput!
-  subOrg: SubOrgCreateOneWithoutTopicsInput!
-  board: BoardCreateOneWithoutTopicsInput!
-  subject: SubjectCreateOneWithoutTopicsInput!
-  specialization: SpecializationCreateOneWithoutTopicInput!
-  std: StdCreateOneWithoutTopicsInput!
-}
-
-type TopicEdge {
-  node: Topic!
-  cursor: String!
-}
-
-enum TopicOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type TopicPreviousValues {
-  id: ID!
-  name: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input TopicScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [TopicScalarWhereInput!]
-  OR: [TopicScalarWhereInput!]
-  NOT: [TopicScalarWhereInput!]
-}
-
-type TopicSubscriptionPayload {
-  mutation: MutationType!
-  node: Topic
-  updatedFields: [String!]
-  previousValues: TopicPreviousValues
-}
-
-input TopicSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: TopicWhereInput
-  AND: [TopicSubscriptionWhereInput!]
-  OR: [TopicSubscriptionWhereInput!]
-  NOT: [TopicSubscriptionWhereInput!]
-}
-
-input TopicUpdateInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateManyDataInput {
-  name: String
-}
-
-input TopicUpdateManyMutationInput {
-  name: String
-}
-
-input TopicUpdateManyWithoutBoardInput {
-  create: [TopicCreateWithoutBoardInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutBoardInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutBoardInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithoutOrgInput {
-  create: [TopicCreateWithoutOrgInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithoutSpecializationInput {
-  create: [TopicCreateWithoutSpecializationInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutSpecializationInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutSpecializationInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithoutStdInput {
-  create: [TopicCreateWithoutStdInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutStdInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutStdInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithoutSubjectInput {
-  create: [TopicCreateWithoutSubjectInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutSubjectInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutSubjectInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithoutSubOrgInput {
-  create: [TopicCreateWithoutSubOrgInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutSubOrgInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutSubOrgInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithoutUnitInput {
-  create: [TopicCreateWithoutUnitInput!]
-  delete: [TopicWhereUniqueInput!]
-  connect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  disconnect: [TopicWhereUniqueInput!]
-  update: [TopicUpdateWithWhereUniqueWithoutUnitInput!]
-  upsert: [TopicUpsertWithWhereUniqueWithoutUnitInput!]
-  deleteMany: [TopicScalarWhereInput!]
-  updateMany: [TopicUpdateManyWithWhereNestedInput!]
-}
-
-input TopicUpdateManyWithWhereNestedInput {
-  where: TopicScalarWhereInput!
-  data: TopicUpdateManyDataInput!
-}
-
-input TopicUpdateWithoutBoardDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithoutOrgDataInput {
-  name: String
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithoutSpecializationDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithoutStdDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithoutSubjectDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithoutSubOrgDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  unit: UnitUpdateOneRequiredWithoutTopicsInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithoutUnitDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutTopicsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutTopicsInput
-  board: BoardUpdateOneRequiredWithoutTopicsInput
-  subject: SubjectUpdateOneRequiredWithoutTopicsInput
-  specialization: SpecializationUpdateOneRequiredWithoutTopicInput
-  std: StdUpdateOneRequiredWithoutTopicsInput
-}
-
-input TopicUpdateWithWhereUniqueWithoutBoardInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutBoardDataInput!
-}
-
-input TopicUpdateWithWhereUniqueWithoutOrgInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutOrgDataInput!
-}
-
-input TopicUpdateWithWhereUniqueWithoutSpecializationInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutSpecializationDataInput!
-}
-
-input TopicUpdateWithWhereUniqueWithoutStdInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutStdDataInput!
-}
-
-input TopicUpdateWithWhereUniqueWithoutSubjectInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutSubjectDataInput!
-}
-
-input TopicUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutSubOrgDataInput!
-}
-
-input TopicUpdateWithWhereUniqueWithoutUnitInput {
-  where: TopicWhereUniqueInput!
-  data: TopicUpdateWithoutUnitDataInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutBoardInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutBoardDataInput!
-  create: TopicCreateWithoutBoardInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutOrgInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutOrgDataInput!
-  create: TopicCreateWithoutOrgInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutSpecializationInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutSpecializationDataInput!
-  create: TopicCreateWithoutSpecializationInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutStdInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutStdDataInput!
-  create: TopicCreateWithoutStdInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutSubjectInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutSubjectDataInput!
-  create: TopicCreateWithoutSubjectInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutSubOrgDataInput!
-  create: TopicCreateWithoutSubOrgInput!
-}
-
-input TopicUpsertWithWhereUniqueWithoutUnitInput {
-  where: TopicWhereUniqueInput!
-  update: TopicUpdateWithoutUnitDataInput!
-  create: TopicCreateWithoutUnitInput!
-}
-
-input TopicWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  org: OrganizationWhereInput
-  subOrg: SubOrgWhereInput
-  board: BoardWhereInput
-  subject: SubjectWhereInput
-  specialization: SpecializationWhereInput
-  unit: UnitWhereInput
-  std: StdWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [TopicWhereInput!]
-  OR: [TopicWhereInput!]
-  NOT: [TopicWhereInput!]
-}
-
-input TopicWhereUniqueInput {
-  id: ID
-}
-
-type Unit {
-  id: ID!
-  name: String!
-  org: Organization!
-  subOrg: SubOrg!
-  board: Board!
-  std: Std!
-  specialization: Specialization!
-  subject: Subject!
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type UnitConnection {
-  pageInfo: PageInfo!
-  edges: [UnitEdge]!
-  aggregate: AggregateUnit!
-}
-
-input UnitCreateInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateManyWithoutBoardInput {
-  create: [UnitCreateWithoutBoardInput!]
-  connect: [UnitWhereUniqueInput!]
-}
-
-input UnitCreateManyWithoutOrgInput {
-  create: [UnitCreateWithoutOrgInput!]
-  connect: [UnitWhereUniqueInput!]
-}
-
-input UnitCreateManyWithoutSpecializationInput {
-  create: [UnitCreateWithoutSpecializationInput!]
-  connect: [UnitWhereUniqueInput!]
-}
-
-input UnitCreateManyWithoutStdInput {
-  create: [UnitCreateWithoutStdInput!]
-  connect: [UnitWhereUniqueInput!]
-}
-
-input UnitCreateManyWithoutSubjectInput {
-  create: [UnitCreateWithoutSubjectInput!]
-  connect: [UnitWhereUniqueInput!]
-}
-
-input UnitCreateManyWithoutSubOrgInput {
-  create: [UnitCreateWithoutSubOrgInput!]
-  connect: [UnitWhereUniqueInput!]
-}
-
-input UnitCreateOneWithoutTopicsInput {
-  create: UnitCreateWithoutTopicsInput
-  connect: UnitWhereUniqueInput
-}
-
-input UnitCreateWithoutBoardInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateWithoutOrgInput {
-  id: ID
-  name: String!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateWithoutSpecializationInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateWithoutStdInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateWithoutSubjectInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateWithoutSubOrgInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-  topics: TopicCreateManyWithoutUnitInput
-}
-
-input UnitCreateWithoutTopicsInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutUnitsInput!
-  subOrg: SubOrgCreateOneWithoutUnitsInput!
-  board: BoardCreateOneWithoutUnitsInput!
-  std: StdCreateOneWithoutUnitsInput!
-  specialization: SpecializationCreateOneWithoutUnitInput!
-  subject: SubjectCreateOneWithoutUnitsInput!
-}
-
-type UnitEdge {
-  node: Unit!
-  cursor: String!
-}
-
-enum UnitOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type UnitPreviousValues {
-  id: ID!
-  name: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input UnitScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [UnitScalarWhereInput!]
-  OR: [UnitScalarWhereInput!]
-  NOT: [UnitScalarWhereInput!]
-}
-
-type UnitSubscriptionPayload {
-  mutation: MutationType!
-  node: Unit
-  updatedFields: [String!]
-  previousValues: UnitPreviousValues
-}
-
-input UnitSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: UnitWhereInput
-  AND: [UnitSubscriptionWhereInput!]
-  OR: [UnitSubscriptionWhereInput!]
-  NOT: [UnitSubscriptionWhereInput!]
-}
-
-input UnitUpdateInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateManyDataInput {
-  name: String
-}
-
-input UnitUpdateManyMutationInput {
-  name: String
-}
-
-input UnitUpdateManyWithoutBoardInput {
-  create: [UnitCreateWithoutBoardInput!]
-  delete: [UnitWhereUniqueInput!]
-  connect: [UnitWhereUniqueInput!]
-  set: [UnitWhereUniqueInput!]
-  disconnect: [UnitWhereUniqueInput!]
-  update: [UnitUpdateWithWhereUniqueWithoutBoardInput!]
-  upsert: [UnitUpsertWithWhereUniqueWithoutBoardInput!]
-  deleteMany: [UnitScalarWhereInput!]
-  updateMany: [UnitUpdateManyWithWhereNestedInput!]
-}
-
-input UnitUpdateManyWithoutOrgInput {
-  create: [UnitCreateWithoutOrgInput!]
-  delete: [UnitWhereUniqueInput!]
-  connect: [UnitWhereUniqueInput!]
-  set: [UnitWhereUniqueInput!]
-  disconnect: [UnitWhereUniqueInput!]
-  update: [UnitUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [UnitUpsertWithWhereUniqueWithoutOrgInput!]
-  deleteMany: [UnitScalarWhereInput!]
-  updateMany: [UnitUpdateManyWithWhereNestedInput!]
-}
-
-input UnitUpdateManyWithoutSpecializationInput {
-  create: [UnitCreateWithoutSpecializationInput!]
-  delete: [UnitWhereUniqueInput!]
-  connect: [UnitWhereUniqueInput!]
-  set: [UnitWhereUniqueInput!]
-  disconnect: [UnitWhereUniqueInput!]
-  update: [UnitUpdateWithWhereUniqueWithoutSpecializationInput!]
-  upsert: [UnitUpsertWithWhereUniqueWithoutSpecializationInput!]
-  deleteMany: [UnitScalarWhereInput!]
-  updateMany: [UnitUpdateManyWithWhereNestedInput!]
-}
-
-input UnitUpdateManyWithoutStdInput {
-  create: [UnitCreateWithoutStdInput!]
-  delete: [UnitWhereUniqueInput!]
-  connect: [UnitWhereUniqueInput!]
-  set: [UnitWhereUniqueInput!]
-  disconnect: [UnitWhereUniqueInput!]
-  update: [UnitUpdateWithWhereUniqueWithoutStdInput!]
-  upsert: [UnitUpsertWithWhereUniqueWithoutStdInput!]
-  deleteMany: [UnitScalarWhereInput!]
-  updateMany: [UnitUpdateManyWithWhereNestedInput!]
-}
-
-input UnitUpdateManyWithoutSubjectInput {
-  create: [UnitCreateWithoutSubjectInput!]
-  delete: [UnitWhereUniqueInput!]
-  connect: [UnitWhereUniqueInput!]
-  set: [UnitWhereUniqueInput!]
-  disconnect: [UnitWhereUniqueInput!]
-  update: [UnitUpdateWithWhereUniqueWithoutSubjectInput!]
-  upsert: [UnitUpsertWithWhereUniqueWithoutSubjectInput!]
-  deleteMany: [UnitScalarWhereInput!]
-  updateMany: [UnitUpdateManyWithWhereNestedInput!]
-}
-
-input UnitUpdateManyWithoutSubOrgInput {
-  create: [UnitCreateWithoutSubOrgInput!]
-  delete: [UnitWhereUniqueInput!]
-  connect: [UnitWhereUniqueInput!]
-  set: [UnitWhereUniqueInput!]
-  disconnect: [UnitWhereUniqueInput!]
-  update: [UnitUpdateWithWhereUniqueWithoutSubOrgInput!]
-  upsert: [UnitUpsertWithWhereUniqueWithoutSubOrgInput!]
-  deleteMany: [UnitScalarWhereInput!]
-  updateMany: [UnitUpdateManyWithWhereNestedInput!]
-}
-
-input UnitUpdateManyWithWhereNestedInput {
-  where: UnitScalarWhereInput!
-  data: UnitUpdateManyDataInput!
-}
-
-input UnitUpdateOneRequiredWithoutTopicsInput {
-  create: UnitCreateWithoutTopicsInput
-  update: UnitUpdateWithoutTopicsDataInput
-  upsert: UnitUpsertWithoutTopicsInput
-  connect: UnitWhereUniqueInput
-}
-
-input UnitUpdateWithoutBoardDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateWithoutOrgDataInput {
-  name: String
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateWithoutSpecializationDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateWithoutStdDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateWithoutSubjectDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateWithoutSubOrgDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-  topics: TopicUpdateManyWithoutUnitInput
-}
-
-input UnitUpdateWithoutTopicsDataInput {
-  name: String
-  org: OrganizationUpdateOneRequiredWithoutUnitsInput
-  subOrg: SubOrgUpdateOneRequiredWithoutUnitsInput
-  board: BoardUpdateOneRequiredWithoutUnitsInput
-  std: StdUpdateOneRequiredWithoutUnitsInput
-  specialization: SpecializationUpdateOneRequiredWithoutUnitInput
-  subject: SubjectUpdateOneRequiredWithoutUnitsInput
-}
-
-input UnitUpdateWithWhereUniqueWithoutBoardInput {
-  where: UnitWhereUniqueInput!
-  data: UnitUpdateWithoutBoardDataInput!
-}
-
-input UnitUpdateWithWhereUniqueWithoutOrgInput {
-  where: UnitWhereUniqueInput!
-  data: UnitUpdateWithoutOrgDataInput!
-}
-
-input UnitUpdateWithWhereUniqueWithoutSpecializationInput {
-  where: UnitWhereUniqueInput!
-  data: UnitUpdateWithoutSpecializationDataInput!
-}
-
-input UnitUpdateWithWhereUniqueWithoutStdInput {
-  where: UnitWhereUniqueInput!
-  data: UnitUpdateWithoutStdDataInput!
-}
-
-input UnitUpdateWithWhereUniqueWithoutSubjectInput {
-  where: UnitWhereUniqueInput!
-  data: UnitUpdateWithoutSubjectDataInput!
-}
-
-input UnitUpdateWithWhereUniqueWithoutSubOrgInput {
-  where: UnitWhereUniqueInput!
-  data: UnitUpdateWithoutSubOrgDataInput!
-}
-
-input UnitUpsertWithoutTopicsInput {
-  update: UnitUpdateWithoutTopicsDataInput!
-  create: UnitCreateWithoutTopicsInput!
-}
-
-input UnitUpsertWithWhereUniqueWithoutBoardInput {
-  where: UnitWhereUniqueInput!
-  update: UnitUpdateWithoutBoardDataInput!
-  create: UnitCreateWithoutBoardInput!
-}
-
-input UnitUpsertWithWhereUniqueWithoutOrgInput {
-  where: UnitWhereUniqueInput!
-  update: UnitUpdateWithoutOrgDataInput!
-  create: UnitCreateWithoutOrgInput!
-}
-
-input UnitUpsertWithWhereUniqueWithoutSpecializationInput {
-  where: UnitWhereUniqueInput!
-  update: UnitUpdateWithoutSpecializationDataInput!
-  create: UnitCreateWithoutSpecializationInput!
-}
-
-input UnitUpsertWithWhereUniqueWithoutStdInput {
-  where: UnitWhereUniqueInput!
-  update: UnitUpdateWithoutStdDataInput!
-  create: UnitCreateWithoutStdInput!
-}
-
-input UnitUpsertWithWhereUniqueWithoutSubjectInput {
-  where: UnitWhereUniqueInput!
-  update: UnitUpdateWithoutSubjectDataInput!
-  create: UnitCreateWithoutSubjectInput!
-}
-
-input UnitUpsertWithWhereUniqueWithoutSubOrgInput {
-  where: UnitWhereUniqueInput!
-  update: UnitUpdateWithoutSubOrgDataInput!
-  create: UnitCreateWithoutSubOrgInput!
-}
-
-input UnitWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  org: OrganizationWhereInput
-  subOrg: SubOrgWhereInput
-  board: BoardWhereInput
-  std: StdWhereInput
-  specialization: SpecializationWhereInput
-  subject: SubjectWhereInput
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [UnitWhereInput!]
-  OR: [UnitWhereInput!]
-  NOT: [UnitWhereInput!]
-}
-
-input UnitWhereUniqueInput {
-  id: ID
 }
 
 type User {
@@ -6114,10 +1208,10 @@ type User {
   lastname: String!
   email: String!
   password: String!
+  myorg: Organization
+  mysuborg: Suborg
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  org: Organization!
-  subOrgs: SubOrg!
   createdBy: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -6135,26 +1229,21 @@ input UserCreateInput {
   lastname: String!
   email: String!
   password: String!
+  myorg: OrganizationCreateOneWithoutAuthorInput
+  mysuborg: SuborgCreateOneWithoutAuthorInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  org: OrganizationCreateOneWithoutAuthorInput!
-  subOrgs: SubOrgCreateOneWithoutAuthorInput!
   createdBy: String
 }
 
-input UserCreateManyWithoutOrgInput {
-  create: [UserCreateWithoutOrgInput!]
+input UserCreateManyWithoutMyorgInput {
+  create: [UserCreateWithoutMyorgInput!]
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutSubOrgsInput {
-  create: [UserCreateWithoutSubOrgsInput!]
+input UserCreateManyWithoutMysuborgInput {
+  create: [UserCreateWithoutMysuborgInput!]
   connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCommentsInput {
@@ -6173,21 +1262,33 @@ input UserCreateWithoutCommentsInput {
   lastname: String!
   email: String!
   password: String!
+  myorg: OrganizationCreateOneWithoutAuthorInput
+  mysuborg: SuborgCreateOneWithoutAuthorInput
   posts: PostCreateManyWithoutAuthorInput
-  org: OrganizationCreateOneWithoutAuthorInput!
-  subOrgs: SubOrgCreateOneWithoutAuthorInput!
   createdBy: String
 }
 
-input UserCreateWithoutOrgInput {
+input UserCreateWithoutMyorgInput {
   id: ID
   firstname: String!
   lastname: String!
   email: String!
   password: String!
+  mysuborg: SuborgCreateOneWithoutAuthorInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  subOrgs: SubOrgCreateOneWithoutAuthorInput!
+  createdBy: String
+}
+
+input UserCreateWithoutMysuborgInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  myorg: OrganizationCreateOneWithoutAuthorInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
   createdBy: String
 }
 
@@ -6197,21 +1298,9 @@ input UserCreateWithoutPostsInput {
   lastname: String!
   email: String!
   password: String!
+  myorg: OrganizationCreateOneWithoutAuthorInput
+  mysuborg: SuborgCreateOneWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  org: OrganizationCreateOneWithoutAuthorInput!
-  subOrgs: SubOrgCreateOneWithoutAuthorInput!
-  createdBy: String
-}
-
-input UserCreateWithoutSubOrgsInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  org: OrganizationCreateOneWithoutAuthorInput!
   createdBy: String
 }
 
@@ -6374,27 +1463,15 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  org: OrganizationUpdateOneRequiredWithoutAuthorInput
-  subOrgs: SubOrgUpdateOneRequiredWithoutAuthorInput
-  createdBy: String
-}
-
 input UserUpdateInput {
   firstname: String
   lastname: String
   email: String
   password: String
+  myorg: OrganizationUpdateOneWithoutAuthorInput
+  mysuborg: SuborgUpdateOneWithoutAuthorInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  org: OrganizationUpdateOneRequiredWithoutAuthorInput
-  subOrgs: SubOrgUpdateOneRequiredWithoutAuthorInput
   createdBy: String
 }
 
@@ -6414,26 +1491,26 @@ input UserUpdateManyMutationInput {
   createdBy: String
 }
 
-input UserUpdateManyWithoutOrgInput {
-  create: [UserCreateWithoutOrgInput!]
+input UserUpdateManyWithoutMyorgInput {
+  create: [UserCreateWithoutMyorgInput!]
   delete: [UserWhereUniqueInput!]
   connect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutOrgInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutOrgInput!]
+  update: [UserUpdateWithWhereUniqueWithoutMyorgInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutMyorgInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
-input UserUpdateManyWithoutSubOrgsInput {
-  create: [UserCreateWithoutSubOrgsInput!]
+input UserUpdateManyWithoutMysuborgInput {
+  create: [UserCreateWithoutMysuborgInput!]
   delete: [UserWhereUniqueInput!]
   connect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubOrgsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubOrgsInput!]
+  update: [UserUpdateWithWhereUniqueWithoutMysuborgInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutMysuborgInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -6441,13 +1518,6 @@ input UserUpdateManyWithoutSubOrgsInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
-}
-
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutCommentsInput {
@@ -6469,20 +1539,31 @@ input UserUpdateWithoutCommentsDataInput {
   lastname: String
   email: String
   password: String
+  myorg: OrganizationUpdateOneWithoutAuthorInput
+  mysuborg: SuborgUpdateOneWithoutAuthorInput
   posts: PostUpdateManyWithoutAuthorInput
-  org: OrganizationUpdateOneRequiredWithoutAuthorInput
-  subOrgs: SubOrgUpdateOneRequiredWithoutAuthorInput
   createdBy: String
 }
 
-input UserUpdateWithoutOrgDataInput {
+input UserUpdateWithoutMyorgDataInput {
   firstname: String
   lastname: String
   email: String
   password: String
+  mysuborg: SuborgUpdateOneWithoutAuthorInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  subOrgs: SubOrgUpdateOneRequiredWithoutAuthorInput
+  createdBy: String
+}
+
+input UserUpdateWithoutMysuborgDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  myorg: OrganizationUpdateOneWithoutAuthorInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
   createdBy: String
 }
 
@@ -6491,36 +1572,20 @@ input UserUpdateWithoutPostsDataInput {
   lastname: String
   email: String
   password: String
+  myorg: OrganizationUpdateOneWithoutAuthorInput
+  mysuborg: SuborgUpdateOneWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  org: OrganizationUpdateOneRequiredWithoutAuthorInput
-  subOrgs: SubOrgUpdateOneRequiredWithoutAuthorInput
   createdBy: String
 }
 
-input UserUpdateWithoutSubOrgsDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  org: OrganizationUpdateOneRequiredWithoutAuthorInput
-  createdBy: String
-}
-
-input UserUpdateWithWhereUniqueWithoutOrgInput {
+input UserUpdateWithWhereUniqueWithoutMyorgInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutOrgDataInput!
+  data: UserUpdateWithoutMyorgDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutSubOrgsInput {
+input UserUpdateWithWhereUniqueWithoutMysuborgInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubOrgsDataInput!
-}
-
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+  data: UserUpdateWithoutMysuborgDataInput!
 }
 
 input UserUpsertWithoutCommentsInput {
@@ -6533,16 +1598,16 @@ input UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutOrgInput {
+input UserUpsertWithWhereUniqueWithoutMyorgInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutOrgDataInput!
-  create: UserCreateWithoutOrgInput!
+  update: UserUpdateWithoutMyorgDataInput!
+  create: UserCreateWithoutMyorgInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutSubOrgsInput {
+input UserUpsertWithWhereUniqueWithoutMysuborgInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubOrgsDataInput!
-  create: UserCreateWithoutSubOrgsInput!
+  update: UserUpdateWithoutMysuborgDataInput!
+  create: UserCreateWithoutMysuborgInput!
 }
 
 input UserWhereInput {
@@ -6616,14 +1681,14 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  myorg: OrganizationWhereInput
+  mysuborg: SuborgWhereInput
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
-  org: OrganizationWhereInput
-  subOrgs: SubOrgWhereInput
   createdBy: String
   createdBy_not: String
   createdBy_in: [String!]

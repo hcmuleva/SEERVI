@@ -1,43 +1,10 @@
+# import Query.*, Mutation.* from "graphql/administration/administration.graphql"
 # import Query.*, Mutation.* from "graphql/users/posts.graphql"
 # import Query.*, Mutation.* from "graphql/users/users.graphql"
-# import Query.*, Mutation.* from "graphql/users/comments.graphql"
-# import Query.*, Mutation.* from "graphql/course/eduBoard.graphql"
 
-# import Query.*, Mutation.* from "address.graphql"
+# import Query.*, Mutation.* from "graphql/users/comments.graphql"
+# import Subscription.* from "graphql/users/subscriptions.graphql"
 # import * from "generated/prisma.graphql"
 
 scalar Upload
-type Query {  
-    uploads: [File]
-    getPhoto(url:String!):File
-}
 
-type Mutation {
-    uploadFile(file: Upload!): Boolean!
-    singleUpload(file: Upload!): File!
-}
-
-type Subscription {
-    comment(postId: ID!): CommentSubscriptionPayload!
-    post: PostSubscriptionPayload!
-}
-
-enum MutationType {
-    CREATED
-    UPDATED
-    DELETED
-}
-
-
-type CommentSubscriptionPayload {
-    mutation: MutationType!
-    node: Comment
-}
-
-type File {
-  id: ID!
-  path: String
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
