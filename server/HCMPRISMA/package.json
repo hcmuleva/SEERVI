@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
     "dev": "env-cmd -f ./config/test.env nodemon src/index.js --ext js,graphql --exec babel-node",
-    "test": "env-cmd -f ./config/test.env jest  --reporters=default --reporters=jest-stare --group=suborg/querySubOrg",
+    "test": "env-cmd -f ./config/test.env jest  --reporters=default --reporters=jest-stare --group=group/deleteGroup ",
     "devdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/dev.env",
     "testdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/test.env",
     "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",

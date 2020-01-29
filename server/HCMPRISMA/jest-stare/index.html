@@ -80,7 +80,7 @@
                 <canvas id="test-suites-canvas" width="100" height="100"></canvas>
                 <h2>Test Suites</h2>
                 <div class="list-group">
-                    <p id="test-suites-results" class="list-group-item list-group-item-action">1 passed, 3 total</p>
+                    <p id="test-suites-results" class="list-group-item list-group-item-action">1 passed, 5 total</p>
                 </div>
             </div>
             <!-- /.col-lg-4 -->
@@ -88,7 +88,7 @@
                 <canvas id="tests-canvas" width="100" height="100"></canvas>
                 <h2>Tests</h2>
                 <div class="list-group">
-                    <p id="tests-results" class="list-group-item list-group-item-action">4 passed, 4 total</p>
+                    <p id="tests-results" class="list-group-item list-group-item-action">5 passed, 5 total</p>
                 </div>
             </div>
             <!-- /.col-lg-4 -->
@@ -118,13 +118,13 @@
   &quot;numFailedTestSuites&quot;: 0,
   &quot;numFailedTests&quot;: 0,
   &quot;numPassedTestSuites&quot;: 1,
-  &quot;numPassedTests&quot;: 4,
+  &quot;numPassedTests&quot;: 5,
   &quot;numPendingTestSuites&quot;: 0,
   &quot;numPendingTests&quot;: 0,
   &quot;numRuntimeErrorTestSuites&quot;: 0,
   &quot;numTodoTests&quot;: 0,
-  &quot;numTotalTestSuites&quot;: 3,
-  &quot;numTotalTests&quot;: 4,
+  &quot;numTotalTestSuites&quot;: 5,
+  &quot;numTotalTests&quot;: 5,
   &quot;openHandles&quot;: [],
   &quot;snapshot&quot;: {
     &quot;added&quot;: 0,
@@ -142,18 +142,18 @@
     &quot;unmatched&quot;: 0,
     &quot;updated&quot;: 0
   },
-  &quot;startTime&quot;: 1580202441637,
+  &quot;startTime&quot;: 1580284290843,
   &quot;success&quot;: false,
   &quot;testResults&quot;: [
     {
       &quot;failureMessage&quot;: null,
       &quot;numFailingTests&quot;: 0,
-      &quot;numPassingTests&quot;: 4,
+      &quot;numPassingTests&quot;: 5,
       &quot;numPendingTests&quot;: 0,
       &quot;numTodoTests&quot;: 0,
       &quot;perfStats&quot;: {
-        &quot;end&quot;: 1580202444950,
-        &quot;start&quot;: 1580202442377
+        &quot;end&quot;: 1580284294566,
+        &quot;start&quot;: 1580284291877
       },
       &quot;snapshot&quot;: {
         &quot;added&quot;: 0,
@@ -164,55 +164,67 @@
         &quot;updated&quot;: 0,
         &quot;uncheckedKeys&quot;: []
       },
-      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;tests&#x2F;administration&#x2F;suborg.test.js&quot;,
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;tests&#x2F;administration&#x2F;group.test.js&quot;,
       &quot;testResults&quot;: [
         {
           &quot;ancestorTitles&quot;: [
-            &quot;SubOrg Create Suite &quot;
+            &quot;Create Group Suite &quot;
           ],
-          &quot;duration&quot;: 99,
+          &quot;duration&quot;: 186,
           &quot;failureMessages&quot;: [],
-          &quot;fullName&quot;: &quot;SubOrg Create Suite  Create SubOrg Positive Case&quot;,
+          &quot;fullName&quot;: &quot;Create Group Suite  Create Group Test&quot;,
           &quot;location&quot;: null,
           &quot;numPassingAsserts&quot;: 0,
           &quot;status&quot;: &quot;passed&quot;,
-          &quot;title&quot;: &quot;Create SubOrg Positive Case&quot;
+          &quot;title&quot;: &quot;Create Group Test&quot;
         },
         {
           &quot;ancestorTitles&quot;: [
-            &quot;SubOrg DeleteSubOrg Suite &quot;
+            &quot;Update Group Suite &quot;
           ],
-          &quot;duration&quot;: 99,
+          &quot;duration&quot;: 64,
           &quot;failureMessages&quot;: [],
-          &quot;fullName&quot;: &quot;SubOrg DeleteSubOrg Suite  Delete SubOrg Positive Case&quot;,
+          &quot;fullName&quot;: &quot;Update Group Suite  Update Group TestCase&quot;,
           &quot;location&quot;: null,
           &quot;numPassingAsserts&quot;: 0,
           &quot;status&quot;: &quot;passed&quot;,
-          &quot;title&quot;: &quot;Delete SubOrg Positive Case&quot;
+          &quot;title&quot;: &quot;Update Group TestCase&quot;
         },
         {
           &quot;ancestorTitles&quot;: [
-            &quot;SubOrg UdateSubOrg Suite &quot;
+            &quot;Query Group Suite &quot;
           ],
-          &quot;duration&quot;: 112,
+          &quot;duration&quot;: 40,
           &quot;failureMessages&quot;: [],
-          &quot;fullName&quot;: &quot;SubOrg UdateSubOrg Suite  Udate SubOrg Positive Case&quot;,
+          &quot;fullName&quot;: &quot;Query Group Suite  Query Group without arguments, need to return all groups&quot;,
           &quot;location&quot;: null,
           &quot;numPassingAsserts&quot;: 0,
           &quot;status&quot;: &quot;passed&quot;,
-          &quot;title&quot;: &quot;Udate SubOrg Positive Case&quot;
+          &quot;title&quot;: &quot;Query Group without arguments, need to return all groups&quot;
         },
         {
           &quot;ancestorTitles&quot;: [
-            &quot;Query SubOrgusing Tests &quot;
+            &quot;Query Group Suite &quot;
           ],
-          &quot;duration&quot;: 38,
+          &quot;duration&quot;: 29,
           &quot;failureMessages&quot;: [],
-          &quot;fullName&quot;: &quot;Query SubOrgusing Tests  Query SubOrg with id&quot;,
+          &quot;fullName&quot;: &quot;Query Group Suite  Query Group by id and single group to be available &quot;,
           &quot;location&quot;: null,
           &quot;numPassingAsserts&quot;: 0,
           &quot;status&quot;: &quot;passed&quot;,
-          &quot;title&quot;: &quot;Query SubOrg with id&quot;
+          &quot;title&quot;: &quot;Query Group by id and single group to be available &quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;Delete Group Suite &quot;
+          ],
+          &quot;duration&quot;: 48,
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;Delete Group Suite  Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there&quot;,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there&quot;
         }
       ],
       &quot;skipped&quot;: false,

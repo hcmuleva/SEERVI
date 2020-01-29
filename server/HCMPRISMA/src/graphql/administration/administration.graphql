@@ -5,6 +5,11 @@ type Query {
     allsuborgs:[Suborg!]!
     suborgsoforg(id:String!):[Suborg!]!
     suborgById(id:ID!):Suborg!
+    groupById(id:ID!):Group!
+    allGroups:[Group!]!
+    subgroupById(id:ID!):SubGroup!
+    allSubGroups:[SubGroup!]!
+
 }
 type Mutation{
      createOrganization(data: CreateOrganizationInput!): Organization!
@@ -13,6 +18,12 @@ type Mutation{
      updateOrg(id:ID! , data:UpdateOrganizationInpput): Organization!
      deleteSubOrg(id:ID!):Suborg!
      updateSuborg(id:ID!,data:UpdateSubOrgInpput!):Suborg!
+     createGroup(data:CreateGroupInput!):Group!
+     deleteGroup(id:ID!):Group!
+     updateGroup(id:ID!,data:UpdateGroupInput!):Group!
+     createSubGroup(data:CreateSubGroupInput!):SubGroup!
+     deleteSubGroup(id:ID!):SubGroup!
+     updateSubGroup(id:ID!,data:UpdateSubGroupInput!):SubGroup!
 }
 type Organization{
   id:ID!
@@ -36,6 +47,7 @@ type Suborg{
     description:String
     author:[User!]
     orgid:Organization!
+    groups:[Group!]!
     
 }
 
@@ -48,4 +60,41 @@ input CreateSubOrganizationInput{
 input UpdateSubOrgInpput{
   name:String
   description:String 
+}
+
+type Group{
+  id: ID! 
+  name:String!
+  description:String 
+  suborgid:Suborg!
+  subgroups:[SubGroup!]!
+  
+}
+input CreateGroupInput{
+    name:String!
+    description:String
+    suborgid:String!
+
+}
+input UpdateGroupInput{
+    name:String
+    description:String
+}
+
+
+type SubGroup{
+  id: ID! 
+  name:String!
+  description:String 
+  groupid:Group! 
+}
+input CreateSubGroupInput{
+    name:String!
+    description:String
+    groupid:String!
+
+}
+input UpdateSubGroupInput{
+    name:String
+    description:String
 }

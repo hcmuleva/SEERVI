@@ -1,5 +1,6 @@
 endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: 
+  - admin/org.graphql
   - users/users.graphql
   - users/posts.graphql
   - users/comments.graphql

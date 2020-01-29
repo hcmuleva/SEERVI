@@ -1,0 +1,39 @@
+type Organization{
+  id:ID! @id
+  name:String!
+  description:String
+  author:[User!]!     @relation(name: "UserToOrg", onDelete: CASCADE)
+  suborgs:[Suborg!]!  @relation(name: "SuborgToOrg", onDelete: CASCADE)
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
+}
+type Suborg{
+  id: ID! @id
+  name:String!
+  description:String
+  author:[User]       @relation(name: "UserToSubOrg", onDelete: CASCADE)
+  org:Organization!   @relation(name: "SuborgToOrg", onDelete: SET_NULL)
+  groups:[Group!]!   @relation(name: "GroupToSuborg", onDelete: CASCADE)
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
+}
+
+type Group{
+  id: ID! @id
+  name:String!
+  description:String 
+  suborgid:Suborg!       @relation(name: "GroupToSuborg", onDelete: SET_NULL)
+  subgroups:[SubGroup!]! @relation(name: "SubGroupToGroup", onDelete: CASCADE)
+  updatedAt:DateTime!    @updatedAt
+  createdAt:DateTime!    @createdAt
+}
+
+
+type SubGroup{
+  id: ID! @id
+  name:String!
+  description:String 
+  groupid:Group!     @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
+}

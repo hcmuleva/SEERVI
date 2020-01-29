@@ -1,7 +1,11 @@
 # source: http://localhost:4466
-# timestamp: Sun Jan 26 2020 05:28:22 GMT+0530 (India Standard Time)
+# timestamp: Wed Jan 29 2020 07:51:56 GMT+0530 (India Standard Time)
 
 type AggregateComment {
+  count: Int!
+}
+
+type AggregateGroup {
   count: Int!
 }
 
@@ -10,6 +14,10 @@ type AggregateOrganization {
 }
 
 type AggregatePost {
+  count: Int!
+}
+
+type AggregateSubGroup {
   count: Int!
 }
 
@@ -491,6 +499,552 @@ input CommentWhereUniqueInput {
 
 scalar DateTime
 
+type Group implements Node {
+  id: ID!
+  name: String!
+  description: String
+  suborgid: Suborg!
+  subgroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type GroupConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [GroupEdge]!
+  aggregate: AggregateGroup!
+}
+
+input GroupCreateInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutGroupsInput!
+  subgroups: SubGroupCreateManyWithoutGroupidInput
+}
+
+input GroupCreateManyWithoutSuborgidInput {
+  create: [GroupCreateWithoutSuborgidInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateOneWithoutSubgroupsInput {
+  create: GroupCreateWithoutSubgroupsInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupCreateWithoutSubgroupsInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutGroupsInput!
+}
+
+input GroupCreateWithoutSuborgidInput {
+  id: ID
+  name: String!
+  description: String
+  subgroups: SubGroupCreateManyWithoutGroupidInput
+}
+
+"""An edge in a connection."""
+type GroupEdge {
+  """The item at the end of the edge."""
+  node: Group!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum GroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type GroupPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input GroupScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
+type GroupSubscriptionPayload {
+  mutation: MutationType!
+  node: Group
+  updatedFields: [String!]
+  previousValues: GroupPreviousValues
+}
+
+input GroupSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: GroupWhereInput
+}
+
+input GroupUpdateInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutGroupsInput
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
+}
+
+input GroupUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input GroupUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input GroupUpdateManyWithoutSuborgidInput {
+  create: [GroupCreateWithoutSuborgidInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutSuborgidInput!]
+  updateMany: [GroupUpdateManyWithWhereNestedInput!]
+  deleteMany: [GroupScalarWhereInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutSuborgidInput!]
+}
+
+input GroupUpdateManyWithWhereNestedInput {
+  where: GroupScalarWhereInput!
+  data: GroupUpdateManyDataInput!
+}
+
+input GroupUpdateOneRequiredWithoutSubgroupsInput {
+  create: GroupCreateWithoutSubgroupsInput
+  connect: GroupWhereUniqueInput
+  update: GroupUpdateWithoutSubgroupsDataInput
+  upsert: GroupUpsertWithoutSubgroupsInput
+}
+
+input GroupUpdateWithoutSubgroupsDataInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutGroupsInput
+}
+
+input GroupUpdateWithoutSuborgidDataInput {
+  name: String
+  description: String
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
+}
+
+input GroupUpdateWithWhereUniqueWithoutSuborgidInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutSuborgidDataInput!
+}
+
+input GroupUpsertWithoutSubgroupsInput {
+  update: GroupUpdateWithoutSubgroupsDataInput!
+  create: GroupCreateWithoutSubgroupsInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutSuborgidInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutSuborgidDataInput!
+  create: GroupCreateWithoutSuborgidInput!
+}
+
+input GroupWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  suborgid: SuborgWhereInput
+  subgroups_every: SubGroupWhereInput
+  subgroups_some: SubGroupWhereInput
+  subgroups_none: SubGroupWhereInput
+}
+
+input GroupWhereUniqueInput {
+  id: ID
+}
+
 """Raw JSON value"""
 scalar Json
 
@@ -503,31 +1057,43 @@ scalar Long
 type Mutation {
   createOrganization(data: OrganizationCreateInput!): Organization!
   createSuborg(data: SuborgCreateInput!): Suborg!
+  createGroup(data: GroupCreateInput!): Group!
+  createSubGroup(data: SubGroupCreateInput!): SubGroup!
   createUser(data: UserCreateInput!): User!
   createPost(data: PostCreateInput!): Post!
   createComment(data: CommentCreateInput!): Comment!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  updateSubGroup(data: SubGroupUpdateInput!, where: SubGroupWhereUniqueInput!): SubGroup
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   deleteOrganization(where: OrganizationWhereUniqueInput!): Organization
   deleteSuborg(where: SuborgWhereUniqueInput!): Suborg
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  deleteSubGroup(where: SubGroupWhereUniqueInput!): SubGroup
   deleteUser(where: UserWhereUniqueInput!): User
   deletePost(where: PostWhereUniqueInput!): Post
   deleteComment(where: CommentWhereUniqueInput!): Comment
   upsertOrganization(where: OrganizationWhereUniqueInput!, create: OrganizationCreateInput!, update: OrganizationUpdateInput!): Organization!
   upsertSuborg(where: SuborgWhereUniqueInput!, create: SuborgCreateInput!, update: SuborgUpdateInput!): Suborg!
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  upsertSubGroup(where: SubGroupWhereUniqueInput!, create: SubGroupCreateInput!, update: SubGroupUpdateInput!): SubGroup!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
+  updateManySubGroups(data: SubGroupUpdateManyMutationInput!, where: SubGroupWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
   deleteManyOrganizations(where: OrganizationWhereInput): BatchPayload!
   deleteManySuborgs(where: SuborgWhereInput): BatchPayload!
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
+  deleteManySubGroups(where: SubGroupWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
@@ -1488,16 +2054,22 @@ enum PrismaDatabase {
 type Query {
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  subGroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   organization(where: OrganizationWhereUniqueInput!): Organization
   suborg(where: SuborgWhereUniqueInput!): Suborg
+  group(where: GroupWhereUniqueInput!): Group
+  subGroup(where: SubGroupWhereUniqueInput!): SubGroup
   user(where: UserWhereUniqueInput!): User
   post(where: PostWhereUniqueInput!): Post
   comment(where: CommentWhereUniqueInput!): Comment
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+  subGroupsConnection(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
@@ -1509,12 +2081,521 @@ type Query {
   ): Node
 }
 
+type SubGroup implements Node {
+  id: ID!
+  name: String!
+  description: String
+  groupid: Group!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type SubGroupConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SubGroupEdge]!
+  aggregate: AggregateSubGroup!
+}
+
+input SubGroupCreateInput {
+  id: ID
+  name: String!
+  description: String
+  groupid: GroupCreateOneWithoutSubgroupsInput!
+}
+
+input SubGroupCreateManyWithoutGroupidInput {
+  create: [SubGroupCreateWithoutGroupidInput!]
+  connect: [SubGroupWhereUniqueInput!]
+}
+
+input SubGroupCreateWithoutGroupidInput {
+  id: ID
+  name: String!
+  description: String
+}
+
+"""An edge in a connection."""
+type SubGroupEdge {
+  """The item at the end of the edge."""
+  node: SubGroup!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SubGroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SubGroupPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input SubGroupScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubGroupScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubGroupScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubGroupScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
+type SubGroupSubscriptionPayload {
+  mutation: MutationType!
+  node: SubGroup
+  updatedFields: [String!]
+  previousValues: SubGroupPreviousValues
+}
+
+input SubGroupSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubGroupSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubGroupSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubGroupSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SubGroupWhereInput
+}
+
+input SubGroupUpdateInput {
+  name: String
+  description: String
+  groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+}
+
+input SubGroupUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input SubGroupUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input SubGroupUpdateManyWithoutGroupidInput {
+  create: [SubGroupCreateWithoutGroupidInput!]
+  connect: [SubGroupWhereUniqueInput!]
+  set: [SubGroupWhereUniqueInput!]
+  disconnect: [SubGroupWhereUniqueInput!]
+  delete: [SubGroupWhereUniqueInput!]
+  update: [SubGroupUpdateWithWhereUniqueWithoutGroupidInput!]
+  updateMany: [SubGroupUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubGroupScalarWhereInput!]
+  upsert: [SubGroupUpsertWithWhereUniqueWithoutGroupidInput!]
+}
+
+input SubGroupUpdateManyWithWhereNestedInput {
+  where: SubGroupScalarWhereInput!
+  data: SubGroupUpdateManyDataInput!
+}
+
+input SubGroupUpdateWithoutGroupidDataInput {
+  name: String
+  description: String
+}
+
+input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
+  where: SubGroupWhereUniqueInput!
+  data: SubGroupUpdateWithoutGroupidDataInput!
+}
+
+input SubGroupUpsertWithWhereUniqueWithoutGroupidInput {
+  where: SubGroupWhereUniqueInput!
+  update: SubGroupUpdateWithoutGroupidDataInput!
+  create: SubGroupCreateWithoutGroupidInput!
+}
+
+input SubGroupWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubGroupWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubGroupWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubGroupWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  groupid: GroupWhereInput
+}
+
+input SubGroupWhereUniqueInput {
+  id: ID
+}
+
 type Suborg implements Node {
   id: ID!
   name: String!
   description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   org: Organization!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1535,6 +2616,7 @@ input SuborgCreateInput {
   description: String
   author: UserCreateManyWithoutMysuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
+  groups: GroupCreateManyWithoutSuborgidInput
 }
 
 input SuborgCreateManyWithoutOrgInput {
@@ -1547,10 +2629,24 @@ input SuborgCreateOneWithoutAuthorInput {
   connect: SuborgWhereUniqueInput
 }
 
+input SuborgCreateOneWithoutGroupsInput {
+  create: SuborgCreateWithoutGroupsInput
+  connect: SuborgWhereUniqueInput
+}
+
 input SuborgCreateWithoutAuthorInput {
   id: ID
   name: String!
   description: String
+  org: OrganizationCreateOneWithoutSuborgsInput!
+  groups: GroupCreateManyWithoutSuborgidInput
+}
+
+input SuborgCreateWithoutGroupsInput {
+  id: ID
+  name: String!
+  description: String
+  author: UserCreateManyWithoutMysuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
 }
 
@@ -1559,6 +2655,7 @@ input SuborgCreateWithoutOrgInput {
   name: String!
   description: String
   author: UserCreateManyWithoutMysuborgInput
+  groups: GroupCreateManyWithoutSuborgidInput
 }
 
 """An edge in a connection."""
@@ -1808,6 +2905,7 @@ input SuborgUpdateInput {
   description: String
   author: UserUpdateManyWithoutMysuborgInput
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  groups: GroupUpdateManyWithoutSuborgidInput
 }
 
 input SuborgUpdateManyDataInput {
@@ -1837,6 +2935,13 @@ input SuborgUpdateManyWithWhereNestedInput {
   data: SuborgUpdateManyDataInput!
 }
 
+input SuborgUpdateOneRequiredWithoutGroupsInput {
+  create: SuborgCreateWithoutGroupsInput
+  connect: SuborgWhereUniqueInput
+  update: SuborgUpdateWithoutGroupsDataInput
+  upsert: SuborgUpsertWithoutGroupsInput
+}
+
 input SuborgUpdateOneWithoutAuthorInput {
   create: SuborgCreateWithoutAuthorInput
   connect: SuborgWhereUniqueInput
@@ -1850,12 +2955,21 @@ input SuborgUpdateWithoutAuthorDataInput {
   name: String
   description: String
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  groups: GroupUpdateManyWithoutSuborgidInput
+}
+
+input SuborgUpdateWithoutGroupsDataInput {
+  name: String
+  description: String
+  author: UserUpdateManyWithoutMysuborgInput
+  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
 }
 
 input SuborgUpdateWithoutOrgDataInput {
   name: String
   description: String
   author: UserUpdateManyWithoutMysuborgInput
+  groups: GroupUpdateManyWithoutSuborgidInput
 }
 
 input SuborgUpdateWithWhereUniqueWithoutOrgInput {
@@ -1866,6 +2980,11 @@ input SuborgUpdateWithWhereUniqueWithoutOrgInput {
 input SuborgUpsertWithoutAuthorInput {
   update: SuborgUpdateWithoutAuthorDataInput!
   create: SuborgCreateWithoutAuthorInput!
+}
+
+input SuborgUpsertWithoutGroupsInput {
+  update: SuborgUpdateWithoutGroupsDataInput!
+  create: SuborgCreateWithoutGroupsInput!
 }
 
 input SuborgUpsertWithWhereUniqueWithoutOrgInput {
@@ -2051,6 +3170,9 @@ input SuborgWhereInput {
   author_some: UserWhereInput
   author_none: UserWhereInput
   org: OrganizationWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
 }
 
 input SuborgWhereUniqueInput {
@@ -2060,6 +3182,8 @@ input SuborgWhereUniqueInput {
 type Subscription {
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+  subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload

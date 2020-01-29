@@ -7,11 +7,19 @@ module.exports = {
   count: Int!
 }
 
+type AggregateGroup {
+  count: Int!
+}
+
 type AggregateOrganization {
   count: Int!
 }
 
 type AggregatePost {
+  count: Int!
+}
+
+type AggregateSubGroup {
   count: Int!
 }
 
@@ -295,6 +303,303 @@ input CommentWhereUniqueInput {
 
 scalar DateTime
 
+type Group {
+  id: ID!
+  name: String!
+  description: String
+  suborgid: Suborg!
+  subgroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type GroupConnection {
+  pageInfo: PageInfo!
+  edges: [GroupEdge]!
+  aggregate: AggregateGroup!
+}
+
+input GroupCreateInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutGroupsInput!
+  subgroups: SubGroupCreateManyWithoutGroupidInput
+}
+
+input GroupCreateManyWithoutSuborgidInput {
+  create: [GroupCreateWithoutSuborgidInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateOneWithoutSubgroupsInput {
+  create: GroupCreateWithoutSubgroupsInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupCreateWithoutSubgroupsInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutGroupsInput!
+}
+
+input GroupCreateWithoutSuborgidInput {
+  id: ID
+  name: String!
+  description: String
+  subgroups: SubGroupCreateManyWithoutGroupidInput
+}
+
+type GroupEdge {
+  node: Group!
+  cursor: String!
+}
+
+enum GroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type GroupPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input GroupScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [GroupScalarWhereInput!]
+  OR: [GroupScalarWhereInput!]
+  NOT: [GroupScalarWhereInput!]
+}
+
+type GroupSubscriptionPayload {
+  mutation: MutationType!
+  node: Group
+  updatedFields: [String!]
+  previousValues: GroupPreviousValues
+}
+
+input GroupSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GroupWhereInput
+  AND: [GroupSubscriptionWhereInput!]
+  OR: [GroupSubscriptionWhereInput!]
+  NOT: [GroupSubscriptionWhereInput!]
+}
+
+input GroupUpdateInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutGroupsInput
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
+}
+
+input GroupUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input GroupUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input GroupUpdateManyWithoutSuborgidInput {
+  create: [GroupCreateWithoutSuborgidInput!]
+  delete: [GroupWhereUniqueInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutSuborgidInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutSuborgidInput!]
+  deleteMany: [GroupScalarWhereInput!]
+  updateMany: [GroupUpdateManyWithWhereNestedInput!]
+}
+
+input GroupUpdateManyWithWhereNestedInput {
+  where: GroupScalarWhereInput!
+  data: GroupUpdateManyDataInput!
+}
+
+input GroupUpdateOneRequiredWithoutSubgroupsInput {
+  create: GroupCreateWithoutSubgroupsInput
+  update: GroupUpdateWithoutSubgroupsDataInput
+  upsert: GroupUpsertWithoutSubgroupsInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupUpdateWithoutSubgroupsDataInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutGroupsInput
+}
+
+input GroupUpdateWithoutSuborgidDataInput {
+  name: String
+  description: String
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
+}
+
+input GroupUpdateWithWhereUniqueWithoutSuborgidInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutSuborgidDataInput!
+}
+
+input GroupUpsertWithoutSubgroupsInput {
+  update: GroupUpdateWithoutSubgroupsDataInput!
+  create: GroupCreateWithoutSubgroupsInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutSuborgidInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutSuborgidDataInput!
+  create: GroupCreateWithoutSuborgidInput!
+}
+
+input GroupWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  suborgid: SuborgWhereInput
+  subgroups_every: SubGroupWhereInput
+  subgroups_some: SubGroupWhereInput
+  subgroups_none: SubGroupWhereInput
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [GroupWhereInput!]
+  OR: [GroupWhereInput!]
+  NOT: [GroupWhereInput!]
+}
+
+input GroupWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -304,6 +609,12 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createGroup(data: GroupCreateInput!): Group!
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
   createOrganization(data: OrganizationCreateInput!): Organization!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
@@ -316,6 +627,12 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   deletePost(where: PostWhereUniqueInput!): Post
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  createSubGroup(data: SubGroupCreateInput!): SubGroup!
+  updateSubGroup(data: SubGroupUpdateInput!, where: SubGroupWhereUniqueInput!): SubGroup
+  updateManySubGroups(data: SubGroupUpdateManyMutationInput!, where: SubGroupWhereInput): BatchPayload!
+  upsertSubGroup(where: SubGroupWhereUniqueInput!, create: SubGroupCreateInput!, update: SubGroupUpdateInput!): SubGroup!
+  deleteSubGroup(where: SubGroupWhereUniqueInput!): SubGroup
+  deleteManySubGroups(where: SubGroupWhereInput): BatchPayload!
   createSuborg(data: SuborgCreateInput!): Suborg!
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
@@ -880,12 +1197,18 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  group(where: GroupWhereUniqueInput!): Group
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   organization(where: OrganizationWhereUniqueInput!): Organization
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  subGroup(where: SubGroupWhereUniqueInput!): SubGroup
+  subGroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup]!
+  subGroupsConnection(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupConnection!
   suborg(where: SuborgWhereUniqueInput!): Suborg
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
@@ -895,12 +1218,272 @@ type Query {
   node(id: ID!): Node
 }
 
+type SubGroup {
+  id: ID!
+  name: String!
+  description: String
+  groupid: Group!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type SubGroupConnection {
+  pageInfo: PageInfo!
+  edges: [SubGroupEdge]!
+  aggregate: AggregateSubGroup!
+}
+
+input SubGroupCreateInput {
+  id: ID
+  name: String!
+  description: String
+  groupid: GroupCreateOneWithoutSubgroupsInput!
+}
+
+input SubGroupCreateManyWithoutGroupidInput {
+  create: [SubGroupCreateWithoutGroupidInput!]
+  connect: [SubGroupWhereUniqueInput!]
+}
+
+input SubGroupCreateWithoutGroupidInput {
+  id: ID
+  name: String!
+  description: String
+}
+
+type SubGroupEdge {
+  node: SubGroup!
+  cursor: String!
+}
+
+enum SubGroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SubGroupPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input SubGroupScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [SubGroupScalarWhereInput!]
+  OR: [SubGroupScalarWhereInput!]
+  NOT: [SubGroupScalarWhereInput!]
+}
+
+type SubGroupSubscriptionPayload {
+  mutation: MutationType!
+  node: SubGroup
+  updatedFields: [String!]
+  previousValues: SubGroupPreviousValues
+}
+
+input SubGroupSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubGroupWhereInput
+  AND: [SubGroupSubscriptionWhereInput!]
+  OR: [SubGroupSubscriptionWhereInput!]
+  NOT: [SubGroupSubscriptionWhereInput!]
+}
+
+input SubGroupUpdateInput {
+  name: String
+  description: String
+  groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+}
+
+input SubGroupUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input SubGroupUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input SubGroupUpdateManyWithoutGroupidInput {
+  create: [SubGroupCreateWithoutGroupidInput!]
+  delete: [SubGroupWhereUniqueInput!]
+  connect: [SubGroupWhereUniqueInput!]
+  set: [SubGroupWhereUniqueInput!]
+  disconnect: [SubGroupWhereUniqueInput!]
+  update: [SubGroupUpdateWithWhereUniqueWithoutGroupidInput!]
+  upsert: [SubGroupUpsertWithWhereUniqueWithoutGroupidInput!]
+  deleteMany: [SubGroupScalarWhereInput!]
+  updateMany: [SubGroupUpdateManyWithWhereNestedInput!]
+}
+
+input SubGroupUpdateManyWithWhereNestedInput {
+  where: SubGroupScalarWhereInput!
+  data: SubGroupUpdateManyDataInput!
+}
+
+input SubGroupUpdateWithoutGroupidDataInput {
+  name: String
+  description: String
+}
+
+input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
+  where: SubGroupWhereUniqueInput!
+  data: SubGroupUpdateWithoutGroupidDataInput!
+}
+
+input SubGroupUpsertWithWhereUniqueWithoutGroupidInput {
+  where: SubGroupWhereUniqueInput!
+  update: SubGroupUpdateWithoutGroupidDataInput!
+  create: SubGroupCreateWithoutGroupidInput!
+}
+
+input SubGroupWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  groupid: GroupWhereInput
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [SubGroupWhereInput!]
+  OR: [SubGroupWhereInput!]
+  NOT: [SubGroupWhereInput!]
+}
+
+input SubGroupWhereUniqueInput {
+  id: ID
+}
+
 type Suborg {
   id: ID!
   name: String!
   description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   org: Organization!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -917,6 +1500,7 @@ input SuborgCreateInput {
   description: String
   author: UserCreateManyWithoutMysuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
+  groups: GroupCreateManyWithoutSuborgidInput
 }
 
 input SuborgCreateManyWithoutOrgInput {
@@ -929,10 +1513,24 @@ input SuborgCreateOneWithoutAuthorInput {
   connect: SuborgWhereUniqueInput
 }
 
+input SuborgCreateOneWithoutGroupsInput {
+  create: SuborgCreateWithoutGroupsInput
+  connect: SuborgWhereUniqueInput
+}
+
 input SuborgCreateWithoutAuthorInput {
   id: ID
   name: String!
   description: String
+  org: OrganizationCreateOneWithoutSuborgsInput!
+  groups: GroupCreateManyWithoutSuborgidInput
+}
+
+input SuborgCreateWithoutGroupsInput {
+  id: ID
+  name: String!
+  description: String
+  author: UserCreateManyWithoutMysuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
 }
 
@@ -941,6 +1539,7 @@ input SuborgCreateWithoutOrgInput {
   name: String!
   description: String
   author: UserCreateManyWithoutMysuborgInput
+  groups: GroupCreateManyWithoutSuborgidInput
 }
 
 type SuborgEdge {
@@ -1056,6 +1655,7 @@ input SuborgUpdateInput {
   description: String
   author: UserUpdateManyWithoutMysuborgInput
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  groups: GroupUpdateManyWithoutSuborgidInput
 }
 
 input SuborgUpdateManyDataInput {
@@ -1085,6 +1685,13 @@ input SuborgUpdateManyWithWhereNestedInput {
   data: SuborgUpdateManyDataInput!
 }
 
+input SuborgUpdateOneRequiredWithoutGroupsInput {
+  create: SuborgCreateWithoutGroupsInput
+  update: SuborgUpdateWithoutGroupsDataInput
+  upsert: SuborgUpsertWithoutGroupsInput
+  connect: SuborgWhereUniqueInput
+}
+
 input SuborgUpdateOneWithoutAuthorInput {
   create: SuborgCreateWithoutAuthorInput
   update: SuborgUpdateWithoutAuthorDataInput
@@ -1098,12 +1705,21 @@ input SuborgUpdateWithoutAuthorDataInput {
   name: String
   description: String
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  groups: GroupUpdateManyWithoutSuborgidInput
+}
+
+input SuborgUpdateWithoutGroupsDataInput {
+  name: String
+  description: String
+  author: UserUpdateManyWithoutMysuborgInput
+  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
 }
 
 input SuborgUpdateWithoutOrgDataInput {
   name: String
   description: String
   author: UserUpdateManyWithoutMysuborgInput
+  groups: GroupUpdateManyWithoutSuborgidInput
 }
 
 input SuborgUpdateWithWhereUniqueWithoutOrgInput {
@@ -1114,6 +1730,11 @@ input SuborgUpdateWithWhereUniqueWithoutOrgInput {
 input SuborgUpsertWithoutAuthorInput {
   update: SuborgUpdateWithoutAuthorDataInput!
   create: SuborgCreateWithoutAuthorInput!
+}
+
+input SuborgUpsertWithoutGroupsInput {
+  update: SuborgUpdateWithoutGroupsDataInput!
+  create: SuborgCreateWithoutGroupsInput!
 }
 
 input SuborgUpsertWithWhereUniqueWithoutOrgInput {
@@ -1169,6 +1790,9 @@ input SuborgWhereInput {
   author_some: UserWhereInput
   author_none: UserWhereInput
   org: OrganizationWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -1196,8 +1820,10 @@ input SuborgWhereUniqueInput {
 
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }

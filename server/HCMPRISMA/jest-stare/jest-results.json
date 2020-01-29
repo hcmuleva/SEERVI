@@ -2,13 +2,13 @@
   "numFailedTestSuites": 0,
   "numFailedTests": 0,
   "numPassedTestSuites": 1,
-  "numPassedTests": 4,
+  "numPassedTests": 5,
   "numPendingTestSuites": 0,
   "numPendingTests": 0,
   "numRuntimeErrorTestSuites": 0,
   "numTodoTests": 0,
-  "numTotalTestSuites": 3,
-  "numTotalTests": 4,
+  "numTotalTestSuites": 5,
+  "numTotalTests": 5,
   "openHandles": [],
   "snapshot": {
     "added": 0,
@@ -26,18 +26,18 @@
     "unmatched": 0,
     "updated": 0
   },
-  "startTime": 1580202441637,
+  "startTime": 1580284290843,
   "success": false,
   "testResults": [
     {
       "failureMessage": null,
       "numFailingTests": 0,
-      "numPassingTests": 4,
+      "numPassingTests": 5,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "perfStats": {
-        "end": 1580202444950,
-        "start": 1580202442377
+        "end": 1580284294566,
+        "start": 1580284291877
       },
       "snapshot": {
         "added": 0,
@@ -48,55 +48,67 @@
         "updated": 0,
         "uncheckedKeys": []
       },
-      "testFilePath": "/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/suborg.test.js",
+      "testFilePath": "/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/group.test.js",
       "testResults": [
         {
           "ancestorTitles": [
-            "SubOrg Create Suite "
+            "Create Group Suite "
           ],
-          "duration": 99,
+          "duration": 186,
           "failureMessages": [],
-          "fullName": "SubOrg Create Suite  Create SubOrg Positive Case",
+          "fullName": "Create Group Suite  Create Group Test",
           "location": null,
           "numPassingAsserts": 0,
           "status": "passed",
-          "title": "Create SubOrg Positive Case"
+          "title": "Create Group Test"
         },
         {
           "ancestorTitles": [
-            "SubOrg DeleteSubOrg Suite "
+            "Update Group Suite "
           ],
-          "duration": 99,
+          "duration": 64,
           "failureMessages": [],
-          "fullName": "SubOrg DeleteSubOrg Suite  Delete SubOrg Positive Case",
+          "fullName": "Update Group Suite  Update Group TestCase",
           "location": null,
           "numPassingAsserts": 0,
           "status": "passed",
-          "title": "Delete SubOrg Positive Case"
+          "title": "Update Group TestCase"
         },
         {
           "ancestorTitles": [
-            "SubOrg UdateSubOrg Suite "
+            "Query Group Suite "
           ],
-          "duration": 112,
+          "duration": 40,
           "failureMessages": [],
-          "fullName": "SubOrg UdateSubOrg Suite  Udate SubOrg Positive Case",
+          "fullName": "Query Group Suite  Query Group without arguments, need to return all groups",
           "location": null,
           "numPassingAsserts": 0,
           "status": "passed",
-          "title": "Udate SubOrg Positive Case"
+          "title": "Query Group without arguments, need to return all groups"
         },
         {
           "ancestorTitles": [
-            "Query SubOrgusing Tests "
+            "Query Group Suite "
           ],
-          "duration": 38,
+          "duration": 29,
           "failureMessages": [],
-          "fullName": "Query SubOrgusing Tests  Query SubOrg with id",
+          "fullName": "Query Group Suite  Query Group by id and single group to be available ",
           "location": null,
           "numPassingAsserts": 0,
           "status": "passed",
-          "title": "Query SubOrg with id"
+          "title": "Query Group by id and single group to be available "
+        },
+        {
+          "ancestorTitles": [
+            "Delete Group Suite "
+          ],
+          "duration": 48,
+          "failureMessages": [],
+          "fullName": "Delete Group Suite  Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there"
         }
       ],
       "skipped": false,

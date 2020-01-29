@@ -13,6 +13,14 @@ var models = [
     embedded: false
   },
   {
+    name: "Group",
+    embedded: false
+  },
+  {
+    name: "SubGroup",
+    embedded: false
+  },
+  {
     name: "User",
     embedded: false
   },

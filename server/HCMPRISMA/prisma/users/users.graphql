@@ -1,21 +1,3 @@
-type Organization{
-  id:ID! @id
-  name:String!
-  description:String
-  author:[User!]!     @relation(name: "UserToOrg", onDelete: CASCADE)
-  suborgs:[Suborg!]!  @relation(name: "SuborgToOrg", onDelete: CASCADE)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-}
-type Suborg{
-  id: ID! @id
-  name:String!
-  description:String
-  author:[User]       @relation(name: "UserToSubOrg", onDelete: CASCADE)
-  org:Organization!   @relation(name: "SuborgToOrg", onDelete: SET_NULL)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-}
 
 type User {
   id: ID! @id
