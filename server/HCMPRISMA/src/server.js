@@ -33,7 +33,28 @@ const pubsub = new PubSub()
   
 //     return file
 //   }
-
+// async function CreateSelfUser(){
+    
+//   await prisma.query.organizations({
+//         where:{
+//             name:"CONSUMER"
+//         }
+//     }).then((resp)=>{
+//          const orgid=resp[0].id
+//          console.log("Result",resp)
+//          const consumerOrg=prisma.query.suborgs({
+//             where:{ 
+//                 org:orgid
+//             }
+//         })
+//          console.log("CreateSelfUser",JSON.stringify(consumerOrg[0]))
+//      })
+     
+//     //        
+//     // })
+   
+// }
+// CreateSelfUser()
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     resolvers,

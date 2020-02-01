@@ -87,6 +87,8 @@ type SubGroup{
   name:String!
   description:String 
   groupid:Group! 
+  memberships:[Membership!]!
+  
 }
 input CreateSubGroupInput{
     name:String!
@@ -97,4 +99,35 @@ input CreateSubGroupInput{
 input UpdateSubGroupInput{
     name:String
     description:String
+}
+type Membership{
+  id:ID!
+  name:String!
+  userid:User!
+  subgroup:SubGroup!
+  status:MembershipStatus
+  description:String
+}
+input MembershipInput{
+  name:String!
+  userid:String!
+  subgroup:String!
+  status:String
+  description:String
+}
+input MembershipUpdateIInput{
+  name:String
+  userid:String
+  subgroup:String
+  status:String
+  description:String
+}
+enum MembershipStatus{
+  ACTIVE
+  EXPIRED
+  INACTIVE
+  DORMANT
+  RENEWED
+  SPECIALGRANT
+
 }

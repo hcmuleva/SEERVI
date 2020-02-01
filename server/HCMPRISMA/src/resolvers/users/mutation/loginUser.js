@@ -18,10 +18,6 @@ async function login(parent, args, { prisma }, info) {
     if (!isMatch) {
         throw new Error('Unable to login')
     }
-    console.log("USER ID",user.id)
-    
-    console.log("\n********* Warning ******** \n")
-  
     return {
         user,
        

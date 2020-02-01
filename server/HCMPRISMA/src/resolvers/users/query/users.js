@@ -4,7 +4,9 @@ function users(parent, args, { prisma }, info) {
     if (args.query) {
         opArgs.where = {
             OR: [{
-                name_contains: args.query
+                firstname_contains: args.query
+            },{
+                lastname_contains: args.query
             }, {
                 email_contains: args.query
             }]

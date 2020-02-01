@@ -6,10 +6,7 @@ import {GET_AllORGS,GET_ORGBYID} from './orgqueries'
 import { onError } from "apollo-link-error";
 
 const client = getClient()
-beforeAll( async ()=>{
-    console.log("CLEANING all ORGS from org test")
-    await prisma.mutation.deleteManyOrganizations()
-})
+
 /**
  * org tests
  *  @group regression

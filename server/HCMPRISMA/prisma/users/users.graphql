@@ -5,8 +5,8 @@ type User {
   lastname: String!
   email: String! @unique
   password: String!
-  myorg:Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
-  mysuborg:Suborg @relation(name: "UserToSubOrg", onDelete: SET_NULL)
+  org:Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
+  suborg:[Suborg] @relation(name: "UserToSubOrg", onDelete: SET_NULL)
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
   createdBy:String

@@ -6,12 +6,6 @@ import {GET_SubOrgById} from './suborgquery'
 import {createSuborg,createSubOrgInputData,deleteSubOrg,deleteSubOrgInputData,udateSubOrg,updateSubOrgInputData} from './suborgmutation'
 import { onError } from "apollo-link-error";
 const client = getClient()
-beforeAll( async ()=>{
-    console.log("CLEANING BOTH ORGS and SUBORGS")
-    await prisma.mutation.deleteManyOrganizations()
-    await prisma.mutation.deleteManySuborgs()
-})
-
 
 /**
  * SubOrg tests

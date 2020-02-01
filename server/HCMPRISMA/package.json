@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
     "dev": "env-cmd -f ./config/test.env nodemon src/index.js --ext js,graphql --exec babel-node",
-    "test": "env-cmd -f ./config/test.env jest  --reporters=default --reporters=jest-stare --group=group/deleteGroup ",
+    "test": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=org/smoke --group=suborg/smoke --group=group/smoke --group=subgroup/smoke ",
+    "seedData": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=subgroup/smoke ",
+
     "devdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/dev.env",
     "testdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/test.env",
     "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",
@@ -50,6 +52,7 @@
     "graphql-middleware-apollo-upload-server": "^1.0.10",
     "graphql-yoga": "^1.14.10",
     "jest": "^24.9.0",
+    "jest-cli": "^25.1.0",
     "jest-runner-groups": "^1.0.0",
     "jest-stare": "^1.26.0",
     "jsonwebtoken": "^8.5.1",

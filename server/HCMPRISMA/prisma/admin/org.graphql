@@ -34,6 +34,29 @@ type SubGroup{
   name:String!
   description:String 
   groupid:Group!     @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
+  memberships:[Membership!]!  @relation(name: "MembershipToSubGroup", onDelete: CASCADE)
   updatedAt:DateTime! @updatedAt
   createdAt:DateTime! @createdAt
+}
+
+
+type Membership{
+  id:ID! @id
+  name:String!
+  userid:User!
+  subgroup:SubGroup!  @relation(name: "MembershipToSubGroup", onDelete: SET_NULL)
+  status:MembershipStatus 
+  description:String
+  updatedAt:DateTime! @updatedAt
+  createdAt:DateTime! @createdAt
+}
+
+enum MembershipStatus{
+  ACTIVE @default
+  EXPIRED
+  INACTIVE
+  DORMANT
+  RENEWED
+  SPECIALGRANT
+
 }

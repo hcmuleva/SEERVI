@@ -11,6 +11,10 @@ type AggregateGroup {
   count: Int!
 }
 
+type AggregateMembership {
+  count: Int!
+}
+
 type AggregateOrganization {
   count: Int!
 }
@@ -602,6 +606,298 @@ input GroupWhereUniqueInput {
 
 scalar Long
 
+type Membership {
+  id: ID!
+  name: String!
+  userid: User!
+  subgroup: SubGroup!
+  status: MembershipStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type MembershipConnection {
+  pageInfo: PageInfo!
+  edges: [MembershipEdge]!
+  aggregate: AggregateMembership!
+}
+
+input MembershipCreateInput {
+  id: ID
+  name: String!
+  userid: UserCreateOneInput!
+  subgroup: SubGroupCreateOneWithoutMembershipsInput!
+  status: MembershipStatus
+  description: String
+}
+
+input MembershipCreateManyWithoutSubgroupInput {
+  create: [MembershipCreateWithoutSubgroupInput!]
+  connect: [MembershipWhereUniqueInput!]
+}
+
+input MembershipCreateWithoutSubgroupInput {
+  id: ID
+  name: String!
+  userid: UserCreateOneInput!
+  status: MembershipStatus
+  description: String
+}
+
+type MembershipEdge {
+  node: Membership!
+  cursor: String!
+}
+
+enum MembershipOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  status_ASC
+  status_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MembershipPreviousValues {
+  id: ID!
+  name: String!
+  status: MembershipStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input MembershipScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  status: MembershipStatus
+  status_not: MembershipStatus
+  status_in: [MembershipStatus!]
+  status_not_in: [MembershipStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [MembershipScalarWhereInput!]
+  OR: [MembershipScalarWhereInput!]
+  NOT: [MembershipScalarWhereInput!]
+}
+
+enum MembershipStatus {
+  ACTIVE
+  EXPIRED
+  INACTIVE
+  DORMANT
+  RENEWED
+  SPECIALGRANT
+}
+
+type MembershipSubscriptionPayload {
+  mutation: MutationType!
+  node: Membership
+  updatedFields: [String!]
+  previousValues: MembershipPreviousValues
+}
+
+input MembershipSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MembershipWhereInput
+  AND: [MembershipSubscriptionWhereInput!]
+  OR: [MembershipSubscriptionWhereInput!]
+  NOT: [MembershipSubscriptionWhereInput!]
+}
+
+input MembershipUpdateInput {
+  name: String
+  userid: UserUpdateOneRequiredInput
+  subgroup: SubGroupUpdateOneRequiredWithoutMembershipsInput
+  status: MembershipStatus
+  description: String
+}
+
+input MembershipUpdateManyDataInput {
+  name: String
+  status: MembershipStatus
+  description: String
+}
+
+input MembershipUpdateManyMutationInput {
+  name: String
+  status: MembershipStatus
+  description: String
+}
+
+input MembershipUpdateManyWithoutSubgroupInput {
+  create: [MembershipCreateWithoutSubgroupInput!]
+  delete: [MembershipWhereUniqueInput!]
+  connect: [MembershipWhereUniqueInput!]
+  set: [MembershipWhereUniqueInput!]
+  disconnect: [MembershipWhereUniqueInput!]
+  update: [MembershipUpdateWithWhereUniqueWithoutSubgroupInput!]
+  upsert: [MembershipUpsertWithWhereUniqueWithoutSubgroupInput!]
+  deleteMany: [MembershipScalarWhereInput!]
+  updateMany: [MembershipUpdateManyWithWhereNestedInput!]
+}
+
+input MembershipUpdateManyWithWhereNestedInput {
+  where: MembershipScalarWhereInput!
+  data: MembershipUpdateManyDataInput!
+}
+
+input MembershipUpdateWithoutSubgroupDataInput {
+  name: String
+  userid: UserUpdateOneRequiredInput
+  status: MembershipStatus
+  description: String
+}
+
+input MembershipUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: MembershipWhereUniqueInput!
+  data: MembershipUpdateWithoutSubgroupDataInput!
+}
+
+input MembershipUpsertWithWhereUniqueWithoutSubgroupInput {
+  where: MembershipWhereUniqueInput!
+  update: MembershipUpdateWithoutSubgroupDataInput!
+  create: MembershipCreateWithoutSubgroupInput!
+}
+
+input MembershipWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  userid: UserWhereInput
+  subgroup: SubGroupWhereInput
+  status: MembershipStatus
+  status_not: MembershipStatus
+  status_in: [MembershipStatus!]
+  status_not_in: [MembershipStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [MembershipWhereInput!]
+  OR: [MembershipWhereInput!]
+  NOT: [MembershipWhereInput!]
+}
+
+input MembershipWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
   createComment(data: CommentCreateInput!): Comment!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
@@ -615,6 +911,12 @@ type Mutation {
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
+  createMembership(data: MembershipCreateInput!): Membership!
+  updateMembership(data: MembershipUpdateInput!, where: MembershipWhereUniqueInput!): Membership
+  updateManyMemberships(data: MembershipUpdateManyMutationInput!, where: MembershipWhereInput): BatchPayload!
+  upsertMembership(where: MembershipWhereUniqueInput!, create: MembershipCreateInput!, update: MembershipUpdateInput!): Membership!
+  deleteMembership(where: MembershipWhereUniqueInput!): Membership
+  deleteManyMemberships(where: MembershipWhereInput): BatchPayload!
   createOrganization(data: OrganizationCreateInput!): Organization!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
@@ -677,7 +979,7 @@ input OrganizationCreateInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutMyorgInput
+  author: UserCreateManyWithoutOrgInput
   suborgs: SuborgCreateManyWithoutOrgInput
 }
 
@@ -702,7 +1004,7 @@ input OrganizationCreateWithoutSuborgsInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutMyorgInput
+  author: UserCreateManyWithoutOrgInput
 }
 
 type OrganizationEdge {
@@ -752,7 +1054,7 @@ input OrganizationSubscriptionWhereInput {
 input OrganizationUpdateInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutMyorgInput
+  author: UserUpdateManyWithoutOrgInput
   suborgs: SuborgUpdateManyWithoutOrgInput
 }
 
@@ -786,7 +1088,7 @@ input OrganizationUpdateWithoutAuthorDataInput {
 input OrganizationUpdateWithoutSuborgsDataInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutMyorgInput
+  author: UserUpdateManyWithoutOrgInput
 }
 
 input OrganizationUpsertWithoutAuthorInput {
@@ -1200,6 +1502,9 @@ type Query {
   group(where: GroupWhereUniqueInput!): Group
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+  membership(where: MembershipWhereUniqueInput!): Membership
+  memberships(where: MembershipWhereInput, orderBy: MembershipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Membership]!
+  membershipsConnection(where: MembershipWhereInput, orderBy: MembershipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MembershipConnection!
   organization(where: OrganizationWhereUniqueInput!): Organization
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
@@ -1223,6 +1528,7 @@ type SubGroup {
   name: String!
   description: String
   groupid: Group!
+  memberships(where: MembershipWhereInput, orderBy: MembershipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Membership!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1238,6 +1544,7 @@ input SubGroupCreateInput {
   name: String!
   description: String
   groupid: GroupCreateOneWithoutSubgroupsInput!
+  memberships: MembershipCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateManyWithoutGroupidInput {
@@ -1245,10 +1552,23 @@ input SubGroupCreateManyWithoutGroupidInput {
   connect: [SubGroupWhereUniqueInput!]
 }
 
+input SubGroupCreateOneWithoutMembershipsInput {
+  create: SubGroupCreateWithoutMembershipsInput
+  connect: SubGroupWhereUniqueInput
+}
+
 input SubGroupCreateWithoutGroupidInput {
   id: ID
   name: String!
   description: String
+  memberships: MembershipCreateManyWithoutSubgroupInput
+}
+
+input SubGroupCreateWithoutMembershipsInput {
+  id: ID
+  name: String!
+  description: String
+  groupid: GroupCreateOneWithoutSubgroupsInput!
 }
 
 type SubGroupEdge {
@@ -1363,6 +1683,7 @@ input SubGroupUpdateInput {
   name: String
   description: String
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+  memberships: MembershipUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateManyDataInput {
@@ -1392,14 +1713,33 @@ input SubGroupUpdateManyWithWhereNestedInput {
   data: SubGroupUpdateManyDataInput!
 }
 
+input SubGroupUpdateOneRequiredWithoutMembershipsInput {
+  create: SubGroupCreateWithoutMembershipsInput
+  update: SubGroupUpdateWithoutMembershipsDataInput
+  upsert: SubGroupUpsertWithoutMembershipsInput
+  connect: SubGroupWhereUniqueInput
+}
+
 input SubGroupUpdateWithoutGroupidDataInput {
   name: String
   description: String
+  memberships: MembershipUpdateManyWithoutSubgroupInput
+}
+
+input SubGroupUpdateWithoutMembershipsDataInput {
+  name: String
+  description: String
+  groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
 }
 
 input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
   where: SubGroupWhereUniqueInput!
   data: SubGroupUpdateWithoutGroupidDataInput!
+}
+
+input SubGroupUpsertWithoutMembershipsInput {
+  update: SubGroupUpdateWithoutMembershipsDataInput!
+  create: SubGroupCreateWithoutMembershipsInput!
 }
 
 input SubGroupUpsertWithWhereUniqueWithoutGroupidInput {
@@ -1452,6 +1792,9 @@ input SubGroupWhereInput {
   description_ends_with: String
   description_not_ends_with: String
   groupid: GroupWhereInput
+  memberships_every: MembershipWhereInput
+  memberships_some: MembershipWhereInput
+  memberships_none: MembershipWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -1498,19 +1841,19 @@ input SuborgCreateInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutMysuborgInput
+  author: UserCreateManyWithoutSuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
   groups: GroupCreateManyWithoutSuborgidInput
+}
+
+input SuborgCreateManyWithoutAuthorInput {
+  create: [SuborgCreateWithoutAuthorInput!]
+  connect: [SuborgWhereUniqueInput!]
 }
 
 input SuborgCreateManyWithoutOrgInput {
   create: [SuborgCreateWithoutOrgInput!]
   connect: [SuborgWhereUniqueInput!]
-}
-
-input SuborgCreateOneWithoutAuthorInput {
-  create: SuborgCreateWithoutAuthorInput
-  connect: SuborgWhereUniqueInput
 }
 
 input SuborgCreateOneWithoutGroupsInput {
@@ -1530,7 +1873,7 @@ input SuborgCreateWithoutGroupsInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutMysuborgInput
+  author: UserCreateManyWithoutSuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
 }
 
@@ -1538,7 +1881,7 @@ input SuborgCreateWithoutOrgInput {
   id: ID
   name: String!
   description: String
-  author: UserCreateManyWithoutMysuborgInput
+  author: UserCreateManyWithoutSuborgInput
   groups: GroupCreateManyWithoutSuborgidInput
 }
 
@@ -1653,7 +1996,7 @@ input SuborgSubscriptionWhereInput {
 input SuborgUpdateInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutMysuborgInput
+  author: UserUpdateManyWithoutSuborgInput
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
   groups: GroupUpdateManyWithoutSuborgidInput
 }
@@ -1666,6 +2009,18 @@ input SuborgUpdateManyDataInput {
 input SuborgUpdateManyMutationInput {
   name: String
   description: String
+}
+
+input SuborgUpdateManyWithoutAuthorInput {
+  create: [SuborgCreateWithoutAuthorInput!]
+  delete: [SuborgWhereUniqueInput!]
+  connect: [SuborgWhereUniqueInput!]
+  set: [SuborgWhereUniqueInput!]
+  disconnect: [SuborgWhereUniqueInput!]
+  update: [SuborgUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [SuborgUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [SuborgScalarWhereInput!]
+  updateMany: [SuborgUpdateManyWithWhereNestedInput!]
 }
 
 input SuborgUpdateManyWithoutOrgInput {
@@ -1692,15 +2047,6 @@ input SuborgUpdateOneRequiredWithoutGroupsInput {
   connect: SuborgWhereUniqueInput
 }
 
-input SuborgUpdateOneWithoutAuthorInput {
-  create: SuborgCreateWithoutAuthorInput
-  update: SuborgUpdateWithoutAuthorDataInput
-  upsert: SuborgUpsertWithoutAuthorInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: SuborgWhereUniqueInput
-}
-
 input SuborgUpdateWithoutAuthorDataInput {
   name: String
   description: String
@@ -1711,15 +2057,20 @@ input SuborgUpdateWithoutAuthorDataInput {
 input SuborgUpdateWithoutGroupsDataInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutMysuborgInput
+  author: UserUpdateManyWithoutSuborgInput
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
 }
 
 input SuborgUpdateWithoutOrgDataInput {
   name: String
   description: String
-  author: UserUpdateManyWithoutMysuborgInput
+  author: UserUpdateManyWithoutSuborgInput
   groups: GroupUpdateManyWithoutSuborgidInput
+}
+
+input SuborgUpdateWithWhereUniqueWithoutAuthorInput {
+  where: SuborgWhereUniqueInput!
+  data: SuborgUpdateWithoutAuthorDataInput!
 }
 
 input SuborgUpdateWithWhereUniqueWithoutOrgInput {
@@ -1727,14 +2078,15 @@ input SuborgUpdateWithWhereUniqueWithoutOrgInput {
   data: SuborgUpdateWithoutOrgDataInput!
 }
 
-input SuborgUpsertWithoutAuthorInput {
-  update: SuborgUpdateWithoutAuthorDataInput!
-  create: SuborgCreateWithoutAuthorInput!
-}
-
 input SuborgUpsertWithoutGroupsInput {
   update: SuborgUpdateWithoutGroupsDataInput!
   create: SuborgCreateWithoutGroupsInput!
+}
+
+input SuborgUpsertWithWhereUniqueWithoutAuthorInput {
+  where: SuborgWhereUniqueInput!
+  update: SuborgUpdateWithoutAuthorDataInput!
+  create: SuborgCreateWithoutAuthorInput!
 }
 
 input SuborgUpsertWithWhereUniqueWithoutOrgInput {
@@ -1821,6 +2173,7 @@ input SuborgWhereUniqueInput {
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+  membership(where: MembershipSubscriptionWhereInput): MembershipSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
@@ -1834,8 +2187,8 @@ type User {
   lastname: String!
   email: String!
   password: String!
-  myorg: Organization
-  mysuborg: Suborg
+  org: Organization
+  suborg(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   createdBy: String
@@ -1855,21 +2208,26 @@ input UserCreateInput {
   lastname: String!
   email: String!
   password: String!
-  myorg: OrganizationCreateOneWithoutAuthorInput
-  mysuborg: SuborgCreateOneWithoutAuthorInput
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   createdBy: String
 }
 
-input UserCreateManyWithoutMyorgInput {
-  create: [UserCreateWithoutMyorgInput!]
+input UserCreateManyWithoutOrgInput {
+  create: [UserCreateWithoutOrgInput!]
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutMysuborgInput {
-  create: [UserCreateWithoutMysuborgInput!]
+input UserCreateManyWithoutSuborgInput {
+  create: [UserCreateWithoutSuborgInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCommentsInput {
@@ -1888,31 +2246,19 @@ input UserCreateWithoutCommentsInput {
   lastname: String!
   email: String!
   password: String!
-  myorg: OrganizationCreateOneWithoutAuthorInput
-  mysuborg: SuborgCreateOneWithoutAuthorInput
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
   posts: PostCreateManyWithoutAuthorInput
   createdBy: String
 }
 
-input UserCreateWithoutMyorgInput {
+input UserCreateWithoutOrgInput {
   id: ID
   firstname: String!
   lastname: String!
   email: String!
   password: String!
-  mysuborg: SuborgCreateOneWithoutAuthorInput
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  createdBy: String
-}
-
-input UserCreateWithoutMysuborgInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  myorg: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   createdBy: String
@@ -1924,8 +2270,20 @@ input UserCreateWithoutPostsInput {
   lastname: String!
   email: String!
   password: String!
-  myorg: OrganizationCreateOneWithoutAuthorInput
-  mysuborg: SuborgCreateOneWithoutAuthorInput
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  createdBy: String
+}
+
+input UserCreateWithoutSuborgInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   createdBy: String
 }
@@ -2089,13 +2447,25 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  createdBy: String
+}
+
 input UserUpdateInput {
   firstname: String
   lastname: String
   email: String
   password: String
-  myorg: OrganizationUpdateOneWithoutAuthorInput
-  mysuborg: SuborgUpdateOneWithoutAuthorInput
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   createdBy: String
@@ -2117,26 +2487,26 @@ input UserUpdateManyMutationInput {
   createdBy: String
 }
 
-input UserUpdateManyWithoutMyorgInput {
-  create: [UserCreateWithoutMyorgInput!]
+input UserUpdateManyWithoutOrgInput {
+  create: [UserCreateWithoutOrgInput!]
   delete: [UserWhereUniqueInput!]
   connect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutMyorgInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutMyorgInput!]
+  update: [UserUpdateWithWhereUniqueWithoutOrgInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutOrgInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
-input UserUpdateManyWithoutMysuborgInput {
-  create: [UserCreateWithoutMysuborgInput!]
+input UserUpdateManyWithoutSuborgInput {
+  create: [UserCreateWithoutSuborgInput!]
   delete: [UserWhereUniqueInput!]
   connect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutMysuborgInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutMysuborgInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSuborgInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSuborgInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -2144,6 +2514,13 @@ input UserUpdateManyWithoutMysuborgInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutCommentsInput {
@@ -2165,29 +2542,18 @@ input UserUpdateWithoutCommentsDataInput {
   lastname: String
   email: String
   password: String
-  myorg: OrganizationUpdateOneWithoutAuthorInput
-  mysuborg: SuborgUpdateOneWithoutAuthorInput
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
   posts: PostUpdateManyWithoutAuthorInput
   createdBy: String
 }
 
-input UserUpdateWithoutMyorgDataInput {
+input UserUpdateWithoutOrgDataInput {
   firstname: String
   lastname: String
   email: String
   password: String
-  mysuborg: SuborgUpdateOneWithoutAuthorInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  createdBy: String
-}
-
-input UserUpdateWithoutMysuborgDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  myorg: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   createdBy: String
@@ -2198,20 +2564,36 @@ input UserUpdateWithoutPostsDataInput {
   lastname: String
   email: String
   password: String
-  myorg: OrganizationUpdateOneWithoutAuthorInput
-  mysuborg: SuborgUpdateOneWithoutAuthorInput
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   createdBy: String
 }
 
-input UserUpdateWithWhereUniqueWithoutMyorgInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutMyorgDataInput!
+input UserUpdateWithoutSuborgDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  createdBy: String
 }
 
-input UserUpdateWithWhereUniqueWithoutMysuborgInput {
+input UserUpdateWithWhereUniqueWithoutOrgInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutMysuborgDataInput!
+  data: UserUpdateWithoutOrgDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutSuborgInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutSuborgDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutCommentsInput {
@@ -2224,16 +2606,16 @@ input UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutMyorgInput {
+input UserUpsertWithWhereUniqueWithoutOrgInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutMyorgDataInput!
-  create: UserCreateWithoutMyorgInput!
+  update: UserUpdateWithoutOrgDataInput!
+  create: UserCreateWithoutOrgInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutMysuborgInput {
+input UserUpsertWithWhereUniqueWithoutSuborgInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutMysuborgDataInput!
-  create: UserCreateWithoutMysuborgInput!
+  update: UserUpdateWithoutSuborgDataInput!
+  create: UserCreateWithoutSuborgInput!
 }
 
 input UserWhereInput {
@@ -2307,8 +2689,10 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  myorg: OrganizationWhereInput
-  mysuborg: SuborgWhereInput
+  org: OrganizationWhereInput
+  suborg_every: SuborgWhereInput
+  suborg_some: SuborgWhereInput
+  suborg_none: SuborgWhereInput
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput

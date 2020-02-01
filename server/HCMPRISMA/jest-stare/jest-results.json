@@ -1,14 +1,14 @@
 {
   "numFailedTestSuites": 0,
   "numFailedTests": 0,
-  "numPassedTestSuites": 1,
-  "numPassedTests": 5,
+  "numPassedTestSuites": 4,
+  "numPassedTests": 22,
   "numPendingTestSuites": 0,
   "numPendingTests": 0,
   "numRuntimeErrorTestSuites": 0,
   "numTodoTests": 0,
-  "numTotalTestSuites": 5,
-  "numTotalTests": 5,
+  "numTotalTestSuites": 7,
+  "numTotalTests": 22,
   "openHandles": [],
   "snapshot": {
     "added": 0,
@@ -26,19 +26,303 @@
     "unmatched": 0,
     "updated": 0
   },
-  "startTime": 1580284290843,
+  "startTime": 1580529221855,
   "success": false,
   "testResults": [
     {
-      "failureMessage": null,
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1580529225736,
+        "start": 1580529222654
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/subgroupp.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Create SubGroup Suite "
+          ],
+          "duration": 276,
+          "failureMessages": [],
+          "fullName": "Create SubGroup Suite  Create SubGroup Test",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Create SubGroup Test"
+        },
+        {
+          "ancestorTitles": [
+            "Update SubGroup Suite "
+          ],
+          "duration": 55,
+          "failureMessages": [],
+          "fullName": "Update SubGroup Suite  Update SubGroup TestCase",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Update SubGroup TestCase"
+        },
+        {
+          "ancestorTitles": [
+            "Query SubGroup Suite "
+          ],
+          "duration": 31,
+          "failureMessages": [],
+          "fullName": "Query SubGroup Suite  Query SubGroup without arguments, need to return all subgroups",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Query SubGroup without arguments, need to return all subgroups"
+        },
+        {
+          "ancestorTitles": [
+            "Query SubGroup Suite "
+          ],
+          "duration": 24,
+          "failureMessages": [],
+          "fullName": "Query SubGroup Suite  Query SubGroup by id and single Subgroup to be available ",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Query SubGroup by id and single Subgroup to be available "
+        },
+        {
+          "ancestorTitles": [
+            "Delete SubGroup Suite "
+          ],
+          "duration": 44,
+          "failureMessages": [],
+          "fullName": "Delete SubGroup Suite  Delete SubGroup: 1.GetAllSubGroup, now consider only one element, and delete, again query it should not there",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Delete SubGroup: 1.GetAllSubGroup, now consider only one element, and delete, again query it should not there"
+        },
+        {
+          "ancestorTitles": [
+            "Create SubGroup Suite "
+          ],
+          "duration": 241,
+          "failureMessages": [],
+          "fullName": "Create SubGroup Suite  Create SubGroup Test",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Create SubGroup Test"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 4,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1580529226618,
+        "start": 1580529225774
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/suborg.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "SubOrg Create Suite "
+          ],
+          "duration": 65,
+          "failureMessages": [],
+          "fullName": "SubOrg Create Suite  Create SubOrg Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Create SubOrg Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "SubOrg DeleteSubOrg Suite "
+          ],
+          "duration": 93,
+          "failureMessages": [],
+          "fullName": "SubOrg DeleteSubOrg Suite  Delete SubOrg Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Delete SubOrg Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "SubOrg UdateSubOrg Suite "
+          ],
+          "duration": 101,
+          "failureMessages": [],
+          "fullName": "SubOrg UdateSubOrg Suite  Udate SubOrg Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Udate SubOrg Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Query SubOrgusing Tests "
+          ],
+          "duration": 31,
+          "failureMessages": [],
+          "fullName": "Query SubOrgusing Tests  Query SubOrg with id",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Query SubOrg with id"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 7,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1580529227478,
+        "start": 1580529226644
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/org.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Org Create "
+          ],
+          "duration": 51,
+          "failureMessages": [],
+          "fullName": "Org Create  create Org Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "create Org Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Org delete "
+          ],
+          "duration": 61,
+          "failureMessages": [],
+          "fullName": "Org delete  Delete Org Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Delete Org Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Org update "
+          ],
+          "duration": 60,
+          "failureMessages": [],
+          "fullName": "Org update  Update Org Positive Case",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Update Org Positive Case"
+        },
+        {
+          "ancestorTitles": [
+            "Org query test cases "
+          ],
+          "duration": 30,
+          "failureMessages": [],
+          "fullName": "Org query test cases  Query Org Positive",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Query Org Positive"
+        },
+        {
+          "ancestorTitles": [
+            "Org query test cases "
+          ],
+          "duration": 25,
+          "failureMessages": [],
+          "fullName": "Org query test cases  Query org by id ",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "Query org by id "
+        },
+        {
+          "ancestorTitles": [
+            "Org Suite for full test "
+          ],
+          "duration": 30,
+          "failureMessages": [],
+          "fullName": "Org Suite for full test  create Org Positive Case WithoutDescription",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "create Org Positive Case WithoutDescription"
+        },
+        {
+          "ancestorTitles": [
+            "Org Suite for full test "
+          ],
+          "duration": 13,
+          "failureMessages": [],
+          "fullName": "Org Suite for full test  create Org Negative: Org withoutname",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "create Org Negative: Org withoutname"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
       "numFailingTests": 0,
       "numPassingTests": 5,
       "numPendingTests": 0,
       "numTodoTests": 0,
+      "openHandles": [],
       "perfStats": {
-        "end": 1580284294566,
-        "start": 1580284291877
+        "end": 1580529228281,
+        "start": 1580529227503
       },
+      "skipped": false,
       "snapshot": {
         "added": 0,
         "fileDeleted": false,
@@ -54,7 +338,7 @@
           "ancestorTitles": [
             "Create Group Suite "
           ],
-          "duration": 186,
+          "duration": 86,
           "failureMessages": [],
           "fullName": "Create Group Suite  Create Group Test",
           "location": null,
@@ -66,7 +350,7 @@
           "ancestorTitles": [
             "Update Group Suite "
           ],
-          "duration": 64,
+          "duration": 46,
           "failureMessages": [],
           "fullName": "Update Group Suite  Update Group TestCase",
           "location": null,
@@ -78,7 +362,7 @@
           "ancestorTitles": [
             "Query Group Suite "
           ],
-          "duration": 40,
+          "duration": 28,
           "failureMessages": [],
           "fullName": "Query Group Suite  Query Group without arguments, need to return all groups",
           "location": null,
@@ -90,7 +374,7 @@
           "ancestorTitles": [
             "Query Group Suite "
           ],
-          "duration": 29,
+          "duration": 28,
           "failureMessages": [],
           "fullName": "Query Group Suite  Query Group by id and single group to be available ",
           "location": null,
@@ -102,7 +386,7 @@
           "ancestorTitles": [
             "Delete Group Suite "
           ],
-          "duration": 48,
+          "duration": 59,
           "failureMessages": [],
           "fullName": "Delete Group Suite  Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there",
           "location": null,
@@ -111,8 +395,7 @@
           "title": "Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there"
         }
       ],
-      "skipped": false,
-      "leaks": false
+      "failureMessage": null
     }
   ],
   "wasInterrupted": false

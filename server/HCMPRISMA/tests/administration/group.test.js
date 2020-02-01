@@ -8,12 +8,7 @@ import {creategroup,createGroupInputData,updategroup,updateGroupInputData,delete
 import {GET_AllGROUPS,GET_GROUPBYID} from './groupqueries'
 import { onError } from "apollo-link-error";
 const client = getClient()
-beforeAll( async ()=>{
-    console.log("CLEANING BOTH ORGS and SUBORGS")
-    await prisma.mutation.deleteManyOrganizations()
-    await prisma.mutation.deleteManySuborgs()
-    await prisma.mutation.deleteManyGroups()
-})
+
 
 
 /**
@@ -126,6 +121,7 @@ describe( 'Query Group Suite ', () => {
  describe( 'Delete Group Suite ', () => {
      test('Delete Group: 1.GetAllGroup, now consider only one element, and delete, again query it should not there', async ()=>{
         await prisma.query.groups({}).then(async (backendGroups)=>{
+            console.log("BACKEND GROUPP ",backendGroups)
             const firstGroup=backendGroups[0]
             const deleteGrouppvariable=deleteGroupInputData(firstGroup.id)
              await client.mutate({mutation: deletegroup, variables:deleteGrouppvariable}).then(async (resp)=>{

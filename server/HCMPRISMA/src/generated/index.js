@@ -21,6 +21,14 @@ var models = [
     embedded: false
   },
   {
+    name: "Membership",
+    embedded: false
+  },
+  {
+    name: "MembershipStatus",
+    embedded: false
+  },
+  {
     name: "User",
     embedded: false
   },

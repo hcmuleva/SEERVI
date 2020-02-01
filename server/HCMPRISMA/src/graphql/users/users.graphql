@@ -20,8 +20,8 @@ type User {
     lastname: String!
     email: String!
     password: String!   
-    myorg:Organization  
-    mysuborg:Suborg 
+    org:Organization  
+    suborg:[Suborg] 
     posts: [Post!]! 
     comments: [Comment!]!
     createdBy:ID
@@ -37,8 +37,8 @@ input CreateUserInput {
     lastname: String!
     email: String!
     password: String!
-    myorg:String
-    mysuborg:String
+    org:String
+    suborg:String
 }
 
 input UpdateUserInputByAdmin{
@@ -46,8 +46,8 @@ input UpdateUserInputByAdmin{
     lastname: String
     email: String
     password: String
-    myorg:String
-    mysuborg:String
+    org:String
+    suborg:String
 }
 input LoginUserInput {
     email: String!
@@ -58,6 +58,6 @@ input UpdateUserInput {
     lastName: String
     email: String
     password:String
-    myorg:String
-    mysuborg:String
+    org:String
+    suborg:String
 }

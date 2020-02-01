@@ -18,6 +18,7 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   comment: (where?: CommentWhereInput) => Promise<boolean>;
   group: (where?: GroupWhereInput) => Promise<boolean>;
+  membership: (where?: MembershipWhereInput) => Promise<boolean>;
   organization: (where?: OrganizationWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   subGroup: (where?: SubGroupWhereInput) => Promise<boolean>;
@@ -82,6 +83,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => GroupConnectionPromise;
+  membership: (where: MembershipWhereUniqueInput) => MembershipNullablePromise;
+  memberships: (args?: {
+    where?: MembershipWhereInput;
+    orderBy?: MembershipOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Membership>;
+  membershipsConnection: (args?: {
+    where?: MembershipWhereInput;
+    orderBy?: MembershipOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MembershipConnectionPromise;
   organization: (
     where: OrganizationWhereUniqueInput
   ) => OrganizationNullablePromise;
@@ -217,6 +237,22 @@ export interface Prisma {
   }) => GroupPromise;
   deleteGroup: (where: GroupWhereUniqueInput) => GroupPromise;
   deleteManyGroups: (where?: GroupWhereInput) => BatchPayloadPromise;
+  createMembership: (data: MembershipCreateInput) => MembershipPromise;
+  updateMembership: (args: {
+    data: MembershipUpdateInput;
+    where: MembershipWhereUniqueInput;
+  }) => MembershipPromise;
+  updateManyMemberships: (args: {
+    data: MembershipUpdateManyMutationInput;
+    where?: MembershipWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMembership: (args: {
+    where: MembershipWhereUniqueInput;
+    create: MembershipCreateInput;
+    update: MembershipUpdateInput;
+  }) => MembershipPromise;
+  deleteMembership: (where: MembershipWhereUniqueInput) => MembershipPromise;
+  deleteManyMemberships: (where?: MembershipWhereInput) => BatchPayloadPromise;
   createOrganization: (data: OrganizationCreateInput) => OrganizationPromise;
   updateOrganization: (args: {
     data: OrganizationUpdateInput;
@@ -316,6 +352,9 @@ export interface Subscription {
   group: (
     where?: GroupSubscriptionWhereInput
   ) => GroupSubscriptionPayloadSubscription;
+  membership: (
+    where?: MembershipSubscriptionWhereInput
+  ) => MembershipSubscriptionPayloadSubscription;
   organization: (
     where?: OrganizationSubscriptionWhereInput
   ) => OrganizationSubscriptionPayloadSubscription;
@@ -340,6 +379,14 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type MembershipStatus =
+  | "ACTIVE"
+  | "EXPIRED"
+  | "INACTIVE"
+  | "DORMANT"
+  | "RENEWED"
+  | "SPECIALGRANT";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -388,6 +435,20 @@ export type SubGroupOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type MembershipOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "status_ASC"
+  | "status_DESC"
   | "description_ASC"
   | "description_DESC"
   | "updatedAt_ASC"
@@ -508,8 +569,10 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  myorg?: Maybe<OrganizationWhereInput>;
-  mysuborg?: Maybe<SuborgWhereInput>;
+  org?: Maybe<OrganizationWhereInput>;
+  suborg_every?: Maybe<SuborgWhereInput>;
+  suborg_some?: Maybe<SuborgWhereInput>;
+  suborg_none?: Maybe<SuborgWhereInput>;
   posts_every?: Maybe<PostWhereInput>;
   posts_some?: Maybe<PostWhereInput>;
   posts_none?: Maybe<PostWhereInput>;
@@ -804,6 +867,9 @@ export interface SubGroupWhereInput {
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
   groupid?: Maybe<GroupWhereInput>;
+  memberships_every?: Maybe<MembershipWhereInput>;
+  memberships_some?: Maybe<MembershipWhereInput>;
+  memberships_none?: Maybe<MembershipWhereInput>;
   updatedAt?: Maybe<DateTimeInput>;
   updatedAt_not?: Maybe<DateTimeInput>;
   updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -823,6 +889,76 @@ export interface SubGroupWhereInput {
   AND?: Maybe<SubGroupWhereInput[] | SubGroupWhereInput>;
   OR?: Maybe<SubGroupWhereInput[] | SubGroupWhereInput>;
   NOT?: Maybe<SubGroupWhereInput[] | SubGroupWhereInput>;
+}
+
+export interface MembershipWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  userid?: Maybe<UserWhereInput>;
+  subgroup?: Maybe<SubGroupWhereInput>;
+  status?: Maybe<MembershipStatus>;
+  status_not?: Maybe<MembershipStatus>;
+  status_in?: Maybe<MembershipStatus[] | MembershipStatus>;
+  status_not_in?: Maybe<MembershipStatus[] | MembershipStatus>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MembershipWhereInput[] | MembershipWhereInput>;
+  OR?: Maybe<MembershipWhereInput[] | MembershipWhereInput>;
+  NOT?: Maybe<MembershipWhereInput[] | MembershipWhereInput>;
 }
 
 export interface PostWhereInput {
@@ -951,6 +1087,10 @@ export type GroupWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export type MembershipWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type OrganizationWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -990,8 +1130,8 @@ export interface UserCreateWithoutCommentsInput {
   lastname: String;
   email: String;
   password: String;
-  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
-  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
@@ -1017,24 +1157,22 @@ export interface SuborgCreateWithoutOrgInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutMysuborgInput>;
+  author?: Maybe<UserCreateManyWithoutSuborgInput>;
   groups?: Maybe<GroupCreateManyWithoutSuborgidInput>;
 }
 
-export interface UserCreateManyWithoutMysuborgInput {
-  create?: Maybe<
-    UserCreateWithoutMysuborgInput[] | UserCreateWithoutMysuborgInput
-  >;
+export interface UserCreateManyWithoutSuborgInput {
+  create?: Maybe<UserCreateWithoutSuborgInput[] | UserCreateWithoutSuborgInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutMysuborgInput {
+export interface UserCreateWithoutSuborgInput {
   id?: Maybe<ID_Input>;
   firstname: String;
   lastname: String;
   email: String;
   password: String;
-  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
@@ -1103,15 +1241,17 @@ export interface UserCreateWithoutPostsInput {
   lastname: String;
   email: String;
   password: String;
-  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
-  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
-export interface SuborgCreateOneWithoutAuthorInput {
-  create?: Maybe<SuborgCreateWithoutAuthorInput>;
-  connect?: Maybe<SuborgWhereUniqueInput>;
+export interface SuborgCreateManyWithoutAuthorInput {
+  create?: Maybe<
+    SuborgCreateWithoutAuthorInput[] | SuborgCreateWithoutAuthorInput
+  >;
+  connect?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
 }
 
 export interface SuborgCreateWithoutAuthorInput {
@@ -1131,21 +1271,21 @@ export interface OrganizationCreateWithoutSuborgsInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutMyorgInput>;
+  author?: Maybe<UserCreateManyWithoutOrgInput>;
 }
 
-export interface UserCreateManyWithoutMyorgInput {
-  create?: Maybe<UserCreateWithoutMyorgInput[] | UserCreateWithoutMyorgInput>;
+export interface UserCreateManyWithoutOrgInput {
+  create?: Maybe<UserCreateWithoutOrgInput[] | UserCreateWithoutOrgInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutMyorgInput {
+export interface UserCreateWithoutOrgInput {
   id?: Maybe<ID_Input>;
   firstname: String;
   lastname: String;
   email: String;
   password: String;
-  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
@@ -1176,6 +1316,41 @@ export interface SubGroupCreateWithoutGroupidInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
+  memberships?: Maybe<MembershipCreateManyWithoutSubgroupInput>;
+}
+
+export interface MembershipCreateManyWithoutSubgroupInput {
+  create?: Maybe<
+    | MembershipCreateWithoutSubgroupInput[]
+    | MembershipCreateWithoutSubgroupInput
+  >;
+  connect?: Maybe<MembershipWhereUniqueInput[] | MembershipWhereUniqueInput>;
+}
+
+export interface MembershipCreateWithoutSubgroupInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  userid: UserCreateOneInput;
+  status?: Maybe<MembershipStatus>;
+  description?: Maybe<String>;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  firstname: String;
+  lastname: String;
+  email: String;
+  password: String;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
+  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
+  createdBy?: Maybe<String>;
 }
 
 export interface CommentUpdateInput {
@@ -1196,8 +1371,8 @@ export interface UserUpdateWithoutCommentsDataInput {
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
@@ -1246,25 +1421,23 @@ export interface SuborgUpdateWithWhereUniqueWithoutOrgInput {
 export interface SuborgUpdateWithoutOrgDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutMysuborgInput>;
+  author?: Maybe<UserUpdateManyWithoutSuborgInput>;
   groups?: Maybe<GroupUpdateManyWithoutSuborgidInput>;
 }
 
-export interface UserUpdateManyWithoutMysuborgInput {
-  create?: Maybe<
-    UserCreateWithoutMysuborgInput[] | UserCreateWithoutMysuborgInput
-  >;
+export interface UserUpdateManyWithoutSuborgInput {
+  create?: Maybe<UserCreateWithoutSuborgInput[] | UserCreateWithoutSuborgInput>;
   delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutMysuborgInput[]
-    | UserUpdateWithWhereUniqueWithoutMysuborgInput
+    | UserUpdateWithWhereUniqueWithoutSuborgInput[]
+    | UserUpdateWithWhereUniqueWithoutSuborgInput
   >;
   upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutMysuborgInput[]
-    | UserUpsertWithWhereUniqueWithoutMysuborgInput
+    | UserUpsertWithWhereUniqueWithoutSuborgInput[]
+    | UserUpsertWithWhereUniqueWithoutSuborgInput
   >;
   deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   updateMany?: Maybe<
@@ -1272,17 +1445,17 @@ export interface UserUpdateManyWithoutMysuborgInput {
   >;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutMysuborgInput {
+export interface UserUpdateWithWhereUniqueWithoutSuborgInput {
   where: UserWhereUniqueInput;
-  data: UserUpdateWithoutMysuborgDataInput;
+  data: UserUpdateWithoutSuborgDataInput;
 }
 
-export interface UserUpdateWithoutMysuborgDataInput {
+export interface UserUpdateWithoutSuborgDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
@@ -1560,19 +1733,38 @@ export interface UserUpdateWithoutPostsDataInput {
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
-export interface SuborgUpdateOneWithoutAuthorInput {
-  create?: Maybe<SuborgCreateWithoutAuthorInput>;
-  update?: Maybe<SuborgUpdateWithoutAuthorDataInput>;
-  upsert?: Maybe<SuborgUpsertWithoutAuthorInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<SuborgWhereUniqueInput>;
+export interface SuborgUpdateManyWithoutAuthorInput {
+  create?: Maybe<
+    SuborgCreateWithoutAuthorInput[] | SuborgCreateWithoutAuthorInput
+  >;
+  delete?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  connect?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  set?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  disconnect?: Maybe<SuborgWhereUniqueInput[] | SuborgWhereUniqueInput>;
+  update?: Maybe<
+    | SuborgUpdateWithWhereUniqueWithoutAuthorInput[]
+    | SuborgUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | SuborgUpsertWithWhereUniqueWithoutAuthorInput[]
+    | SuborgUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<SuborgScalarWhereInput[] | SuborgScalarWhereInput>;
+  updateMany?: Maybe<
+    | SuborgUpdateManyWithWhereNestedInput[]
+    | SuborgUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SuborgUpdateWithWhereUniqueWithoutAuthorInput {
+  where: SuborgWhereUniqueInput;
+  data: SuborgUpdateWithoutAuthorDataInput;
 }
 
 export interface SuborgUpdateWithoutAuthorDataInput {
@@ -1592,22 +1784,22 @@ export interface OrganizationUpdateOneRequiredWithoutSuborgsInput {
 export interface OrganizationUpdateWithoutSuborgsDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutMyorgInput>;
+  author?: Maybe<UserUpdateManyWithoutOrgInput>;
 }
 
-export interface UserUpdateManyWithoutMyorgInput {
-  create?: Maybe<UserCreateWithoutMyorgInput[] | UserCreateWithoutMyorgInput>;
+export interface UserUpdateManyWithoutOrgInput {
+  create?: Maybe<UserCreateWithoutOrgInput[] | UserCreateWithoutOrgInput>;
   delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutMyorgInput[]
-    | UserUpdateWithWhereUniqueWithoutMyorgInput
+    | UserUpdateWithWhereUniqueWithoutOrgInput[]
+    | UserUpdateWithWhereUniqueWithoutOrgInput
   >;
   upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutMyorgInput[]
-    | UserUpsertWithWhereUniqueWithoutMyorgInput
+    | UserUpsertWithWhereUniqueWithoutOrgInput[]
+    | UserUpsertWithWhereUniqueWithoutOrgInput
   >;
   deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   updateMany?: Maybe<
@@ -1615,26 +1807,26 @@ export interface UserUpdateManyWithoutMyorgInput {
   >;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutMyorgInput {
+export interface UserUpdateWithWhereUniqueWithoutOrgInput {
   where: UserWhereUniqueInput;
-  data: UserUpdateWithoutMyorgDataInput;
+  data: UserUpdateWithoutOrgDataInput;
 }
 
-export interface UserUpdateWithoutMyorgDataInput {
+export interface UserUpdateWithoutOrgDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutMyorgInput {
+export interface UserUpsertWithWhereUniqueWithoutOrgInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutMyorgDataInput;
-  create: UserCreateWithoutMyorgInput;
+  update: UserUpdateWithoutOrgDataInput;
+  create: UserCreateWithoutOrgInput;
 }
 
 export interface UserScalarWhereInput {
@@ -1825,6 +2017,152 @@ export interface SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
 export interface SubGroupUpdateWithoutGroupidDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
+  memberships?: Maybe<MembershipUpdateManyWithoutSubgroupInput>;
+}
+
+export interface MembershipUpdateManyWithoutSubgroupInput {
+  create?: Maybe<
+    | MembershipCreateWithoutSubgroupInput[]
+    | MembershipCreateWithoutSubgroupInput
+  >;
+  delete?: Maybe<MembershipWhereUniqueInput[] | MembershipWhereUniqueInput>;
+  connect?: Maybe<MembershipWhereUniqueInput[] | MembershipWhereUniqueInput>;
+  set?: Maybe<MembershipWhereUniqueInput[] | MembershipWhereUniqueInput>;
+  disconnect?: Maybe<MembershipWhereUniqueInput[] | MembershipWhereUniqueInput>;
+  update?: Maybe<
+    | MembershipUpdateWithWhereUniqueWithoutSubgroupInput[]
+    | MembershipUpdateWithWhereUniqueWithoutSubgroupInput
+  >;
+  upsert?: Maybe<
+    | MembershipUpsertWithWhereUniqueWithoutSubgroupInput[]
+    | MembershipUpsertWithWhereUniqueWithoutSubgroupInput
+  >;
+  deleteMany?: Maybe<MembershipScalarWhereInput[] | MembershipScalarWhereInput>;
+  updateMany?: Maybe<
+    | MembershipUpdateManyWithWhereNestedInput[]
+    | MembershipUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface MembershipUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: MembershipWhereUniqueInput;
+  data: MembershipUpdateWithoutSubgroupDataInput;
+}
+
+export interface MembershipUpdateWithoutSubgroupDataInput {
+  name?: Maybe<String>;
+  userid?: Maybe<UserUpdateOneRequiredInput>;
+  status?: Maybe<MembershipStatus>;
+  description?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateDataInput {
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
+  createdBy?: Maybe<String>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface MembershipUpsertWithWhereUniqueWithoutSubgroupInput {
+  where: MembershipWhereUniqueInput;
+  update: MembershipUpdateWithoutSubgroupDataInput;
+  create: MembershipCreateWithoutSubgroupInput;
+}
+
+export interface MembershipScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  status?: Maybe<MembershipStatus>;
+  status_not?: Maybe<MembershipStatus>;
+  status_in?: Maybe<MembershipStatus[] | MembershipStatus>;
+  status_not_in?: Maybe<MembershipStatus[] | MembershipStatus>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MembershipScalarWhereInput[] | MembershipScalarWhereInput>;
+  OR?: Maybe<MembershipScalarWhereInput[] | MembershipScalarWhereInput>;
+  NOT?: Maybe<MembershipScalarWhereInput[] | MembershipScalarWhereInput>;
+}
+
+export interface MembershipUpdateManyWithWhereNestedInput {
+  where: MembershipScalarWhereInput;
+  data: MembershipUpdateManyDataInput;
+}
+
+export interface MembershipUpdateManyDataInput {
+  name?: Maybe<String>;
+  status?: Maybe<MembershipStatus>;
+  description?: Maybe<String>;
 }
 
 export interface SubGroupUpsertWithWhereUniqueWithoutGroupidInput {
@@ -1987,37 +2325,10 @@ export interface GroupUpdateManyDataInput {
   description?: Maybe<String>;
 }
 
-export interface SuborgUpsertWithoutAuthorInput {
+export interface SuborgUpsertWithWhereUniqueWithoutAuthorInput {
+  where: SuborgWhereUniqueInput;
   update: SuborgUpdateWithoutAuthorDataInput;
   create: SuborgCreateWithoutAuthorInput;
-}
-
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
-}
-
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutAuthorDataInput;
-  create: CommentCreateWithoutAuthorInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutMysuborgInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutMysuborgDataInput;
-  create: UserCreateWithoutMysuborgInput;
-}
-
-export interface SuborgUpsertWithWhereUniqueWithoutOrgInput {
-  where: SuborgWhereUniqueInput;
-  update: SuborgUpdateWithoutOrgDataInput;
-  create: SuborgCreateWithoutOrgInput;
 }
 
 export interface SuborgScalarWhereInput {
@@ -2094,6 +2405,34 @@ export interface SuborgUpdateManyDataInput {
   description?: Maybe<String>;
 }
 
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutAuthorDataInput;
+  create: CommentCreateWithoutAuthorInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutSuborgInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutSuborgDataInput;
+  create: UserCreateWithoutSuborgInput;
+}
+
+export interface SuborgUpsertWithWhereUniqueWithoutOrgInput {
+  where: SuborgWhereUniqueInput;
+  update: SuborgUpdateWithoutOrgDataInput;
+  create: SuborgCreateWithoutOrgInput;
+}
+
 export interface OrganizationUpsertWithoutAuthorInput {
   update: OrganizationUpdateWithoutAuthorDataInput;
   create: OrganizationCreateWithoutAuthorInput;
@@ -2125,7 +2464,7 @@ export interface SuborgCreateWithoutGroupsInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutMysuborgInput>;
+  author?: Maybe<UserCreateManyWithoutSuborgInput>;
   org: OrganizationCreateOneWithoutSuborgsInput;
 }
 
@@ -2146,7 +2485,7 @@ export interface SuborgUpdateOneRequiredWithoutGroupsInput {
 export interface SuborgUpdateWithoutGroupsDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutMysuborgInput>;
+  author?: Maybe<UserUpdateManyWithoutSuborgInput>;
   org?: Maybe<OrganizationUpdateOneRequiredWithoutSuborgsInput>;
 }
 
@@ -2160,18 +2499,101 @@ export interface GroupUpdateManyMutationInput {
   description?: Maybe<String>;
 }
 
+export interface MembershipCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  userid: UserCreateOneInput;
+  subgroup: SubGroupCreateOneWithoutMembershipsInput;
+  status?: Maybe<MembershipStatus>;
+  description?: Maybe<String>;
+}
+
+export interface SubGroupCreateOneWithoutMembershipsInput {
+  create?: Maybe<SubGroupCreateWithoutMembershipsInput>;
+  connect?: Maybe<SubGroupWhereUniqueInput>;
+}
+
+export interface SubGroupCreateWithoutMembershipsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  groupid: GroupCreateOneWithoutSubgroupsInput;
+}
+
+export interface GroupCreateOneWithoutSubgroupsInput {
+  create?: Maybe<GroupCreateWithoutSubgroupsInput>;
+  connect?: Maybe<GroupWhereUniqueInput>;
+}
+
+export interface GroupCreateWithoutSubgroupsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  suborgid: SuborgCreateOneWithoutGroupsInput;
+}
+
+export interface MembershipUpdateInput {
+  name?: Maybe<String>;
+  userid?: Maybe<UserUpdateOneRequiredInput>;
+  subgroup?: Maybe<SubGroupUpdateOneRequiredWithoutMembershipsInput>;
+  status?: Maybe<MembershipStatus>;
+  description?: Maybe<String>;
+}
+
+export interface SubGroupUpdateOneRequiredWithoutMembershipsInput {
+  create?: Maybe<SubGroupCreateWithoutMembershipsInput>;
+  update?: Maybe<SubGroupUpdateWithoutMembershipsDataInput>;
+  upsert?: Maybe<SubGroupUpsertWithoutMembershipsInput>;
+  connect?: Maybe<SubGroupWhereUniqueInput>;
+}
+
+export interface SubGroupUpdateWithoutMembershipsDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  groupid?: Maybe<GroupUpdateOneRequiredWithoutSubgroupsInput>;
+}
+
+export interface GroupUpdateOneRequiredWithoutSubgroupsInput {
+  create?: Maybe<GroupCreateWithoutSubgroupsInput>;
+  update?: Maybe<GroupUpdateWithoutSubgroupsDataInput>;
+  upsert?: Maybe<GroupUpsertWithoutSubgroupsInput>;
+  connect?: Maybe<GroupWhereUniqueInput>;
+}
+
+export interface GroupUpdateWithoutSubgroupsDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  suborgid?: Maybe<SuborgUpdateOneRequiredWithoutGroupsInput>;
+}
+
+export interface GroupUpsertWithoutSubgroupsInput {
+  update: GroupUpdateWithoutSubgroupsDataInput;
+  create: GroupCreateWithoutSubgroupsInput;
+}
+
+export interface SubGroupUpsertWithoutMembershipsInput {
+  update: SubGroupUpdateWithoutMembershipsDataInput;
+  create: SubGroupCreateWithoutMembershipsInput;
+}
+
+export interface MembershipUpdateManyMutationInput {
+  name?: Maybe<String>;
+  status?: Maybe<MembershipStatus>;
+  description?: Maybe<String>;
+}
+
 export interface OrganizationCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutMyorgInput>;
+  author?: Maybe<UserCreateManyWithoutOrgInput>;
   suborgs?: Maybe<SuborgCreateManyWithoutOrgInput>;
 }
 
 export interface OrganizationUpdateInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutMyorgInput>;
+  author?: Maybe<UserUpdateManyWithoutOrgInput>;
   suborgs?: Maybe<SuborgUpdateManyWithoutOrgInput>;
 }
 
@@ -2208,42 +2630,14 @@ export interface SubGroupCreateInput {
   name: String;
   description?: Maybe<String>;
   groupid: GroupCreateOneWithoutSubgroupsInput;
-}
-
-export interface GroupCreateOneWithoutSubgroupsInput {
-  create?: Maybe<GroupCreateWithoutSubgroupsInput>;
-  connect?: Maybe<GroupWhereUniqueInput>;
-}
-
-export interface GroupCreateWithoutSubgroupsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  suborgid: SuborgCreateOneWithoutGroupsInput;
+  memberships?: Maybe<MembershipCreateManyWithoutSubgroupInput>;
 }
 
 export interface SubGroupUpdateInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
   groupid?: Maybe<GroupUpdateOneRequiredWithoutSubgroupsInput>;
-}
-
-export interface GroupUpdateOneRequiredWithoutSubgroupsInput {
-  create?: Maybe<GroupCreateWithoutSubgroupsInput>;
-  update?: Maybe<GroupUpdateWithoutSubgroupsDataInput>;
-  upsert?: Maybe<GroupUpsertWithoutSubgroupsInput>;
-  connect?: Maybe<GroupWhereUniqueInput>;
-}
-
-export interface GroupUpdateWithoutSubgroupsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  suborgid?: Maybe<SuborgUpdateOneRequiredWithoutGroupsInput>;
-}
-
-export interface GroupUpsertWithoutSubgroupsInput {
-  update: GroupUpdateWithoutSubgroupsDataInput;
-  create: GroupCreateWithoutSubgroupsInput;
+  memberships?: Maybe<MembershipUpdateManyWithoutSubgroupInput>;
 }
 
 export interface SubGroupUpdateManyMutationInput {
@@ -2255,7 +2649,7 @@ export interface SuborgCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   description?: Maybe<String>;
-  author?: Maybe<UserCreateManyWithoutMysuborgInput>;
+  author?: Maybe<UserCreateManyWithoutSuborgInput>;
   org: OrganizationCreateOneWithoutSuborgsInput;
   groups?: Maybe<GroupCreateManyWithoutSuborgidInput>;
 }
@@ -2263,7 +2657,7 @@ export interface SuborgCreateInput {
 export interface SuborgUpdateInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  author?: Maybe<UserUpdateManyWithoutMysuborgInput>;
+  author?: Maybe<UserUpdateManyWithoutSuborgInput>;
   org?: Maybe<OrganizationUpdateOneRequiredWithoutSuborgsInput>;
   groups?: Maybe<GroupUpdateManyWithoutSuborgidInput>;
 }
@@ -2273,26 +2667,13 @@ export interface SuborgUpdateManyMutationInput {
   description?: Maybe<String>;
 }
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  myorg?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
-  mysuborg?: Maybe<SuborgCreateOneWithoutAuthorInput>;
-  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  createdBy?: Maybe<String>;
-}
-
 export interface UserUpdateInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  myorg?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  mysuborg?: Maybe<SuborgUpdateOneWithoutAuthorInput>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   createdBy?: Maybe<String>;
@@ -2326,6 +2707,23 @@ export interface GroupSubscriptionWhereInput {
   AND?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
   OR?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
   NOT?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
+}
+
+export interface MembershipSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MembershipWhereInput>;
+  AND?: Maybe<
+    MembershipSubscriptionWhereInput[] | MembershipSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    MembershipSubscriptionWhereInput[] | MembershipSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    MembershipSubscriptionWhereInput[] | MembershipSubscriptionWhereInput
+  >;
 }
 
 export interface OrganizationSubscriptionWhereInput {
@@ -2452,8 +2850,16 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   lastname: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  myorg: <T = OrganizationPromise>() => T;
-  mysuborg: <T = SuborgPromise>() => T;
+  org: <T = OrganizationPromise>() => T;
+  suborg: <T = FragmentableArray<Suborg>>(args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -2485,8 +2891,16 @@ export interface UserSubscription
   lastname: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  myorg: <T = OrganizationSubscription>() => T;
-  mysuborg: <T = SuborgSubscription>() => T;
+  org: <T = OrganizationSubscription>() => T;
+  suborg: <T = Promise<AsyncIterator<SuborgSubscription>>>(args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -2518,8 +2932,16 @@ export interface UserNullablePromise
   lastname: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  myorg: <T = OrganizationPromise>() => T;
-  mysuborg: <T = SuborgPromise>() => T;
+  org: <T = OrganizationPromise>() => T;
+  suborg: <T = FragmentableArray<Suborg>>(args?: {
+    where?: SuborgWhereInput;
+    orderBy?: SuborgOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -2807,6 +3229,15 @@ export interface SubGroupPromise extends Promise<SubGroup>, Fragmentable {
   name: () => Promise<String>;
   description: () => Promise<String>;
   groupid: <T = GroupPromise>() => T;
+  memberships: <T = FragmentableArray<Membership>>(args?: {
+    where?: MembershipWhereInput;
+    orderBy?: MembershipOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -2818,6 +3249,15 @@ export interface SubGroupSubscription
   name: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   groupid: <T = GroupSubscription>() => T;
+  memberships: <T = Promise<AsyncIterator<MembershipSubscription>>>(args?: {
+    where?: MembershipWhereInput;
+    orderBy?: MembershipOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -2829,6 +3269,61 @@ export interface SubGroupNullablePromise
   name: () => Promise<String>;
   description: () => Promise<String>;
   groupid: <T = GroupPromise>() => T;
+  memberships: <T = FragmentableArray<Membership>>(args?: {
+    where?: MembershipWhereInput;
+    orderBy?: MembershipOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface Membership {
+  id: ID_Output;
+  name: String;
+  status?: MembershipStatus;
+  description?: String;
+  updatedAt: DateTimeOutput;
+  createdAt: DateTimeOutput;
+}
+
+export interface MembershipPromise extends Promise<Membership>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  userid: <T = UserPromise>() => T;
+  subgroup: <T = SubGroupPromise>() => T;
+  status: () => Promise<MembershipStatus>;
+  description: () => Promise<String>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MembershipSubscription
+  extends Promise<AsyncIterator<Membership>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  userid: <T = UserSubscription>() => T;
+  subgroup: <T = SubGroupSubscription>() => T;
+  status: () => Promise<AsyncIterator<MembershipStatus>>;
+  description: () => Promise<AsyncIterator<String>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface MembershipNullablePromise
+  extends Promise<Membership | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  userid: <T = UserPromise>() => T;
+  subgroup: <T = SubGroupPromise>() => T;
+  status: () => Promise<MembershipStatus>;
+  description: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -3030,6 +3525,62 @@ export interface AggregateGroupPromise
 
 export interface AggregateGroupSubscription
   extends Promise<AsyncIterator<AggregateGroup>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MembershipConnection {
+  pageInfo: PageInfo;
+  edges: MembershipEdge[];
+}
+
+export interface MembershipConnectionPromise
+  extends Promise<MembershipConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MembershipEdge>>() => T;
+  aggregate: <T = AggregateMembershipPromise>() => T;
+}
+
+export interface MembershipConnectionSubscription
+  extends Promise<AsyncIterator<MembershipConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MembershipEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMembershipSubscription>() => T;
+}
+
+export interface MembershipEdge {
+  node: Membership;
+  cursor: String;
+}
+
+export interface MembershipEdgePromise
+  extends Promise<MembershipEdge>,
+    Fragmentable {
+  node: <T = MembershipPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MembershipEdgeSubscription
+  extends Promise<AsyncIterator<MembershipEdge>>,
+    Fragmentable {
+  node: <T = MembershipSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateMembership {
+  count: Int;
+}
+
+export interface AggregateMembershipPromise
+  extends Promise<AggregateMembership>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMembershipSubscription
+  extends Promise<AsyncIterator<AggregateMembership>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3427,6 +3978,62 @@ export interface GroupPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface MembershipSubscriptionPayload {
+  mutation: MutationType;
+  node: Membership;
+  updatedFields: String[];
+  previousValues: MembershipPreviousValues;
+}
+
+export interface MembershipSubscriptionPayloadPromise
+  extends Promise<MembershipSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MembershipPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MembershipPreviousValuesPromise>() => T;
+}
+
+export interface MembershipSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MembershipSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MembershipSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MembershipPreviousValuesSubscription>() => T;
+}
+
+export interface MembershipPreviousValues {
+  id: ID_Output;
+  name: String;
+  status?: MembershipStatus;
+  description?: String;
+  updatedAt: DateTimeOutput;
+  createdAt: DateTimeOutput;
+}
+
+export interface MembershipPreviousValuesPromise
+  extends Promise<MembershipPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  status: () => Promise<MembershipStatus>;
+  description: () => Promise<String>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MembershipPreviousValuesSubscription
+  extends Promise<AsyncIterator<MembershipPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<MembershipStatus>>;
+  description: () => Promise<AsyncIterator<String>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface OrganizationSubscriptionPayload {
   mutation: MutationType;
   node: Organization;
@@ -3756,6 +4363,14 @@ export const models: Model[] = [
   },
   {
     name: "SubGroup",
+    embedded: false
+  },
+  {
+    name: "Membership",
+    embedded: false
+  },
+  {
+    name: "MembershipStatus",
     embedded: false
   },
   {
