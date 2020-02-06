@@ -1,15 +1,15 @@
 
 type Query {
-    users(query: String): [User!]!
-    me: User!
-    usersForAdmin:[User!]!    
+    users(query: String,first: Int, skip: Int, after: String): [User!]!
+    loggedInUser: User!
+    #usersForAdmin:[User!]!    
 }
 type Mutation {
     createUser(data: CreateUserInput!): AuthPayload!
     createUserByAdmin(data:CreateUserInput!): AuthPayload!
     login(data: LoginUserInput!): AuthPayload!
-    deleteUser: User!
-    updateUser(data: UpdateUserInput!): User!
+    deleteUser(id: ID!): User!
+    updateUser(id:ID!,data: UpdateUserInput!): User!
     updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
    
 }
@@ -20,10 +20,11 @@ type User {
     lastname: String!
     email: String!
     password: String!   
-    org:Organization  
-    suborg:[Suborg] 
+    org:Organization!  
+    suborg:[Suborg!]! 
     posts: [Post!]! 
     comments: [Comment!]!
+    groupmembers:[GroupMember!]!
     createdBy:ID
     createdAt:String!
     updatedAt:String!
@@ -54,8 +55,8 @@ input LoginUserInput {
     password: String!
 }
 input UpdateUserInput {
-    firstName:String
-    lastName: String
+    firstname:String
+    lastname: String
     email: String
     password:String
     org:String

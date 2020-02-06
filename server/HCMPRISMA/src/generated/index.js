@@ -17,15 +17,31 @@ var models = [
     embedded: false
   },
   {
+    name: "GroupMember",
+    embedded: false
+  },
+  {
     name: "SubGroup",
     embedded: false
   },
   {
-    name: "Membership",
+    name: "SubGroupMember",
     embedded: false
   },
   {
-    name: "MembershipStatus",
+    name: "Role",
+    embedded: false
+  },
+  {
+    name: "RoleMember",
+    embedded: false
+  },
+  {
+    name: "RoleStatus",
+    embedded: false
+  },
+  {
+    name: "MemberStatus",
     embedded: false
   },
   {

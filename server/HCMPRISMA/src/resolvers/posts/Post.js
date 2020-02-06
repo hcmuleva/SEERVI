@@ -1,5 +1,5 @@
-const Post = {
+// const Post = {
 
-}
+// }
 
-export { Post as default }
+// export { Post as default }

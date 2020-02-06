@@ -1,6 +1,6 @@
 import getUserId from '../../../utils/getUserId'   
 async function updateUser(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request)
+    //const userId = getUserId(request)
     console.log("\n**********************WARNING**************************\n")
     console.log("\nNeed to keep extra validation logic for reset password. \n")
     console.log("\n********************************************************\n")
@@ -9,7 +9,7 @@ async function updateUser(parent, args, { prisma, request }, info) {
     }
     return prisma.mutation.updateUser({
         where: {
-            id: userId
+            id: args.id
         },
         data: args.data
     }, info)

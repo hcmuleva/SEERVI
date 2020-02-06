@@ -11,7 +11,7 @@ type AggregateGroup {
   count: Int!
 }
 
-type AggregateMembership {
+type AggregateGroupMember {
   count: Int!
 }
 
@@ -23,7 +23,19 @@ type AggregatePost {
   count: Int!
 }
 
+type AggregateRole {
+  count: Int!
+}
+
+type AggregateRoleMember {
+  count: Int!
+}
+
 type AggregateSubGroup {
+  count: Int!
+}
+
+type AggregateSubGroupMember {
   count: Int!
 }
 
@@ -313,6 +325,8 @@ type Group {
   description: String
   suborgid: Suborg!
   subgroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup!]
+  members(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember!]
+  groupRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -327,8 +341,10 @@ input GroupCreateInput {
   id: ID
   name: String!
   description: String
-  suborgid: SuborgCreateOneWithoutGroupsInput!
+  suborgid: SuborgCreateOneWithoutUserGroupsInput!
   subgroups: SubGroupCreateManyWithoutGroupidInput
+  members: GroupMemberCreateManyWithoutMemberInput
+  groupRoles: RoleCreateManyWithoutGroupInput
 }
 
 input GroupCreateManyWithoutSuborgidInput {
@@ -336,16 +352,46 @@ input GroupCreateManyWithoutSuborgidInput {
   connect: [GroupWhereUniqueInput!]
 }
 
+input GroupCreateOneWithoutGroupRolesInput {
+  create: GroupCreateWithoutGroupRolesInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupCreateOneWithoutMembersInput {
+  create: GroupCreateWithoutMembersInput
+  connect: GroupWhereUniqueInput
+}
+
 input GroupCreateOneWithoutSubgroupsInput {
   create: GroupCreateWithoutSubgroupsInput
   connect: GroupWhereUniqueInput
+}
+
+input GroupCreateWithoutGroupRolesInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutUserGroupsInput!
+  subgroups: SubGroupCreateManyWithoutGroupidInput
+  members: GroupMemberCreateManyWithoutMemberInput
+}
+
+input GroupCreateWithoutMembersInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutUserGroupsInput!
+  subgroups: SubGroupCreateManyWithoutGroupidInput
+  groupRoles: RoleCreateManyWithoutGroupInput
 }
 
 input GroupCreateWithoutSubgroupsInput {
   id: ID
   name: String!
   description: String
-  suborgid: SuborgCreateOneWithoutGroupsInput!
+  suborgid: SuborgCreateOneWithoutUserGroupsInput!
+  members: GroupMemberCreateManyWithoutMemberInput
+  groupRoles: RoleCreateManyWithoutGroupInput
 }
 
 input GroupCreateWithoutSuborgidInput {
@@ -353,11 +399,299 @@ input GroupCreateWithoutSuborgidInput {
   name: String!
   description: String
   subgroups: SubGroupCreateManyWithoutGroupidInput
+  members: GroupMemberCreateManyWithoutMemberInput
+  groupRoles: RoleCreateManyWithoutGroupInput
 }
 
 type GroupEdge {
   node: Group!
   cursor: String!
+}
+
+type GroupMember {
+  id: ID!
+  userid: User!
+  member: Group!
+  status: MemberStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type GroupMemberConnection {
+  pageInfo: PageInfo!
+  edges: [GroupMemberEdge]!
+  aggregate: AggregateGroupMember!
+}
+
+input GroupMemberCreateInput {
+  id: ID
+  userid: UserCreateOneWithoutGroupmembersInput!
+  member: GroupCreateOneWithoutMembersInput!
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberCreateManyWithoutMemberInput {
+  create: [GroupMemberCreateWithoutMemberInput!]
+  connect: [GroupMemberWhereUniqueInput!]
+}
+
+input GroupMemberCreateManyWithoutUseridInput {
+  create: [GroupMemberCreateWithoutUseridInput!]
+  connect: [GroupMemberWhereUniqueInput!]
+}
+
+input GroupMemberCreateWithoutMemberInput {
+  id: ID
+  userid: UserCreateOneWithoutGroupmembersInput!
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberCreateWithoutUseridInput {
+  id: ID
+  member: GroupCreateOneWithoutMembersInput!
+  status: MemberStatus
+  description: String
+}
+
+type GroupMemberEdge {
+  node: GroupMember!
+  cursor: String!
+}
+
+enum GroupMemberOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type GroupMemberPreviousValues {
+  id: ID!
+  status: MemberStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input GroupMemberScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: MemberStatus
+  status_not: MemberStatus
+  status_in: [MemberStatus!]
+  status_not_in: [MemberStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [GroupMemberScalarWhereInput!]
+  OR: [GroupMemberScalarWhereInput!]
+  NOT: [GroupMemberScalarWhereInput!]
+}
+
+type GroupMemberSubscriptionPayload {
+  mutation: MutationType!
+  node: GroupMember
+  updatedFields: [String!]
+  previousValues: GroupMemberPreviousValues
+}
+
+input GroupMemberSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GroupMemberWhereInput
+  AND: [GroupMemberSubscriptionWhereInput!]
+  OR: [GroupMemberSubscriptionWhereInput!]
+  NOT: [GroupMemberSubscriptionWhereInput!]
+}
+
+input GroupMemberUpdateInput {
+  userid: UserUpdateOneRequiredWithoutGroupmembersInput
+  member: GroupUpdateOneRequiredWithoutMembersInput
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberUpdateManyDataInput {
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberUpdateManyMutationInput {
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberUpdateManyWithoutMemberInput {
+  create: [GroupMemberCreateWithoutMemberInput!]
+  delete: [GroupMemberWhereUniqueInput!]
+  connect: [GroupMemberWhereUniqueInput!]
+  set: [GroupMemberWhereUniqueInput!]
+  disconnect: [GroupMemberWhereUniqueInput!]
+  update: [GroupMemberUpdateWithWhereUniqueWithoutMemberInput!]
+  upsert: [GroupMemberUpsertWithWhereUniqueWithoutMemberInput!]
+  deleteMany: [GroupMemberScalarWhereInput!]
+  updateMany: [GroupMemberUpdateManyWithWhereNestedInput!]
+}
+
+input GroupMemberUpdateManyWithoutUseridInput {
+  create: [GroupMemberCreateWithoutUseridInput!]
+  delete: [GroupMemberWhereUniqueInput!]
+  connect: [GroupMemberWhereUniqueInput!]
+  set: [GroupMemberWhereUniqueInput!]
+  disconnect: [GroupMemberWhereUniqueInput!]
+  update: [GroupMemberUpdateWithWhereUniqueWithoutUseridInput!]
+  upsert: [GroupMemberUpsertWithWhereUniqueWithoutUseridInput!]
+  deleteMany: [GroupMemberScalarWhereInput!]
+  updateMany: [GroupMemberUpdateManyWithWhereNestedInput!]
+}
+
+input GroupMemberUpdateManyWithWhereNestedInput {
+  where: GroupMemberScalarWhereInput!
+  data: GroupMemberUpdateManyDataInput!
+}
+
+input GroupMemberUpdateWithoutMemberDataInput {
+  userid: UserUpdateOneRequiredWithoutGroupmembersInput
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberUpdateWithoutUseridDataInput {
+  member: GroupUpdateOneRequiredWithoutMembersInput
+  status: MemberStatus
+  description: String
+}
+
+input GroupMemberUpdateWithWhereUniqueWithoutMemberInput {
+  where: GroupMemberWhereUniqueInput!
+  data: GroupMemberUpdateWithoutMemberDataInput!
+}
+
+input GroupMemberUpdateWithWhereUniqueWithoutUseridInput {
+  where: GroupMemberWhereUniqueInput!
+  data: GroupMemberUpdateWithoutUseridDataInput!
+}
+
+input GroupMemberUpsertWithWhereUniqueWithoutMemberInput {
+  where: GroupMemberWhereUniqueInput!
+  update: GroupMemberUpdateWithoutMemberDataInput!
+  create: GroupMemberCreateWithoutMemberInput!
+}
+
+input GroupMemberUpsertWithWhereUniqueWithoutUseridInput {
+  where: GroupMemberWhereUniqueInput!
+  update: GroupMemberUpdateWithoutUseridDataInput!
+  create: GroupMemberCreateWithoutUseridInput!
+}
+
+input GroupMemberWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  userid: UserWhereInput
+  member: GroupWhereInput
+  status: MemberStatus
+  status_not: MemberStatus
+  status_in: [MemberStatus!]
+  status_not_in: [MemberStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [GroupMemberWhereInput!]
+  OR: [GroupMemberWhereInput!]
+  NOT: [GroupMemberWhereInput!]
+}
+
+input GroupMemberWhereUniqueInput {
+  id: ID
 }
 
 enum GroupOrderByInput {
@@ -466,8 +800,10 @@ input GroupSubscriptionWhereInput {
 input GroupUpdateInput {
   name: String
   description: String
-  suborgid: SuborgUpdateOneRequiredWithoutGroupsInput
+  suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
   subgroups: SubGroupUpdateManyWithoutGroupidInput
+  members: GroupMemberUpdateManyWithoutMemberInput
+  groupRoles: RoleUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateManyDataInput {
@@ -497,6 +833,13 @@ input GroupUpdateManyWithWhereNestedInput {
   data: GroupUpdateManyDataInput!
 }
 
+input GroupUpdateOneRequiredWithoutMembersInput {
+  create: GroupCreateWithoutMembersInput
+  update: GroupUpdateWithoutMembersDataInput
+  upsert: GroupUpsertWithoutMembersInput
+  connect: GroupWhereUniqueInput
+}
+
 input GroupUpdateOneRequiredWithoutSubgroupsInput {
   create: GroupCreateWithoutSubgroupsInput
   update: GroupUpdateWithoutSubgroupsDataInput
@@ -504,21 +847,60 @@ input GroupUpdateOneRequiredWithoutSubgroupsInput {
   connect: GroupWhereUniqueInput
 }
 
+input GroupUpdateOneWithoutGroupRolesInput {
+  create: GroupCreateWithoutGroupRolesInput
+  update: GroupUpdateWithoutGroupRolesDataInput
+  upsert: GroupUpsertWithoutGroupRolesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: GroupWhereUniqueInput
+}
+
+input GroupUpdateWithoutGroupRolesDataInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
+  members: GroupMemberUpdateManyWithoutMemberInput
+}
+
+input GroupUpdateWithoutMembersDataInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
+  groupRoles: RoleUpdateManyWithoutGroupInput
+}
+
 input GroupUpdateWithoutSubgroupsDataInput {
   name: String
   description: String
-  suborgid: SuborgUpdateOneRequiredWithoutGroupsInput
+  suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
+  members: GroupMemberUpdateManyWithoutMemberInput
+  groupRoles: RoleUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithoutSuborgidDataInput {
   name: String
   description: String
   subgroups: SubGroupUpdateManyWithoutGroupidInput
+  members: GroupMemberUpdateManyWithoutMemberInput
+  groupRoles: RoleUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithWhereUniqueWithoutSuborgidInput {
   where: GroupWhereUniqueInput!
   data: GroupUpdateWithoutSuborgidDataInput!
+}
+
+input GroupUpsertWithoutGroupRolesInput {
+  update: GroupUpdateWithoutGroupRolesDataInput!
+  create: GroupCreateWithoutGroupRolesInput!
+}
+
+input GroupUpsertWithoutMembersInput {
+  update: GroupUpdateWithoutMembersDataInput!
+  create: GroupCreateWithoutMembersInput!
 }
 
 input GroupUpsertWithoutSubgroupsInput {
@@ -579,6 +961,12 @@ input GroupWhereInput {
   subgroups_every: SubGroupWhereInput
   subgroups_some: SubGroupWhereInput
   subgroups_none: SubGroupWhereInput
+  members_every: GroupMemberWhereInput
+  members_some: GroupMemberWhereInput
+  members_none: GroupMemberWhereInput
+  groupRoles_every: RoleWhereInput
+  groupRoles_some: RoleWhereInput
+  groupRoles_none: RoleWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -606,296 +994,13 @@ input GroupWhereUniqueInput {
 
 scalar Long
 
-type Membership {
-  id: ID!
-  name: String!
-  userid: User!
-  subgroup: SubGroup!
-  status: MembershipStatus
-  description: String
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type MembershipConnection {
-  pageInfo: PageInfo!
-  edges: [MembershipEdge]!
-  aggregate: AggregateMembership!
-}
-
-input MembershipCreateInput {
-  id: ID
-  name: String!
-  userid: UserCreateOneInput!
-  subgroup: SubGroupCreateOneWithoutMembershipsInput!
-  status: MembershipStatus
-  description: String
-}
-
-input MembershipCreateManyWithoutSubgroupInput {
-  create: [MembershipCreateWithoutSubgroupInput!]
-  connect: [MembershipWhereUniqueInput!]
-}
-
-input MembershipCreateWithoutSubgroupInput {
-  id: ID
-  name: String!
-  userid: UserCreateOneInput!
-  status: MembershipStatus
-  description: String
-}
-
-type MembershipEdge {
-  node: Membership!
-  cursor: String!
-}
-
-enum MembershipOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  status_ASC
-  status_DESC
-  description_ASC
-  description_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type MembershipPreviousValues {
-  id: ID!
-  name: String!
-  status: MembershipStatus
-  description: String
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input MembershipScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  status: MembershipStatus
-  status_not: MembershipStatus
-  status_in: [MembershipStatus!]
-  status_not_in: [MembershipStatus!]
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [MembershipScalarWhereInput!]
-  OR: [MembershipScalarWhereInput!]
-  NOT: [MembershipScalarWhereInput!]
-}
-
-enum MembershipStatus {
+enum MemberStatus {
   ACTIVE
   EXPIRED
   INACTIVE
   DORMANT
   RENEWED
   SPECIALGRANT
-}
-
-type MembershipSubscriptionPayload {
-  mutation: MutationType!
-  node: Membership
-  updatedFields: [String!]
-  previousValues: MembershipPreviousValues
-}
-
-input MembershipSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: MembershipWhereInput
-  AND: [MembershipSubscriptionWhereInput!]
-  OR: [MembershipSubscriptionWhereInput!]
-  NOT: [MembershipSubscriptionWhereInput!]
-}
-
-input MembershipUpdateInput {
-  name: String
-  userid: UserUpdateOneRequiredInput
-  subgroup: SubGroupUpdateOneRequiredWithoutMembershipsInput
-  status: MembershipStatus
-  description: String
-}
-
-input MembershipUpdateManyDataInput {
-  name: String
-  status: MembershipStatus
-  description: String
-}
-
-input MembershipUpdateManyMutationInput {
-  name: String
-  status: MembershipStatus
-  description: String
-}
-
-input MembershipUpdateManyWithoutSubgroupInput {
-  create: [MembershipCreateWithoutSubgroupInput!]
-  delete: [MembershipWhereUniqueInput!]
-  connect: [MembershipWhereUniqueInput!]
-  set: [MembershipWhereUniqueInput!]
-  disconnect: [MembershipWhereUniqueInput!]
-  update: [MembershipUpdateWithWhereUniqueWithoutSubgroupInput!]
-  upsert: [MembershipUpsertWithWhereUniqueWithoutSubgroupInput!]
-  deleteMany: [MembershipScalarWhereInput!]
-  updateMany: [MembershipUpdateManyWithWhereNestedInput!]
-}
-
-input MembershipUpdateManyWithWhereNestedInput {
-  where: MembershipScalarWhereInput!
-  data: MembershipUpdateManyDataInput!
-}
-
-input MembershipUpdateWithoutSubgroupDataInput {
-  name: String
-  userid: UserUpdateOneRequiredInput
-  status: MembershipStatus
-  description: String
-}
-
-input MembershipUpdateWithWhereUniqueWithoutSubgroupInput {
-  where: MembershipWhereUniqueInput!
-  data: MembershipUpdateWithoutSubgroupDataInput!
-}
-
-input MembershipUpsertWithWhereUniqueWithoutSubgroupInput {
-  where: MembershipWhereUniqueInput!
-  update: MembershipUpdateWithoutSubgroupDataInput!
-  create: MembershipCreateWithoutSubgroupInput!
-}
-
-input MembershipWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  userid: UserWhereInput
-  subgroup: SubGroupWhereInput
-  status: MembershipStatus
-  status_not: MembershipStatus
-  status_in: [MembershipStatus!]
-  status_not_in: [MembershipStatus!]
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [MembershipWhereInput!]
-  OR: [MembershipWhereInput!]
-  NOT: [MembershipWhereInput!]
-}
-
-input MembershipWhereUniqueInput {
-  id: ID
 }
 
 type Mutation {
@@ -911,12 +1016,12 @@ type Mutation {
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
-  createMembership(data: MembershipCreateInput!): Membership!
-  updateMembership(data: MembershipUpdateInput!, where: MembershipWhereUniqueInput!): Membership
-  updateManyMemberships(data: MembershipUpdateManyMutationInput!, where: MembershipWhereInput): BatchPayload!
-  upsertMembership(where: MembershipWhereUniqueInput!, create: MembershipCreateInput!, update: MembershipUpdateInput!): Membership!
-  deleteMembership(where: MembershipWhereUniqueInput!): Membership
-  deleteManyMemberships(where: MembershipWhereInput): BatchPayload!
+  createGroupMember(data: GroupMemberCreateInput!): GroupMember!
+  updateGroupMember(data: GroupMemberUpdateInput!, where: GroupMemberWhereUniqueInput!): GroupMember
+  updateManyGroupMembers(data: GroupMemberUpdateManyMutationInput!, where: GroupMemberWhereInput): BatchPayload!
+  upsertGroupMember(where: GroupMemberWhereUniqueInput!, create: GroupMemberCreateInput!, update: GroupMemberUpdateInput!): GroupMember!
+  deleteGroupMember(where: GroupMemberWhereUniqueInput!): GroupMember
+  deleteManyGroupMembers(where: GroupMemberWhereInput): BatchPayload!
   createOrganization(data: OrganizationCreateInput!): Organization!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
@@ -929,12 +1034,30 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   deletePost(where: PostWhereUniqueInput!): Post
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  createRole(data: RoleCreateInput!): Role!
+  updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
+  updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
+  upsertRole(where: RoleWhereUniqueInput!, create: RoleCreateInput!, update: RoleUpdateInput!): Role!
+  deleteRole(where: RoleWhereUniqueInput!): Role
+  deleteManyRoles(where: RoleWhereInput): BatchPayload!
+  createRoleMember(data: RoleMemberCreateInput!): RoleMember!
+  updateRoleMember(data: RoleMemberUpdateInput!, where: RoleMemberWhereUniqueInput!): RoleMember
+  updateManyRoleMembers(data: RoleMemberUpdateManyMutationInput!, where: RoleMemberWhereInput): BatchPayload!
+  upsertRoleMember(where: RoleMemberWhereUniqueInput!, create: RoleMemberCreateInput!, update: RoleMemberUpdateInput!): RoleMember!
+  deleteRoleMember(where: RoleMemberWhereUniqueInput!): RoleMember
+  deleteManyRoleMembers(where: RoleMemberWhereInput): BatchPayload!
   createSubGroup(data: SubGroupCreateInput!): SubGroup!
   updateSubGroup(data: SubGroupUpdateInput!, where: SubGroupWhereUniqueInput!): SubGroup
   updateManySubGroups(data: SubGroupUpdateManyMutationInput!, where: SubGroupWhereInput): BatchPayload!
   upsertSubGroup(where: SubGroupWhereUniqueInput!, create: SubGroupCreateInput!, update: SubGroupUpdateInput!): SubGroup!
   deleteSubGroup(where: SubGroupWhereUniqueInput!): SubGroup
   deleteManySubGroups(where: SubGroupWhereInput): BatchPayload!
+  createSubGroupMember(data: SubGroupMemberCreateInput!): SubGroupMember!
+  updateSubGroupMember(data: SubGroupMemberUpdateInput!, where: SubGroupMemberWhereUniqueInput!): SubGroupMember
+  updateManySubGroupMembers(data: SubGroupMemberUpdateManyMutationInput!, where: SubGroupMemberWhereInput): BatchPayload!
+  upsertSubGroupMember(where: SubGroupMemberWhereUniqueInput!, create: SubGroupMemberCreateInput!, update: SubGroupMemberUpdateInput!): SubGroupMember!
+  deleteSubGroupMember(where: SubGroupMemberWhereUniqueInput!): SubGroupMember
+  deleteManySubGroupMembers(where: SubGroupMemberWhereInput): BatchPayload!
   createSuborg(data: SuborgCreateInput!): Suborg!
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
@@ -965,6 +1088,7 @@ type Organization {
   description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
+  orgRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -981,10 +1105,16 @@ input OrganizationCreateInput {
   description: String
   author: UserCreateManyWithoutOrgInput
   suborgs: SuborgCreateManyWithoutOrgInput
+  orgRoles: RoleCreateManyWithoutOrgInput
 }
 
 input OrganizationCreateOneWithoutAuthorInput {
   create: OrganizationCreateWithoutAuthorInput
+  connect: OrganizationWhereUniqueInput
+}
+
+input OrganizationCreateOneWithoutOrgRolesInput {
+  create: OrganizationCreateWithoutOrgRolesInput
   connect: OrganizationWhereUniqueInput
 }
 
@@ -998,6 +1128,15 @@ input OrganizationCreateWithoutAuthorInput {
   name: String!
   description: String
   suborgs: SuborgCreateManyWithoutOrgInput
+  orgRoles: RoleCreateManyWithoutOrgInput
+}
+
+input OrganizationCreateWithoutOrgRolesInput {
+  id: ID
+  name: String!
+  description: String
+  author: UserCreateManyWithoutOrgInput
+  suborgs: SuborgCreateManyWithoutOrgInput
 }
 
 input OrganizationCreateWithoutSuborgsInput {
@@ -1005,6 +1144,7 @@ input OrganizationCreateWithoutSuborgsInput {
   name: String!
   description: String
   author: UserCreateManyWithoutOrgInput
+  orgRoles: RoleCreateManyWithoutOrgInput
 }
 
 type OrganizationEdge {
@@ -1056,6 +1196,7 @@ input OrganizationUpdateInput {
   description: String
   author: UserUpdateManyWithoutOrgInput
   suborgs: SuborgUpdateManyWithoutOrgInput
+  orgRoles: RoleUpdateManyWithoutOrgInput
 }
 
 input OrganizationUpdateManyMutationInput {
@@ -1079,9 +1220,26 @@ input OrganizationUpdateOneWithoutAuthorInput {
   connect: OrganizationWhereUniqueInput
 }
 
+input OrganizationUpdateOneWithoutOrgRolesInput {
+  create: OrganizationCreateWithoutOrgRolesInput
+  update: OrganizationUpdateWithoutOrgRolesDataInput
+  upsert: OrganizationUpsertWithoutOrgRolesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: OrganizationWhereUniqueInput
+}
+
 input OrganizationUpdateWithoutAuthorDataInput {
   name: String
   description: String
+  suborgs: SuborgUpdateManyWithoutOrgInput
+  orgRoles: RoleUpdateManyWithoutOrgInput
+}
+
+input OrganizationUpdateWithoutOrgRolesDataInput {
+  name: String
+  description: String
+  author: UserUpdateManyWithoutOrgInput
   suborgs: SuborgUpdateManyWithoutOrgInput
 }
 
@@ -1089,11 +1247,17 @@ input OrganizationUpdateWithoutSuborgsDataInput {
   name: String
   description: String
   author: UserUpdateManyWithoutOrgInput
+  orgRoles: RoleUpdateManyWithoutOrgInput
 }
 
 input OrganizationUpsertWithoutAuthorInput {
   update: OrganizationUpdateWithoutAuthorDataInput!
   create: OrganizationCreateWithoutAuthorInput!
+}
+
+input OrganizationUpsertWithoutOrgRolesInput {
+  update: OrganizationUpdateWithoutOrgRolesDataInput!
+  create: OrganizationCreateWithoutOrgRolesInput!
 }
 
 input OrganizationUpsertWithoutSuborgsInput {
@@ -1150,6 +1314,9 @@ input OrganizationWhereInput {
   suborgs_every: SuborgWhereInput
   suborgs_some: SuborgWhereInput
   suborgs_none: SuborgWhereInput
+  orgRoles_every: RoleWhereInput
+  orgRoles_some: RoleWhereInput
+  orgRoles_none: RoleWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -1502,18 +1669,27 @@ type Query {
   group(where: GroupWhereUniqueInput!): Group
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
-  membership(where: MembershipWhereUniqueInput!): Membership
-  memberships(where: MembershipWhereInput, orderBy: MembershipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Membership]!
-  membershipsConnection(where: MembershipWhereInput, orderBy: MembershipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MembershipConnection!
+  groupMember(where: GroupMemberWhereUniqueInput!): GroupMember
+  groupMembers(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember]!
+  groupMembersConnection(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupMemberConnection!
   organization(where: OrganizationWhereUniqueInput!): Organization
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  role(where: RoleWhereUniqueInput!): Role
+  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
+  rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
+  roleMember(where: RoleMemberWhereUniqueInput!): RoleMember
+  roleMembers(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember]!
+  roleMembersConnection(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleMemberConnection!
   subGroup(where: SubGroupWhereUniqueInput!): SubGroup
   subGroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup]!
   subGroupsConnection(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupConnection!
+  subGroupMember(where: SubGroupMemberWhereUniqueInput!): SubGroupMember
+  subGroupMembers(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember]!
+  subGroupMembersConnection(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupMemberConnection!
   suborg(where: SuborgWhereUniqueInput!): Suborg
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
@@ -1523,12 +1699,770 @@ type Query {
   node(id: ID!): Node
 }
 
+type Role {
+  id: ID!
+  name: String!
+  org: Organization
+  suborg: Suborg
+  group: Group
+  subgroup: SubGroup
+  members(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type RoleConnection {
+  pageInfo: PageInfo!
+  edges: [RoleEdge]!
+  aggregate: AggregateRole!
+}
+
+input RoleCreateInput {
+  id: ID
+  name: String!
+  org: OrganizationCreateOneWithoutOrgRolesInput
+  suborg: SuborgCreateOneWithoutSuborgRolesInput
+  group: GroupCreateOneWithoutGroupRolesInput
+  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
+  members: RoleMemberCreateManyWithoutRoleInput
+  description: String
+}
+
+input RoleCreateManyWithoutGroupInput {
+  create: [RoleCreateWithoutGroupInput!]
+  connect: [RoleWhereUniqueInput!]
+}
+
+input RoleCreateManyWithoutOrgInput {
+  create: [RoleCreateWithoutOrgInput!]
+  connect: [RoleWhereUniqueInput!]
+}
+
+input RoleCreateManyWithoutSubgroupInput {
+  create: [RoleCreateWithoutSubgroupInput!]
+  connect: [RoleWhereUniqueInput!]
+}
+
+input RoleCreateManyWithoutSuborgInput {
+  create: [RoleCreateWithoutSuborgInput!]
+  connect: [RoleWhereUniqueInput!]
+}
+
+input RoleCreateOneWithoutMembersInput {
+  create: RoleCreateWithoutMembersInput
+  connect: RoleWhereUniqueInput
+}
+
+input RoleCreateWithoutGroupInput {
+  id: ID
+  name: String!
+  org: OrganizationCreateOneWithoutOrgRolesInput
+  suborg: SuborgCreateOneWithoutSuborgRolesInput
+  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
+  members: RoleMemberCreateManyWithoutRoleInput
+  description: String
+}
+
+input RoleCreateWithoutMembersInput {
+  id: ID
+  name: String!
+  org: OrganizationCreateOneWithoutOrgRolesInput
+  suborg: SuborgCreateOneWithoutSuborgRolesInput
+  group: GroupCreateOneWithoutGroupRolesInput
+  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
+  description: String
+}
+
+input RoleCreateWithoutOrgInput {
+  id: ID
+  name: String!
+  suborg: SuborgCreateOneWithoutSuborgRolesInput
+  group: GroupCreateOneWithoutGroupRolesInput
+  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
+  members: RoleMemberCreateManyWithoutRoleInput
+  description: String
+}
+
+input RoleCreateWithoutSubgroupInput {
+  id: ID
+  name: String!
+  org: OrganizationCreateOneWithoutOrgRolesInput
+  suborg: SuborgCreateOneWithoutSuborgRolesInput
+  group: GroupCreateOneWithoutGroupRolesInput
+  members: RoleMemberCreateManyWithoutRoleInput
+  description: String
+}
+
+input RoleCreateWithoutSuborgInput {
+  id: ID
+  name: String!
+  org: OrganizationCreateOneWithoutOrgRolesInput
+  group: GroupCreateOneWithoutGroupRolesInput
+  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
+  members: RoleMemberCreateManyWithoutRoleInput
+  description: String
+}
+
+type RoleEdge {
+  node: Role!
+  cursor: String!
+}
+
+type RoleMember {
+  id: ID!
+  userid: User!
+  role: Role!
+  status: RoleStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type RoleMemberConnection {
+  pageInfo: PageInfo!
+  edges: [RoleMemberEdge]!
+  aggregate: AggregateRoleMember!
+}
+
+input RoleMemberCreateInput {
+  id: ID
+  userid: UserCreateOneWithoutMyRolesInput!
+  role: RoleCreateOneWithoutMembersInput!
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberCreateManyWithoutRoleInput {
+  create: [RoleMemberCreateWithoutRoleInput!]
+  connect: [RoleMemberWhereUniqueInput!]
+}
+
+input RoleMemberCreateManyWithoutUseridInput {
+  create: [RoleMemberCreateWithoutUseridInput!]
+  connect: [RoleMemberWhereUniqueInput!]
+}
+
+input RoleMemberCreateWithoutRoleInput {
+  id: ID
+  userid: UserCreateOneWithoutMyRolesInput!
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberCreateWithoutUseridInput {
+  id: ID
+  role: RoleCreateOneWithoutMembersInput!
+  status: RoleStatus
+  description: String
+}
+
+type RoleMemberEdge {
+  node: RoleMember!
+  cursor: String!
+}
+
+enum RoleMemberOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RoleMemberPreviousValues {
+  id: ID!
+  status: RoleStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input RoleMemberScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: RoleStatus
+  status_not: RoleStatus
+  status_in: [RoleStatus!]
+  status_not_in: [RoleStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [RoleMemberScalarWhereInput!]
+  OR: [RoleMemberScalarWhereInput!]
+  NOT: [RoleMemberScalarWhereInput!]
+}
+
+type RoleMemberSubscriptionPayload {
+  mutation: MutationType!
+  node: RoleMember
+  updatedFields: [String!]
+  previousValues: RoleMemberPreviousValues
+}
+
+input RoleMemberSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RoleMemberWhereInput
+  AND: [RoleMemberSubscriptionWhereInput!]
+  OR: [RoleMemberSubscriptionWhereInput!]
+  NOT: [RoleMemberSubscriptionWhereInput!]
+}
+
+input RoleMemberUpdateInput {
+  userid: UserUpdateOneRequiredWithoutMyRolesInput
+  role: RoleUpdateOneRequiredWithoutMembersInput
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberUpdateManyDataInput {
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberUpdateManyMutationInput {
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberUpdateManyWithoutRoleInput {
+  create: [RoleMemberCreateWithoutRoleInput!]
+  delete: [RoleMemberWhereUniqueInput!]
+  connect: [RoleMemberWhereUniqueInput!]
+  set: [RoleMemberWhereUniqueInput!]
+  disconnect: [RoleMemberWhereUniqueInput!]
+  update: [RoleMemberUpdateWithWhereUniqueWithoutRoleInput!]
+  upsert: [RoleMemberUpsertWithWhereUniqueWithoutRoleInput!]
+  deleteMany: [RoleMemberScalarWhereInput!]
+  updateMany: [RoleMemberUpdateManyWithWhereNestedInput!]
+}
+
+input RoleMemberUpdateManyWithoutUseridInput {
+  create: [RoleMemberCreateWithoutUseridInput!]
+  delete: [RoleMemberWhereUniqueInput!]
+  connect: [RoleMemberWhereUniqueInput!]
+  set: [RoleMemberWhereUniqueInput!]
+  disconnect: [RoleMemberWhereUniqueInput!]
+  update: [RoleMemberUpdateWithWhereUniqueWithoutUseridInput!]
+  upsert: [RoleMemberUpsertWithWhereUniqueWithoutUseridInput!]
+  deleteMany: [RoleMemberScalarWhereInput!]
+  updateMany: [RoleMemberUpdateManyWithWhereNestedInput!]
+}
+
+input RoleMemberUpdateManyWithWhereNestedInput {
+  where: RoleMemberScalarWhereInput!
+  data: RoleMemberUpdateManyDataInput!
+}
+
+input RoleMemberUpdateWithoutRoleDataInput {
+  userid: UserUpdateOneRequiredWithoutMyRolesInput
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberUpdateWithoutUseridDataInput {
+  role: RoleUpdateOneRequiredWithoutMembersInput
+  status: RoleStatus
+  description: String
+}
+
+input RoleMemberUpdateWithWhereUniqueWithoutRoleInput {
+  where: RoleMemberWhereUniqueInput!
+  data: RoleMemberUpdateWithoutRoleDataInput!
+}
+
+input RoleMemberUpdateWithWhereUniqueWithoutUseridInput {
+  where: RoleMemberWhereUniqueInput!
+  data: RoleMemberUpdateWithoutUseridDataInput!
+}
+
+input RoleMemberUpsertWithWhereUniqueWithoutRoleInput {
+  where: RoleMemberWhereUniqueInput!
+  update: RoleMemberUpdateWithoutRoleDataInput!
+  create: RoleMemberCreateWithoutRoleInput!
+}
+
+input RoleMemberUpsertWithWhereUniqueWithoutUseridInput {
+  where: RoleMemberWhereUniqueInput!
+  update: RoleMemberUpdateWithoutUseridDataInput!
+  create: RoleMemberCreateWithoutUseridInput!
+}
+
+input RoleMemberWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  userid: UserWhereInput
+  role: RoleWhereInput
+  status: RoleStatus
+  status_not: RoleStatus
+  status_in: [RoleStatus!]
+  status_not_in: [RoleStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [RoleMemberWhereInput!]
+  OR: [RoleMemberWhereInput!]
+  NOT: [RoleMemberWhereInput!]
+}
+
+input RoleMemberWhereUniqueInput {
+  id: ID
+}
+
+enum RoleOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RolePreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input RoleScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [RoleScalarWhereInput!]
+  OR: [RoleScalarWhereInput!]
+  NOT: [RoleScalarWhereInput!]
+}
+
+enum RoleStatus {
+  ACTIVE
+  EXPIRED
+  INACTIVE
+  DORMANT
+  RENEWED
+  SPECIALGRANT
+}
+
+type RoleSubscriptionPayload {
+  mutation: MutationType!
+  node: Role
+  updatedFields: [String!]
+  previousValues: RolePreviousValues
+}
+
+input RoleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RoleWhereInput
+  AND: [RoleSubscriptionWhereInput!]
+  OR: [RoleSubscriptionWhereInput!]
+  NOT: [RoleSubscriptionWhereInput!]
+}
+
+input RoleUpdateInput {
+  name: String
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  members: RoleMemberUpdateManyWithoutRoleInput
+  description: String
+}
+
+input RoleUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input RoleUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input RoleUpdateManyWithoutGroupInput {
+  create: [RoleCreateWithoutGroupInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutGroupInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutGroupInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
+}
+
+input RoleUpdateManyWithoutOrgInput {
+  create: [RoleCreateWithoutOrgInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutOrgInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutOrgInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
+}
+
+input RoleUpdateManyWithoutSubgroupInput {
+  create: [RoleCreateWithoutSubgroupInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutSubgroupInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutSubgroupInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
+}
+
+input RoleUpdateManyWithoutSuborgInput {
+  create: [RoleCreateWithoutSuborgInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutSuborgInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutSuborgInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
+}
+
+input RoleUpdateManyWithWhereNestedInput {
+  where: RoleScalarWhereInput!
+  data: RoleUpdateManyDataInput!
+}
+
+input RoleUpdateOneRequiredWithoutMembersInput {
+  create: RoleCreateWithoutMembersInput
+  update: RoleUpdateWithoutMembersDataInput
+  upsert: RoleUpsertWithoutMembersInput
+  connect: RoleWhereUniqueInput
+}
+
+input RoleUpdateWithoutGroupDataInput {
+  name: String
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  members: RoleMemberUpdateManyWithoutRoleInput
+  description: String
+}
+
+input RoleUpdateWithoutMembersDataInput {
+  name: String
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  description: String
+}
+
+input RoleUpdateWithoutOrgDataInput {
+  name: String
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  members: RoleMemberUpdateManyWithoutRoleInput
+  description: String
+}
+
+input RoleUpdateWithoutSubgroupDataInput {
+  name: String
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  members: RoleMemberUpdateManyWithoutRoleInput
+  description: String
+}
+
+input RoleUpdateWithoutSuborgDataInput {
+  name: String
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  members: RoleMemberUpdateManyWithoutRoleInput
+  description: String
+}
+
+input RoleUpdateWithWhereUniqueWithoutGroupInput {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateWithoutGroupDataInput!
+}
+
+input RoleUpdateWithWhereUniqueWithoutOrgInput {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateWithoutOrgDataInput!
+}
+
+input RoleUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateWithoutSubgroupDataInput!
+}
+
+input RoleUpdateWithWhereUniqueWithoutSuborgInput {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateWithoutSuborgDataInput!
+}
+
+input RoleUpsertWithoutMembersInput {
+  update: RoleUpdateWithoutMembersDataInput!
+  create: RoleCreateWithoutMembersInput!
+}
+
+input RoleUpsertWithWhereUniqueWithoutGroupInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateWithoutGroupDataInput!
+  create: RoleCreateWithoutGroupInput!
+}
+
+input RoleUpsertWithWhereUniqueWithoutOrgInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateWithoutOrgDataInput!
+  create: RoleCreateWithoutOrgInput!
+}
+
+input RoleUpsertWithWhereUniqueWithoutSubgroupInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateWithoutSubgroupDataInput!
+  create: RoleCreateWithoutSubgroupInput!
+}
+
+input RoleUpsertWithWhereUniqueWithoutSuborgInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateWithoutSuborgDataInput!
+  create: RoleCreateWithoutSuborgInput!
+}
+
+input RoleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  org: OrganizationWhereInput
+  suborg: SuborgWhereInput
+  group: GroupWhereInput
+  subgroup: SubGroupWhereInput
+  members_every: RoleMemberWhereInput
+  members_some: RoleMemberWhereInput
+  members_none: RoleMemberWhereInput
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  NOT: [RoleWhereInput!]
+}
+
+input RoleWhereUniqueInput {
+  id: ID
+}
+
 type SubGroup {
   id: ID!
   name: String!
   description: String
   groupid: Group!
-  memberships(where: MembershipWhereInput, orderBy: MembershipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Membership!]
+  members(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember!]
+  subgroupRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1544,7 +2478,8 @@ input SubGroupCreateInput {
   name: String!
   description: String
   groupid: GroupCreateOneWithoutSubgroupsInput!
-  memberships: MembershipCreateManyWithoutSubgroupInput
+  members: SubGroupMemberCreateManyWithoutMemberInput
+  subgroupRoles: RoleCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateManyWithoutGroupidInput {
@@ -1552,8 +2487,13 @@ input SubGroupCreateManyWithoutGroupidInput {
   connect: [SubGroupWhereUniqueInput!]
 }
 
-input SubGroupCreateOneWithoutMembershipsInput {
-  create: SubGroupCreateWithoutMembershipsInput
+input SubGroupCreateOneWithoutMembersInput {
+  create: SubGroupCreateWithoutMembersInput
+  connect: SubGroupWhereUniqueInput
+}
+
+input SubGroupCreateOneWithoutSubgroupRolesInput {
+  create: SubGroupCreateWithoutSubgroupRolesInput
   connect: SubGroupWhereUniqueInput
 }
 
@@ -1561,19 +2501,274 @@ input SubGroupCreateWithoutGroupidInput {
   id: ID
   name: String!
   description: String
-  memberships: MembershipCreateManyWithoutSubgroupInput
+  members: SubGroupMemberCreateManyWithoutMemberInput
+  subgroupRoles: RoleCreateManyWithoutSubgroupInput
 }
 
-input SubGroupCreateWithoutMembershipsInput {
+input SubGroupCreateWithoutMembersInput {
   id: ID
   name: String!
   description: String
   groupid: GroupCreateOneWithoutSubgroupsInput!
+  subgroupRoles: RoleCreateManyWithoutSubgroupInput
+}
+
+input SubGroupCreateWithoutSubgroupRolesInput {
+  id: ID
+  name: String!
+  description: String
+  groupid: GroupCreateOneWithoutSubgroupsInput!
+  members: SubGroupMemberCreateManyWithoutMemberInput
 }
 
 type SubGroupEdge {
   node: SubGroup!
   cursor: String!
+}
+
+type SubGroupMember {
+  id: ID!
+  userid: User!
+  member: SubGroup!
+  status: MemberStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type SubGroupMemberConnection {
+  pageInfo: PageInfo!
+  edges: [SubGroupMemberEdge]!
+  aggregate: AggregateSubGroupMember!
+}
+
+input SubGroupMemberCreateInput {
+  id: ID
+  userid: UserCreateOneInput!
+  member: SubGroupCreateOneWithoutMembersInput!
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberCreateManyWithoutMemberInput {
+  create: [SubGroupMemberCreateWithoutMemberInput!]
+  connect: [SubGroupMemberWhereUniqueInput!]
+}
+
+input SubGroupMemberCreateWithoutMemberInput {
+  id: ID
+  userid: UserCreateOneInput!
+  status: MemberStatus
+  description: String
+}
+
+type SubGroupMemberEdge {
+  node: SubGroupMember!
+  cursor: String!
+}
+
+enum SubGroupMemberOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SubGroupMemberPreviousValues {
+  id: ID!
+  status: MemberStatus
+  description: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input SubGroupMemberScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: MemberStatus
+  status_not: MemberStatus
+  status_in: [MemberStatus!]
+  status_not_in: [MemberStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [SubGroupMemberScalarWhereInput!]
+  OR: [SubGroupMemberScalarWhereInput!]
+  NOT: [SubGroupMemberScalarWhereInput!]
+}
+
+type SubGroupMemberSubscriptionPayload {
+  mutation: MutationType!
+  node: SubGroupMember
+  updatedFields: [String!]
+  previousValues: SubGroupMemberPreviousValues
+}
+
+input SubGroupMemberSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubGroupMemberWhereInput
+  AND: [SubGroupMemberSubscriptionWhereInput!]
+  OR: [SubGroupMemberSubscriptionWhereInput!]
+  NOT: [SubGroupMemberSubscriptionWhereInput!]
+}
+
+input SubGroupMemberUpdateInput {
+  userid: UserUpdateOneRequiredInput
+  member: SubGroupUpdateOneRequiredWithoutMembersInput
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberUpdateManyDataInput {
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberUpdateManyMutationInput {
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberUpdateManyWithoutMemberInput {
+  create: [SubGroupMemberCreateWithoutMemberInput!]
+  delete: [SubGroupMemberWhereUniqueInput!]
+  connect: [SubGroupMemberWhereUniqueInput!]
+  set: [SubGroupMemberWhereUniqueInput!]
+  disconnect: [SubGroupMemberWhereUniqueInput!]
+  update: [SubGroupMemberUpdateWithWhereUniqueWithoutMemberInput!]
+  upsert: [SubGroupMemberUpsertWithWhereUniqueWithoutMemberInput!]
+  deleteMany: [SubGroupMemberScalarWhereInput!]
+  updateMany: [SubGroupMemberUpdateManyWithWhereNestedInput!]
+}
+
+input SubGroupMemberUpdateManyWithWhereNestedInput {
+  where: SubGroupMemberScalarWhereInput!
+  data: SubGroupMemberUpdateManyDataInput!
+}
+
+input SubGroupMemberUpdateWithoutMemberDataInput {
+  userid: UserUpdateOneRequiredInput
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberUpdateWithWhereUniqueWithoutMemberInput {
+  where: SubGroupMemberWhereUniqueInput!
+  data: SubGroupMemberUpdateWithoutMemberDataInput!
+}
+
+input SubGroupMemberUpsertWithWhereUniqueWithoutMemberInput {
+  where: SubGroupMemberWhereUniqueInput!
+  update: SubGroupMemberUpdateWithoutMemberDataInput!
+  create: SubGroupMemberCreateWithoutMemberInput!
+}
+
+input SubGroupMemberWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  userid: UserWhereInput
+  member: SubGroupWhereInput
+  status: MemberStatus
+  status_not: MemberStatus
+  status_in: [MemberStatus!]
+  status_not_in: [MemberStatus!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [SubGroupMemberWhereInput!]
+  OR: [SubGroupMemberWhereInput!]
+  NOT: [SubGroupMemberWhereInput!]
+}
+
+input SubGroupMemberWhereUniqueInput {
+  id: ID
 }
 
 enum SubGroupOrderByInput {
@@ -1683,7 +2878,8 @@ input SubGroupUpdateInput {
   name: String
   description: String
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
-  memberships: MembershipUpdateManyWithoutSubgroupInput
+  members: SubGroupMemberUpdateManyWithoutMemberInput
+  subgroupRoles: RoleUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateManyDataInput {
@@ -1713,23 +2909,41 @@ input SubGroupUpdateManyWithWhereNestedInput {
   data: SubGroupUpdateManyDataInput!
 }
 
-input SubGroupUpdateOneRequiredWithoutMembershipsInput {
-  create: SubGroupCreateWithoutMembershipsInput
-  update: SubGroupUpdateWithoutMembershipsDataInput
-  upsert: SubGroupUpsertWithoutMembershipsInput
+input SubGroupUpdateOneRequiredWithoutMembersInput {
+  create: SubGroupCreateWithoutMembersInput
+  update: SubGroupUpdateWithoutMembersDataInput
+  upsert: SubGroupUpsertWithoutMembersInput
+  connect: SubGroupWhereUniqueInput
+}
+
+input SubGroupUpdateOneWithoutSubgroupRolesInput {
+  create: SubGroupCreateWithoutSubgroupRolesInput
+  update: SubGroupUpdateWithoutSubgroupRolesDataInput
+  upsert: SubGroupUpsertWithoutSubgroupRolesInput
+  delete: Boolean
+  disconnect: Boolean
   connect: SubGroupWhereUniqueInput
 }
 
 input SubGroupUpdateWithoutGroupidDataInput {
   name: String
   description: String
-  memberships: MembershipUpdateManyWithoutSubgroupInput
+  members: SubGroupMemberUpdateManyWithoutMemberInput
+  subgroupRoles: RoleUpdateManyWithoutSubgroupInput
 }
 
-input SubGroupUpdateWithoutMembershipsDataInput {
+input SubGroupUpdateWithoutMembersDataInput {
   name: String
   description: String
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+  subgroupRoles: RoleUpdateManyWithoutSubgroupInput
+}
+
+input SubGroupUpdateWithoutSubgroupRolesDataInput {
+  name: String
+  description: String
+  groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+  members: SubGroupMemberUpdateManyWithoutMemberInput
 }
 
 input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
@@ -1737,9 +2951,14 @@ input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
   data: SubGroupUpdateWithoutGroupidDataInput!
 }
 
-input SubGroupUpsertWithoutMembershipsInput {
-  update: SubGroupUpdateWithoutMembershipsDataInput!
-  create: SubGroupCreateWithoutMembershipsInput!
+input SubGroupUpsertWithoutMembersInput {
+  update: SubGroupUpdateWithoutMembersDataInput!
+  create: SubGroupCreateWithoutMembersInput!
+}
+
+input SubGroupUpsertWithoutSubgroupRolesInput {
+  update: SubGroupUpdateWithoutSubgroupRolesDataInput!
+  create: SubGroupCreateWithoutSubgroupRolesInput!
 }
 
 input SubGroupUpsertWithWhereUniqueWithoutGroupidInput {
@@ -1792,9 +3011,12 @@ input SubGroupWhereInput {
   description_ends_with: String
   description_not_ends_with: String
   groupid: GroupWhereInput
-  memberships_every: MembershipWhereInput
-  memberships_some: MembershipWhereInput
-  memberships_none: MembershipWhereInput
+  members_every: SubGroupMemberWhereInput
+  members_some: SubGroupMemberWhereInput
+  members_none: SubGroupMemberWhereInput
+  subgroupRoles_every: RoleWhereInput
+  subgroupRoles_some: RoleWhereInput
+  subgroupRoles_none: RoleWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -1826,7 +3048,8 @@ type Suborg {
   description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   org: Organization!
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  userGroups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  suborgRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1843,7 +3066,8 @@ input SuborgCreateInput {
   description: String
   author: UserCreateManyWithoutSuborgInput
   org: OrganizationCreateOneWithoutSuborgsInput!
-  groups: GroupCreateManyWithoutSuborgidInput
+  userGroups: GroupCreateManyWithoutSuborgidInput
+  suborgRoles: RoleCreateManyWithoutSuborgInput
 }
 
 input SuborgCreateManyWithoutAuthorInput {
@@ -1856,8 +3080,13 @@ input SuborgCreateManyWithoutOrgInput {
   connect: [SuborgWhereUniqueInput!]
 }
 
-input SuborgCreateOneWithoutGroupsInput {
-  create: SuborgCreateWithoutGroupsInput
+input SuborgCreateOneWithoutSuborgRolesInput {
+  create: SuborgCreateWithoutSuborgRolesInput
+  connect: SuborgWhereUniqueInput
+}
+
+input SuborgCreateOneWithoutUserGroupsInput {
+  create: SuborgCreateWithoutUserGroupsInput
   connect: SuborgWhereUniqueInput
 }
 
@@ -1866,15 +3095,8 @@ input SuborgCreateWithoutAuthorInput {
   name: String!
   description: String
   org: OrganizationCreateOneWithoutSuborgsInput!
-  groups: GroupCreateManyWithoutSuborgidInput
-}
-
-input SuborgCreateWithoutGroupsInput {
-  id: ID
-  name: String!
-  description: String
-  author: UserCreateManyWithoutSuborgInput
-  org: OrganizationCreateOneWithoutSuborgsInput!
+  userGroups: GroupCreateManyWithoutSuborgidInput
+  suborgRoles: RoleCreateManyWithoutSuborgInput
 }
 
 input SuborgCreateWithoutOrgInput {
@@ -1882,7 +3104,26 @@ input SuborgCreateWithoutOrgInput {
   name: String!
   description: String
   author: UserCreateManyWithoutSuborgInput
-  groups: GroupCreateManyWithoutSuborgidInput
+  userGroups: GroupCreateManyWithoutSuborgidInput
+  suborgRoles: RoleCreateManyWithoutSuborgInput
+}
+
+input SuborgCreateWithoutSuborgRolesInput {
+  id: ID
+  name: String!
+  description: String
+  author: UserCreateManyWithoutSuborgInput
+  org: OrganizationCreateOneWithoutSuborgsInput!
+  userGroups: GroupCreateManyWithoutSuborgidInput
+}
+
+input SuborgCreateWithoutUserGroupsInput {
+  id: ID
+  name: String!
+  description: String
+  author: UserCreateManyWithoutSuborgInput
+  org: OrganizationCreateOneWithoutSuborgsInput!
+  suborgRoles: RoleCreateManyWithoutSuborgInput
 }
 
 type SuborgEdge {
@@ -1998,7 +3239,8 @@ input SuborgUpdateInput {
   description: String
   author: UserUpdateManyWithoutSuborgInput
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
-  groups: GroupUpdateManyWithoutSuborgidInput
+  userGroups: GroupUpdateManyWithoutSuborgidInput
+  suborgRoles: RoleUpdateManyWithoutSuborgInput
 }
 
 input SuborgUpdateManyDataInput {
@@ -2040,10 +3282,19 @@ input SuborgUpdateManyWithWhereNestedInput {
   data: SuborgUpdateManyDataInput!
 }
 
-input SuborgUpdateOneRequiredWithoutGroupsInput {
-  create: SuborgCreateWithoutGroupsInput
-  update: SuborgUpdateWithoutGroupsDataInput
-  upsert: SuborgUpsertWithoutGroupsInput
+input SuborgUpdateOneRequiredWithoutUserGroupsInput {
+  create: SuborgCreateWithoutUserGroupsInput
+  update: SuborgUpdateWithoutUserGroupsDataInput
+  upsert: SuborgUpsertWithoutUserGroupsInput
+  connect: SuborgWhereUniqueInput
+}
+
+input SuborgUpdateOneWithoutSuborgRolesInput {
+  create: SuborgCreateWithoutSuborgRolesInput
+  update: SuborgUpdateWithoutSuborgRolesDataInput
+  upsert: SuborgUpsertWithoutSuborgRolesInput
+  delete: Boolean
+  disconnect: Boolean
   connect: SuborgWhereUniqueInput
 }
 
@@ -2051,21 +3302,32 @@ input SuborgUpdateWithoutAuthorDataInput {
   name: String
   description: String
   org: OrganizationUpdateOneRequiredWithoutSuborgsInput
-  groups: GroupUpdateManyWithoutSuborgidInput
-}
-
-input SuborgUpdateWithoutGroupsDataInput {
-  name: String
-  description: String
-  author: UserUpdateManyWithoutSuborgInput
-  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  userGroups: GroupUpdateManyWithoutSuborgidInput
+  suborgRoles: RoleUpdateManyWithoutSuborgInput
 }
 
 input SuborgUpdateWithoutOrgDataInput {
   name: String
   description: String
   author: UserUpdateManyWithoutSuborgInput
-  groups: GroupUpdateManyWithoutSuborgidInput
+  userGroups: GroupUpdateManyWithoutSuborgidInput
+  suborgRoles: RoleUpdateManyWithoutSuborgInput
+}
+
+input SuborgUpdateWithoutSuborgRolesDataInput {
+  name: String
+  description: String
+  author: UserUpdateManyWithoutSuborgInput
+  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  userGroups: GroupUpdateManyWithoutSuborgidInput
+}
+
+input SuborgUpdateWithoutUserGroupsDataInput {
+  name: String
+  description: String
+  author: UserUpdateManyWithoutSuborgInput
+  org: OrganizationUpdateOneRequiredWithoutSuborgsInput
+  suborgRoles: RoleUpdateManyWithoutSuborgInput
 }
 
 input SuborgUpdateWithWhereUniqueWithoutAuthorInput {
@@ -2078,9 +3340,14 @@ input SuborgUpdateWithWhereUniqueWithoutOrgInput {
   data: SuborgUpdateWithoutOrgDataInput!
 }
 
-input SuborgUpsertWithoutGroupsInput {
-  update: SuborgUpdateWithoutGroupsDataInput!
-  create: SuborgCreateWithoutGroupsInput!
+input SuborgUpsertWithoutSuborgRolesInput {
+  update: SuborgUpdateWithoutSuborgRolesDataInput!
+  create: SuborgCreateWithoutSuborgRolesInput!
+}
+
+input SuborgUpsertWithoutUserGroupsInput {
+  update: SuborgUpdateWithoutUserGroupsDataInput!
+  create: SuborgCreateWithoutUserGroupsInput!
 }
 
 input SuborgUpsertWithWhereUniqueWithoutAuthorInput {
@@ -2142,9 +3409,12 @@ input SuborgWhereInput {
   author_some: UserWhereInput
   author_none: UserWhereInput
   org: OrganizationWhereInput
-  groups_every: GroupWhereInput
-  groups_some: GroupWhereInput
-  groups_none: GroupWhereInput
+  userGroups_every: GroupWhereInput
+  userGroups_some: GroupWhereInput
+  userGroups_none: GroupWhereInput
+  suborgRoles_every: RoleWhereInput
+  suborgRoles_some: RoleWhereInput
+  suborgRoles_none: RoleWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -2173,10 +3443,13 @@ input SuborgWhereUniqueInput {
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
-  membership(where: MembershipSubscriptionWhereInput): MembershipSubscriptionPayload
+  groupMember(where: GroupMemberSubscriptionWhereInput): GroupMemberSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
+  roleMember(where: RoleMemberSubscriptionWhereInput): RoleMemberSubscriptionPayload
   subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
+  subGroupMember(where: SubGroupMemberSubscriptionWhereInput): SubGroupMemberSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -2189,8 +3462,10 @@ type User {
   password: String!
   org: Organization
   suborg(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
+  groupmembers(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  myRoles(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
   createdBy: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -2210,8 +3485,10 @@ input UserCreateInput {
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2235,6 +3512,16 @@ input UserCreateOneWithoutCommentsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutGroupmembersInput {
+  create: UserCreateWithoutGroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMyRolesInput {
+  create: UserCreateWithoutMyRolesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   connect: UserWhereUniqueInput
@@ -2248,7 +3535,37 @@ input UserCreateWithoutCommentsInput {
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserCreateWithoutGroupmembersInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserCreateWithoutMyRolesInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
   createdBy: String
 }
 
@@ -2259,8 +3576,10 @@ input UserCreateWithoutOrgInput {
   email: String!
   password: String!
   suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2272,7 +3591,9 @@ input UserCreateWithoutPostsInput {
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2283,8 +3604,10 @@ input UserCreateWithoutSuborgInput {
   email: String!
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2454,8 +3777,10 @@ input UserUpdateDataInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2466,8 +3791,10 @@ input UserUpdateInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2530,6 +3857,20 @@ input UserUpdateOneRequiredWithoutCommentsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutGroupmembersInput {
+  create: UserCreateWithoutGroupmembersInput
+  update: UserUpdateWithoutGroupmembersDataInput
+  upsert: UserUpsertWithoutGroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutMyRolesInput {
+  create: UserCreateWithoutMyRolesInput
+  update: UserUpdateWithoutMyRolesDataInput
+  upsert: UserUpsertWithoutMyRolesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
@@ -2544,7 +3885,35 @@ input UserUpdateWithoutCommentsDataInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserUpdateWithoutGroupmembersDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserUpdateWithoutMyRolesDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
   createdBy: String
 }
 
@@ -2554,8 +3923,10 @@ input UserUpdateWithoutOrgDataInput {
   email: String
   password: String
   suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2566,7 +3937,9 @@ input UserUpdateWithoutPostsDataInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2576,8 +3949,10 @@ input UserUpdateWithoutSuborgDataInput {
   email: String
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -2599,6 +3974,16 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutCommentsInput {
   update: UserUpdateWithoutCommentsDataInput!
   create: UserCreateWithoutCommentsInput!
+}
+
+input UserUpsertWithoutGroupmembersInput {
+  update: UserUpdateWithoutGroupmembersDataInput!
+  create: UserCreateWithoutGroupmembersInput!
+}
+
+input UserUpsertWithoutMyRolesInput {
+  update: UserUpdateWithoutMyRolesDataInput!
+  create: UserCreateWithoutMyRolesInput!
 }
 
 input UserUpsertWithoutPostsInput {
@@ -2693,12 +4078,18 @@ input UserWhereInput {
   suborg_every: SuborgWhereInput
   suborg_some: SuborgWhereInput
   suborg_none: SuborgWhereInput
+  groupmembers_every: GroupMemberWhereInput
+  groupmembers_some: GroupMemberWhereInput
+  groupmembers_none: GroupMemberWhereInput
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
+  myRoles_every: RoleMemberWhereInput
+  myRoles_some: RoleMemberWhereInput
+  myRoles_none: RoleMemberWhereInput
   createdBy: String
   createdBy_not: String
   createdBy_in: [String!]

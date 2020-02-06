@@ -2,6 +2,7 @@ import hashPassword from '../../../utils/hashPassword'
 import jwt from 'jsonwebtoken'
 
 async function createUser(parent, args, { prisma }, info) {
+    console.log("RECIEVED CREATE USER REQUEST ",args.data)
     const {firstname,lastname,email,org, suborg}=args.data
     const password = await hashPassword(args.data.password)
     

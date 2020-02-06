@@ -10,10 +10,8 @@ import prisma from '../src/prisma'
  * @group user/smoke
  */
 
-describe( 'Create User Dummy', () => {
+
 test('dummy Dummy', ()=>{
     expect(true).toBe(true)
 });
 
-
-})

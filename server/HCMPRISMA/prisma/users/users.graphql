@@ -7,8 +7,10 @@ type User {
   password: String!
   org:Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
   suborg:[Suborg] @relation(name: "UserToSubOrg", onDelete: SET_NULL)
+  groupmembers:[GroupMember!]! @relation(name: "GroupMemberToUser", onDelete: CASCADE)
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
+  myRoles:[RoleMember!]! @relation(name: "RoleMemberToUser", onDelete: CASCADE)
   createdBy:String
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt

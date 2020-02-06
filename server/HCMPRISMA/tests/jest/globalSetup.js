@@ -9,6 +9,9 @@ const cleanupData=async ()=>{
     await prisma.mutation.deleteManyOrganizations()
     await prisma.mutation.deleteManySuborgs()
     await prisma.mutation.deleteManyGroups()
+    await prisma.mutation.deleteManySubGroups()
+    await prisma.mutation.deleteManyUsers()
+    
      console.log("\n\n\n****DONE******\n\n\n")
 }
 module.exports = async () => {
