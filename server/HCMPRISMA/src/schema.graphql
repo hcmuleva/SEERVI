@@ -1,7 +1,7 @@
 # import Query.*, Mutation.* from "graphql/administration/administration.graphql"
 # import Query.*, Mutation.* from "graphql/users/posts.graphql"
 # import Query.*, Mutation.* from "graphql/users/users.graphql"
-
+# import Query.*, Mutation.* from "graphql/profiles/mysubscription.graphql"
 # import Query.*, Mutation.* from "graphql/users/comments.graphql"
 # import Subscription.* from "graphql/users/subscriptions.graphql"
 # import * from "generated/prisma.graphql"

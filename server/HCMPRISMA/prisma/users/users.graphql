@@ -1,4 +1,3 @@
-
 type User {
   id: ID! @id
   firstname: String!
@@ -8,11 +7,19 @@ type User {
   org:Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
   suborg:[Suborg] @relation(name: "UserToSubOrg", onDelete: SET_NULL)
   groupmembers:[GroupMember!]! @relation(name: "GroupMemberToUser", onDelete: CASCADE)
+  subgroupmembers:[SubGroupMember!]! @relation(name: "SubGroupMemberToUser", onDelete: CASCADE)
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
   myRoles:[RoleMember!]! @relation(name: "RoleMemberToUser", onDelete: CASCADE)
+  subjectSubscription:[SubjectSubscription!]! @relation(name: "SubjectSubscriptionToUser", onDelete: CASCADE)
   createdBy:String
   updatedAt:DateTime!  @updatedAt
   createdAt:DateTime!  @createdAt
-
 }
+
+type Medium{
+  id:ID! @id
+  name: String!
+  subjects:[Subject!]!        @relation(name: "SubjectToMedium", onDelete: CASCADE)
+}
+

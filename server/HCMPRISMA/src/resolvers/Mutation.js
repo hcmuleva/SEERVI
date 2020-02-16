@@ -8,13 +8,17 @@ import {UserMutationFunction} from './users/UserMutationFunction'
 import {PostMutationFunctions} from './posts/PostMutationFunctions'
 import {CommentsMutationFunction} from './comments/CommentsMutationFunction'
 import {AdminMutation} from './administration/adminMutation'
+import {subjectSubs} from './profiles/profileMutation'
 const Mutation = {
     /** Administrator mutations */
     ...AdminMutation,
     /** Users */
     ...UserMutationFunction,
     /** Posts  and comments*/
-    ...PostMutationFunctions,...CommentsMutationFunction,
+    ...PostMutationFunctions,
+    ...CommentsMutationFunction,
+    /** Subject Subscription  */
+    ...subjectSubs
     
 }
 

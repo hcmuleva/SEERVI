@@ -29,6 +29,7 @@ type Group{
   subgroups:[SubGroup!]!      @relation(name: "SubGroupToGroup", onDelete: CASCADE)
   members:[GroupMember!]!     @relation(name: "GroupMemberToGroup", onDelete: CASCADE)
   groupRoles:[Role!]!         @relation(name: "RoleToGroup", onDelete: CASCADE)
+  subjects:[Subject!]!        @relation(name: "SubjectToGroup", onDelete: CASCADE)
   updatedAt:DateTime!         @updatedAt
   createdAt:DateTime!         @createdAt
 }
@@ -52,6 +53,7 @@ type SubGroup{
   groupid:Group!              @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
   members:[SubGroupMember!]!  @relation(name: "SubGroupMemberToGroup", onDelete: CASCADE )
   subgroupRoles:[Role!]!      @relation(name: "RoleToSubGroup", onDelete: CASCADE)
+  subjects:[Subject!]!        @relation(name: "SubjectToSubGroup", onDelete: CASCADE)
   updatedAt:DateTime!         @updatedAt
   createdAt:DateTime!         @createdAt
 }

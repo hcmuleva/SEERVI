@@ -24,6 +24,10 @@ const roleAssigment=async (userid,role,status,description)=>{
 seedDataCreate('dummy',client)
 describe( 'User Suite ', () => {
    test('Create SEERVI ORG for Demo', async ()=>{
+      
+
+       console.log("AFTER SEED CREATION ")
+        console.log("CREATING TEST DATA for SEED")
         const orgVariables=orgInputData("SEERVI", "SEERVI ORG IS FOR PUBLIC USE")
         const createdOrgResp=await client.mutate({mutation: createOrg, variables:orgVariables})
         const createdOrgId=createdOrgResp.data.createOrganization.id
@@ -31,8 +35,17 @@ describe( 'User Suite ', () => {
         const subOrgResponse=await client.mutate({mutation:createSuborg,variables:suborgVariables})
         const groupVariable=createGroupInputData("EDUCATION","EDUCATION GROUP IS FOR KARI SEERVI USE",subOrgResponse.data.createSubOrg.id )
         const groupResponse=await client.mutate({mutation:creategroup,variables:groupVariable})
+        const newsGroupVariable=createGroupInputData("NEWS","NEWS GROUP IS FOR KARI SEERVI USE",subOrgResponse.data.createSubOrg.id )
+        const newsGroupResponse=await client.mutate({mutation:creategroup,variables:newsGroupVariable})
+        
         const subgroupVariable=createSubGroupInputData("ACADAMIC","ACADAMIC SUBGROUP IS FOR PUBLIC USE",groupResponse.data.createGroup.id )
         const subGroupResponse=await client.mutate({mutation:createsubgroup,variables:subgroupVariable})
+        
+
+        const eduSubgroupVariable=createSubGroupInputData("EDUCATION","EDUCATION SUBGROUP IS FOR PUBLIC USE",newsGroupResponse.data.createGroup.id )
+        const eduSubGroupResponse=await client.mutate({mutation:createsubgroup,variables:eduSubgroupVariable})
+        
+
         const collegeStudent=await userCreate("arpita","muleva","arpita@seervi.com","welcome123",createdOrgId,subOrgResponse.data.createSubOrg.id)  
         const middleStudent=await userCreate("krishna","muleva","krishna@seervi.com","welcome123",createdOrgId,subOrgResponse.data.createSubOrg.id)  
         const lkgStudent=await userCreate("aniudha","muleva","ani@seervi.com","welcome123",createdOrgId,subOrgResponse.data.createSubOrg.id)  
@@ -43,13 +56,16 @@ describe( 'User Suite ', () => {
         //Starting Create  subgroup level roles: (SubGroup=ACADAMIC), Roles:TEACHER, STUDENT, PARENT
         const subgroupid=subGroupResponse.data.createSubGroup.id
         const teacherSubGroupveriable=createSubGroupRoleInputData("TEACHER1","TESt",subgroupid)
+        const studentSubGroupveriable =createSubGroupRoleInputData("STUDENT","TESTING",subgroupid)
         console.log("REQUEST  ",teacherSubGroupveriable)
         const teacherRole=await client.mutate({mutation: createSubGroupRolegql,variables: teacherSubGroupveriable})
+        const studentRole=await client.mutate({mutation: createSubGroupRolegql,variables: studentSubGroupveriable})
         const teacherId=teacher.data.createUser.user.id
         console.log("TEACHER ROLE CREATED successfully",teacherRole , " \n  TEACHER OBJ n\n", teacher)
         //Assign ROLE TO USER
         const teacherRoleAssignment=await roleAssigment(teacherId,teacherRole.data.createSubGroupRole.id,"ACTIVE","Testing Role")
         console.log("teacherRoleAssignment ",teacherRoleAssignment)
+        const studentReoleAssignement =await roleAssigment(lkgStudent.data.createUser.user.id,studentRole.data.createSubGroupRole.id,"ACTIVE","TESTING STUDENTROLE")
         //Assign Group to User
          // const groupMemberVariable={data:{userid:collegeStudent.data.createUser.user.id,member:backendGroups[0].id,status:"ACTIVE", description:"Created for UnitTest for groupmember"}}
     //    console.log("Data for user assign to group",groupMemberVariable)
@@ -58,9 +74,7 @@ describe( 'User Suite ', () => {
         //Create Mutation for Role, Role Assignment  and GroupAssignment    
         //Asign Role
 
-        
-
-
-
    });
+
+
 });

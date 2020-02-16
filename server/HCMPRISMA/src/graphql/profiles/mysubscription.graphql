@@ -1,0 +1,40 @@
+type Query {
+  getAllSubjects:[Subject!]!
+  getAllSubjectSubscription:[SubjectSubscription!]!
+  mySubscription(query: String):[SubjectSubscription!]!
+}
+type Mutation {
+  createSubject(data:SubjectInputData!):Subject!
+  createSubjectSubscription(data:SubjectSubscriptionInputData!):SubjectSubscription!
+}
+type Subject{
+  id:ID! 
+  name:String!
+  medium:Medium     
+  std:String!
+  board:String 
+  group:Group       
+  subgroup:SubGroup 
+}
+input SubjectInputData{
+  name:String!
+  medium:String     
+  std:String!
+  board:String 
+  group:String       
+  subgroup:String 
+}
+
+type SubjectSubscription{
+    id:ID! 
+    subsType:String @default(value: "FREE")
+    mySubjects:[Subject!]! 
+    userid:User! 
+    subscribedAs:String @default(value: "VIEWER")
+}
+input SubjectSubscriptionInputData{
+    subsType:String 
+    mySubject:String! 
+    userid:String! 
+    subscribedAs:String
+}

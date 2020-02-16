@@ -3,12 +3,25 @@ import jwt from 'jsonwebtoken'
 
 async function createUser(parent, args, { prisma }, info) {
     console.log("RECIEVED CREATE USER REQUEST ",args.data)
-    const {firstname,lastname,email,org, suborg}=args.data
+    const {firstname,lastname,email,myorg, mysuborg}=args.data
     const password = await hashPassword(args.data.password)
-    
+    let org=myorg
+    let suborg =mysuborg
+    if(!org){
+        console.log("orgDataList before")
+        const orgData= await prisma.query.organizations({name:"SEERVI"})
+        //const orgData= orgDataList.filter((elm)=>elm.name=="SEERVI")
+        console.log("orgData",orgData)
+        org=orgData[0].id
+    }
+    if(!suborg){
+        const suborgData=await prisma.query.suborgs({name:"KARI"})
+        suborg=suborgData[0].id
+    }
     const userData=await prisma.mutation.createUser({
         data: {firstname,lastname,email,password,org:{connect: {id:org}},suborg:{connect: {id: suborg}}}
         })
+    
     //Self user should be part of education->acadamic group, and role =student.
     //return group and role...
     // TBD: This need to fix it...
@@ -22,4 +35,8 @@ async function createUser(parent, args, { prisma }, info) {
     console.log("my user data",myuser)
     return myuser
 }
-export default createUser  
+
+async function createMedium(params,args, { prisma }, info) {
+    return await prisma.mutation.createMedium(args.data,info)
+}
+export  {createUser ,createMedium} 

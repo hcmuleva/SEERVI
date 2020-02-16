@@ -1,8 +1,9 @@
 
+
 type Query {
     users(query: String,first: Int, skip: Int, after: String): [User!]!
     loggedInUser: User!
-    #usersForAdmin:[User!]!    
+    getAllMedium:[Medium!]!
 }
 type Mutation {
     createUser(data: CreateUserInput!): AuthPayload!
@@ -11,7 +12,8 @@ type Mutation {
     deleteUser(id: ID!): User!
     updateUser(id:ID!,data: UpdateUserInput!): User!
     updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
-   
+    createMedium(data:MediumCreateInput!):Medium!
+
 }
 
 type User {
@@ -25,13 +27,15 @@ type User {
     posts: [Post!]! 
     comments: [Comment!]!
     groupmembers:[GroupMember!]!
+    subjectSubscription:[SubjectSubscription!]! 
     createdBy:ID
     createdAt:String!
     updatedAt:String!
 }
 type AuthPayload {
     token: String!
-    user: User!   
+    user: User!  
+    subs:[SubjectSubscription!]! 
 }
 input CreateUserInput {
     firstname:String!
@@ -62,3 +66,13 @@ input UpdateUserInput {
     org:String
     suborg:String
 }
+
+type Medium{
+  id:ID! 
+  name: String!
+  subjects:[Subject!]!  
+}
+input MediumCreateInput{
+    name:String!
+}
+

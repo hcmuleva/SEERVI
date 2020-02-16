@@ -1,0 +1,18 @@
+type Subject{
+  id:ID! @id
+  name:String!
+  medium:Medium     @relation(name: "SubjectToMedium", onDelete: SET_NULL)
+  std:String!
+  board:String 
+  group:Group       @relation(name: "SubjectToGroup", onDelete: SET_NULL)
+  subgroup:SubGroup @relation(name: "SubjectToSubGroup", onDelete: SET_NULL)
+}
+
+
+type SubjectSubscription{
+    id:ID! @id
+    subsType:String @default(value: "FREE")
+    mySubjects:[Subject!]! 
+    userid:User! @relation(name: "SubjectSubscriptionToUser", onDelete: SET_NULL)
+    subscribedAs:String @default(value: "VIEWER")
+}

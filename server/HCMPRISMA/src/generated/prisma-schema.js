@@ -7,11 +7,27 @@ module.exports = {
   count: Int!
 }
 
+type AggregateEducationProfile {
+  count: Int!
+}
+
 type AggregateGroup {
   count: Int!
 }
 
 type AggregateGroupMember {
+  count: Int!
+}
+
+type AggregateMedium {
+  count: Int!
+}
+
+type AggregateMyMedium {
+  count: Int!
+}
+
+type AggregateMySubject {
   count: Int!
 }
 
@@ -39,7 +55,15 @@ type AggregateSubGroupMember {
   count: Int!
 }
 
+type AggregateSubject {
+  count: Int!
+}
+
 type AggregateSuborg {
+  count: Int!
+}
+
+type AggregateTBD {
   count: Int!
 }
 
@@ -318,6 +342,555 @@ input CommentWhereUniqueInput {
 }
 
 scalar DateTime
+
+type EducationProfile {
+  id: ID!
+  name: String!
+  std: String!
+  board: String!
+  studyIn: String!
+  studyLevel: String!
+  branch: String!
+  specialization: String
+  medium(where: MyMediumWhereInput, orderBy: MyMediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MyMedium!]
+  subjects(where: MySubjectWhereInput, orderBy: MySubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MySubject!]
+  userid: User!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type EducationProfileConnection {
+  pageInfo: PageInfo!
+  edges: [EducationProfileEdge]!
+  aggregate: AggregateEducationProfile!
+}
+
+input EducationProfileCreateInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String!
+  studyIn: String!
+  studyLevel: String!
+  branch: String!
+  specialization: String
+  medium: MyMediumCreateManyWithoutEducationProfileInput
+  subjects: MySubjectCreateManyWithoutEducationProfileInput
+  userid: UserCreateOneWithoutMyEducationProfilesInput!
+}
+
+input EducationProfileCreateManyWithoutUseridInput {
+  create: [EducationProfileCreateWithoutUseridInput!]
+  connect: [EducationProfileWhereUniqueInput!]
+}
+
+input EducationProfileCreateOneWithoutMediumInput {
+  create: EducationProfileCreateWithoutMediumInput
+  connect: EducationProfileWhereUniqueInput
+}
+
+input EducationProfileCreateOneWithoutSubjectsInput {
+  create: EducationProfileCreateWithoutSubjectsInput
+  connect: EducationProfileWhereUniqueInput
+}
+
+input EducationProfileCreateWithoutMediumInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String!
+  studyIn: String!
+  studyLevel: String!
+  branch: String!
+  specialization: String
+  subjects: MySubjectCreateManyWithoutEducationProfileInput
+  userid: UserCreateOneWithoutMyEducationProfilesInput!
+}
+
+input EducationProfileCreateWithoutSubjectsInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String!
+  studyIn: String!
+  studyLevel: String!
+  branch: String!
+  specialization: String
+  medium: MyMediumCreateManyWithoutEducationProfileInput
+  userid: UserCreateOneWithoutMyEducationProfilesInput!
+}
+
+input EducationProfileCreateWithoutUseridInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String!
+  studyIn: String!
+  studyLevel: String!
+  branch: String!
+  specialization: String
+  medium: MyMediumCreateManyWithoutEducationProfileInput
+  subjects: MySubjectCreateManyWithoutEducationProfileInput
+}
+
+type EducationProfileEdge {
+  node: EducationProfile!
+  cursor: String!
+}
+
+enum EducationProfileOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  std_ASC
+  std_DESC
+  board_ASC
+  board_DESC
+  studyIn_ASC
+  studyIn_DESC
+  studyLevel_ASC
+  studyLevel_DESC
+  branch_ASC
+  branch_DESC
+  specialization_ASC
+  specialization_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EducationProfilePreviousValues {
+  id: ID!
+  name: String!
+  std: String!
+  board: String!
+  studyIn: String!
+  studyLevel: String!
+  branch: String!
+  specialization: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input EducationProfileScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  std: String
+  std_not: String
+  std_in: [String!]
+  std_not_in: [String!]
+  std_lt: String
+  std_lte: String
+  std_gt: String
+  std_gte: String
+  std_contains: String
+  std_not_contains: String
+  std_starts_with: String
+  std_not_starts_with: String
+  std_ends_with: String
+  std_not_ends_with: String
+  board: String
+  board_not: String
+  board_in: [String!]
+  board_not_in: [String!]
+  board_lt: String
+  board_lte: String
+  board_gt: String
+  board_gte: String
+  board_contains: String
+  board_not_contains: String
+  board_starts_with: String
+  board_not_starts_with: String
+  board_ends_with: String
+  board_not_ends_with: String
+  studyIn: String
+  studyIn_not: String
+  studyIn_in: [String!]
+  studyIn_not_in: [String!]
+  studyIn_lt: String
+  studyIn_lte: String
+  studyIn_gt: String
+  studyIn_gte: String
+  studyIn_contains: String
+  studyIn_not_contains: String
+  studyIn_starts_with: String
+  studyIn_not_starts_with: String
+  studyIn_ends_with: String
+  studyIn_not_ends_with: String
+  studyLevel: String
+  studyLevel_not: String
+  studyLevel_in: [String!]
+  studyLevel_not_in: [String!]
+  studyLevel_lt: String
+  studyLevel_lte: String
+  studyLevel_gt: String
+  studyLevel_gte: String
+  studyLevel_contains: String
+  studyLevel_not_contains: String
+  studyLevel_starts_with: String
+  studyLevel_not_starts_with: String
+  studyLevel_ends_with: String
+  studyLevel_not_ends_with: String
+  branch: String
+  branch_not: String
+  branch_in: [String!]
+  branch_not_in: [String!]
+  branch_lt: String
+  branch_lte: String
+  branch_gt: String
+  branch_gte: String
+  branch_contains: String
+  branch_not_contains: String
+  branch_starts_with: String
+  branch_not_starts_with: String
+  branch_ends_with: String
+  branch_not_ends_with: String
+  specialization: String
+  specialization_not: String
+  specialization_in: [String!]
+  specialization_not_in: [String!]
+  specialization_lt: String
+  specialization_lte: String
+  specialization_gt: String
+  specialization_gte: String
+  specialization_contains: String
+  specialization_not_contains: String
+  specialization_starts_with: String
+  specialization_not_starts_with: String
+  specialization_ends_with: String
+  specialization_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [EducationProfileScalarWhereInput!]
+  OR: [EducationProfileScalarWhereInput!]
+  NOT: [EducationProfileScalarWhereInput!]
+}
+
+type EducationProfileSubscriptionPayload {
+  mutation: MutationType!
+  node: EducationProfile
+  updatedFields: [String!]
+  previousValues: EducationProfilePreviousValues
+}
+
+input EducationProfileSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: EducationProfileWhereInput
+  AND: [EducationProfileSubscriptionWhereInput!]
+  OR: [EducationProfileSubscriptionWhereInput!]
+  NOT: [EducationProfileSubscriptionWhereInput!]
+}
+
+input EducationProfileUpdateInput {
+  name: String
+  std: String
+  board: String
+  studyIn: String
+  studyLevel: String
+  branch: String
+  specialization: String
+  medium: MyMediumUpdateManyWithoutEducationProfileInput
+  subjects: MySubjectUpdateManyWithoutEducationProfileInput
+  userid: UserUpdateOneRequiredWithoutMyEducationProfilesInput
+}
+
+input EducationProfileUpdateManyDataInput {
+  name: String
+  std: String
+  board: String
+  studyIn: String
+  studyLevel: String
+  branch: String
+  specialization: String
+}
+
+input EducationProfileUpdateManyMutationInput {
+  name: String
+  std: String
+  board: String
+  studyIn: String
+  studyLevel: String
+  branch: String
+  specialization: String
+}
+
+input EducationProfileUpdateManyWithoutUseridInput {
+  create: [EducationProfileCreateWithoutUseridInput!]
+  delete: [EducationProfileWhereUniqueInput!]
+  connect: [EducationProfileWhereUniqueInput!]
+  set: [EducationProfileWhereUniqueInput!]
+  disconnect: [EducationProfileWhereUniqueInput!]
+  update: [EducationProfileUpdateWithWhereUniqueWithoutUseridInput!]
+  upsert: [EducationProfileUpsertWithWhereUniqueWithoutUseridInput!]
+  deleteMany: [EducationProfileScalarWhereInput!]
+  updateMany: [EducationProfileUpdateManyWithWhereNestedInput!]
+}
+
+input EducationProfileUpdateManyWithWhereNestedInput {
+  where: EducationProfileScalarWhereInput!
+  data: EducationProfileUpdateManyDataInput!
+}
+
+input EducationProfileUpdateOneRequiredWithoutMediumInput {
+  create: EducationProfileCreateWithoutMediumInput
+  update: EducationProfileUpdateWithoutMediumDataInput
+  upsert: EducationProfileUpsertWithoutMediumInput
+  connect: EducationProfileWhereUniqueInput
+}
+
+input EducationProfileUpdateOneRequiredWithoutSubjectsInput {
+  create: EducationProfileCreateWithoutSubjectsInput
+  update: EducationProfileUpdateWithoutSubjectsDataInput
+  upsert: EducationProfileUpsertWithoutSubjectsInput
+  connect: EducationProfileWhereUniqueInput
+}
+
+input EducationProfileUpdateWithoutMediumDataInput {
+  name: String
+  std: String
+  board: String
+  studyIn: String
+  studyLevel: String
+  branch: String
+  specialization: String
+  subjects: MySubjectUpdateManyWithoutEducationProfileInput
+  userid: UserUpdateOneRequiredWithoutMyEducationProfilesInput
+}
+
+input EducationProfileUpdateWithoutSubjectsDataInput {
+  name: String
+  std: String
+  board: String
+  studyIn: String
+  studyLevel: String
+  branch: String
+  specialization: String
+  medium: MyMediumUpdateManyWithoutEducationProfileInput
+  userid: UserUpdateOneRequiredWithoutMyEducationProfilesInput
+}
+
+input EducationProfileUpdateWithoutUseridDataInput {
+  name: String
+  std: String
+  board: String
+  studyIn: String
+  studyLevel: String
+  branch: String
+  specialization: String
+  medium: MyMediumUpdateManyWithoutEducationProfileInput
+  subjects: MySubjectUpdateManyWithoutEducationProfileInput
+}
+
+input EducationProfileUpdateWithWhereUniqueWithoutUseridInput {
+  where: EducationProfileWhereUniqueInput!
+  data: EducationProfileUpdateWithoutUseridDataInput!
+}
+
+input EducationProfileUpsertWithoutMediumInput {
+  update: EducationProfileUpdateWithoutMediumDataInput!
+  create: EducationProfileCreateWithoutMediumInput!
+}
+
+input EducationProfileUpsertWithoutSubjectsInput {
+  update: EducationProfileUpdateWithoutSubjectsDataInput!
+  create: EducationProfileCreateWithoutSubjectsInput!
+}
+
+input EducationProfileUpsertWithWhereUniqueWithoutUseridInput {
+  where: EducationProfileWhereUniqueInput!
+  update: EducationProfileUpdateWithoutUseridDataInput!
+  create: EducationProfileCreateWithoutUseridInput!
+}
+
+input EducationProfileWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  std: String
+  std_not: String
+  std_in: [String!]
+  std_not_in: [String!]
+  std_lt: String
+  std_lte: String
+  std_gt: String
+  std_gte: String
+  std_contains: String
+  std_not_contains: String
+  std_starts_with: String
+  std_not_starts_with: String
+  std_ends_with: String
+  std_not_ends_with: String
+  board: String
+  board_not: String
+  board_in: [String!]
+  board_not_in: [String!]
+  board_lt: String
+  board_lte: String
+  board_gt: String
+  board_gte: String
+  board_contains: String
+  board_not_contains: String
+  board_starts_with: String
+  board_not_starts_with: String
+  board_ends_with: String
+  board_not_ends_with: String
+  studyIn: String
+  studyIn_not: String
+  studyIn_in: [String!]
+  studyIn_not_in: [String!]
+  studyIn_lt: String
+  studyIn_lte: String
+  studyIn_gt: String
+  studyIn_gte: String
+  studyIn_contains: String
+  studyIn_not_contains: String
+  studyIn_starts_with: String
+  studyIn_not_starts_with: String
+  studyIn_ends_with: String
+  studyIn_not_ends_with: String
+  studyLevel: String
+  studyLevel_not: String
+  studyLevel_in: [String!]
+  studyLevel_not_in: [String!]
+  studyLevel_lt: String
+  studyLevel_lte: String
+  studyLevel_gt: String
+  studyLevel_gte: String
+  studyLevel_contains: String
+  studyLevel_not_contains: String
+  studyLevel_starts_with: String
+  studyLevel_not_starts_with: String
+  studyLevel_ends_with: String
+  studyLevel_not_ends_with: String
+  branch: String
+  branch_not: String
+  branch_in: [String!]
+  branch_not_in: [String!]
+  branch_lt: String
+  branch_lte: String
+  branch_gt: String
+  branch_gte: String
+  branch_contains: String
+  branch_not_contains: String
+  branch_starts_with: String
+  branch_not_starts_with: String
+  branch_ends_with: String
+  branch_not_ends_with: String
+  specialization: String
+  specialization_not: String
+  specialization_in: [String!]
+  specialization_not_in: [String!]
+  specialization_lt: String
+  specialization_lte: String
+  specialization_gt: String
+  specialization_gte: String
+  specialization_contains: String
+  specialization_not_contains: String
+  specialization_starts_with: String
+  specialization_not_starts_with: String
+  specialization_ends_with: String
+  specialization_not_ends_with: String
+  medium_every: MyMediumWhereInput
+  medium_some: MyMediumWhereInput
+  medium_none: MyMediumWhereInput
+  subjects_every: MySubjectWhereInput
+  subjects_some: MySubjectWhereInput
+  subjects_none: MySubjectWhereInput
+  userid: UserWhereInput
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [EducationProfileWhereInput!]
+  OR: [EducationProfileWhereInput!]
+  NOT: [EducationProfileWhereInput!]
+}
+
+input EducationProfileWhereUniqueInput {
+  id: ID
+}
 
 type Group {
   id: ID!
@@ -992,7 +1565,127 @@ input GroupWhereUniqueInput {
   id: ID
 }
 
+scalar Json
+
 scalar Long
+
+type Medium {
+  id: ID!
+  name: String!
+}
+
+type MediumConnection {
+  pageInfo: PageInfo!
+  edges: [MediumEdge]!
+  aggregate: AggregateMedium!
+}
+
+input MediumCreateInput {
+  id: ID
+  name: String!
+}
+
+input MediumCreateOneInput {
+  create: MediumCreateInput
+  connect: MediumWhereUniqueInput
+}
+
+type MediumEdge {
+  node: Medium!
+  cursor: String!
+}
+
+enum MediumOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type MediumPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type MediumSubscriptionPayload {
+  mutation: MutationType!
+  node: Medium
+  updatedFields: [String!]
+  previousValues: MediumPreviousValues
+}
+
+input MediumSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MediumWhereInput
+  AND: [MediumSubscriptionWhereInput!]
+  OR: [MediumSubscriptionWhereInput!]
+  NOT: [MediumSubscriptionWhereInput!]
+}
+
+input MediumUpdateDataInput {
+  name: String
+}
+
+input MediumUpdateInput {
+  name: String
+}
+
+input MediumUpdateManyMutationInput {
+  name: String
+}
+
+input MediumUpdateOneRequiredInput {
+  create: MediumCreateInput
+  update: MediumUpdateDataInput
+  upsert: MediumUpsertNestedInput
+  connect: MediumWhereUniqueInput
+}
+
+input MediumUpsertNestedInput {
+  update: MediumUpdateDataInput!
+  create: MediumCreateInput!
+}
+
+input MediumWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [MediumWhereInput!]
+  OR: [MediumWhereInput!]
+  NOT: [MediumWhereInput!]
+}
+
+input MediumWhereUniqueInput {
+  id: ID
+}
 
 enum MemberStatus {
   ACTIVE
@@ -1010,6 +1703,12 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createEducationProfile(data: EducationProfileCreateInput!): EducationProfile!
+  updateEducationProfile(data: EducationProfileUpdateInput!, where: EducationProfileWhereUniqueInput!): EducationProfile
+  updateManyEducationProfiles(data: EducationProfileUpdateManyMutationInput!, where: EducationProfileWhereInput): BatchPayload!
+  upsertEducationProfile(where: EducationProfileWhereUniqueInput!, create: EducationProfileCreateInput!, update: EducationProfileUpdateInput!): EducationProfile!
+  deleteEducationProfile(where: EducationProfileWhereUniqueInput!): EducationProfile
+  deleteManyEducationProfiles(where: EducationProfileWhereInput): BatchPayload!
   createGroup(data: GroupCreateInput!): Group!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
@@ -1022,6 +1721,22 @@ type Mutation {
   upsertGroupMember(where: GroupMemberWhereUniqueInput!, create: GroupMemberCreateInput!, update: GroupMemberUpdateInput!): GroupMember!
   deleteGroupMember(where: GroupMemberWhereUniqueInput!): GroupMember
   deleteManyGroupMembers(where: GroupMemberWhereInput): BatchPayload!
+  createMedium(data: MediumCreateInput!): Medium!
+  updateMedium(data: MediumUpdateInput!, where: MediumWhereUniqueInput!): Medium
+  updateManyMediums(data: MediumUpdateManyMutationInput!, where: MediumWhereInput): BatchPayload!
+  upsertMedium(where: MediumWhereUniqueInput!, create: MediumCreateInput!, update: MediumUpdateInput!): Medium!
+  deleteMedium(where: MediumWhereUniqueInput!): Medium
+  deleteManyMediums(where: MediumWhereInput): BatchPayload!
+  createMyMedium(data: MyMediumCreateInput!): MyMedium!
+  updateMyMedium(data: MyMediumUpdateInput!, where: MyMediumWhereUniqueInput!): MyMedium
+  upsertMyMedium(where: MyMediumWhereUniqueInput!, create: MyMediumCreateInput!, update: MyMediumUpdateInput!): MyMedium!
+  deleteMyMedium(where: MyMediumWhereUniqueInput!): MyMedium
+  deleteManyMyMediums(where: MyMediumWhereInput): BatchPayload!
+  createMySubject(data: MySubjectCreateInput!): MySubject!
+  updateMySubject(data: MySubjectUpdateInput!, where: MySubjectWhereUniqueInput!): MySubject
+  upsertMySubject(where: MySubjectWhereUniqueInput!, create: MySubjectCreateInput!, update: MySubjectUpdateInput!): MySubject!
+  deleteMySubject(where: MySubjectWhereUniqueInput!): MySubject
+  deleteManyMySubjects(where: MySubjectWhereInput): BatchPayload!
   createOrganization(data: OrganizationCreateInput!): Organization!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
@@ -1058,12 +1773,24 @@ type Mutation {
   upsertSubGroupMember(where: SubGroupMemberWhereUniqueInput!, create: SubGroupMemberCreateInput!, update: SubGroupMemberUpdateInput!): SubGroupMember!
   deleteSubGroupMember(where: SubGroupMemberWhereUniqueInput!): SubGroupMember
   deleteManySubGroupMembers(where: SubGroupMemberWhereInput): BatchPayload!
+  createSubject(data: SubjectCreateInput!): Subject!
+  updateSubject(data: SubjectUpdateInput!, where: SubjectWhereUniqueInput!): Subject
+  updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
+  upsertSubject(where: SubjectWhereUniqueInput!, create: SubjectCreateInput!, update: SubjectUpdateInput!): Subject!
+  deleteSubject(where: SubjectWhereUniqueInput!): Subject
+  deleteManySubjects(where: SubjectWhereInput): BatchPayload!
   createSuborg(data: SuborgCreateInput!): Suborg!
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
   upsertSuborg(where: SuborgWhereUniqueInput!, create: SuborgCreateInput!, update: SuborgUpdateInput!): Suborg!
   deleteSuborg(where: SuborgWhereUniqueInput!): Suborg
   deleteManySuborgs(where: SuborgWhereInput): BatchPayload!
+  createTBD(data: TBDCreateInput!): TBD!
+  updateTBD(data: TBDUpdateInput!, where: TBDWhereUniqueInput!): TBD
+  updateManyTBDs(data: TBDUpdateManyMutationInput!, where: TBDWhereInput): BatchPayload!
+  upsertTBD(where: TBDWhereUniqueInput!, create: TBDCreateInput!, update: TBDUpdateInput!): TBD!
+  deleteTBD(where: TBDWhereUniqueInput!): TBD
+  deleteManyTBDs(where: TBDWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1076,6 +1803,280 @@ enum MutationType {
   CREATED
   UPDATED
   DELETED
+}
+
+type MyMedium {
+  id: ID!
+  educationProfile: EducationProfile!
+  medium: Medium!
+}
+
+type MyMediumConnection {
+  pageInfo: PageInfo!
+  edges: [MyMediumEdge]!
+  aggregate: AggregateMyMedium!
+}
+
+input MyMediumCreateInput {
+  id: ID
+  educationProfile: EducationProfileCreateOneWithoutMediumInput!
+  medium: MediumCreateOneInput!
+}
+
+input MyMediumCreateManyWithoutEducationProfileInput {
+  create: [MyMediumCreateWithoutEducationProfileInput!]
+  connect: [MyMediumWhereUniqueInput!]
+}
+
+input MyMediumCreateWithoutEducationProfileInput {
+  id: ID
+  medium: MediumCreateOneInput!
+}
+
+type MyMediumEdge {
+  node: MyMedium!
+  cursor: String!
+}
+
+enum MyMediumOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type MyMediumPreviousValues {
+  id: ID!
+}
+
+input MyMediumScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [MyMediumScalarWhereInput!]
+  OR: [MyMediumScalarWhereInput!]
+  NOT: [MyMediumScalarWhereInput!]
+}
+
+type MyMediumSubscriptionPayload {
+  mutation: MutationType!
+  node: MyMedium
+  updatedFields: [String!]
+  previousValues: MyMediumPreviousValues
+}
+
+input MyMediumSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MyMediumWhereInput
+  AND: [MyMediumSubscriptionWhereInput!]
+  OR: [MyMediumSubscriptionWhereInput!]
+  NOT: [MyMediumSubscriptionWhereInput!]
+}
+
+input MyMediumUpdateInput {
+  educationProfile: EducationProfileUpdateOneRequiredWithoutMediumInput
+  medium: MediumUpdateOneRequiredInput
+}
+
+input MyMediumUpdateManyWithoutEducationProfileInput {
+  create: [MyMediumCreateWithoutEducationProfileInput!]
+  delete: [MyMediumWhereUniqueInput!]
+  connect: [MyMediumWhereUniqueInput!]
+  set: [MyMediumWhereUniqueInput!]
+  disconnect: [MyMediumWhereUniqueInput!]
+  update: [MyMediumUpdateWithWhereUniqueWithoutEducationProfileInput!]
+  upsert: [MyMediumUpsertWithWhereUniqueWithoutEducationProfileInput!]
+  deleteMany: [MyMediumScalarWhereInput!]
+}
+
+input MyMediumUpdateWithoutEducationProfileDataInput {
+  medium: MediumUpdateOneRequiredInput
+}
+
+input MyMediumUpdateWithWhereUniqueWithoutEducationProfileInput {
+  where: MyMediumWhereUniqueInput!
+  data: MyMediumUpdateWithoutEducationProfileDataInput!
+}
+
+input MyMediumUpsertWithWhereUniqueWithoutEducationProfileInput {
+  where: MyMediumWhereUniqueInput!
+  update: MyMediumUpdateWithoutEducationProfileDataInput!
+  create: MyMediumCreateWithoutEducationProfileInput!
+}
+
+input MyMediumWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  educationProfile: EducationProfileWhereInput
+  medium: MediumWhereInput
+  AND: [MyMediumWhereInput!]
+  OR: [MyMediumWhereInput!]
+  NOT: [MyMediumWhereInput!]
+}
+
+input MyMediumWhereUniqueInput {
+  id: ID
+}
+
+type MySubject {
+  id: ID!
+  subject: Subject!
+  educationProfile: EducationProfile!
+}
+
+type MySubjectConnection {
+  pageInfo: PageInfo!
+  edges: [MySubjectEdge]!
+  aggregate: AggregateMySubject!
+}
+
+input MySubjectCreateInput {
+  id: ID
+  subject: SubjectCreateOneInput!
+  educationProfile: EducationProfileCreateOneWithoutSubjectsInput!
+}
+
+input MySubjectCreateManyWithoutEducationProfileInput {
+  create: [MySubjectCreateWithoutEducationProfileInput!]
+  connect: [MySubjectWhereUniqueInput!]
+}
+
+input MySubjectCreateWithoutEducationProfileInput {
+  id: ID
+  subject: SubjectCreateOneInput!
+}
+
+type MySubjectEdge {
+  node: MySubject!
+  cursor: String!
+}
+
+enum MySubjectOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type MySubjectPreviousValues {
+  id: ID!
+}
+
+input MySubjectScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [MySubjectScalarWhereInput!]
+  OR: [MySubjectScalarWhereInput!]
+  NOT: [MySubjectScalarWhereInput!]
+}
+
+type MySubjectSubscriptionPayload {
+  mutation: MutationType!
+  node: MySubject
+  updatedFields: [String!]
+  previousValues: MySubjectPreviousValues
+}
+
+input MySubjectSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MySubjectWhereInput
+  AND: [MySubjectSubscriptionWhereInput!]
+  OR: [MySubjectSubscriptionWhereInput!]
+  NOT: [MySubjectSubscriptionWhereInput!]
+}
+
+input MySubjectUpdateInput {
+  subject: SubjectUpdateOneRequiredInput
+  educationProfile: EducationProfileUpdateOneRequiredWithoutSubjectsInput
+}
+
+input MySubjectUpdateManyWithoutEducationProfileInput {
+  create: [MySubjectCreateWithoutEducationProfileInput!]
+  delete: [MySubjectWhereUniqueInput!]
+  connect: [MySubjectWhereUniqueInput!]
+  set: [MySubjectWhereUniqueInput!]
+  disconnect: [MySubjectWhereUniqueInput!]
+  update: [MySubjectUpdateWithWhereUniqueWithoutEducationProfileInput!]
+  upsert: [MySubjectUpsertWithWhereUniqueWithoutEducationProfileInput!]
+  deleteMany: [MySubjectScalarWhereInput!]
+}
+
+input MySubjectUpdateWithoutEducationProfileDataInput {
+  subject: SubjectUpdateOneRequiredInput
+}
+
+input MySubjectUpdateWithWhereUniqueWithoutEducationProfileInput {
+  where: MySubjectWhereUniqueInput!
+  data: MySubjectUpdateWithoutEducationProfileDataInput!
+}
+
+input MySubjectUpsertWithWhereUniqueWithoutEducationProfileInput {
+  where: MySubjectWhereUniqueInput!
+  update: MySubjectUpdateWithoutEducationProfileDataInput!
+  create: MySubjectCreateWithoutEducationProfileInput!
+}
+
+input MySubjectWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  subject: SubjectWhereInput
+  educationProfile: EducationProfileWhereInput
+  AND: [MySubjectWhereInput!]
+  OR: [MySubjectWhereInput!]
+  NOT: [MySubjectWhereInput!]
+}
+
+input MySubjectWhereUniqueInput {
+  id: ID
 }
 
 interface Node {
@@ -1666,12 +2667,24 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  educationProfile(where: EducationProfileWhereUniqueInput!): EducationProfile
+  educationProfiles(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationProfile]!
+  educationProfilesConnection(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EducationProfileConnection!
   group(where: GroupWhereUniqueInput!): Group
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   groupMember(where: GroupMemberWhereUniqueInput!): GroupMember
   groupMembers(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember]!
   groupMembersConnection(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupMemberConnection!
+  medium(where: MediumWhereUniqueInput!): Medium
+  mediums(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Medium]!
+  mediumsConnection(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MediumConnection!
+  myMedium(where: MyMediumWhereUniqueInput!): MyMedium
+  myMediums(where: MyMediumWhereInput, orderBy: MyMediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MyMedium]!
+  myMediumsConnection(where: MyMediumWhereInput, orderBy: MyMediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MyMediumConnection!
+  mySubject(where: MySubjectWhereUniqueInput!): MySubject
+  mySubjects(where: MySubjectWhereInput, orderBy: MySubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MySubject]!
+  mySubjectsConnection(where: MySubjectWhereInput, orderBy: MySubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MySubjectConnection!
   organization(where: OrganizationWhereUniqueInput!): Organization
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
@@ -1690,9 +2703,15 @@ type Query {
   subGroupMember(where: SubGroupMemberWhereUniqueInput!): SubGroupMember
   subGroupMembers(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember]!
   subGroupMembersConnection(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupMemberConnection!
+  subject(where: SubjectWhereUniqueInput!): Subject
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
+  subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
   suborg(where: SuborgWhereUniqueInput!): Suborg
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
+  tBD(where: TBDWhereUniqueInput!): TBD
+  tBDs(where: TBDWhereInput, orderBy: TBDOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TBD]!
+  tBDsConnection(where: TBDWhereInput, orderBy: TBDOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TBDConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -2544,7 +3563,7 @@ type SubGroupMemberConnection {
 
 input SubGroupMemberCreateInput {
   id: ID
-  userid: UserCreateOneInput!
+  userid: UserCreateOneWithoutSubgroupmembersInput!
   member: SubGroupCreateOneWithoutMembersInput!
   status: MemberStatus
   description: String
@@ -2555,9 +3574,21 @@ input SubGroupMemberCreateManyWithoutMemberInput {
   connect: [SubGroupMemberWhereUniqueInput!]
 }
 
+input SubGroupMemberCreateManyWithoutUseridInput {
+  create: [SubGroupMemberCreateWithoutUseridInput!]
+  connect: [SubGroupMemberWhereUniqueInput!]
+}
+
 input SubGroupMemberCreateWithoutMemberInput {
   id: ID
-  userid: UserCreateOneInput!
+  userid: UserCreateOneWithoutSubgroupmembersInput!
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberCreateWithoutUseridInput {
+  id: ID
+  member: SubGroupCreateOneWithoutMembersInput!
   status: MemberStatus
   description: String
 }
@@ -2661,7 +3692,7 @@ input SubGroupMemberSubscriptionWhereInput {
 }
 
 input SubGroupMemberUpdateInput {
-  userid: UserUpdateOneRequiredInput
+  userid: UserUpdateOneRequiredWithoutSubgroupmembersInput
   member: SubGroupUpdateOneRequiredWithoutMembersInput
   status: MemberStatus
   description: String
@@ -2689,13 +3720,31 @@ input SubGroupMemberUpdateManyWithoutMemberInput {
   updateMany: [SubGroupMemberUpdateManyWithWhereNestedInput!]
 }
 
+input SubGroupMemberUpdateManyWithoutUseridInput {
+  create: [SubGroupMemberCreateWithoutUseridInput!]
+  delete: [SubGroupMemberWhereUniqueInput!]
+  connect: [SubGroupMemberWhereUniqueInput!]
+  set: [SubGroupMemberWhereUniqueInput!]
+  disconnect: [SubGroupMemberWhereUniqueInput!]
+  update: [SubGroupMemberUpdateWithWhereUniqueWithoutUseridInput!]
+  upsert: [SubGroupMemberUpsertWithWhereUniqueWithoutUseridInput!]
+  deleteMany: [SubGroupMemberScalarWhereInput!]
+  updateMany: [SubGroupMemberUpdateManyWithWhereNestedInput!]
+}
+
 input SubGroupMemberUpdateManyWithWhereNestedInput {
   where: SubGroupMemberScalarWhereInput!
   data: SubGroupMemberUpdateManyDataInput!
 }
 
 input SubGroupMemberUpdateWithoutMemberDataInput {
-  userid: UserUpdateOneRequiredInput
+  userid: UserUpdateOneRequiredWithoutSubgroupmembersInput
+  status: MemberStatus
+  description: String
+}
+
+input SubGroupMemberUpdateWithoutUseridDataInput {
+  member: SubGroupUpdateOneRequiredWithoutMembersInput
   status: MemberStatus
   description: String
 }
@@ -2705,10 +3754,21 @@ input SubGroupMemberUpdateWithWhereUniqueWithoutMemberInput {
   data: SubGroupMemberUpdateWithoutMemberDataInput!
 }
 
+input SubGroupMemberUpdateWithWhereUniqueWithoutUseridInput {
+  where: SubGroupMemberWhereUniqueInput!
+  data: SubGroupMemberUpdateWithoutUseridDataInput!
+}
+
 input SubGroupMemberUpsertWithWhereUniqueWithoutMemberInput {
   where: SubGroupMemberWhereUniqueInput!
   update: SubGroupMemberUpdateWithoutMemberDataInput!
   create: SubGroupMemberCreateWithoutMemberInput!
+}
+
+input SubGroupMemberUpsertWithWhereUniqueWithoutUseridInput {
+  where: SubGroupMemberWhereUniqueInput!
+  update: SubGroupMemberUpdateWithoutUseridDataInput!
+  create: SubGroupMemberCreateWithoutUseridInput!
 }
 
 input SubGroupMemberWhereInput {
@@ -3039,6 +4099,168 @@ input SubGroupWhereInput {
 }
 
 input SubGroupWhereUniqueInput {
+  id: ID
+}
+
+type Subject {
+  id: ID!
+  name: String!
+  std: String!
+  board: String
+}
+
+type SubjectConnection {
+  pageInfo: PageInfo!
+  edges: [SubjectEdge]!
+  aggregate: AggregateSubject!
+}
+
+input SubjectCreateInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String
+}
+
+input SubjectCreateOneInput {
+  create: SubjectCreateInput
+  connect: SubjectWhereUniqueInput
+}
+
+type SubjectEdge {
+  node: Subject!
+  cursor: String!
+}
+
+enum SubjectOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  std_ASC
+  std_DESC
+  board_ASC
+  board_DESC
+}
+
+type SubjectPreviousValues {
+  id: ID!
+  name: String!
+  std: String!
+  board: String
+}
+
+type SubjectSubscriptionPayload {
+  mutation: MutationType!
+  node: Subject
+  updatedFields: [String!]
+  previousValues: SubjectPreviousValues
+}
+
+input SubjectSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubjectWhereInput
+  AND: [SubjectSubscriptionWhereInput!]
+  OR: [SubjectSubscriptionWhereInput!]
+  NOT: [SubjectSubscriptionWhereInput!]
+}
+
+input SubjectUpdateDataInput {
+  name: String
+  std: String
+  board: String
+}
+
+input SubjectUpdateInput {
+  name: String
+  std: String
+  board: String
+}
+
+input SubjectUpdateManyMutationInput {
+  name: String
+  std: String
+  board: String
+}
+
+input SubjectUpdateOneRequiredInput {
+  create: SubjectCreateInput
+  update: SubjectUpdateDataInput
+  upsert: SubjectUpsertNestedInput
+  connect: SubjectWhereUniqueInput
+}
+
+input SubjectUpsertNestedInput {
+  update: SubjectUpdateDataInput!
+  create: SubjectCreateInput!
+}
+
+input SubjectWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  std: String
+  std_not: String
+  std_in: [String!]
+  std_not_in: [String!]
+  std_lt: String
+  std_lte: String
+  std_gt: String
+  std_gte: String
+  std_contains: String
+  std_not_contains: String
+  std_starts_with: String
+  std_not_starts_with: String
+  std_ends_with: String
+  std_not_ends_with: String
+  board: String
+  board_not: String
+  board_in: [String!]
+  board_not_in: [String!]
+  board_lt: String
+  board_lte: String
+  board_gt: String
+  board_gte: String
+  board_contains: String
+  board_not_contains: String
+  board_starts_with: String
+  board_not_starts_with: String
+  board_ends_with: String
+  board_not_ends_with: String
+  AND: [SubjectWhereInput!]
+  OR: [SubjectWhereInput!]
+  NOT: [SubjectWhereInput!]
+}
+
+input SubjectWhereUniqueInput {
   id: ID
 }
 
@@ -3442,16 +4664,139 @@ input SuborgWhereUniqueInput {
 
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  educationProfile(where: EducationProfileSubscriptionWhereInput): EducationProfileSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   groupMember(where: GroupMemberSubscriptionWhereInput): GroupMemberSubscriptionPayload
+  medium(where: MediumSubscriptionWhereInput): MediumSubscriptionPayload
+  myMedium(where: MyMediumSubscriptionWhereInput): MyMediumSubscriptionPayload
+  mySubject(where: MySubjectSubscriptionWhereInput): MySubjectSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
   roleMember(where: RoleMemberSubscriptionWhereInput): RoleMemberSubscriptionPayload
   subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
   subGroupMember(where: SubGroupMemberSubscriptionWhereInput): SubGroupMemberSubscriptionPayload
+  subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
+  tBD(where: TBDSubscriptionWhereInput): TBDSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type TBD {
+  id: ID!
+  name: String!
+  tags: [String!]!
+  myJSON: Json
+}
+
+type TBDConnection {
+  pageInfo: PageInfo!
+  edges: [TBDEdge]!
+  aggregate: AggregateTBD!
+}
+
+input TBDCreateInput {
+  id: ID
+  name: String!
+  tags: TBDCreatetagsInput
+  myJSON: Json
+}
+
+input TBDCreatetagsInput {
+  set: [String!]
+}
+
+type TBDEdge {
+  node: TBD!
+  cursor: String!
+}
+
+enum TBDOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  myJSON_ASC
+  myJSON_DESC
+}
+
+type TBDPreviousValues {
+  id: ID!
+  name: String!
+  tags: [String!]!
+  myJSON: Json
+}
+
+type TBDSubscriptionPayload {
+  mutation: MutationType!
+  node: TBD
+  updatedFields: [String!]
+  previousValues: TBDPreviousValues
+}
+
+input TBDSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TBDWhereInput
+  AND: [TBDSubscriptionWhereInput!]
+  OR: [TBDSubscriptionWhereInput!]
+  NOT: [TBDSubscriptionWhereInput!]
+}
+
+input TBDUpdateInput {
+  name: String
+  tags: TBDUpdatetagsInput
+  myJSON: Json
+}
+
+input TBDUpdateManyMutationInput {
+  name: String
+  tags: TBDUpdatetagsInput
+  myJSON: Json
+}
+
+input TBDUpdatetagsInput {
+  set: [String!]
+}
+
+input TBDWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [TBDWhereInput!]
+  OR: [TBDWhereInput!]
+  NOT: [TBDWhereInput!]
+}
+
+input TBDWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -3463,9 +4808,11 @@ type User {
   org: Organization
   suborg(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
   groupmembers(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember!]
+  subgroupmembers(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   myRoles(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  myEducationProfiles(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationProfile!]
   createdBy: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -3486,9 +4833,11 @@ input UserCreateInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3502,11 +4851,6 @@ input UserCreateManyWithoutSuborgInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreateOneWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
   connect: UserWhereUniqueInput
@@ -3514,6 +4858,11 @@ input UserCreateOneWithoutCommentsInput {
 
 input UserCreateOneWithoutGroupmembersInput {
   create: UserCreateWithoutGroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMyEducationProfilesInput {
+  create: UserCreateWithoutMyEducationProfilesInput
   connect: UserWhereUniqueInput
 }
 
@@ -3527,6 +4876,11 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutSubgroupmembersInput {
+  create: UserCreateWithoutSubgroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutCommentsInput {
   id: ID
   firstname: String!
@@ -3536,8 +4890,10 @@ input UserCreateWithoutCommentsInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3549,6 +4905,24 @@ input UserCreateWithoutGroupmembersInput {
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserCreateWithoutMyEducationProfilesInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
@@ -3564,8 +4938,10 @@ input UserCreateWithoutMyRolesInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3577,9 +4953,11 @@ input UserCreateWithoutOrgInput {
   password: String!
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3592,8 +4970,26 @@ input UserCreateWithoutPostsInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserCreateWithoutSubgroupmembersInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3605,9 +5001,11 @@ input UserCreateWithoutSuborgInput {
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileCreateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3770,20 +5168,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
-  createdBy: String
-}
-
 input UserUpdateInput {
   firstname: String
   lastname: String
@@ -3792,9 +5176,11 @@ input UserUpdateInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3843,13 +5229,6 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneRequiredWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
   update: UserUpdateWithoutCommentsDataInput
@@ -3861,6 +5240,13 @@ input UserUpdateOneRequiredWithoutGroupmembersInput {
   create: UserCreateWithoutGroupmembersInput
   update: UserUpdateWithoutGroupmembersDataInput
   upsert: UserUpsertWithoutGroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutMyEducationProfilesInput {
+  create: UserCreateWithoutMyEducationProfilesInput
+  update: UserUpdateWithoutMyEducationProfilesDataInput
+  upsert: UserUpsertWithoutMyEducationProfilesInput
   connect: UserWhereUniqueInput
 }
 
@@ -3878,6 +5264,13 @@ input UserUpdateOneRequiredWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutSubgroupmembersInput {
+  create: UserCreateWithoutSubgroupmembersInput
+  update: UserUpdateWithoutSubgroupmembersDataInput
+  upsert: UserUpsertWithoutSubgroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutCommentsDataInput {
   firstname: String
   lastname: String
@@ -3886,8 +5279,10 @@ input UserUpdateWithoutCommentsDataInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3898,6 +5293,23 @@ input UserUpdateWithoutGroupmembersDataInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserUpdateWithoutMyEducationProfilesDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
@@ -3912,8 +5324,10 @@ input UserUpdateWithoutMyRolesDataInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3924,9 +5338,11 @@ input UserUpdateWithoutOrgDataInput {
   password: String
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3938,8 +5354,25 @@ input UserUpdateWithoutPostsDataInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserUpdateWithoutSubgroupmembersDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3950,9 +5383,11 @@ input UserUpdateWithoutSuborgDataInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myEducationProfiles: EducationProfileUpdateManyWithoutUseridInput
   createdBy: String
 }
 
@@ -3966,11 +5401,6 @@ input UserUpdateWithWhereUniqueWithoutSuborgInput {
   data: UserUpdateWithoutSuborgDataInput!
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
-}
-
 input UserUpsertWithoutCommentsInput {
   update: UserUpdateWithoutCommentsDataInput!
   create: UserCreateWithoutCommentsInput!
@@ -3981,6 +5411,11 @@ input UserUpsertWithoutGroupmembersInput {
   create: UserCreateWithoutGroupmembersInput!
 }
 
+input UserUpsertWithoutMyEducationProfilesInput {
+  update: UserUpdateWithoutMyEducationProfilesDataInput!
+  create: UserCreateWithoutMyEducationProfilesInput!
+}
+
 input UserUpsertWithoutMyRolesInput {
   update: UserUpdateWithoutMyRolesDataInput!
   create: UserCreateWithoutMyRolesInput!
@@ -3989,6 +5424,11 @@ input UserUpsertWithoutMyRolesInput {
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
+}
+
+input UserUpsertWithoutSubgroupmembersInput {
+  update: UserUpdateWithoutSubgroupmembersDataInput!
+  create: UserCreateWithoutSubgroupmembersInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutOrgInput {
@@ -4081,6 +5521,9 @@ input UserWhereInput {
   groupmembers_every: GroupMemberWhereInput
   groupmembers_some: GroupMemberWhereInput
   groupmembers_none: GroupMemberWhereInput
+  subgroupmembers_every: SubGroupMemberWhereInput
+  subgroupmembers_some: SubGroupMemberWhereInput
+  subgroupmembers_none: SubGroupMemberWhereInput
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
@@ -4090,6 +5533,9 @@ input UserWhereInput {
   myRoles_every: RoleMemberWhereInput
   myRoles_some: RoleMemberWhereInput
   myRoles_none: RoleMemberWhereInput
+  myEducationProfiles_every: EducationProfileWhereInput
+  myEducationProfiles_some: EducationProfileWhereInput
+  myEducationProfiles_none: EducationProfileWhereInput
   createdBy: String
   createdBy_not: String
   createdBy_in: [String!]

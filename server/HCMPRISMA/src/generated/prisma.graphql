@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Feb 05 2020 10:31:59 GMT+0530 (India Standard Time)
+# timestamp: Sat Feb 15 2020 10:01:57 GMT+0530 (India Standard Time)
 
 type AggregateComment {
   count: Int!
@@ -10,6 +10,10 @@ type AggregateGroup {
 }
 
 type AggregateGroupMember {
+  count: Int!
+}
+
+type AggregateMedium {
   count: Int!
 }
 
@@ -34,6 +38,14 @@ type AggregateSubGroup {
 }
 
 type AggregateSubGroupMember {
+  count: Int!
+}
+
+type AggregateSubject {
+  count: Int!
+}
+
+type AggregateSubjectSubscription {
   count: Int!
 }
 
@@ -523,6 +535,7 @@ type Group implements Node {
   subgroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup!]
   members(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember!]
   groupRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -545,6 +558,7 @@ input GroupCreateInput {
   subgroups: SubGroupCreateManyWithoutGroupidInput
   members: GroupMemberCreateManyWithoutMemberInput
   groupRoles: RoleCreateManyWithoutGroupInput
+  subjects: SubjectCreateManyWithoutGroupInput
 }
 
 input GroupCreateManyWithoutSuborgidInput {
@@ -567,6 +581,11 @@ input GroupCreateOneWithoutSubgroupsInput {
   connect: GroupWhereUniqueInput
 }
 
+input GroupCreateOneWithoutSubjectsInput {
+  create: GroupCreateWithoutSubjectsInput
+  connect: GroupWhereUniqueInput
+}
+
 input GroupCreateWithoutGroupRolesInput {
   id: ID
   name: String!
@@ -574,6 +593,7 @@ input GroupCreateWithoutGroupRolesInput {
   suborgid: SuborgCreateOneWithoutUserGroupsInput!
   subgroups: SubGroupCreateManyWithoutGroupidInput
   members: GroupMemberCreateManyWithoutMemberInput
+  subjects: SubjectCreateManyWithoutGroupInput
 }
 
 input GroupCreateWithoutMembersInput {
@@ -583,6 +603,7 @@ input GroupCreateWithoutMembersInput {
   suborgid: SuborgCreateOneWithoutUserGroupsInput!
   subgroups: SubGroupCreateManyWithoutGroupidInput
   groupRoles: RoleCreateManyWithoutGroupInput
+  subjects: SubjectCreateManyWithoutGroupInput
 }
 
 input GroupCreateWithoutSubgroupsInput {
@@ -590,6 +611,17 @@ input GroupCreateWithoutSubgroupsInput {
   name: String!
   description: String
   suborgid: SuborgCreateOneWithoutUserGroupsInput!
+  members: GroupMemberCreateManyWithoutMemberInput
+  groupRoles: RoleCreateManyWithoutGroupInput
+  subjects: SubjectCreateManyWithoutGroupInput
+}
+
+input GroupCreateWithoutSubjectsInput {
+  id: ID
+  name: String!
+  description: String
+  suborgid: SuborgCreateOneWithoutUserGroupsInput!
+  subgroups: SubGroupCreateManyWithoutGroupidInput
   members: GroupMemberCreateManyWithoutMemberInput
   groupRoles: RoleCreateManyWithoutGroupInput
 }
@@ -601,6 +633,7 @@ input GroupCreateWithoutSuborgidInput {
   subgroups: SubGroupCreateManyWithoutGroupidInput
   members: GroupMemberCreateManyWithoutMemberInput
   groupRoles: RoleCreateManyWithoutGroupInput
+  subjects: SubjectCreateManyWithoutGroupInput
 }
 
 """An edge in a connection."""
@@ -1347,6 +1380,7 @@ input GroupUpdateInput {
   subgroups: SubGroupUpdateManyWithoutGroupidInput
   members: GroupMemberUpdateManyWithoutMemberInput
   groupRoles: RoleUpdateManyWithoutGroupInput
+  subjects: SubjectUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateManyDataInput {
@@ -1399,12 +1433,22 @@ input GroupUpdateOneWithoutGroupRolesInput {
   upsert: GroupUpsertWithoutGroupRolesInput
 }
 
+input GroupUpdateOneWithoutSubjectsInput {
+  create: GroupCreateWithoutSubjectsInput
+  connect: GroupWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: GroupUpdateWithoutSubjectsDataInput
+  upsert: GroupUpsertWithoutSubjectsInput
+}
+
 input GroupUpdateWithoutGroupRolesDataInput {
   name: String
   description: String
   suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
   subgroups: SubGroupUpdateManyWithoutGroupidInput
   members: GroupMemberUpdateManyWithoutMemberInput
+  subjects: SubjectUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithoutMembersDataInput {
@@ -1413,12 +1457,23 @@ input GroupUpdateWithoutMembersDataInput {
   suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
   subgroups: SubGroupUpdateManyWithoutGroupidInput
   groupRoles: RoleUpdateManyWithoutGroupInput
+  subjects: SubjectUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithoutSubgroupsDataInput {
   name: String
   description: String
   suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
+  members: GroupMemberUpdateManyWithoutMemberInput
+  groupRoles: RoleUpdateManyWithoutGroupInput
+  subjects: SubjectUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithoutSubjectsDataInput {
+  name: String
+  description: String
+  suborgid: SuborgUpdateOneRequiredWithoutUserGroupsInput
+  subgroups: SubGroupUpdateManyWithoutGroupidInput
   members: GroupMemberUpdateManyWithoutMemberInput
   groupRoles: RoleUpdateManyWithoutGroupInput
 }
@@ -1429,6 +1484,7 @@ input GroupUpdateWithoutSuborgidDataInput {
   subgroups: SubGroupUpdateManyWithoutGroupidInput
   members: GroupMemberUpdateManyWithoutMemberInput
   groupRoles: RoleUpdateManyWithoutGroupInput
+  subjects: SubjectUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithWhereUniqueWithoutSuborgidInput {
@@ -1449,6 +1505,11 @@ input GroupUpsertWithoutMembersInput {
 input GroupUpsertWithoutSubgroupsInput {
   update: GroupUpdateWithoutSubgroupsDataInput!
   create: GroupCreateWithoutSubgroupsInput!
+}
+
+input GroupUpsertWithoutSubjectsInput {
+  update: GroupUpdateWithoutSubjectsDataInput!
+  create: GroupCreateWithoutSubjectsInput!
 }
 
 input GroupUpsertWithWhereUniqueWithoutSuborgidInput {
@@ -1640,6 +1701,9 @@ input GroupWhereInput {
   groupRoles_every: RoleWhereInput
   groupRoles_some: RoleWhereInput
   groupRoles_none: RoleWhereInput
+  subjects_every: SubjectWhereInput
+  subjects_some: SubjectWhereInput
+  subjects_none: SubjectWhereInput
 }
 
 input GroupWhereUniqueInput {
@@ -1654,6 +1718,221 @@ The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
+
+type Medium implements Node {
+  id: ID!
+  name: String!
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
+}
+
+"""A connection to a list of items."""
+type MediumConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MediumEdge]!
+  aggregate: AggregateMedium!
+}
+
+input MediumCreateInput {
+  id: ID
+  name: String!
+  subjects: SubjectCreateManyWithoutMediumInput
+}
+
+input MediumCreateOneWithoutSubjectsInput {
+  create: MediumCreateWithoutSubjectsInput
+  connect: MediumWhereUniqueInput
+}
+
+input MediumCreateWithoutSubjectsInput {
+  id: ID
+  name: String!
+}
+
+"""An edge in a connection."""
+type MediumEdge {
+  """The item at the end of the edge."""
+  node: Medium!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MediumOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type MediumPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type MediumSubscriptionPayload {
+  mutation: MutationType!
+  node: Medium
+  updatedFields: [String!]
+  previousValues: MediumPreviousValues
+}
+
+input MediumSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MediumSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MediumSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MediumSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MediumWhereInput
+}
+
+input MediumUpdateInput {
+  name: String
+  subjects: SubjectUpdateManyWithoutMediumInput
+}
+
+input MediumUpdateManyMutationInput {
+  name: String
+}
+
+input MediumUpdateOneWithoutSubjectsInput {
+  create: MediumCreateWithoutSubjectsInput
+  connect: MediumWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MediumUpdateWithoutSubjectsDataInput
+  upsert: MediumUpsertWithoutSubjectsInput
+}
+
+input MediumUpdateWithoutSubjectsDataInput {
+  name: String
+}
+
+input MediumUpsertWithoutSubjectsInput {
+  update: MediumUpdateWithoutSubjectsDataInput!
+  create: MediumCreateWithoutSubjectsInput!
+}
+
+input MediumWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MediumWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MediumWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MediumWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  subjects_every: SubjectWhereInput
+  subjects_some: SubjectWhereInput
+  subjects_none: SubjectWhereInput
+}
+
+input MediumWhereUniqueInput {
+  id: ID
+}
 
 enum MemberStatus {
   ACTIVE
@@ -1671,10 +1950,13 @@ type Mutation {
   createSubGroup(data: SubGroupCreateInput!): SubGroup!
   createSubGroupMember(data: SubGroupMemberCreateInput!): SubGroupMember!
   createRoleMember(data: RoleMemberCreateInput!): RoleMember!
+  createUser(data: UserCreateInput!): User!
+  createMedium(data: MediumCreateInput!): Medium!
   createPost(data: PostCreateInput!): Post!
   createComment(data: CommentCreateInput!): Comment!
+  createSubjectSubscription(data: SubjectSubscriptionCreateInput!): SubjectSubscription!
   createSuborg(data: SuborgCreateInput!): Suborg!
-  createUser(data: UserCreateInput!): User!
+  createSubject(data: SubjectCreateInput!): Subject!
   createRole(data: RoleCreateInput!): Role!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
@@ -1682,10 +1964,13 @@ type Mutation {
   updateSubGroup(data: SubGroupUpdateInput!, where: SubGroupWhereUniqueInput!): SubGroup
   updateSubGroupMember(data: SubGroupMemberUpdateInput!, where: SubGroupMemberWhereUniqueInput!): SubGroupMember
   updateRoleMember(data: RoleMemberUpdateInput!, where: RoleMemberWhereUniqueInput!): RoleMember
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateMedium(data: MediumUpdateInput!, where: MediumWhereUniqueInput!): Medium
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  updateSubjectSubscription(data: SubjectSubscriptionUpdateInput!, where: SubjectSubscriptionWhereUniqueInput!): SubjectSubscription
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateSubject(data: SubjectUpdateInput!, where: SubjectWhereUniqueInput!): Subject
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
   deleteOrganization(where: OrganizationWhereUniqueInput!): Organization
   deleteGroup(where: GroupWhereUniqueInput!): Group
@@ -1693,10 +1978,13 @@ type Mutation {
   deleteSubGroup(where: SubGroupWhereUniqueInput!): SubGroup
   deleteSubGroupMember(where: SubGroupMemberWhereUniqueInput!): SubGroupMember
   deleteRoleMember(where: RoleMemberWhereUniqueInput!): RoleMember
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteMedium(where: MediumWhereUniqueInput!): Medium
   deletePost(where: PostWhereUniqueInput!): Post
   deleteComment(where: CommentWhereUniqueInput!): Comment
+  deleteSubjectSubscription(where: SubjectSubscriptionWhereUniqueInput!): SubjectSubscription
   deleteSuborg(where: SuborgWhereUniqueInput!): Suborg
-  deleteUser(where: UserWhereUniqueInput!): User
+  deleteSubject(where: SubjectWhereUniqueInput!): Subject
   deleteRole(where: RoleWhereUniqueInput!): Role
   upsertOrganization(where: OrganizationWhereUniqueInput!, create: OrganizationCreateInput!, update: OrganizationUpdateInput!): Organization!
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
@@ -1704,10 +1992,13 @@ type Mutation {
   upsertSubGroup(where: SubGroupWhereUniqueInput!, create: SubGroupCreateInput!, update: SubGroupUpdateInput!): SubGroup!
   upsertSubGroupMember(where: SubGroupMemberWhereUniqueInput!, create: SubGroupMemberCreateInput!, update: SubGroupMemberUpdateInput!): SubGroupMember!
   upsertRoleMember(where: RoleMemberWhereUniqueInput!, create: RoleMemberCreateInput!, update: RoleMemberUpdateInput!): RoleMember!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertMedium(where: MediumWhereUniqueInput!, create: MediumCreateInput!, update: MediumUpdateInput!): Medium!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
+  upsertSubjectSubscription(where: SubjectSubscriptionWhereUniqueInput!, create: SubjectSubscriptionCreateInput!, update: SubjectSubscriptionUpdateInput!): SubjectSubscription!
   upsertSuborg(where: SuborgWhereUniqueInput!, create: SuborgCreateInput!, update: SuborgUpdateInput!): Suborg!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertSubject(where: SubjectWhereUniqueInput!, create: SubjectCreateInput!, update: SubjectUpdateInput!): Subject!
   upsertRole(where: RoleWhereUniqueInput!, create: RoleCreateInput!, update: RoleUpdateInput!): Role!
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
   updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
@@ -1715,10 +2006,13 @@ type Mutation {
   updateManySubGroups(data: SubGroupUpdateManyMutationInput!, where: SubGroupWhereInput): BatchPayload!
   updateManySubGroupMembers(data: SubGroupMemberUpdateManyMutationInput!, where: SubGroupMemberWhereInput): BatchPayload!
   updateManyRoleMembers(data: RoleMemberUpdateManyMutationInput!, where: RoleMemberWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyMediums(data: MediumUpdateManyMutationInput!, where: MediumWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
+  updateManySubjectSubscriptions(data: SubjectSubscriptionUpdateManyMutationInput!, where: SubjectSubscriptionWhereInput): BatchPayload!
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
   updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
   deleteManyOrganizations(where: OrganizationWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
@@ -1726,10 +2020,13 @@ type Mutation {
   deleteManySubGroups(where: SubGroupWhereInput): BatchPayload!
   deleteManySubGroupMembers(where: SubGroupMemberWhereInput): BatchPayload!
   deleteManyRoleMembers(where: RoleMemberWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyMediums(where: MediumWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  deleteManySubjectSubscriptions(where: SubjectSubscriptionWhereInput): BatchPayload!
   deleteManySuborgs(where: SuborgWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManySubjects(where: SubjectWhereInput): BatchPayload!
   deleteManyRoles(where: RoleWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
@@ -2736,10 +3033,13 @@ type Query {
   subGroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup]!
   subGroupMembers(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember]!
   roleMembers(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  mediums(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Medium]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  subjectSubscriptions(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription]!
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
   organization(where: OrganizationWhereUniqueInput!): Organization
   group(where: GroupWhereUniqueInput!): Group
@@ -2747,10 +3047,13 @@ type Query {
   subGroup(where: SubGroupWhereUniqueInput!): SubGroup
   subGroupMember(where: SubGroupMemberWhereUniqueInput!): SubGroupMember
   roleMember(where: RoleMemberWhereUniqueInput!): RoleMember
+  user(where: UserWhereUniqueInput!): User
+  medium(where: MediumWhereUniqueInput!): Medium
   post(where: PostWhereUniqueInput!): Post
   comment(where: CommentWhereUniqueInput!): Comment
+  subjectSubscription(where: SubjectSubscriptionWhereUniqueInput!): SubjectSubscription
   suborg(where: SuborgWhereUniqueInput!): Suborg
-  user(where: UserWhereUniqueInput!): User
+  subject(where: SubjectWhereUniqueInput!): Subject
   role(where: RoleWhereUniqueInput!): Role
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
@@ -2758,10 +3061,13 @@ type Query {
   subGroupsConnection(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupConnection!
   subGroupMembersConnection(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupMemberConnection!
   roleMembersConnection(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleMemberConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  mediumsConnection(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MediumConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  subjectSubscriptionsConnection(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectSubscriptionConnection!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
   rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
 
   """Fetches an object given its ID"""
@@ -3984,6 +4290,7 @@ type SubGroup implements Node {
   groupid: Group!
   members(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember!]
   subgroupRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -4005,6 +4312,7 @@ input SubGroupCreateInput {
   groupid: GroupCreateOneWithoutSubgroupsInput!
   members: SubGroupMemberCreateManyWithoutMemberInput
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
+  subjects: SubjectCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateManyWithoutGroupidInput {
@@ -4022,12 +4330,18 @@ input SubGroupCreateOneWithoutSubgroupRolesInput {
   connect: SubGroupWhereUniqueInput
 }
 
+input SubGroupCreateOneWithoutSubjectsInput {
+  create: SubGroupCreateWithoutSubjectsInput
+  connect: SubGroupWhereUniqueInput
+}
+
 input SubGroupCreateWithoutGroupidInput {
   id: ID
   name: String!
   description: String
   members: SubGroupMemberCreateManyWithoutMemberInput
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
+  subjects: SubjectCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateWithoutMembersInput {
@@ -4036,6 +4350,7 @@ input SubGroupCreateWithoutMembersInput {
   description: String
   groupid: GroupCreateOneWithoutSubgroupsInput!
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
+  subjects: SubjectCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateWithoutSubgroupRolesInput {
@@ -4044,6 +4359,16 @@ input SubGroupCreateWithoutSubgroupRolesInput {
   description: String
   groupid: GroupCreateOneWithoutSubgroupsInput!
   members: SubGroupMemberCreateManyWithoutMemberInput
+  subjects: SubjectCreateManyWithoutSubgroupInput
+}
+
+input SubGroupCreateWithoutSubjectsInput {
+  id: ID
+  name: String!
+  description: String
+  groupid: GroupCreateOneWithoutSubgroupsInput!
+  members: SubGroupMemberCreateManyWithoutMemberInput
+  subgroupRoles: RoleCreateManyWithoutSubgroupInput
 }
 
 """An edge in a connection."""
@@ -4079,7 +4404,7 @@ input SubGroupMemberCreateInput {
   id: ID
   status: MemberStatus
   description: String
-  userid: UserCreateOneInput!
+  userid: UserCreateOneWithoutSubgroupmembersInput!
   member: SubGroupCreateOneWithoutMembersInput!
 }
 
@@ -4088,11 +4413,23 @@ input SubGroupMemberCreateManyWithoutMemberInput {
   connect: [SubGroupMemberWhereUniqueInput!]
 }
 
+input SubGroupMemberCreateManyWithoutUseridInput {
+  create: [SubGroupMemberCreateWithoutUseridInput!]
+  connect: [SubGroupMemberWhereUniqueInput!]
+}
+
 input SubGroupMemberCreateWithoutMemberInput {
   id: ID
   status: MemberStatus
   description: String
-  userid: UserCreateOneInput!
+  userid: UserCreateOneWithoutSubgroupmembersInput!
+}
+
+input SubGroupMemberCreateWithoutUseridInput {
+  id: ID
+  status: MemberStatus
+  description: String
+  member: SubGroupCreateOneWithoutMembersInput!
 }
 
 """An edge in a connection."""
@@ -4310,7 +4647,7 @@ input SubGroupMemberSubscriptionWhereInput {
 input SubGroupMemberUpdateInput {
   status: MemberStatus
   description: String
-  userid: UserUpdateOneRequiredInput
+  userid: UserUpdateOneRequiredWithoutSubgroupmembersInput
   member: SubGroupUpdateOneRequiredWithoutMembersInput
 }
 
@@ -4336,6 +4673,18 @@ input SubGroupMemberUpdateManyWithoutMemberInput {
   upsert: [SubGroupMemberUpsertWithWhereUniqueWithoutMemberInput!]
 }
 
+input SubGroupMemberUpdateManyWithoutUseridInput {
+  create: [SubGroupMemberCreateWithoutUseridInput!]
+  connect: [SubGroupMemberWhereUniqueInput!]
+  set: [SubGroupMemberWhereUniqueInput!]
+  disconnect: [SubGroupMemberWhereUniqueInput!]
+  delete: [SubGroupMemberWhereUniqueInput!]
+  update: [SubGroupMemberUpdateWithWhereUniqueWithoutUseridInput!]
+  updateMany: [SubGroupMemberUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubGroupMemberScalarWhereInput!]
+  upsert: [SubGroupMemberUpsertWithWhereUniqueWithoutUseridInput!]
+}
+
 input SubGroupMemberUpdateManyWithWhereNestedInput {
   where: SubGroupMemberScalarWhereInput!
   data: SubGroupMemberUpdateManyDataInput!
@@ -4344,7 +4693,13 @@ input SubGroupMemberUpdateManyWithWhereNestedInput {
 input SubGroupMemberUpdateWithoutMemberDataInput {
   status: MemberStatus
   description: String
-  userid: UserUpdateOneRequiredInput
+  userid: UserUpdateOneRequiredWithoutSubgroupmembersInput
+}
+
+input SubGroupMemberUpdateWithoutUseridDataInput {
+  status: MemberStatus
+  description: String
+  member: SubGroupUpdateOneRequiredWithoutMembersInput
 }
 
 input SubGroupMemberUpdateWithWhereUniqueWithoutMemberInput {
@@ -4352,10 +4707,21 @@ input SubGroupMemberUpdateWithWhereUniqueWithoutMemberInput {
   data: SubGroupMemberUpdateWithoutMemberDataInput!
 }
 
+input SubGroupMemberUpdateWithWhereUniqueWithoutUseridInput {
+  where: SubGroupMemberWhereUniqueInput!
+  data: SubGroupMemberUpdateWithoutUseridDataInput!
+}
+
 input SubGroupMemberUpsertWithWhereUniqueWithoutMemberInput {
   where: SubGroupMemberWhereUniqueInput!
   update: SubGroupMemberUpdateWithoutMemberDataInput!
   create: SubGroupMemberCreateWithoutMemberInput!
+}
+
+input SubGroupMemberUpsertWithWhereUniqueWithoutUseridInput {
+  where: SubGroupMemberWhereUniqueInput!
+  update: SubGroupMemberUpdateWithoutUseridDataInput!
+  create: SubGroupMemberCreateWithoutUseridInput!
 }
 
 input SubGroupMemberWhereInput {
@@ -4748,6 +5114,7 @@ input SubGroupUpdateInput {
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
   members: SubGroupMemberUpdateManyWithoutMemberInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
+  subjects: SubjectUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateManyDataInput {
@@ -4793,11 +5160,21 @@ input SubGroupUpdateOneWithoutSubgroupRolesInput {
   upsert: SubGroupUpsertWithoutSubgroupRolesInput
 }
 
+input SubGroupUpdateOneWithoutSubjectsInput {
+  create: SubGroupCreateWithoutSubjectsInput
+  connect: SubGroupWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: SubGroupUpdateWithoutSubjectsDataInput
+  upsert: SubGroupUpsertWithoutSubjectsInput
+}
+
 input SubGroupUpdateWithoutGroupidDataInput {
   name: String
   description: String
   members: SubGroupMemberUpdateManyWithoutMemberInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
+  subjects: SubjectUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithoutMembersDataInput {
@@ -4805,6 +5182,7 @@ input SubGroupUpdateWithoutMembersDataInput {
   description: String
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
+  subjects: SubjectUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithoutSubgroupRolesDataInput {
@@ -4812,6 +5190,15 @@ input SubGroupUpdateWithoutSubgroupRolesDataInput {
   description: String
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
   members: SubGroupMemberUpdateManyWithoutMemberInput
+  subjects: SubjectUpdateManyWithoutSubgroupInput
+}
+
+input SubGroupUpdateWithoutSubjectsDataInput {
+  name: String
+  description: String
+  groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+  members: SubGroupMemberUpdateManyWithoutMemberInput
+  subgroupRoles: RoleUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
@@ -4827,6 +5214,11 @@ input SubGroupUpsertWithoutMembersInput {
 input SubGroupUpsertWithoutSubgroupRolesInput {
   update: SubGroupUpdateWithoutSubgroupRolesDataInput!
   create: SubGroupCreateWithoutSubgroupRolesInput!
+}
+
+input SubGroupUpsertWithoutSubjectsInput {
+  update: SubGroupUpdateWithoutSubjectsDataInput!
+  create: SubGroupCreateWithoutSubjectsInput!
 }
 
 input SubGroupUpsertWithWhereUniqueWithoutGroupidInput {
@@ -5015,9 +5407,1043 @@ input SubGroupWhereInput {
   subgroupRoles_every: RoleWhereInput
   subgroupRoles_some: RoleWhereInput
   subgroupRoles_none: RoleWhereInput
+  subjects_every: SubjectWhereInput
+  subjects_some: SubjectWhereInput
+  subjects_none: SubjectWhereInput
 }
 
 input SubGroupWhereUniqueInput {
+  id: ID
+}
+
+type Subject implements Node {
+  id: ID!
+  name: String!
+  medium: Medium
+  std: String!
+  board: String
+  group: Group
+  subgroup: SubGroup
+}
+
+"""A connection to a list of items."""
+type SubjectConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SubjectEdge]!
+  aggregate: AggregateSubject!
+}
+
+input SubjectCreateInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String
+  medium: MediumCreateOneWithoutSubjectsInput
+  group: GroupCreateOneWithoutSubjectsInput
+  subgroup: SubGroupCreateOneWithoutSubjectsInput
+}
+
+input SubjectCreateManyInput {
+  create: [SubjectCreateInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input SubjectCreateManyWithoutGroupInput {
+  create: [SubjectCreateWithoutGroupInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input SubjectCreateManyWithoutMediumInput {
+  create: [SubjectCreateWithoutMediumInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input SubjectCreateManyWithoutSubgroupInput {
+  create: [SubjectCreateWithoutSubgroupInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input SubjectCreateWithoutGroupInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String
+  medium: MediumCreateOneWithoutSubjectsInput
+  subgroup: SubGroupCreateOneWithoutSubjectsInput
+}
+
+input SubjectCreateWithoutMediumInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String
+  group: GroupCreateOneWithoutSubjectsInput
+  subgroup: SubGroupCreateOneWithoutSubjectsInput
+}
+
+input SubjectCreateWithoutSubgroupInput {
+  id: ID
+  name: String!
+  std: String!
+  board: String
+  medium: MediumCreateOneWithoutSubjectsInput
+  group: GroupCreateOneWithoutSubjectsInput
+}
+
+"""An edge in a connection."""
+type SubjectEdge {
+  """The item at the end of the edge."""
+  node: Subject!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SubjectOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  std_ASC
+  std_DESC
+  board_ASC
+  board_DESC
+}
+
+type SubjectPreviousValues {
+  id: ID!
+  name: String!
+  std: String!
+  board: String
+}
+
+input SubjectScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  std: String
+
+  """All values that are not equal to given value."""
+  std_not: String
+
+  """All values that are contained in given list."""
+  std_in: [String!]
+
+  """All values that are not contained in given list."""
+  std_not_in: [String!]
+
+  """All values less than the given value."""
+  std_lt: String
+
+  """All values less than or equal the given value."""
+  std_lte: String
+
+  """All values greater than the given value."""
+  std_gt: String
+
+  """All values greater than or equal the given value."""
+  std_gte: String
+
+  """All values containing the given string."""
+  std_contains: String
+
+  """All values not containing the given string."""
+  std_not_contains: String
+
+  """All values starting with the given string."""
+  std_starts_with: String
+
+  """All values not starting with the given string."""
+  std_not_starts_with: String
+
+  """All values ending with the given string."""
+  std_ends_with: String
+
+  """All values not ending with the given string."""
+  std_not_ends_with: String
+  board: String
+
+  """All values that are not equal to given value."""
+  board_not: String
+
+  """All values that are contained in given list."""
+  board_in: [String!]
+
+  """All values that are not contained in given list."""
+  board_not_in: [String!]
+
+  """All values less than the given value."""
+  board_lt: String
+
+  """All values less than or equal the given value."""
+  board_lte: String
+
+  """All values greater than the given value."""
+  board_gt: String
+
+  """All values greater than or equal the given value."""
+  board_gte: String
+
+  """All values containing the given string."""
+  board_contains: String
+
+  """All values not containing the given string."""
+  board_not_contains: String
+
+  """All values starting with the given string."""
+  board_starts_with: String
+
+  """All values not starting with the given string."""
+  board_not_starts_with: String
+
+  """All values ending with the given string."""
+  board_ends_with: String
+
+  """All values not ending with the given string."""
+  board_not_ends_with: String
+}
+
+type SubjectSubscription implements Node {
+  id: ID!
+  subsType: String
+  mySubjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
+  userid: User!
+  subscribedAs: String
+}
+
+"""A connection to a list of items."""
+type SubjectSubscriptionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SubjectSubscriptionEdge]!
+  aggregate: AggregateSubjectSubscription!
+}
+
+input SubjectSubscriptionCreateInput {
+  id: ID
+  subsType: String
+  subscribedAs: String
+  mySubjects: SubjectCreateManyInput
+  userid: UserCreateOneWithoutSubjectSubscriptionInput!
+}
+
+input SubjectSubscriptionCreateManyWithoutUseridInput {
+  create: [SubjectSubscriptionCreateWithoutUseridInput!]
+  connect: [SubjectSubscriptionWhereUniqueInput!]
+}
+
+input SubjectSubscriptionCreateWithoutUseridInput {
+  id: ID
+  subsType: String
+  subscribedAs: String
+  mySubjects: SubjectCreateManyInput
+}
+
+"""An edge in a connection."""
+type SubjectSubscriptionEdge {
+  """The item at the end of the edge."""
+  node: SubjectSubscription!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SubjectSubscriptionOrderByInput {
+  id_ASC
+  id_DESC
+  subsType_ASC
+  subsType_DESC
+  subscribedAs_ASC
+  subscribedAs_DESC
+}
+
+type SubjectSubscriptionPayload {
+  mutation: MutationType!
+  node: Subject
+  updatedFields: [String!]
+  previousValues: SubjectPreviousValues
+}
+
+type SubjectSubscriptionPreviousValues {
+  id: ID!
+  subsType: String
+  subscribedAs: String
+}
+
+input SubjectSubscriptionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectSubscriptionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectSubscriptionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectSubscriptionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  subsType: String
+
+  """All values that are not equal to given value."""
+  subsType_not: String
+
+  """All values that are contained in given list."""
+  subsType_in: [String!]
+
+  """All values that are not contained in given list."""
+  subsType_not_in: [String!]
+
+  """All values less than the given value."""
+  subsType_lt: String
+
+  """All values less than or equal the given value."""
+  subsType_lte: String
+
+  """All values greater than the given value."""
+  subsType_gt: String
+
+  """All values greater than or equal the given value."""
+  subsType_gte: String
+
+  """All values containing the given string."""
+  subsType_contains: String
+
+  """All values not containing the given string."""
+  subsType_not_contains: String
+
+  """All values starting with the given string."""
+  subsType_starts_with: String
+
+  """All values not starting with the given string."""
+  subsType_not_starts_with: String
+
+  """All values ending with the given string."""
+  subsType_ends_with: String
+
+  """All values not ending with the given string."""
+  subsType_not_ends_with: String
+  subscribedAs: String
+
+  """All values that are not equal to given value."""
+  subscribedAs_not: String
+
+  """All values that are contained in given list."""
+  subscribedAs_in: [String!]
+
+  """All values that are not contained in given list."""
+  subscribedAs_not_in: [String!]
+
+  """All values less than the given value."""
+  subscribedAs_lt: String
+
+  """All values less than or equal the given value."""
+  subscribedAs_lte: String
+
+  """All values greater than the given value."""
+  subscribedAs_gt: String
+
+  """All values greater than or equal the given value."""
+  subscribedAs_gte: String
+
+  """All values containing the given string."""
+  subscribedAs_contains: String
+
+  """All values not containing the given string."""
+  subscribedAs_not_contains: String
+
+  """All values starting with the given string."""
+  subscribedAs_starts_with: String
+
+  """All values not starting with the given string."""
+  subscribedAs_not_starts_with: String
+
+  """All values ending with the given string."""
+  subscribedAs_ends_with: String
+
+  """All values not ending with the given string."""
+  subscribedAs_not_ends_with: String
+}
+
+type SubjectSubscriptionSubscriptionPayload {
+  mutation: MutationType!
+  node: SubjectSubscription
+  updatedFields: [String!]
+  previousValues: SubjectSubscriptionPreviousValues
+}
+
+input SubjectSubscriptionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectSubscriptionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectSubscriptionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectSubscriptionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SubjectSubscriptionWhereInput
+}
+
+input SubjectSubscriptionUpdateInput {
+  subsType: String
+  subscribedAs: String
+  mySubjects: SubjectUpdateManyInput
+  userid: UserUpdateOneRequiredWithoutSubjectSubscriptionInput
+}
+
+input SubjectSubscriptionUpdateManyDataInput {
+  subsType: String
+  subscribedAs: String
+}
+
+input SubjectSubscriptionUpdateManyMutationInput {
+  subsType: String
+  subscribedAs: String
+}
+
+input SubjectSubscriptionUpdateManyWithoutUseridInput {
+  create: [SubjectSubscriptionCreateWithoutUseridInput!]
+  connect: [SubjectSubscriptionWhereUniqueInput!]
+  set: [SubjectSubscriptionWhereUniqueInput!]
+  disconnect: [SubjectSubscriptionWhereUniqueInput!]
+  delete: [SubjectSubscriptionWhereUniqueInput!]
+  update: [SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput!]
+  updateMany: [SubjectSubscriptionUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubjectSubscriptionScalarWhereInput!]
+  upsert: [SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput!]
+}
+
+input SubjectSubscriptionUpdateManyWithWhereNestedInput {
+  where: SubjectSubscriptionScalarWhereInput!
+  data: SubjectSubscriptionUpdateManyDataInput!
+}
+
+input SubjectSubscriptionUpdateWithoutUseridDataInput {
+  subsType: String
+  subscribedAs: String
+  mySubjects: SubjectUpdateManyInput
+}
+
+input SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput {
+  where: SubjectSubscriptionWhereUniqueInput!
+  data: SubjectSubscriptionUpdateWithoutUseridDataInput!
+}
+
+input SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput {
+  where: SubjectSubscriptionWhereUniqueInput!
+  update: SubjectSubscriptionUpdateWithoutUseridDataInput!
+  create: SubjectSubscriptionCreateWithoutUseridInput!
+}
+
+input SubjectSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectSubscriptionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  subsType: String
+
+  """All values that are not equal to given value."""
+  subsType_not: String
+
+  """All values that are contained in given list."""
+  subsType_in: [String!]
+
+  """All values that are not contained in given list."""
+  subsType_not_in: [String!]
+
+  """All values less than the given value."""
+  subsType_lt: String
+
+  """All values less than or equal the given value."""
+  subsType_lte: String
+
+  """All values greater than the given value."""
+  subsType_gt: String
+
+  """All values greater than or equal the given value."""
+  subsType_gte: String
+
+  """All values containing the given string."""
+  subsType_contains: String
+
+  """All values not containing the given string."""
+  subsType_not_contains: String
+
+  """All values starting with the given string."""
+  subsType_starts_with: String
+
+  """All values not starting with the given string."""
+  subsType_not_starts_with: String
+
+  """All values ending with the given string."""
+  subsType_ends_with: String
+
+  """All values not ending with the given string."""
+  subsType_not_ends_with: String
+  subscribedAs: String
+
+  """All values that are not equal to given value."""
+  subscribedAs_not: String
+
+  """All values that are contained in given list."""
+  subscribedAs_in: [String!]
+
+  """All values that are not contained in given list."""
+  subscribedAs_not_in: [String!]
+
+  """All values less than the given value."""
+  subscribedAs_lt: String
+
+  """All values less than or equal the given value."""
+  subscribedAs_lte: String
+
+  """All values greater than the given value."""
+  subscribedAs_gt: String
+
+  """All values greater than or equal the given value."""
+  subscribedAs_gte: String
+
+  """All values containing the given string."""
+  subscribedAs_contains: String
+
+  """All values not containing the given string."""
+  subscribedAs_not_contains: String
+
+  """All values starting with the given string."""
+  subscribedAs_starts_with: String
+
+  """All values not starting with the given string."""
+  subscribedAs_not_starts_with: String
+
+  """All values ending with the given string."""
+  subscribedAs_ends_with: String
+
+  """All values not ending with the given string."""
+  subscribedAs_not_ends_with: String
+  mySubjects_every: SubjectWhereInput
+  mySubjects_some: SubjectWhereInput
+  mySubjects_none: SubjectWhereInput
+  userid: UserWhereInput
+}
+
+input SubjectSubscriptionWhereUniqueInput {
+  id: ID
+}
+
+input SubjectUpdateDataInput {
+  name: String
+  std: String
+  board: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  group: GroupUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+}
+
+input SubjectUpdateInput {
+  name: String
+  std: String
+  board: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  group: GroupUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+}
+
+input SubjectUpdateManyDataInput {
+  name: String
+  std: String
+  board: String
+}
+
+input SubjectUpdateManyInput {
+  create: [SubjectCreateInput!]
+  connect: [SubjectWhereUniqueInput!]
+  set: [SubjectWhereUniqueInput!]
+  disconnect: [SubjectWhereUniqueInput!]
+  delete: [SubjectWhereUniqueInput!]
+  update: [SubjectUpdateWithWhereUniqueNestedInput!]
+  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubjectScalarWhereInput!]
+  upsert: [SubjectUpsertWithWhereUniqueNestedInput!]
+}
+
+input SubjectUpdateManyMutationInput {
+  name: String
+  std: String
+  board: String
+}
+
+input SubjectUpdateManyWithoutGroupInput {
+  create: [SubjectCreateWithoutGroupInput!]
+  connect: [SubjectWhereUniqueInput!]
+  set: [SubjectWhereUniqueInput!]
+  disconnect: [SubjectWhereUniqueInput!]
+  delete: [SubjectWhereUniqueInput!]
+  update: [SubjectUpdateWithWhereUniqueWithoutGroupInput!]
+  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubjectScalarWhereInput!]
+  upsert: [SubjectUpsertWithWhereUniqueWithoutGroupInput!]
+}
+
+input SubjectUpdateManyWithoutMediumInput {
+  create: [SubjectCreateWithoutMediumInput!]
+  connect: [SubjectWhereUniqueInput!]
+  set: [SubjectWhereUniqueInput!]
+  disconnect: [SubjectWhereUniqueInput!]
+  delete: [SubjectWhereUniqueInput!]
+  update: [SubjectUpdateWithWhereUniqueWithoutMediumInput!]
+  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubjectScalarWhereInput!]
+  upsert: [SubjectUpsertWithWhereUniqueWithoutMediumInput!]
+}
+
+input SubjectUpdateManyWithoutSubgroupInput {
+  create: [SubjectCreateWithoutSubgroupInput!]
+  connect: [SubjectWhereUniqueInput!]
+  set: [SubjectWhereUniqueInput!]
+  disconnect: [SubjectWhereUniqueInput!]
+  delete: [SubjectWhereUniqueInput!]
+  update: [SubjectUpdateWithWhereUniqueWithoutSubgroupInput!]
+  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
+  deleteMany: [SubjectScalarWhereInput!]
+  upsert: [SubjectUpsertWithWhereUniqueWithoutSubgroupInput!]
+}
+
+input SubjectUpdateManyWithWhereNestedInput {
+  where: SubjectScalarWhereInput!
+  data: SubjectUpdateManyDataInput!
+}
+
+input SubjectUpdateWithoutGroupDataInput {
+  name: String
+  std: String
+  board: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+}
+
+input SubjectUpdateWithoutMediumDataInput {
+  name: String
+  std: String
+  board: String
+  group: GroupUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+}
+
+input SubjectUpdateWithoutSubgroupDataInput {
+  name: String
+  std: String
+  board: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  group: GroupUpdateOneWithoutSubjectsInput
+}
+
+input SubjectUpdateWithWhereUniqueNestedInput {
+  where: SubjectWhereUniqueInput!
+  data: SubjectUpdateDataInput!
+}
+
+input SubjectUpdateWithWhereUniqueWithoutGroupInput {
+  where: SubjectWhereUniqueInput!
+  data: SubjectUpdateWithoutGroupDataInput!
+}
+
+input SubjectUpdateWithWhereUniqueWithoutMediumInput {
+  where: SubjectWhereUniqueInput!
+  data: SubjectUpdateWithoutMediumDataInput!
+}
+
+input SubjectUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: SubjectWhereUniqueInput!
+  data: SubjectUpdateWithoutSubgroupDataInput!
+}
+
+input SubjectUpsertWithWhereUniqueNestedInput {
+  where: SubjectWhereUniqueInput!
+  update: SubjectUpdateDataInput!
+  create: SubjectCreateInput!
+}
+
+input SubjectUpsertWithWhereUniqueWithoutGroupInput {
+  where: SubjectWhereUniqueInput!
+  update: SubjectUpdateWithoutGroupDataInput!
+  create: SubjectCreateWithoutGroupInput!
+}
+
+input SubjectUpsertWithWhereUniqueWithoutMediumInput {
+  where: SubjectWhereUniqueInput!
+  update: SubjectUpdateWithoutMediumDataInput!
+  create: SubjectCreateWithoutMediumInput!
+}
+
+input SubjectUpsertWithWhereUniqueWithoutSubgroupInput {
+  where: SubjectWhereUniqueInput!
+  update: SubjectUpdateWithoutSubgroupDataInput!
+  create: SubjectCreateWithoutSubgroupInput!
+}
+
+input SubjectWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubjectWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubjectWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubjectWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  std: String
+
+  """All values that are not equal to given value."""
+  std_not: String
+
+  """All values that are contained in given list."""
+  std_in: [String!]
+
+  """All values that are not contained in given list."""
+  std_not_in: [String!]
+
+  """All values less than the given value."""
+  std_lt: String
+
+  """All values less than or equal the given value."""
+  std_lte: String
+
+  """All values greater than the given value."""
+  std_gt: String
+
+  """All values greater than or equal the given value."""
+  std_gte: String
+
+  """All values containing the given string."""
+  std_contains: String
+
+  """All values not containing the given string."""
+  std_not_contains: String
+
+  """All values starting with the given string."""
+  std_starts_with: String
+
+  """All values not starting with the given string."""
+  std_not_starts_with: String
+
+  """All values ending with the given string."""
+  std_ends_with: String
+
+  """All values not ending with the given string."""
+  std_not_ends_with: String
+  board: String
+
+  """All values that are not equal to given value."""
+  board_not: String
+
+  """All values that are contained in given list."""
+  board_in: [String!]
+
+  """All values that are not contained in given list."""
+  board_not_in: [String!]
+
+  """All values less than the given value."""
+  board_lt: String
+
+  """All values less than or equal the given value."""
+  board_lte: String
+
+  """All values greater than the given value."""
+  board_gt: String
+
+  """All values greater than or equal the given value."""
+  board_gte: String
+
+  """All values containing the given string."""
+  board_contains: String
+
+  """All values not containing the given string."""
+  board_not_contains: String
+
+  """All values starting with the given string."""
+  board_starts_with: String
+
+  """All values not starting with the given string."""
+  board_not_starts_with: String
+
+  """All values ending with the given string."""
+  board_ends_with: String
+
+  """All values not ending with the given string."""
+  board_not_ends_with: String
+  medium: MediumWhereInput
+  group: GroupWhereInput
+  subgroup: SubGroupWhereInput
+}
+
+input SubjectWhereUniqueInput {
   id: ID
 }
 
@@ -5667,10 +7093,13 @@ type Subscription {
   subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
   subGroupMember(where: SubGroupMemberSubscriptionWhereInput): SubGroupMemberSubscriptionPayload
   roleMember(where: RoleMemberSubscriptionWhereInput): RoleMemberSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  medium(where: MediumSubscriptionWhereInput): MediumSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  subjectSubscription(where: SubjectSubscriptionSubscriptionWhereInput): SubjectSubscriptionSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
 }
 
@@ -5683,9 +7112,11 @@ type User implements Node {
   org: Organization
   suborg(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
   groupmembers(where: GroupMemberWhereInput, orderBy: GroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GroupMember!]
+  subgroupmembers(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   myRoles(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  subjectSubscription(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription!]
   createdBy: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -5711,9 +7142,11 @@ input UserCreateInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
 input UserCreateManyWithoutOrgInput {
@@ -5724,11 +7157,6 @@ input UserCreateManyWithoutOrgInput {
 input UserCreateManyWithoutSuborgInput {
   create: [UserCreateWithoutSuborgInput!]
   connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCommentsInput {
@@ -5751,6 +7179,16 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutSubgroupmembersInput {
+  create: UserCreateWithoutSubgroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutSubjectSubscriptionInput {
+  create: UserCreateWithoutSubjectSubscriptionInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutCommentsInput {
   id: ID
   firstname: String!
@@ -5761,8 +7199,10 @@ input UserCreateWithoutCommentsInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
 input UserCreateWithoutGroupmembersInput {
@@ -5774,9 +7214,11 @@ input UserCreateWithoutGroupmembersInput {
   createdBy: String
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
 input UserCreateWithoutMyRolesInput {
@@ -5789,8 +7231,10 @@ input UserCreateWithoutMyRolesInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
 input UserCreateWithoutOrgInput {
@@ -5802,9 +7246,11 @@ input UserCreateWithoutOrgInput {
   createdBy: String
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -5817,6 +7263,40 @@ input UserCreateWithoutPostsInput {
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+}
+
+input UserCreateWithoutSubgroupmembersInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdBy: String
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+}
+
+input UserCreateWithoutSubjectSubscriptionInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdBy: String
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
 }
@@ -5830,9 +7310,11 @@ input UserCreateWithoutSuborgInput {
   createdBy: String
   org: OrganizationCreateOneWithoutAuthorInput
   groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
 """An edge in a connection."""
@@ -6206,20 +7688,6 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
-input UserUpdateDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  createdBy: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
-}
-
 input UserUpdateInput {
   firstname: String
   lastname: String
@@ -6229,9 +7697,11 @@ input UserUpdateInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
 input UserUpdateManyDataInput {
@@ -6279,13 +7749,6 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-}
-
 input UserUpdateOneRequiredWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
   connect: UserWhereUniqueInput
@@ -6314,6 +7777,20 @@ input UserUpdateOneRequiredWithoutPostsInput {
   upsert: UserUpsertWithoutPostsInput
 }
 
+input UserUpdateOneRequiredWithoutSubgroupmembersInput {
+  create: UserCreateWithoutSubgroupmembersInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutSubgroupmembersDataInput
+  upsert: UserUpsertWithoutSubgroupmembersInput
+}
+
+input UserUpdateOneRequiredWithoutSubjectSubscriptionInput {
+  create: UserCreateWithoutSubjectSubscriptionInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutSubjectSubscriptionDataInput
+  upsert: UserUpsertWithoutSubjectSubscriptionInput
+}
+
 input UserUpdateWithoutCommentsDataInput {
   firstname: String
   lastname: String
@@ -6323,8 +7800,10 @@ input UserUpdateWithoutCommentsDataInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
 input UserUpdateWithoutGroupmembersDataInput {
@@ -6335,9 +7814,11 @@ input UserUpdateWithoutGroupmembersDataInput {
   createdBy: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
 input UserUpdateWithoutMyRolesDataInput {
@@ -6349,8 +7830,10 @@ input UserUpdateWithoutMyRolesDataInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
 input UserUpdateWithoutOrgDataInput {
@@ -6361,9 +7844,11 @@ input UserUpdateWithoutOrgDataInput {
   createdBy: String
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -6375,6 +7860,38 @@ input UserUpdateWithoutPostsDataInput {
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+}
+
+input UserUpdateWithoutSubgroupmembersDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  createdBy: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+}
+
+input UserUpdateWithoutSubjectSubscriptionDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  createdBy: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
 }
@@ -6387,9 +7904,11 @@ input UserUpdateWithoutSuborgDataInput {
   createdBy: String
   org: OrganizationUpdateOneWithoutAuthorInput
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
 input UserUpdateWithWhereUniqueWithoutOrgInput {
@@ -6400,11 +7919,6 @@ input UserUpdateWithWhereUniqueWithoutOrgInput {
 input UserUpdateWithWhereUniqueWithoutSuborgInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutSuborgDataInput!
-}
-
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
 }
 
 input UserUpsertWithoutCommentsInput {
@@ -6425,6 +7939,16 @@ input UserUpsertWithoutMyRolesInput {
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
+}
+
+input UserUpsertWithoutSubgroupmembersInput {
+  update: UserUpdateWithoutSubgroupmembersDataInput!
+  create: UserCreateWithoutSubgroupmembersInput!
+}
+
+input UserUpsertWithoutSubjectSubscriptionInput {
+  update: UserUpdateWithoutSubjectSubscriptionDataInput!
+  create: UserCreateWithoutSubjectSubscriptionInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutOrgInput {
@@ -6739,6 +8263,9 @@ input UserWhereInput {
   groupmembers_every: GroupMemberWhereInput
   groupmembers_some: GroupMemberWhereInput
   groupmembers_none: GroupMemberWhereInput
+  subgroupmembers_every: SubGroupMemberWhereInput
+  subgroupmembers_some: SubGroupMemberWhereInput
+  subgroupmembers_none: SubGroupMemberWhereInput
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
@@ -6748,6 +8275,9 @@ input UserWhereInput {
   myRoles_every: RoleMemberWhereInput
   myRoles_some: RoleMemberWhereInput
   myRoles_none: RoleMemberWhereInput
+  subjectSubscription_every: SubjectSubscriptionWhereInput
+  subjectSubscription_some: SubjectSubscriptionWhereInput
+  subjectSubscription_none: SubjectSubscriptionWhereInput
 }
 
 input UserWhereUniqueInput {

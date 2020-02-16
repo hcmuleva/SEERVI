@@ -49,6 +49,30 @@ var models = [
     embedded: false
   },
   {
+    name: "EducationProfile",
+    embedded: false
+  },
+  {
+    name: "MyMedium",
+    embedded: false
+  },
+  {
+    name: "Medium",
+    embedded: false
+  },
+  {
+    name: "MySubject",
+    embedded: false
+  },
+  {
+    name: "Subject",
+    embedded: false
+  },
+  {
+    name: "TBD",
+    embedded: false
+  },
+  {
     name: "Post",
     embedded: false
   },

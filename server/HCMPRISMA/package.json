@@ -8,10 +8,9 @@
     "dev": "env-cmd -f ./config/test.env nodemon src/index.js --ext js,graphql --exec babel-node",
     "test": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=org/smoke --group=suborg/smoke --group=group/smoke --group=subgroup/smoke ",
     "singletest": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=groupmember/createRelationship ",
-    "seedtest":"env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=seed/createseed",
-    "reg":"env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=subgroup/CONSUMERDATA",
+    "seedtest": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=seed/createseed",
+    "reg": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=subgroup/CONSUMERDATA",
     "seedData": "env-cmd -f ./config/test.env jest --runInBand --reporters=default --reporters=jest-stare --group=subgroup/smoke ",
-
     "devdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/dev.env",
     "testdeploy": "prisma deploy env-cmd -f ./prisma/prisma.yml  -e config/test.env",
     "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",

@@ -11,7 +11,8 @@ type Query {
     allSubGroups:[SubGroup!]!
     groupmember(query: String):[GroupMember]  
     mymembeship(query: String, first: Int, skip: Int, after: String): [GroupMember!]!
-
+    allRoles:[RoleMember!]!
+    myRoles:[RoleMember!]!
 
 
 }

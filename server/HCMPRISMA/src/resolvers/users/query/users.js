@@ -15,4 +15,8 @@ function users(parent, args, { prisma }, info) {
 
     return prisma.query.users(opArgs, info)
 }
-export default users
+function getAllMedium(parent, args, { prisma }, info) {
+    return prisma.query.mediums(null, info)
+}
+
+export {users,getAllMedium}

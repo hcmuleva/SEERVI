@@ -4,8 +4,12 @@ datamodel:
   - users/users.graphql
   - users/posts.graphql
   - users/comments.graphql
+  - profiles/mysubscription.graphql
+
    
 secret: ${env:PRISMA_SECRET}
 generate:
     - generator: javascript-client
-      output: ../src/generated/
+      output: ../generated/prisma-client
+    - generator: graphql-schema
+      output: ../generated/prisma.graphql
