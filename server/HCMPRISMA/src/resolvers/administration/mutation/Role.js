@@ -1,4 +1,5 @@
 async function createOrgRole(parent, args, { prisma, request }, info) {
+  console.log("REquest recived for CreateORG ROLE ",args)
   const orgRoleExists = await prisma.exists.Role({ name: args.data.name,org: {id: args.data.org}})
     if (orgRoleExists) {
         throw new Error('Role Already Exist')

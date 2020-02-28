@@ -39,9 +39,10 @@ const CREATE_SUBGROUP = gql`
     }
   }
 `;
-const CREATE_ORGROLE=gql`
-mutation CREATE_ORGROLE($name: String!, $org: String!,$description:String) {
-    orgRoles(data: { name: $name, org: $org ,description:$description}) {
+
+const CREATE_ORGROLE = gql`
+mutation CREATE_ORGROLE($name: String!, $org: String,$description:String) {
+    createOrgRole(data: { name: $name, org: $org ,description:$description}) {
       name
       id
     }
@@ -49,7 +50,7 @@ mutation CREATE_ORGROLE($name: String!, $org: String!,$description:String) {
 `;
 const CREATE_SUBORGROLE=gql`
 mutation CREATE_SUBORGROLE($name: String!, $suborg: String!,$description:String) {
-    groupRoles(data: { name: $name, suborg: $suborg ,description:$description}) {
+    createSubOrgRole(data: { name: $name, suborg: $suborg ,description:$description}) {
       name
       id
     }
@@ -57,7 +58,7 @@ mutation CREATE_SUBORGROLE($name: String!, $suborg: String!,$description:String)
 `;
 const CREATE_GROUPROLE=gql`
 mutation CREATE_GROUPROLE($name: String!, $group: String!,$description:String) {
-    orgRoles(data: { name: $name, group: $group ,description:$description}) {
+    createGroupRole(data: { name: $name, group: $group ,description:$description}) {
       name
       id
     }
@@ -65,7 +66,7 @@ mutation CREATE_GROUPROLE($name: String!, $group: String!,$description:String) {
 `;
 const CREATE_SUBGROUPROLE=gql`
 mutation CREATE_SUBGROUPROLE($name: String!, $subgroup: String!,$description:String) {
-    orgRoles(data: { name: $name, subgroup: $subgroup ,description:$description}) {
+    createSubGroupRole(data: { name: $name, subgroup: $subgroup ,description:$description}) {
       name
       id
     }
@@ -114,6 +115,18 @@ const UPDATE_SUBGROUP = gql`
     }
   }
 `;
+
+const UPDATE_ROLE = gql`
+  mutation UPDATE_ROLE($id: ID!, $name: String, $description: String) {
+    updateRole(id: $id, data:{name:$name,description:$description}) {
+      id
+      name
+      description
+    }
+  }
+`;
+
+
 const DELETE_ORG = gql`
   mutation DELETEORG($id: ID!) {
     deleteOrg(id: $id) {
@@ -147,12 +160,20 @@ const DELETE_SUBGROUP = gql`
     }
   }
 `;
-
+const DELETE_ROLE = gql`
+  mutation DELETE_ROLE($id: ID!) {
+    deleteRole(id: $id) {
+      id
+      name
+    }
+  }
+`;
 
 export { CREATE_ORG,UPDATE_ORG, DELETE_ORG, 
 CREATE_SUBORG,UPDATE_SUBORG,
 DELETE_SUBORG,CREATE_GROUP,UPDATE_GROUP,DELETE_GROUP,
 CREATE_SUBGROUP,UPDATE_SUBGROUP,DELETE_SUBGROUP,
-CREATE_ORGROLE,CREATE_SUBORGROLE,CREATE_GROUPROLE,CREATE_SUBGROUPROLE
+CREATE_ORGROLE,CREATE_SUBORGROLE,CREATE_GROUPROLE,CREATE_SUBGROUPROLE,
+UPDATE_ROLE,DELETE_ROLE
 
  };

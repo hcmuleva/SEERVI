@@ -19,6 +19,7 @@ import {
   GET_GROUPROLES,
   GET_SUBGROUPROLES
 } from "../queries/getAllOrgs";
+import {CREATE_ORGROLE,CREATE_SUBORGROLE,CREATE_GROUPROLE,CREATE_SUBGROUPROLE,UPDATE_ROLE,DELETE_ROLE} from '../mutations/org'
 
 export default function RoleViewComponent(props) {
   const selectRoleQuery = () => {
@@ -36,10 +37,8 @@ export default function RoleViewComponent(props) {
         return GET_SUBGROUPROLES;
         break;
 
-      default:
-        roleLiistValue = GET_ORGROLES;
-        break;
     }
+      console.log("selectRoleQuery ",selectRoleQuery)
     return roleLiistValue;
 
     console.log("ROLELIST ", roleList);
@@ -51,6 +50,14 @@ export default function RoleViewComponent(props) {
   const [roleName, setRoleName] = useState('');
   const [roleDescription, setRoleDescription] = useState('');
   const [isRoleEdit,setIsRoleEdit] =useState(false)
+  const [orgRoleCreate] = useMutation(CREATE_ORGROLE);
+  const [suborgRoleCreate] = useMutation(CREATE_SUBORGROLE);
+  const [groupRoleCreate] = useMutation(CREATE_GROUPROLE);
+  const [subgroupRoleCreate] = useMutation(CREATE_SUBGROUPROLE);
+  const [deleteRole] = useMutation(DELETE_ROLE);
+  const [orgRoleUpdate]=useMutation(UPDATE_ROLE);
+  const [selectedRole,setSelectedRole]= useState(null)
+  
   const {
     loading: rolesLoading,
     error: rolesError,
@@ -91,22 +98,77 @@ export default function RoleViewComponent(props) {
   };
 
   const editRoleOrg = role => {
-    console.log("EDIT ROLE NEED TO IMPLEMENT", role);
+    console.log("EDIT ROLE ",role)
+    document.getElementById("roleCreateId").value=role.name;
+    document.getElementById("roleCreatedescriptionid").value=role.description;
+    setRoleName(role.name)
+    setRoleDescription(role.description)
+    setSelectedRole(role)
+    
   };
   const deleteRoleOperation = role => {
     console.log("DELETE ROLE OPERATION NEED TO IMEPLMENT", role);
+    deleteRole({
+      variables: { id: role.id},
+      refetchQueries: [{ query: selectRoleQuery(),variables: { id: props.id } }]
+    }).then(res => {
+        console.log("Role  DeleteResponse", res);
+      })
+      .catch(err => {
+        throw new Error("Error in Deleting Role",err);
+      });
+    
   };
-  const updateRole=()=>{
-    console.log("Update Role",roleName, "  Descr", roleDescription)
+  const updateRole=(role)=>{
+    console.log("Update Role",roleName, "  Descr", roleDescription, "role::", role)
     console.log("UPDATE Role")
+    orgRoleUpdate({
+      variables: { name: roleName, description: roleDescription, id: selectedRole.id },
+      refetchQueries: [{ query: selectRoleQuery(),variables: { id: props.id } }]
+    }).then(res => {console.log("UPDATED  ROLE",res)}).catch(err => {throw new Error("Error in Update ROLE", err); });
+        
+    
+      document.getElementById("roleCreateId").value=""
+      document.getElementById("roleCreatedescriptionid").value=""
   }
-   const createRole=()=>{
-     
-    console.log("Create Role",roleName, "  Descr", roleDescription)
+
+   const createRole=(role)=>{
+    
+    switch (props.rolelevel) {
+        case "ORG":
+          orgRoleCreate({
+      variables: { name: roleName, description: roleDescription, org: props.id },
+      refetchQueries: [{ query: selectRoleQuery(),variables: { id: props.id } }]
+    }).then(res => {console.log("CREATED ORG ROLE",res)}).catch(err => {throw new Error("Error in creating ORG ROLE", err); });
+          break;
+        case "SUBORG":
+          suborgRoleCreate({
+      variables: { name: roleName, description: roleDescription, suborg: props.id },
+      refetchQueries: [{ query: selectRoleQuery(),variables: { id: props.id } }]
+    }).then(res => {console.log("CREATED SUBORG ROLE",res)}).catch(err => {throw new Error("Error in creating SUBORG  ROLE", err); });
+          break;
+        case "GROUP":
+          groupRoleCreate({
+      variables: { name: roleName, description: roleDescription, group: props.id },
+      refetchQueries: [{ query: selectRoleQuery(),variables: { id: props.id } }]
+    }).then(res => {console.log("CREATED GROUPROLE",res)}).catch(err => {throw new Error("Error in creating group ROLE", err); });
+          break;
+        case "SUBGROUP":
+          subgroupRoleCreate({
+      variables: { name: roleName, description: roleDescription, subgroup: props.id },
+      refetchQueries: [{ query: selectRoleQuery(),variables: { id: props.id } }]
+    }).then(res => {console.log("CREATED SUBGROUPROLE",res)}).catch(err => {throw new Error("Error in creating SUBGROUP ROLE", err); });
+          break;
+       
+      }
+    
+      document.getElementById("roleCreateId").value=""
+      document.getElementById("roleCreatedescriptionid").value=""
+    
   }
-  const addRoleHandeler =(e)=>{
+  const addRoleHandeler =(e,role)=>{
     console.log("isRoleEdit",isRoleEdit)
-    isRoleEdit?updateRole():createRole()
+    isRoleEdit?updateRole(e,role):createRole(e,role)
   }
   return (
     <Row>
