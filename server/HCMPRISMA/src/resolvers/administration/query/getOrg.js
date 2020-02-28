@@ -1,5 +1,8 @@
-function allorgs(parent, args, { prisma }, info) {
-    return prisma.query.organizations(null, info)
+async function allorgs(parent, args, { prisma }, info) {
+    console.log("all Orgs get called")
+    const myorgs= await prisma.query.organizations(null, info)
+    console.log("myorgs",myorgs)
+    return myorgs;
 }
 
 function orgById(parent, args, { prisma }, info) {

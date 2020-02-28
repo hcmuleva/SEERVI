@@ -5,10 +5,17 @@ type Query {
     allsuborgs:[Suborg!]!
     suborgsoforg(id:String!):[Suborg!]!
     suborgById(id:ID!):Suborg!
+    groupsOfSubOrg(id:String!):[Group!]!
+    
     groupById(id:ID!):Group!
     allGroups:[Group!]!
     subgroupById(id:ID!):SubGroup!
     allSubGroups:[SubGroup!]!
+    subgroupsOfGroup(id:String!):[SubGroup!]!
+    orgRoles(id:String!):[Role!]!
+    subOrgRoles(id:String!):[Role!]!
+    groupRoles(id:String!):[Role!]!
+    subGroupRoles(id:String!):[Role!]!
     groupmember(query: String):[GroupMember]  
     mymembeship(query: String, first: Int, skip: Int, after: String): [GroupMember!]!
     allRoles:[RoleMember!]!
@@ -73,7 +80,7 @@ type Suborg{
     description:String
     author:[User!]!
     orgid:Organization!
-    groups:[Group!]!
+    userGroups:[Group!]!
     suborgRoles:[Role!]!    
     
 }

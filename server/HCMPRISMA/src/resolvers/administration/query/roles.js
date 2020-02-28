@@ -14,4 +14,33 @@ async function myRoles(parent, args, { prisma ,request}, info) {
   
 }
 
-export {allRoles,myRoles}
+async function orgRoles(parent, args, { prisma ,request}, info) {
+    console.log("RECIVED REQUEST FOR orgRoles",args)
+   return await prisma.query.roles({
+       where: {org:{id:args.id }}
+        
+    }, info)
+  
+}
+async function subOrgRoles(parent, args, { prisma ,request}, info) {
+   return await prisma.query.roles({
+       where: {suborg:{id:args.id }}
+        
+    }, info)
+  
+}
+async function groupRoles(parent, args, { prisma ,request}, info) {
+   return await prisma.query.roles({
+       where: {group:{id:args.id }}
+        
+    }, info)
+  
+}
+async function subGroupRoles(parent, args, { prisma ,request}, info) {
+   return await prisma.query.roles({
+       where: {subgroup:{id:args.id }}
+        
+    }, info)
+  
+}
+export {allRoles,myRoles,orgRoles,subOrgRoles,groupRoles,subGroupRoles}

@@ -1,6 +1,6 @@
-function createSubOrg(parent,args,{prisma,request},info){
+async function createSubOrg(parent,args,{prisma,request},info){
     console.log("RECIEVED CREATED SUBORG REQUEST",args.data)
-     return prisma.mutation.createSuborg({
+     return await prisma.mutation.createSuborg({
         data: {
             name:args.data.name,    
             description:args.data.description,

@@ -8,6 +8,7 @@ import { orgwithoutnameException} from '../../../exceptions/administrationExcept
     }, info)
 }
 async function deleteOrg(parent, args, { prisma, request }, info) {
+    console.log("DELETE ORG Request",args)
     const orgExists = await prisma.exists.Organization({
         id: args.id
         
@@ -23,6 +24,7 @@ async function deleteOrg(parent, args, { prisma, request }, info) {
 }
 
 async function updateOrg(parent, args, { prisma, request }, info) {
+    console.log("Update ORG Request ", args)
     const orgExists = await prisma.exists.Organization({
         id: args.id
         

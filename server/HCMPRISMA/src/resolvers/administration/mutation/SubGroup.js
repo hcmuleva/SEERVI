@@ -1,4 +1,5 @@
 async function createSubGroup(parent,args,{prisma,request},info){
+    console.log("Data For Create SubGroup",args.data)
      const createdSubGroup=await prisma.mutation.createSubGroup({
         data: {
             name:args.data.name,    

@@ -1,6 +1,6 @@
 async function createGroup(parent,args,{prisma,request},info){
     console.log("REquest ",args)
-     const createdGroup=await prisma.mutation.createGroup({
+     return await prisma.mutation.createGroup({
         data: {
             name:args.data.name,    
             description:args.data.description,
@@ -11,7 +11,7 @@ async function createGroup(parent,args,{prisma,request},info){
             }
         }
     }, info)
-    return createdGroup;
+   
 }
  
  async function deleteGroup(parent,args,{prisma,request},info){

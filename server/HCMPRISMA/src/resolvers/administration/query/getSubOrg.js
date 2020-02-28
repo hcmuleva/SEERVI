@@ -7,9 +7,7 @@ function allsuborgs(parent, args, { prisma }, info) {
 async function suborgsoforg(parent, args, { prisma }, info) {
 console.log("getAllSubOrgOfOrg args",args.id,"parent",parent)
 return  await prisma.query.suborgs({
-    where :{
-        org:{connect:{id:args.id}}
-    }  
+     org:{connect:{id:args.id}} 
 }, info)
 }
 
