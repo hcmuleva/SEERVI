@@ -8,12 +8,12 @@ export default function() {
       },
       {
         title: "Register",
-        htmlBefore: '<i class="material-icons">vertical_split</i>',
+        htmlBefore: '<i class="material-icons">line_style</i>',
         to: "/Register",
       },
       {
         title: "Forgot Password",
-        htmlBefore: '<i class="material-icons">vertical_split</i>',
+        htmlBefore: '<i class="material-icons">list</i>',
         to: "/ForgotPassword",
       }
     ];

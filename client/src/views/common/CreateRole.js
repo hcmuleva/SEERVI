@@ -19,7 +19,7 @@ export const CREATE_ROLE = gql`
 export const GET_ROLES = gql`
     query GETROLES{
         roles{
-        id, rolename
+        id
     }}
 `
 export default function CreateRole() {

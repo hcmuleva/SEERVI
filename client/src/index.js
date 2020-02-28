@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Controller from './POC_TBD/Controller'
 //import Routing from './Routing';
 import * as serviceWorker from './serviceWorker';
 

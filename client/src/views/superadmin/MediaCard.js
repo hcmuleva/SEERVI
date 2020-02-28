@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -11,55 +11,55 @@ import { useQuery ,useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {DELETE_ORG} from '../mutations/org'
 import {GET_ORGS} from '../queries/getAllOrgs'
+import OrgDetails from './OrgDetails'
+import { Redirect } from "react-router-dom";
+import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345,
+    maxWidth: 275,
   },
   media: {
-    height: 40,
+    height: 10,
   },
 });
 
 export default function MediaCard(props) {
   const classes = useStyles();
-  const [deleteOrganization] = useMutation(DELETE_ORG);
-  const {id,name}= props.data
-  const removeOrg=()=>{
-      console.log("Delete org name ", name , " and id =",id)
-         //deleteOrg
-         deleteOrganization({ variables: { id },refetchQueries: [{ query: GET_ORGS }]   }).then((res)=>{console.log("Response",res)
-            
-         }).catch(function onReject(e) {
-    console.error('some problem happened', e);
-  });
-
-
-  }
   return (
+
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
           image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
+          title={props.data.name}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.data.name}
+          <Typography gutterBottom variant="h5" component="h2" align="center">
+       
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-             {props.data.description}
+           <div className='hcm' onClick={ ()=>{const myData={id:props.data.id,name:props.data.name}
+         
+            props.orgSetter(myData)}}> {props.data.name}</div>
+          <Typography variant="body2" color="textSecondary" component="p" align="center" >
+          
+             
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          UpdateLogo
-        </Button>
-        <Button size="small" color="secondary" onClick={removeOrg}>
+      <CardActions >
+     
+        <Button size="small" color="secondary" onClick={ ()=>{
+            props.orgSetter(props.data.id)}}>
           Remove
+        </Button>
+        <Button size="small" color="primary" onClick={ ()=>{
+
+            props.orgSetter("Harish Muleva from child")
+            }}>
+          Temp
         </Button>
       </CardActions>
     </Card>
-  );
+  )
 }

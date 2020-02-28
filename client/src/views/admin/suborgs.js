@@ -1,6 +1,4 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
-
-import React from "react";
+import React from 'react'
 import PropTypes from "prop-types";
 import {
   Card,
@@ -11,8 +9,8 @@ import {
   Button
 } from "shards-react";
 
-const SidebarActions = (props) => (
-  
+const  Suborgs=(props) =>(
+    
   <Card small className="mb-3">
   <div><h1>{props.action}</h1></div>
     <CardHeader className="border-bottom">
@@ -67,18 +65,18 @@ const SidebarActions = (props) => (
   </Card>
 );
 
-SidebarActions.propTypes = {
+Suborgs.propTypes = {
   /**
    * The component's title.
    */
   title: PropTypes.string
 };
 
-SidebarActions.defaultProps = {
-  title: "Actions"
+Suborgs.defaultProps = {
+  title: "ActionsHCM"
 };
 function handleClick(e) {
   e.preventDefault();
   console.log('SidebarActions The link was clicked.');
 };
-export default SidebarActions;
+export default Suborgs;

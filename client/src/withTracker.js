@@ -8,7 +8,6 @@ const withTracker = (WrappedComponent, options = {}) => {
     if (process.env.NODE_ENV !== "production") {
       return;
     }
-
     GoogleAnalytics.set({
       page,
       ...options
@@ -32,14 +31,12 @@ const withTracker = (WrappedComponent, options = {}) => {
         prevProps.location.pathname + prevProps.location.search;
       const nextPage =
         this.props.location.pathname + this.props.location.search;
-
       if (currentPage !== nextPage) {
         trackPage(`${BASENAME}${nextPage}`);
       }
     }
 
     render() {
-      console.log("withTracker hoc",this.props)
       return <WrappedComponent {...this.props} />;
     }
   };

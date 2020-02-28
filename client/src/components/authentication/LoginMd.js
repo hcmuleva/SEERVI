@@ -1,98 +1,75 @@
 import './Login.css'
 import React, { useState } from "react";
 import { Redirect } from 'react-router'
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation,useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Auth from '../../modules/Auth';
 import Register from './Register'
 import Constants from "../../flux/constants"
 import Dispatcher from "../../flux/dispatcher"
+import { Store } from "../../flux";
+import publicnavitems from "../../data/public-nav-items";
+import newsregistration from "../../data/newsregistration";
+import { createBrowserHistory } from "history";
+
+import { Button} from "shards-react";
+export const GET_SUBSCRIPTION = gql`
+   query GET_SUBSCRIPTION{
+  mySubscription{
+    id
+    subsType
+    mySubjects{
+      id
+      name
+      medium{
+        id
+        name
+      }
+    }
+  }
+}
+   `;
 
 export const LOGIN_USER = gql`
     mutation LOGIN($email:String!, $password:String!){
         login(data:{email:$email,password:$password}){
             user{id firstname email}
-            token,
-            roles
+            token
         }}`;
 export default function LoginMd() {
+    
+const history = createBrowserHistory();
 
     const [userLogin] = useMutation(LOGIN_USER);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const[register, setRegister]=useState(false);
     const[compType,setCompType]=useState("login")
     const handleRegister=(event)=>{
-        event.preventDefault();
-        console.log("Register component")
-        setRegister(true)
-        setCompType("register")
+        history.push("/register")
     }
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const email = event.target.email.value;
         const password=event.target.password.value
-        userLogin({ variables: { email,password } }).then((res)=>{
-            console.log("RES",res)
-            const token=res.data.login.token
-            const authdata =res.data.login.roles
-            console.log(authdata)
-            console.log("\n********WARNING********\n")
-            console.log("\n********Login does handle only single role, where as user can have multiple role********\n")
-            switch(authdata[0].rolename){
-                case Constants.EDUCATION_ROLE_SUPERADMIN:
-                    Dispatcher.dispatch({
-                        actionType: Constants.EDUCATION_ROLE_SUPERADMIN,
-                        payload:"THis is simply hardcoded from Harish"
-                      });
-                      break;
-                case Constants.EDUCATION_ROLE_ADMIN:
-                Dispatcher.dispatch({
-                    actionType: Constants.EDUCATION_ROLE_ADMIN,
-                    payload:"THis is simply hardcoded from Harish"
-                    });
-                    break;
-                case Constants.EDUCATION_ROLE_TEACHER:
-                    Dispatcher.dispatch({
-                        actionType: Constants.EDUCATION_ROLE_TEACHER,
-                        payload:"THis is simply hardcoded from Harish"
-                        });
-                        break;
-                case Constants.EDUCATION_ROLE_PARENT:
-                Dispatcher.dispatch({
-                    actionType: Constants.EDUCATION_ROLE_PARENT,
-                    payload:"THis is simply hardcoded from Harish"
-                    });
-                    break;
-                default:
-
+        console.log("email",email, "passowrd", password)
+        userLogin({ variables: { email,password } }).then((loginResponse)=>{
+            if(loginResponse&&loginResponse.data&&loginResponse.data.login&&loginResponse.data.login.token){
+                console.log("loginResponse.token ", loginResponse.data.login.token)
+                history.push("/registernews")
+                localStorage.setItem('token', loginResponse.data.login.token);
+                 setIsAuthenticated(true)
+                 const mynavItems=[...publicnavitems(), ...newsregistration()]
+                 Store.setSideBarItems(mynavItems);
+                 Dispatcher.dispatch({actionType: Constants.EDUCATION_ROLE_SUPERADMIN,payload:"THis is simply hardcoded from Harish" });
             }
-           /**
-            *  
-            */
-           
-            console.log("Local Storage",token)
-            localStorage.setItem('token', token);
-            localStorage.setItem("authdata",JSON.stringify(authdata))
-            Auth.authenticateUser(token)
-            Auth.isUserAuthenticated(true)  
-            setIsAuthenticated(true)
-        }).catch(err=>{
-           console.log(err)
-            console.log(err.message)
-        })
+        });
         
+      
     }
     return (
         <div>   
-        {(function() {
-            
-            switch(compType) {
-              case 'register':
-                 return <Redirect to="/register" />
-            default:
-            }
-          })()}
-  {isAuthenticated ? <Redirect to="/blog-overview" />: 
+  
+  {isAuthenticated ? <Redirect to="/userpage"/>: 
         <div id="login">
         <div className="container">
             <div id="login-row" className="row justify-content-center align-items-center">
@@ -113,12 +90,15 @@ export default function LoginMd() {
                                 <span>Remember me</span> <span>
                                 <input id="remember-me" name="remember-me" type="checkbox"/></span>
                                 </label><br/>
+                                
                                 <input type="submit" name="submit" className="btn btn-info btn-md" value="submit"/>
+                                
+                                <Button className="btn btn-info btn-md" ><a href="/register"  onClick={handleRegister}>Register here</a></Button>
                             </div>
-
+                            
                             <div id="register-link" className="text-right">   
                                 {register?<Register/>:<div></div>}        
-                                <a href="/register" className="text-info" onClick={handleRegister}>Register here</a>
+                                
                             </div>
                         </form>
                     </div>

@@ -12,10 +12,12 @@ export default class App extends Component {
   handleState(){
     this.setState()
   }
+  
   render() {
     
-    return (<ApolloProvider client={client}>
-     <Routing/>
+    return (
+      <ApolloProvider client={client}>
+        <Routing/>
       </ApolloProvider>
     )
     
