@@ -105,7 +105,7 @@ query GET_SUBGROUPS{
 
 const GET_SUBORGROLES= gql`
 query GET_SUBORGROLES($id:String!){
-	subOrgRoles(id:$id){
+	suborgRoles(id:$id){
 		id
 		name
 		description

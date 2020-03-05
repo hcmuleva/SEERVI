@@ -100,7 +100,7 @@ export default function SuperAdmin() {
                         <Orgs title="ORG"/>
                     </Col>
                     <Col lg="4" md="8">
-                        <OrgTable orgdata={orgData.allorgs} orgName={"HCM"} rowSelected={setSelectedRowData}/>
+                        <OrgTable orgdata={orgData.allorgs} orgName={"HCM1"} rowSelected={setSelectedRowData}/>
                     </Col>
                       <Col lg="3" md="4">
                         <SubOrgs title={rowSelected} orgid={getSelectedOrgId()} suborghandler={suborghandler}/>

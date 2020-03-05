@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { Row,Col,Button } from "shards-react";
 import ResponsiveDialog from './Component/Dialog/StudiesSelection'
-export default function HCMTBDPage(props) {
-  const [userRegisterFormData, setUserRegisterFormData] = useState({});
-  const [confirmPassword, setConfirmPassword]=useState(null)
-  const [profession,setProfession] = useState({student:false,agriculture:false,business:false,service:false, hcm:false});
-  
-  const [professionSelection,setProfessionSelection] = useState({studentSelection:false,agricultureSelection:false,businessSelection:false,serviceSelection:false,hcmSelection:false});
-  const setStudentSelectinFunc = (selection)=>{
-      setProfessionSelection({...professionSelection,studentSelection:selection})
-  }
-  
-  if(profession.student &!professionSelection.studentSelection){
-      return <ResponsiveDialog open={true} studentControllder={setStudentSelectinFunc} />
-  }
+
+export default function RegisterForm(props) {
+    const [userRegisterFormData, setUserRegisterFormData] = useState({});
+    const [confirmPassword, setConfirmPassword]=useState(null)
+    const [profession,setProfession] = useState({student:false,agriculture:false,business:false,service:false});
+    const [professionSelection,setProfessionSelection] = useState({studentSelection:false,agricultureSelection:false,businessSelection:false,serviceSelection:false,hcmSelection:false});
+    const [studies,setStudies] = useState(null)
+    const setStudentSelectinFunc = (selection)=>{
+    setProfessionSelection({...professionSelection,studentSelection:selection})
+    }
+
+    if(profession.student &!professionSelection.studentSelection){
+        return <ResponsiveDialog open={true} studentControllder={setStudentSelectinFunc} mystudies={setStudies} />
+    }
+    console.log("studies",studies)
   return (
     <div id="login">
-      
       <div className="container">
         <div
           id="login-row"
@@ -36,6 +37,7 @@ export default function HCMTBDPage(props) {
                 }}
               >
                 <h3 className="text-center text-info">Register</h3>
+                   <br/>
                  <div className="form-group" className="col-md-12">
                  
                  <Row>
@@ -71,6 +73,7 @@ export default function HCMTBDPage(props) {
                   />
                    </Col>
                   </Row>
+                     <br/>
                 </div>
                 
                 <div className="form-group" className="col-md-12">
@@ -118,7 +121,7 @@ export default function HCMTBDPage(props) {
                 </div>
                 
                 <div className="form-group">
-
+                    <br/>
                   <label htmlFor="Profession" className="text-info">
                   <span>Your Profession:</span> 
                   &nbsp;&nbsp;
@@ -168,12 +171,19 @@ export default function HCMTBDPage(props) {
                     
                       />
                     </span>
-                    
-
+                        <br/>
+                {     
+                    studies?
+                         (<span>You Studies in:{studies}</span> ):<span>"No Studeies"</span>
+                }
                   </label>
                     <br/>
-
+                   <br/>
+                      <br/>
                     &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Row>
+                    <Col>
+                    </Col>
                   <input
                     type="submit"
                     name="submit"
@@ -188,15 +198,21 @@ export default function HCMTBDPage(props) {
                     className="btn btn-success btn-md"
                     value="register"
                   />
+                  <Col>
+                    </Col>
+                  </Row>
                 </div>
+            
+               
 
-                <div id="register-link" className="text-right"></div>
+                <div id="register-link" className="text-right">
+                    
+                </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-     
     </div>
   );
 }

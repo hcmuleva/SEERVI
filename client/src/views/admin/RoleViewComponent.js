@@ -78,7 +78,7 @@ export default function RoleViewComponent(props) {
           roleLiistValue = rolesData.orgRoles;
           break;
         case "SUBORG":
-          roleLiistValue = rolesData.subOrgRoles;
+          roleLiistValue = rolesData.suborgRoles;
           break;
         case "GROUP":
           roleLiistValue = rolesData.groupRoles;

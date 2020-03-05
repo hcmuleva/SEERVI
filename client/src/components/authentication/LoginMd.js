@@ -4,7 +4,7 @@ import { Redirect } from 'react-router'
 import { useMutation,useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Auth from '../../modules/Auth';
-import Register from './Register'
+import Register from './RegisterForm'
 import Constants from "../../flux/constants"
 import Dispatcher from "../../flux/dispatcher"
 import { Store } from "../../flux";

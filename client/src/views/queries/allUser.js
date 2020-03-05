@@ -15,4 +15,53 @@ import gql from 'graphql-tag';
     }}
 
 `;
-export {GET_AllUsers}
+
+
+const GET_ORGBYID= gql`
+query GET_ORGBYID($id:ID!){
+	orgById(id:$id){
+		 id
+  name
+  description
+  author{
+    id
+    firstname
+    lastname
+    email
+    myRoles{
+				id
+				role{
+					id
+					name
+				}
+			}
+  }
+		
+	}	
+}
+`;
+const GET_SUBORGBYID= gql`
+query GET_SUBORGBYID($id:String!){
+	suborgById(id:$id){
+		id
+		name
+		description
+        author{
+            id
+            firstname
+            lastname
+            email
+            myRoles{
+				id
+				role{
+					id
+					name
+				}
+			}
+
+            }
+		
+	}	
+}
+`;
+export {GET_AllUsers,GET_ORGBYID,GET_SUBORGBYID}

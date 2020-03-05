@@ -1,7 +1,7 @@
 import LoginMd from "../components/authentication/LoginMd";
 import UserPage from "../components/authentication/UserPage";
 import Profile from "../components/authentication/Profile";
-import Register from "../components/authentication/Register";
+import Register from "../components/authentication/RegisterForm";
 import BlogPosts from "../views/BlogPosts";
 import AddNewPost from "../views/AddNewPost";
 
@@ -13,7 +13,6 @@ import {
   CreateUser
 } from "./common";
 import SuperAdmin from './admin/superAdmin'
-import UserOnBoard from "./admin/UserOnBoard";
 import CreateOrg from "./superadmin/CreateOrg";
 import Parent from "./education/parent/Parent";
 import Principal from "./education/principal/Principal";
@@ -21,7 +20,8 @@ import Student from "./education/students/Student";
 import BlogOverview from "./BlogOverview";
 import OrgDetails from "../views/superadmin/OrgDetails";
 import UserProfileLite from "./UserProfileLite";
-import UserManagement from './admin/userManagement'
+import SuperAdminManagementPage from './admin/SuperAdminManagementPage'
+import UserManagedByAdmin from './admin/UserManagedByAdmin'
 import CustomizedExpansionPanels from "./newsRegisteration"
 import HCMTBDPage from "./../POC_TBD/HCMTBDPage"
 // Layout Types
@@ -97,7 +97,7 @@ export default [
   path: "/usermanagement",
     exact: true,
     layout: DefaultLayout,
-    component: UserManagement
+    component: SuperAdminManagementPage
   
 },
   {
@@ -147,10 +147,10 @@ export default [
     component: CreateUser
   },
   {
-    path: "/useronboard",
+    path: "/usermanagedbyadmin",
     exact: true,
     layout: DefaultLayout,
-    component: UserOnBoard
+    component: UserManagedByAdmin
   },
   {
     path: "/parent",

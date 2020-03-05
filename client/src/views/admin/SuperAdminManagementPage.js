@@ -19,6 +19,8 @@ import SubOrgs from './subOrgPage'
 import SubOrgView from './SubOrgView'
 import GroupView from './GroupView'
 import SubGroupView from './SUBGroupView'
+import UserRoleAssignView from './UserRoleAssignView'
+import UserManagedByAdmin from './UserManagedByAdmin'
 function TabPanel(props) {
     const { loading:orgLoading, error:orgError, data:orgData } = useQuery(GET_ORGS)
     const { loading:groupLoading, error:groupError, data:groupData } = useQuery(GET_GROUPS)
@@ -62,10 +64,11 @@ function TabPanel(props) {
            break;
          case 4:
            title="USER";
-           return (<CardUser/>)
+           return (<UserRoleAssignView/>)
            break;
          case 5:
            title="ROLE";
+           return (<UserManagedByAdmin/>)
            break;
       }
        console.log("Index",index)
@@ -106,7 +109,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserManagement() {
+export default function SuperAdminManagementPage() {
         
   const classes = useStyles();
   const theme = useTheme();
@@ -120,26 +123,7 @@ export default function UserManagement() {
   const handleChangeIndex = index => {
     setValue(index);
   };
-  const orgHandler=(orgId)=>{
-    //   console.log("ORG DATA ",orgData)
-    //   console.log("ORG ID ",orgId)
-      
-    //   const mySubOrgData=orgData.allorgs.map((org)=>{
-    //       if(org.id===orgId) return org;
-    //   })
-    //   console.log("BEFORE GETTING SUBORGS  ",mySubOrgData)
-    //   if(mySubOrgData&&mySubOrgData[0]&&mySubOrgData[0].suborgs){
-    //       setSubOrgList(mySubOrgData[0].suborgs)
-    //   }
-    //   setOrgSelected(orgId)
-  }
-  
-//   console.log("ORGData",orgData)
 
-//     const getSelectionComponent=(title, list, handlermethod)=>{
-//         console.log("\n\n**Called for ***",title,"\n")
-//         return (<SelectComponent title={title} listdata={list} setSelected={handlermethod}/>)
-//     }
     return (
          <div className={classes.root}>
        
@@ -156,8 +140,8 @@ export default function UserManagement() {
           <Tab label="SubOrg" {...a11yProps(1)} />
           <Tab label="Group" {...a11yProps(2)} />
           <Tab label="SubGroup" {...a11yProps(3)} />
-          <Tab label="User" {...a11yProps(4)} />
-           <Tab label="Role" {...a11yProps(5)} />
+          <Tab label="RoleAssignment" {...a11yProps(4)} />
+           <Tab label="User" {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -178,12 +162,7 @@ export default function UserManagement() {
           Item Four
         </TabPanel>
         <TabPanel value={value} index={4} dir={theme.direction}>
-        {/**<Row>
-           <Col lg="1" md="12">{getSelectionComponent("org",orgList,orgHandler)}</Col>
-          {orgSelected? <Col lg="1" md="12">{getSelectionComponent("SUBORG",subOrgList,setSuborgSelected)}</Col>:""}
-          
-          </Row>
-         */} 
+   
         </TabPanel>
         <TabPanel value={value} index={5} dir={theme.direction}>
           Item Six
