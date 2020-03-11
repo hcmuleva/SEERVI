@@ -15,6 +15,12 @@ query suborgsoforg($id:String!){
 		id
 		name
 		description
+		createdAt
+		updatedAt
+		org{
+			id
+			name
+		}
 	}
 }
 `;
@@ -24,6 +30,8 @@ const GET_ORGS = gql`
 	allorgs{
 		id
 		name
+		createdAt
+		updatedAt
 		description
 		suborgs{
 			id

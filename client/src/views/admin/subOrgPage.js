@@ -34,7 +34,7 @@ function SubOrgs(props) {
   if (suborgError) return <p>SubOrg ERROR: {suborgError.message}</p>;
   if (suborgData === undefined) return <p>ERROR</p>;
   if (suborgLoading) {
-    return <div>ORG Loading</div>;
+    return <div>SUBORG Loading</div>;
   }
   const createSubOrgFunction=()=>{
      document.getElementById("subOrgNameId").value="";
@@ -51,7 +51,7 @@ function SubOrgs(props) {
       });
   }
   const updateSubOrgFunction=()=>{
-    console.log("UPdate for org id ",selectSubOrgObj.id)
+    console.log("UPdate for Suborg id ",selectSubOrgObj.id)
     updateSubOrg({
       variables: { id:selectSubOrgObj.id,name: subOrgname, description: suborgDescription },
       refetchQueries: [{ query: GET_SUBORGS,variables: { id: props.id } }]
@@ -96,7 +96,7 @@ function SubOrgs(props) {
       <Col>
     <Card small className="mb-3">
       <div>
-        <h1>{props.action}</h1>
+        <h1>HCM{props.action}</h1>
       </div>
       
       <CardHeader className="border-bottom">

@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import Routing from './Routing'
 import { ApolloProvider } from "@apollo/react-hooks";
-import {client } from './apollo'
+import {client}  from './apollo'
 
 export default class App extends Component {
   

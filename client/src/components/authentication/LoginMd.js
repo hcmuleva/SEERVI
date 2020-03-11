@@ -9,26 +9,13 @@ import Constants from "../../flux/constants"
 import Dispatcher from "../../flux/dispatcher"
 import { Store } from "../../flux";
 import publicnavitems from "../../data/public-nav-items";
+import rolebased_routes from "../../data/rolebased_routes"
+import defaultnav from "../../data/defaultnav"
 import newsregistration from "../../data/newsregistration";
 import { createBrowserHistory } from "history";
-
+import {GET_MYROLES,GET_SUBSCRIPTION} from '../../views/queries/allUser'
 import { Button} from "shards-react";
-export const GET_SUBSCRIPTION = gql`
-   query GET_SUBSCRIPTION{
-  mySubscription{
-    id
-    subsType
-    mySubjects{
-      id
-      name
-      medium{
-        id
-        name
-      }
-    }
-  }
-}
-   `;
+ 
 
 export const LOGIN_USER = gql`
     mutation LOGIN($email:String!, $password:String!){
@@ -66,9 +53,90 @@ const history = createBrowserHistory();
         
       
     }
+    const getRoleItem =(role)=>{
+        return rolebased_routes().filter(item=>{
+            if(item.title === role) return item
+        })
+    }
+    const myRole=[{name:"ORGADMIN"},{name:"TEACHER"},{name:"PARENT"}]
+    const getRoleNavItemList = (myRole)=>{
+        let roleNavItems=[] 
+        myRole.map(role=>{
+            switch (role.name) {
+                case "SUPERADMIN":
+                    roleNavItems.push(...getRoleItem('superadmin'))
+                    break;
+                case "ORGADMIN":
+                    roleNavItems.push(...getRoleItem('orgadmin'))
+                    break;
+                case "GROUPADMIN":
+                    roleNavItems.push(...getRoleItem('groupadmin'))
+                    break;
+                case "SUBGROUPADMIN":
+                    roleNavItems.push(...getRoleItem('subgroupadmin'))
+                    break;
+                case "PRINCIPAL":
+                    roleNavItems.push(...getRoleItem('principal'))
+                    break;
+                case "TEACHER":
+                    roleNavItems.push(...getRoleItem('teacher'))
+                    break; 
+                case "STUDENT":
+                    roleNavItems.push(...getRoleItem('student'))
+                    break;
+                case "PARENT":
+                    roleNavItems.push(...getRoleItem('parent'))
+                    break;         
+                default:
+                    break;
+            }
+        })
+        roleNavItems.push(...defaultnav())
+        return roleNavItems;
+    }
+    const { loading:userRoleLoading, error:userRoleError, data:userRoleData } = useQuery(GET_MYROLES)
+    if (userRoleError) return <p>User ERROR: {userRoleError.message}</p>;
+    if (userRoleData === undefined) return <p>User RoleERROR</p>;
+    if (userRoleLoading) {return <div>userRoleData Loading</div>;}
+    const myRecievedRoles= ()=>{
+        let myMetaData={}
+        const myrolelist=userRoleData.myRoles.map(myrole=>{
+            console.log("MYROLE ",myrole.role)
+            
+            if(myrole.role.org){
+                myMetaData["org"]=myrole.role.org
+                console.log("ORG ID ", myrole.role.org.id, " ORG NAME ", myrole.role.org.name)
+                if(myrole.role.org.suborgs){
+                    myMetaData["suborgs"]=myrole.role.org.suborgs
+                    myrole.role.org.suborgs.map(sorg=>{
+                        console.log("SUBORG ",sorg, "ID ",sorg.id, "  name ",sorg.name)
+                        //console.log("SUBORG ID ", myrole.role.org.sorg.id, " suborg NAME ", myrole.role.org.sorg.name)
+                    })
+                    
+                }
+            }
+            console.log("BEFORE STORAGE ",myMetaData)
+            localStorage.setItem('metadata',JSON.stringify(myMetaData))
+            console.log("After STORAGE ",localStorage.getItem('metadata'))
+            return myrole.role
+            })
+        console.log(myrolelist)
+
+    }
+    if(userRoleData){
+         myRecievedRoles()
+         const roleItems=getRoleNavItemList(myRole)
+         Store.setSideBarItems(roleItems);
+         Dispatcher.dispatch({actionType: Constants.EDUCATION_ROLE_SUPERADMIN,payload:"THis is simply hardcoded from Harish" });
+    }
+    const getRoleBaseComponent= ()=>{
+        if(userRoleData){
+
+        }
+    }
     return (
         <div>   
-  
+    
   {isAuthenticated ? <Redirect to="/userpage"/>: 
         <div id="login">
         <div className="container">

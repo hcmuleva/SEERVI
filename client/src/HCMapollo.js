@@ -8,7 +8,7 @@ import { getMainDefinition } from 'apollo-utilities'
 
 const getClient = (jwt, httpURL = 'http://localhost:4000', websocketURL = 'ws://localhost:4000') => {
     // Setup the authorization header for the http client
-    const request = async (operation) => {    
+    const request = async (operation) => {
         if (jwt) {
             operation.setContext({
                 headers: {
@@ -86,8 +86,8 @@ const getClient = (jwt, httpURL = 'http://localhost:4000', websocketURL = 'ws://
                 )
             }
             if (networkError) {
-                console.log(`[Network error]: ${networkError}`)
                 throw new Error(`[Network error]: ${networkError}`)
+                //console.log(`[Network error]: ${networkError}`)
             }
         }),
         requestLink,
@@ -114,6 +114,5 @@ const getClient = (jwt, httpURL = 'http://localhost:4000', websocketURL = 'ws://
         cache: new InMemoryCache()
     })
 }
-const token =localStorage.getItem('token')
-const client =getClient(token)
-export { client }
+
+export { getClient as default }

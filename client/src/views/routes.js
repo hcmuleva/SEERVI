@@ -1,6 +1,5 @@
 import LoginMd from "../components/authentication/LoginMd";
 import UserPage from "../components/authentication/UserPage";
-import Profile from "../components/authentication/Profile";
 import Register from "../components/authentication/RegisterForm";
 import BlogPosts from "../views/BlogPosts";
 import AddNewPost from "../views/AddNewPost";
@@ -12,11 +11,20 @@ import {
   CreateSubOrg,
   CreateUser
 } from "./common";
-import SuperAdmin from './admin/superAdmin'
+
+import SuperAdmin from './EducationRoles/SuperAdmin'
+import OrgAdmin from "./EducationRoles/OrgAdmin";
+import GroupAdmin from './EducationRoles/GroupAdmin';
+import SubGroupAdmin from './EducationRoles/SubGroupAdmin';
+import Principal from "./EducationRoles/Principal";
+import Teacher from "./EducationRoles/Teacher";
+import Student from "./EducationRoles/Student";
+import Parent from "./EducationRoles/Parent";
+
+import ResetPassword from '../views/userprofile/ResetPassword';
+import Profile from '../views/userprofile/Profile';
+import Subscription from '../views/userprofile/Subscription';
 import CreateOrg from "./superadmin/CreateOrg";
-import Parent from "./education/parent/Parent";
-import Principal from "./education/principal/Principal";
-import Student from "./education/students/Student";
 import BlogOverview from "./BlogOverview";
 import OrgDetails from "../views/superadmin/OrgDetails";
 import UserProfileLite from "./UserProfileLite";
@@ -153,10 +161,36 @@ export default [
     component: UserManagedByAdmin
   },
   {
+    path:"/subgroupadmin",
+    exact:true,
+    layout:DefaultLayout,
+    component:SubGroupAdmin
+  },
+    {
+    path:"/groupadmin",
+    exact:true,
+    layout:DefaultLayout,
+    component:GroupAdmin
+  },
+  
+  {
     path: "/parent",
     exact: true,
     layout: DefaultLayout,
     component: Parent
+  },
+   {
+    path: "/teacher",
+    exact: true,
+    layout: DefaultLayout,
+    component: Teacher
+  },
+  {
+    path: "/orgadmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: OrgAdmin
+    
   },
   {
     path: "/principal",
@@ -169,6 +203,24 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: Student
+  },
+    {
+    path: "/profile",
+    exact: true,
+    layout: DefaultLayout,
+    component: Profile
+  },
+    {
+    path: "/resetpassword",
+    exact: true,
+    layout: DefaultLayout,
+    component: ResetPassword
+  },
+    {
+    path: "/subscription",
+    exact: true,
+    layout: DefaultLayout,
+    component: Subscription
   },
 
   {

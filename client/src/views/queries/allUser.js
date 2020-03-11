@@ -3,13 +3,7 @@ import gql from 'graphql-tag';
 
  const GET_AllUsers = gql`
     query GET_AllUsers{
-        users{
-        id, firstname, lastname,email,org{
-            id
-            name
-            suborgs{
-				id
-				name
+        users{id, firstname, lastname,email,org{id name suborgs{ id name
 			}
         }
     }}
@@ -64,4 +58,23 @@ query GET_SUBORGBYID($id:String!){
 	}	
 }
 `;
-export {GET_AllUsers,GET_ORGBYID,GET_SUBORGBYID}
+const GET_SUBSCRIPTION = gql`
+   query GET_SUBSCRIPTION{
+  mySubscription{
+    id
+    subsType
+    mySubjects{
+      id
+      name
+      medium{
+        id
+        name
+      }
+    }
+  }
+}
+   `;
+const GET_MYROLES=gql`
+    query GET_MYROLES{	myRoles{id	description userid{	id	email} role{id	name	org{	id name	suborgs{id	name	}}}}}
+`
+export {GET_AllUsers,GET_ORGBYID,GET_SUBORGBYID,GET_MYROLES,GET_SUBSCRIPTION}
