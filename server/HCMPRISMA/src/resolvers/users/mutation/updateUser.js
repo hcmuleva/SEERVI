@@ -1,3 +1,5 @@
+import hashPassword from '../../../utils/hashPassword'
+
 import getUserId from '../../../utils/getUserId'   
 async function updateUser(parent, args, { prisma, request }, info) {
     //const userId = getUserId(request)

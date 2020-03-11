@@ -11,6 +11,7 @@ type User {
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
   myRoles:[RoleMember!]! @relation(name: "RoleMemberToUser", onDelete: CASCADE)
+  myprofiles:[Profile!]!  @relation(name: "ProfilesToUser", onDelete: CASCADE)
   subjectSubscription:[SubjectSubscription!]! @relation(name: "SubjectSubscriptionToUser", onDelete: CASCADE)
   createdBy:String
   updatedAt:DateTime!  @updatedAt

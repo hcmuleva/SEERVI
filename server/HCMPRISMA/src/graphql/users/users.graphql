@@ -27,7 +27,9 @@ type User {
     posts: [Post!]! 
     comments: [Comment!]!
     groupmembers:[GroupMember!]!
+    myprofiles:[Profile!]!
     subjectSubscription:[SubjectSubscription!]! 
+    myRoles:[RoleMember!]!
     createdBy:ID
     createdAt:String!
     updatedAt:String!

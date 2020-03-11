@@ -22,11 +22,19 @@ type AggregatePost {
   count: Int!
 }
 
+type AggregateProfile {
+  count: Int!
+}
+
 type AggregateRole {
   count: Int!
 }
 
 type AggregateRoleMember {
+  count: Int!
+}
+
+type AggregateStudentProfile {
   count: Int!
 }
 
@@ -1230,6 +1238,12 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   deletePost(where: PostWhereUniqueInput!): Post
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  createProfile(data: ProfileCreateInput!): Profile!
+  updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile
+  updateManyProfiles(data: ProfileUpdateManyMutationInput!, where: ProfileWhereInput): BatchPayload!
+  upsertProfile(where: ProfileWhereUniqueInput!, create: ProfileCreateInput!, update: ProfileUpdateInput!): Profile!
+  deleteProfile(where: ProfileWhereUniqueInput!): Profile
+  deleteManyProfiles(where: ProfileWhereInput): BatchPayload!
   createRole(data: RoleCreateInput!): Role!
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
   updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
@@ -1242,6 +1256,12 @@ type Mutation {
   upsertRoleMember(where: RoleMemberWhereUniqueInput!, create: RoleMemberCreateInput!, update: RoleMemberUpdateInput!): RoleMember!
   deleteRoleMember(where: RoleMemberWhereUniqueInput!): RoleMember
   deleteManyRoleMembers(where: RoleMemberWhereInput): BatchPayload!
+  createStudentProfile(data: StudentProfileCreateInput!): StudentProfile!
+  updateStudentProfile(data: StudentProfileUpdateInput!, where: StudentProfileWhereUniqueInput!): StudentProfile
+  updateManyStudentProfiles(data: StudentProfileUpdateManyMutationInput!, where: StudentProfileWhereInput): BatchPayload!
+  upsertStudentProfile(where: StudentProfileWhereUniqueInput!, create: StudentProfileCreateInput!, update: StudentProfileUpdateInput!): StudentProfile!
+  deleteStudentProfile(where: StudentProfileWhereUniqueInput!): StudentProfile
+  deleteManyStudentProfiles(where: StudentProfileWhereInput): BatchPayload!
   createSubGroup(data: SubGroupCreateInput!): SubGroup!
   updateSubGroup(data: SubGroupUpdateInput!, where: SubGroupWhereUniqueInput!): SubGroup
   updateManySubGroups(data: SubGroupUpdateManyMutationInput!, where: SubGroupWhereInput): BatchPayload!
@@ -1870,6 +1890,223 @@ input PostWhereUniqueInput {
   id: ID
 }
 
+type Profile {
+  id: ID!
+  name: String!
+  userId: User!
+  studentProfile(where: StudentProfileWhereInput, orderBy: StudentProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentProfile!]
+}
+
+type ProfileConnection {
+  pageInfo: PageInfo!
+  edges: [ProfileEdge]!
+  aggregate: AggregateProfile!
+}
+
+input ProfileCreateInput {
+  id: ID
+  name: String!
+  userId: UserCreateOneWithoutMyprofilesInput!
+  studentProfile: StudentProfileCreateManyWithoutProfileIdInput
+}
+
+input ProfileCreateManyWithoutUserIdInput {
+  create: [ProfileCreateWithoutUserIdInput!]
+  connect: [ProfileWhereUniqueInput!]
+}
+
+input ProfileCreateOneWithoutStudentProfileInput {
+  create: ProfileCreateWithoutStudentProfileInput
+  connect: ProfileWhereUniqueInput
+}
+
+input ProfileCreateWithoutStudentProfileInput {
+  id: ID
+  name: String!
+  userId: UserCreateOneWithoutMyprofilesInput!
+}
+
+input ProfileCreateWithoutUserIdInput {
+  id: ID
+  name: String!
+  studentProfile: StudentProfileCreateManyWithoutProfileIdInput
+}
+
+type ProfileEdge {
+  node: Profile!
+  cursor: String!
+}
+
+enum ProfileOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type ProfilePreviousValues {
+  id: ID!
+  name: String!
+}
+
+input ProfileScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ProfileScalarWhereInput!]
+  OR: [ProfileScalarWhereInput!]
+  NOT: [ProfileScalarWhereInput!]
+}
+
+type ProfileSubscriptionPayload {
+  mutation: MutationType!
+  node: Profile
+  updatedFields: [String!]
+  previousValues: ProfilePreviousValues
+}
+
+input ProfileSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProfileWhereInput
+  AND: [ProfileSubscriptionWhereInput!]
+  OR: [ProfileSubscriptionWhereInput!]
+  NOT: [ProfileSubscriptionWhereInput!]
+}
+
+input ProfileUpdateInput {
+  name: String
+  userId: UserUpdateOneRequiredWithoutMyprofilesInput
+  studentProfile: StudentProfileUpdateManyWithoutProfileIdInput
+}
+
+input ProfileUpdateManyDataInput {
+  name: String
+}
+
+input ProfileUpdateManyMutationInput {
+  name: String
+}
+
+input ProfileUpdateManyWithoutUserIdInput {
+  create: [ProfileCreateWithoutUserIdInput!]
+  delete: [ProfileWhereUniqueInput!]
+  connect: [ProfileWhereUniqueInput!]
+  set: [ProfileWhereUniqueInput!]
+  disconnect: [ProfileWhereUniqueInput!]
+  update: [ProfileUpdateWithWhereUniqueWithoutUserIdInput!]
+  upsert: [ProfileUpsertWithWhereUniqueWithoutUserIdInput!]
+  deleteMany: [ProfileScalarWhereInput!]
+  updateMany: [ProfileUpdateManyWithWhereNestedInput!]
+}
+
+input ProfileUpdateManyWithWhereNestedInput {
+  where: ProfileScalarWhereInput!
+  data: ProfileUpdateManyDataInput!
+}
+
+input ProfileUpdateOneRequiredWithoutStudentProfileInput {
+  create: ProfileCreateWithoutStudentProfileInput
+  update: ProfileUpdateWithoutStudentProfileDataInput
+  upsert: ProfileUpsertWithoutStudentProfileInput
+  connect: ProfileWhereUniqueInput
+}
+
+input ProfileUpdateWithoutStudentProfileDataInput {
+  name: String
+  userId: UserUpdateOneRequiredWithoutMyprofilesInput
+}
+
+input ProfileUpdateWithoutUserIdDataInput {
+  name: String
+  studentProfile: StudentProfileUpdateManyWithoutProfileIdInput
+}
+
+input ProfileUpdateWithWhereUniqueWithoutUserIdInput {
+  where: ProfileWhereUniqueInput!
+  data: ProfileUpdateWithoutUserIdDataInput!
+}
+
+input ProfileUpsertWithoutStudentProfileInput {
+  update: ProfileUpdateWithoutStudentProfileDataInput!
+  create: ProfileCreateWithoutStudentProfileInput!
+}
+
+input ProfileUpsertWithWhereUniqueWithoutUserIdInput {
+  where: ProfileWhereUniqueInput!
+  update: ProfileUpdateWithoutUserIdDataInput!
+  create: ProfileCreateWithoutUserIdInput!
+}
+
+input ProfileWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  userId: UserWhereInput
+  studentProfile_every: StudentProfileWhereInput
+  studentProfile_some: StudentProfileWhereInput
+  studentProfile_none: StudentProfileWhereInput
+  AND: [ProfileWhereInput!]
+  OR: [ProfileWhereInput!]
+  NOT: [ProfileWhereInput!]
+}
+
+input ProfileWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
@@ -1889,12 +2126,18 @@ type Query {
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  profile(where: ProfileWhereUniqueInput!): Profile
+  profiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile]!
+  profilesConnection(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfileConnection!
   role(where: RoleWhereUniqueInput!): Role
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
   rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
   roleMember(where: RoleMemberWhereUniqueInput!): RoleMember
   roleMembers(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember]!
   roleMembersConnection(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleMemberConnection!
+  studentProfile(where: StudentProfileWhereUniqueInput!): StudentProfile
+  studentProfiles(where: StudentProfileWhereInput, orderBy: StudentProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentProfile]!
+  studentProfilesConnection(where: StudentProfileWhereInput, orderBy: StudentProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentProfileConnection!
   subGroup(where: SubGroupWhereUniqueInput!): SubGroup
   subGroups(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroup]!
   subGroupsConnection(where: SubGroupWhereInput, orderBy: SubGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubGroupConnection!
@@ -2670,6 +2913,543 @@ input RoleWhereInput {
 }
 
 input RoleWhereUniqueInput {
+  id: ID
+}
+
+type StudentProfile {
+  id: ID!
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: Profile!
+}
+
+type StudentProfileConnection {
+  pageInfo: PageInfo!
+  edges: [StudentProfileEdge]!
+  aggregate: AggregateStudentProfile!
+}
+
+input StudentProfileCreateInput {
+  id: ID
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: ProfileCreateOneWithoutStudentProfileInput!
+}
+
+input StudentProfileCreateManyWithoutProfileIdInput {
+  create: [StudentProfileCreateWithoutProfileIdInput!]
+  connect: [StudentProfileWhereUniqueInput!]
+}
+
+input StudentProfileCreateWithoutProfileIdInput {
+  id: ID
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+type StudentProfileEdge {
+  node: StudentProfile!
+  cursor: String!
+}
+
+enum StudentProfileOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  profiileType_ASC
+  profiileType_DESC
+  educationLevel_ASC
+  educationLevel_DESC
+  educationType_ASC
+  educationType_DESC
+  specialization_ASC
+  specialization_DESC
+  std_ASC
+  std_DESC
+  startedYear_ASC
+  startedYear_DESC
+  completedYear_ASC
+  completedYear_DESC
+  result_ASC
+  result_DESC
+  status_ASC
+  status_DESC
+  remark_ASC
+  remark_DESC
+}
+
+type StudentProfilePreviousValues {
+  id: ID!
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  profiileType: String
+  profiileType_not: String
+  profiileType_in: [String!]
+  profiileType_not_in: [String!]
+  profiileType_lt: String
+  profiileType_lte: String
+  profiileType_gt: String
+  profiileType_gte: String
+  profiileType_contains: String
+  profiileType_not_contains: String
+  profiileType_starts_with: String
+  profiileType_not_starts_with: String
+  profiileType_ends_with: String
+  profiileType_not_ends_with: String
+  educationLevel: String
+  educationLevel_not: String
+  educationLevel_in: [String!]
+  educationLevel_not_in: [String!]
+  educationLevel_lt: String
+  educationLevel_lte: String
+  educationLevel_gt: String
+  educationLevel_gte: String
+  educationLevel_contains: String
+  educationLevel_not_contains: String
+  educationLevel_starts_with: String
+  educationLevel_not_starts_with: String
+  educationLevel_ends_with: String
+  educationLevel_not_ends_with: String
+  educationType: String
+  educationType_not: String
+  educationType_in: [String!]
+  educationType_not_in: [String!]
+  educationType_lt: String
+  educationType_lte: String
+  educationType_gt: String
+  educationType_gte: String
+  educationType_contains: String
+  educationType_not_contains: String
+  educationType_starts_with: String
+  educationType_not_starts_with: String
+  educationType_ends_with: String
+  educationType_not_ends_with: String
+  specialization: String
+  specialization_not: String
+  specialization_in: [String!]
+  specialization_not_in: [String!]
+  specialization_lt: String
+  specialization_lte: String
+  specialization_gt: String
+  specialization_gte: String
+  specialization_contains: String
+  specialization_not_contains: String
+  specialization_starts_with: String
+  specialization_not_starts_with: String
+  specialization_ends_with: String
+  specialization_not_ends_with: String
+  std: String
+  std_not: String
+  std_in: [String!]
+  std_not_in: [String!]
+  std_lt: String
+  std_lte: String
+  std_gt: String
+  std_gte: String
+  std_contains: String
+  std_not_contains: String
+  std_starts_with: String
+  std_not_starts_with: String
+  std_ends_with: String
+  std_not_ends_with: String
+  startedYear: DateTime
+  startedYear_not: DateTime
+  startedYear_in: [DateTime!]
+  startedYear_not_in: [DateTime!]
+  startedYear_lt: DateTime
+  startedYear_lte: DateTime
+  startedYear_gt: DateTime
+  startedYear_gte: DateTime
+  completedYear: DateTime
+  completedYear_not: DateTime
+  completedYear_in: [DateTime!]
+  completedYear_not_in: [DateTime!]
+  completedYear_lt: DateTime
+  completedYear_lte: DateTime
+  completedYear_gt: DateTime
+  completedYear_gte: DateTime
+  result: String
+  result_not: String
+  result_in: [String!]
+  result_not_in: [String!]
+  result_lt: String
+  result_lte: String
+  result_gt: String
+  result_gte: String
+  result_contains: String
+  result_not_contains: String
+  result_starts_with: String
+  result_not_starts_with: String
+  result_ends_with: String
+  result_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  remark: String
+  remark_not: String
+  remark_in: [String!]
+  remark_not_in: [String!]
+  remark_lt: String
+  remark_lte: String
+  remark_gt: String
+  remark_gte: String
+  remark_contains: String
+  remark_not_contains: String
+  remark_starts_with: String
+  remark_not_starts_with: String
+  remark_ends_with: String
+  remark_not_ends_with: String
+  AND: [StudentProfileScalarWhereInput!]
+  OR: [StudentProfileScalarWhereInput!]
+  NOT: [StudentProfileScalarWhereInput!]
+}
+
+type StudentProfileSubscriptionPayload {
+  mutation: MutationType!
+  node: StudentProfile
+  updatedFields: [String!]
+  previousValues: StudentProfilePreviousValues
+}
+
+input StudentProfileSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StudentProfileWhereInput
+  AND: [StudentProfileSubscriptionWhereInput!]
+  OR: [StudentProfileSubscriptionWhereInput!]
+  NOT: [StudentProfileSubscriptionWhereInput!]
+}
+
+input StudentProfileUpdateInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: ProfileUpdateOneRequiredWithoutStudentProfileInput
+}
+
+input StudentProfileUpdateManyDataInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileUpdateManyMutationInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileUpdateManyWithoutProfileIdInput {
+  create: [StudentProfileCreateWithoutProfileIdInput!]
+  delete: [StudentProfileWhereUniqueInput!]
+  connect: [StudentProfileWhereUniqueInput!]
+  set: [StudentProfileWhereUniqueInput!]
+  disconnect: [StudentProfileWhereUniqueInput!]
+  update: [StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput!]
+  upsert: [StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput!]
+  deleteMany: [StudentProfileScalarWhereInput!]
+  updateMany: [StudentProfileUpdateManyWithWhereNestedInput!]
+}
+
+input StudentProfileUpdateManyWithWhereNestedInput {
+  where: StudentProfileScalarWhereInput!
+  data: StudentProfileUpdateManyDataInput!
+}
+
+input StudentProfileUpdateWithoutProfileIdDataInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput {
+  where: StudentProfileWhereUniqueInput!
+  data: StudentProfileUpdateWithoutProfileIdDataInput!
+}
+
+input StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput {
+  where: StudentProfileWhereUniqueInput!
+  update: StudentProfileUpdateWithoutProfileIdDataInput!
+  create: StudentProfileCreateWithoutProfileIdInput!
+}
+
+input StudentProfileWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  profiileType: String
+  profiileType_not: String
+  profiileType_in: [String!]
+  profiileType_not_in: [String!]
+  profiileType_lt: String
+  profiileType_lte: String
+  profiileType_gt: String
+  profiileType_gte: String
+  profiileType_contains: String
+  profiileType_not_contains: String
+  profiileType_starts_with: String
+  profiileType_not_starts_with: String
+  profiileType_ends_with: String
+  profiileType_not_ends_with: String
+  educationLevel: String
+  educationLevel_not: String
+  educationLevel_in: [String!]
+  educationLevel_not_in: [String!]
+  educationLevel_lt: String
+  educationLevel_lte: String
+  educationLevel_gt: String
+  educationLevel_gte: String
+  educationLevel_contains: String
+  educationLevel_not_contains: String
+  educationLevel_starts_with: String
+  educationLevel_not_starts_with: String
+  educationLevel_ends_with: String
+  educationLevel_not_ends_with: String
+  educationType: String
+  educationType_not: String
+  educationType_in: [String!]
+  educationType_not_in: [String!]
+  educationType_lt: String
+  educationType_lte: String
+  educationType_gt: String
+  educationType_gte: String
+  educationType_contains: String
+  educationType_not_contains: String
+  educationType_starts_with: String
+  educationType_not_starts_with: String
+  educationType_ends_with: String
+  educationType_not_ends_with: String
+  specialization: String
+  specialization_not: String
+  specialization_in: [String!]
+  specialization_not_in: [String!]
+  specialization_lt: String
+  specialization_lte: String
+  specialization_gt: String
+  specialization_gte: String
+  specialization_contains: String
+  specialization_not_contains: String
+  specialization_starts_with: String
+  specialization_not_starts_with: String
+  specialization_ends_with: String
+  specialization_not_ends_with: String
+  std: String
+  std_not: String
+  std_in: [String!]
+  std_not_in: [String!]
+  std_lt: String
+  std_lte: String
+  std_gt: String
+  std_gte: String
+  std_contains: String
+  std_not_contains: String
+  std_starts_with: String
+  std_not_starts_with: String
+  std_ends_with: String
+  std_not_ends_with: String
+  startedYear: DateTime
+  startedYear_not: DateTime
+  startedYear_in: [DateTime!]
+  startedYear_not_in: [DateTime!]
+  startedYear_lt: DateTime
+  startedYear_lte: DateTime
+  startedYear_gt: DateTime
+  startedYear_gte: DateTime
+  completedYear: DateTime
+  completedYear_not: DateTime
+  completedYear_in: [DateTime!]
+  completedYear_not_in: [DateTime!]
+  completedYear_lt: DateTime
+  completedYear_lte: DateTime
+  completedYear_gt: DateTime
+  completedYear_gte: DateTime
+  result: String
+  result_not: String
+  result_in: [String!]
+  result_not_in: [String!]
+  result_lt: String
+  result_lte: String
+  result_gt: String
+  result_gte: String
+  result_contains: String
+  result_not_contains: String
+  result_starts_with: String
+  result_not_starts_with: String
+  result_ends_with: String
+  result_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  remark: String
+  remark_not: String
+  remark_in: [String!]
+  remark_not_in: [String!]
+  remark_lt: String
+  remark_lte: String
+  remark_gt: String
+  remark_gte: String
+  remark_contains: String
+  remark_not_contains: String
+  remark_starts_with: String
+  remark_not_starts_with: String
+  remark_ends_with: String
+  remark_not_ends_with: String
+  profileId: ProfileWhereInput
+  AND: [StudentProfileWhereInput!]
+  OR: [StudentProfileWhereInput!]
+  NOT: [StudentProfileWhereInput!]
+}
+
+input StudentProfileWhereUniqueInput {
   id: ID
 }
 
@@ -4365,8 +5145,10 @@ type Subscription {
   medium(where: MediumSubscriptionWhereInput): MediumSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  profile(where: ProfileSubscriptionWhereInput): ProfileSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
   roleMember(where: RoleMemberSubscriptionWhereInput): RoleMemberSubscriptionPayload
+  studentProfile(where: StudentProfileSubscriptionWhereInput): StudentProfileSubscriptionPayload
   subGroup(where: SubGroupSubscriptionWhereInput): SubGroupSubscriptionPayload
   subGroupMember(where: SubGroupMemberSubscriptionWhereInput): SubGroupMemberSubscriptionPayload
   subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
@@ -4388,6 +5170,7 @@ type User {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   myRoles(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  myprofiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile!]
   subjectSubscription(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription!]
   createdBy: String
   updatedAt: DateTime!
@@ -4413,6 +5196,7 @@ input UserCreateInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4434,6 +5218,11 @@ input UserCreateOneWithoutCommentsInput {
 
 input UserCreateOneWithoutGroupmembersInput {
   create: UserCreateWithoutGroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMyprofilesInput {
+  create: UserCreateWithoutMyprofilesInput
   connect: UserWhereUniqueInput
 }
 
@@ -4469,6 +5258,7 @@ input UserCreateWithoutCommentsInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4481,6 +5271,24 @@ input UserCreateWithoutGroupmembersInput {
   password: String!
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserCreateWithoutMyprofilesInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
@@ -4501,6 +5309,7 @@ input UserCreateWithoutMyRolesInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4517,6 +5326,7 @@ input UserCreateWithoutOrgInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4533,6 +5343,7 @@ input UserCreateWithoutPostsInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4549,6 +5360,7 @@ input UserCreateWithoutSubgroupmembersInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4566,6 +5378,7 @@ input UserCreateWithoutSubjectSubscriptionInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   createdBy: String
 }
 
@@ -4581,6 +5394,7 @@ input UserCreateWithoutSuborgInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
 }
@@ -4756,6 +5570,7 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4819,6 +5634,13 @@ input UserUpdateOneRequiredWithoutGroupmembersInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutMyprofilesInput {
+  create: UserCreateWithoutMyprofilesInput
+  update: UserUpdateWithoutMyprofilesDataInput
+  upsert: UserUpsertWithoutMyprofilesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutMyRolesInput {
   create: UserCreateWithoutMyRolesInput
   update: UserUpdateWithoutMyRolesDataInput
@@ -4858,6 +5680,7 @@ input UserUpdateWithoutCommentsDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4869,6 +5692,23 @@ input UserUpdateWithoutGroupmembersDataInput {
   password: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  createdBy: String
+}
+
+input UserUpdateWithoutMyprofilesDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
@@ -4888,6 +5728,7 @@ input UserUpdateWithoutMyRolesDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4903,6 +5744,7 @@ input UserUpdateWithoutOrgDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4918,6 +5760,7 @@ input UserUpdateWithoutPostsDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4933,6 +5776,7 @@ input UserUpdateWithoutSubgroupmembersDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4949,6 +5793,7 @@ input UserUpdateWithoutSubjectSubscriptionDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   createdBy: String
 }
 
@@ -4963,6 +5808,7 @@ input UserUpdateWithoutSuborgDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
 }
@@ -4985,6 +5831,11 @@ input UserUpsertWithoutCommentsInput {
 input UserUpsertWithoutGroupmembersInput {
   update: UserUpdateWithoutGroupmembersDataInput!
   create: UserCreateWithoutGroupmembersInput!
+}
+
+input UserUpsertWithoutMyprofilesInput {
+  update: UserUpdateWithoutMyprofilesDataInput!
+  create: UserCreateWithoutMyprofilesInput!
 }
 
 input UserUpsertWithoutMyRolesInput {
@@ -5109,6 +5960,9 @@ input UserWhereInput {
   myRoles_every: RoleMemberWhereInput
   myRoles_some: RoleMemberWhereInput
   myRoles_none: RoleMemberWhereInput
+  myprofiles_every: ProfileWhereInput
+  myprofiles_some: ProfileWhereInput
+  myprofiles_none: ProfileWhereInput
   subjectSubscription_every: SubjectSubscriptionWhereInput
   subjectSubscription_some: SubjectSubscriptionWhereInput
   subjectSubscription_none: SubjectSubscriptionWhereInput

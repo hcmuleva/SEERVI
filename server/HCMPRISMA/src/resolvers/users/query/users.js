@@ -15,6 +15,7 @@ function users(parent, args, { prisma }, info) {
 
     return prisma.query.users(opArgs, info)
 }
+
 function getAllMedium(parent, args, { prisma }, info) {
     return prisma.query.mediums(null, info)
 }

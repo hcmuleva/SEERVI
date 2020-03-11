@@ -67,6 +67,14 @@ var models = [
   {
     name: "SubjectSubscription",
     embedded: false
+  },
+  {
+    name: "Profile",
+    embedded: false
+  },
+  {
+    name: "StudentProfile",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

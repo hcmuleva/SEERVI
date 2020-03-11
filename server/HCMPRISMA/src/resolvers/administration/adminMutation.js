@@ -6,7 +6,7 @@ import {createSubGroup,deleteSubGroup,updateSubGroup} from './mutation/SubGroup'
 import {assignUserToGroup,deleteUserToGroup,updateUserToGroup} from './mutation/UserToGroup'
 import {assignUserToSubGroup,deleteUserToSubGroup,updateUserToSubGroup} from './mutation/UserToSubGroup'
 import {createOrgRole,createSubOrgRole, createGroupRole,createSubGroupRole,updateRole,deleteRole} from './mutation/Role'
-import {createUserRole,deleteUserRole,updateUserRole} from './mutation/UserRole'
+import {createUserRole,assignBulkRoleToUser,deleteUserRole,updateUserRole} from './mutation/UserRole'
 export const AdminMutation = {
     createOrganization,deleteOrg,updateOrg,
     createSubOrg,deleteSubOrg,updateSuborg,
@@ -15,7 +15,7 @@ export const AdminMutation = {
     assignUserToGroup,deleteUserToGroup,updateUserToGroup,
     assignUserToSubGroup,deleteUserToSubGroup,updateUserToSubGroup,
     createOrgRole,createSubOrgRole, createGroupRole,createSubGroupRole,updateRole,deleteRole,
-    createUserRole,deleteUserRole,updateUserRole
+    createUserRole,assignBulkRoleToUser,deleteUserRole,updateUserRole
     
 }
 

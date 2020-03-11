@@ -6,9 +6,14 @@ function allsuborgs(parent, args, { prisma }, info) {
 
 async function suborgsoforg(parent, args, { prisma }, info) {
 console.log("getAllSubOrgOfOrg args",args.id,"parent",parent)
-return  await prisma.query.suborgs({
+const suborgsData=  await prisma.query.suborgs({
      org:{connect:{id:args.id}} 
 }, info)
+console.log("suborgsData",suborgsData)
+
+return suborgsData.filter((sorg)=>{
+    if(sorg.org.id===args.id) return sorg
+});
 }
 
 

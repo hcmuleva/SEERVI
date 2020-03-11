@@ -1,0 +1,32 @@
+type Profile{
+    id:ID! @id
+    name:String!
+    userId:User! @relation(name: "ProfilesToUser", onDelete: SET_NULL)
+    studentProfile:[StudentProfile!]! @relation(name: "StudentProfiileToProfiles", onDelete: CASCADE)
+}
+
+type StudentProfile{
+    id:ID! @id
+    name:String!
+    profiileType:String
+    """
+    profiileType meaning: Scool, College, University
+    educationLevel: Primary, middle,hiighschool, highersecondary UG or PG PhD NA
+    education Type: Full Time, Part time , tution type, Training type
+    std: LKG, UKG ...11th 12th ....
+    result: Pass Fail Drop
+    status: active/inactive 
+    remark: 
+    attch certificates for this profile: This is TBD
+    """
+    educationLevel:String
+    educationType:String
+    specialization:String
+    std:String
+    startedYear:DateTime
+    completedYear:DateTime
+    result:String
+    status:String
+    remark:String
+    profileId:Profile! @relation(name: "StudentProfiileToProfiles", onDelete: SET_NULL)
+}

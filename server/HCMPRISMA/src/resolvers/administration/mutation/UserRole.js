@@ -19,6 +19,32 @@ function createUserRole(parent,args,{prisma,request},info){
     }, info)
 }
 
+function assignBulkRoleToUser(parent,args,{prisma,request},info){
+
+    console.log("RECIEVED CREATED createUserRole REQUEST",args.data)
+    const {status,description,userid,role}=args.data
+    const roleJsonObj=JSON.parse(role)
+    const data=roleJsonObj.map((roleobj)=>{
+        return  prisma.mutation.createRoleMember({
+        data: {
+            status, description,
+            userid: {
+                connect:{
+                    id:userid
+                }
+            },
+            role:{
+               connect:{
+                   id:roleobj.id
+               }
+            }
+        }
+    
+    })
+    });
+    return true
+}
+
 
 
  async function deleteUserRole(parent, args, { prisma, request }, info) {
@@ -54,4 +80,4 @@ async function updateUserRole(parent, args, { prisma, request }, info) {
 
 
 
-export {createUserRole,deleteUserRole,updateUserRole}
+export {createUserRole,deleteUserRole,updateUserRole,assignBulkRoleToUser}

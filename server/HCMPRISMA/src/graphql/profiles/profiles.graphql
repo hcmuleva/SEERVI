@@ -1,0 +1,62 @@
+type Query {
+  getAllProfiles:[Profile!]!
+  getStudentProfiles:[StudentProfile!]!
+  getMyProfiles(id:String!):[Profile!]!
+}
+type Mutation {
+  createProfile(data:ProfilesInputData!):Profile!
+  createStudentProfile(data:StudentProfileInputData!):StudentProfile!
+}
+type Profile{
+    id:ID!
+    name:String!
+    userId:User! 
+    studentProfile:[StudentProfile!]! 
+}
+
+type StudentProfile{
+    id:ID! 
+    name:String!
+    profiileType:String
+    """
+    profiileType meaning: Scool, College, University
+    educationLevel: Primary, middle,hiighschool, highersecondary UG or PG PhD NA
+    education Type: Full Time, Part time , tution type, Training type
+    std: LKG, UKG ...11th 12th ....
+    result: Pass Fail Drop
+    status: active/inactive 
+    remark: 
+    attch certificates for this profile: This is TBD
+    """
+    educationLevel:String
+    educationType:String
+    specialization:String
+    std:String
+    startedYear:DateTime
+    completedYear:DateTime
+    result:String
+    status:String
+    remark:String
+    profileId:Profile! 
+}
+
+input  ProfilesInputData{
+    name:String!
+    userId:String!
+}
+
+input StudentProfileInputData{
+    name:String!
+    profiileType:String
+    educationLevel:String
+    educationType:String
+    specialization:String
+    std:String
+    startedYear:String
+    completedYear:String
+    result:String
+    status:String
+    remark:String
+    profileId:String! 
+
+}

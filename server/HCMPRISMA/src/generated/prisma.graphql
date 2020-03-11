@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Feb 15 2020 10:01:57 GMT+0530 (India Standard Time)
+# timestamp: Wed Mar 04 2020 10:23:31 GMT+0530 (India Standard Time)
 
 type AggregateComment {
   count: Int!
@@ -25,11 +25,19 @@ type AggregatePost {
   count: Int!
 }
 
+type AggregateProfile {
+  count: Int!
+}
+
 type AggregateRole {
   count: Int!
 }
 
 type AggregateRoleMember {
+  count: Int!
+}
+
+type AggregateStudentProfile {
   count: Int!
 }
 
@@ -1955,6 +1963,8 @@ type Mutation {
   createPost(data: PostCreateInput!): Post!
   createComment(data: CommentCreateInput!): Comment!
   createSubjectSubscription(data: SubjectSubscriptionCreateInput!): SubjectSubscription!
+  createProfile(data: ProfileCreateInput!): Profile!
+  createStudentProfile(data: StudentProfileCreateInput!): StudentProfile!
   createSuborg(data: SuborgCreateInput!): Suborg!
   createSubject(data: SubjectCreateInput!): Subject!
   createRole(data: RoleCreateInput!): Role!
@@ -1969,6 +1979,8 @@ type Mutation {
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateSubjectSubscription(data: SubjectSubscriptionUpdateInput!, where: SubjectSubscriptionWhereUniqueInput!): SubjectSubscription
+  updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile
+  updateStudentProfile(data: StudentProfileUpdateInput!, where: StudentProfileWhereUniqueInput!): StudentProfile
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
   updateSubject(data: SubjectUpdateInput!, where: SubjectWhereUniqueInput!): Subject
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
@@ -1983,6 +1995,8 @@ type Mutation {
   deletePost(where: PostWhereUniqueInput!): Post
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteSubjectSubscription(where: SubjectSubscriptionWhereUniqueInput!): SubjectSubscription
+  deleteProfile(where: ProfileWhereUniqueInput!): Profile
+  deleteStudentProfile(where: StudentProfileWhereUniqueInput!): StudentProfile
   deleteSuborg(where: SuborgWhereUniqueInput!): Suborg
   deleteSubject(where: SubjectWhereUniqueInput!): Subject
   deleteRole(where: RoleWhereUniqueInput!): Role
@@ -1997,6 +2011,8 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   upsertSubjectSubscription(where: SubjectSubscriptionWhereUniqueInput!, create: SubjectSubscriptionCreateInput!, update: SubjectSubscriptionUpdateInput!): SubjectSubscription!
+  upsertProfile(where: ProfileWhereUniqueInput!, create: ProfileCreateInput!, update: ProfileUpdateInput!): Profile!
+  upsertStudentProfile(where: StudentProfileWhereUniqueInput!, create: StudentProfileCreateInput!, update: StudentProfileUpdateInput!): StudentProfile!
   upsertSuborg(where: SuborgWhereUniqueInput!, create: SuborgCreateInput!, update: SuborgUpdateInput!): Suborg!
   upsertSubject(where: SubjectWhereUniqueInput!, create: SubjectCreateInput!, update: SubjectUpdateInput!): Subject!
   upsertRole(where: RoleWhereUniqueInput!, create: RoleCreateInput!, update: RoleUpdateInput!): Role!
@@ -2011,6 +2027,8 @@ type Mutation {
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
   updateManySubjectSubscriptions(data: SubjectSubscriptionUpdateManyMutationInput!, where: SubjectSubscriptionWhereInput): BatchPayload!
+  updateManyProfiles(data: ProfileUpdateManyMutationInput!, where: ProfileWhereInput): BatchPayload!
+  updateManyStudentProfiles(data: StudentProfileUpdateManyMutationInput!, where: StudentProfileWhereInput): BatchPayload!
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
   updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
   updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
@@ -2025,6 +2043,8 @@ type Mutation {
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
   deleteManySubjectSubscriptions(where: SubjectSubscriptionWhereInput): BatchPayload!
+  deleteManyProfiles(where: ProfileWhereInput): BatchPayload!
+  deleteManyStudentProfiles(where: StudentProfileWhereInput): BatchPayload!
   deleteManySuborgs(where: SuborgWhereInput): BatchPayload!
   deleteManySubjects(where: SubjectWhereInput): BatchPayload!
   deleteManyRoles(where: RoleWhereInput): BatchPayload!
@@ -3026,6 +3046,364 @@ enum PrismaDatabase {
   default
 }
 
+type Profile implements Node {
+  id: ID!
+  name: String!
+  userId: User!
+  studentProfile(where: StudentProfileWhereInput, orderBy: StudentProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentProfile!]
+}
+
+"""A connection to a list of items."""
+type ProfileConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProfileEdge]!
+  aggregate: AggregateProfile!
+}
+
+input ProfileCreateInput {
+  id: ID
+  name: String!
+  userId: UserCreateOneWithoutMyprofilesInput!
+  studentProfile: StudentProfileCreateManyWithoutProfileIdInput
+}
+
+input ProfileCreateManyWithoutUserIdInput {
+  create: [ProfileCreateWithoutUserIdInput!]
+  connect: [ProfileWhereUniqueInput!]
+}
+
+input ProfileCreateOneWithoutStudentProfileInput {
+  create: ProfileCreateWithoutStudentProfileInput
+  connect: ProfileWhereUniqueInput
+}
+
+input ProfileCreateWithoutStudentProfileInput {
+  id: ID
+  name: String!
+  userId: UserCreateOneWithoutMyprofilesInput!
+}
+
+input ProfileCreateWithoutUserIdInput {
+  id: ID
+  name: String!
+  studentProfile: StudentProfileCreateManyWithoutProfileIdInput
+}
+
+"""An edge in a connection."""
+type ProfileEdge {
+  """The item at the end of the edge."""
+  node: Profile!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ProfileOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type ProfilePreviousValues {
+  id: ID!
+  name: String!
+}
+
+input ProfileScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfileScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfileScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfileScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type ProfileSubscriptionPayload {
+  mutation: MutationType!
+  node: Profile
+  updatedFields: [String!]
+  previousValues: ProfilePreviousValues
+}
+
+input ProfileSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfileSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfileSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfileSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProfileWhereInput
+}
+
+input ProfileUpdateInput {
+  name: String
+  userId: UserUpdateOneRequiredWithoutMyprofilesInput
+  studentProfile: StudentProfileUpdateManyWithoutProfileIdInput
+}
+
+input ProfileUpdateManyDataInput {
+  name: String
+}
+
+input ProfileUpdateManyMutationInput {
+  name: String
+}
+
+input ProfileUpdateManyWithoutUserIdInput {
+  create: [ProfileCreateWithoutUserIdInput!]
+  connect: [ProfileWhereUniqueInput!]
+  set: [ProfileWhereUniqueInput!]
+  disconnect: [ProfileWhereUniqueInput!]
+  delete: [ProfileWhereUniqueInput!]
+  update: [ProfileUpdateWithWhereUniqueWithoutUserIdInput!]
+  updateMany: [ProfileUpdateManyWithWhereNestedInput!]
+  deleteMany: [ProfileScalarWhereInput!]
+  upsert: [ProfileUpsertWithWhereUniqueWithoutUserIdInput!]
+}
+
+input ProfileUpdateManyWithWhereNestedInput {
+  where: ProfileScalarWhereInput!
+  data: ProfileUpdateManyDataInput!
+}
+
+input ProfileUpdateOneRequiredWithoutStudentProfileInput {
+  create: ProfileCreateWithoutStudentProfileInput
+  connect: ProfileWhereUniqueInput
+  update: ProfileUpdateWithoutStudentProfileDataInput
+  upsert: ProfileUpsertWithoutStudentProfileInput
+}
+
+input ProfileUpdateWithoutStudentProfileDataInput {
+  name: String
+  userId: UserUpdateOneRequiredWithoutMyprofilesInput
+}
+
+input ProfileUpdateWithoutUserIdDataInput {
+  name: String
+  studentProfile: StudentProfileUpdateManyWithoutProfileIdInput
+}
+
+input ProfileUpdateWithWhereUniqueWithoutUserIdInput {
+  where: ProfileWhereUniqueInput!
+  data: ProfileUpdateWithoutUserIdDataInput!
+}
+
+input ProfileUpsertWithoutStudentProfileInput {
+  update: ProfileUpdateWithoutStudentProfileDataInput!
+  create: ProfileCreateWithoutStudentProfileInput!
+}
+
+input ProfileUpsertWithWhereUniqueWithoutUserIdInput {
+  where: ProfileWhereUniqueInput!
+  update: ProfileUpdateWithoutUserIdDataInput!
+  create: ProfileCreateWithoutUserIdInput!
+}
+
+input ProfileWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfileWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfileWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfileWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  userId: UserWhereInput
+  studentProfile_every: StudentProfileWhereInput
+  studentProfile_some: StudentProfileWhereInput
+  studentProfile_none: StudentProfileWhereInput
+}
+
+input ProfileWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
@@ -3038,6 +3416,8 @@ type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   subjectSubscriptions(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription]!
+  profiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile]!
+  studentProfiles(where: StudentProfileWhereInput, orderBy: StudentProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentProfile]!
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
@@ -3052,6 +3432,8 @@ type Query {
   post(where: PostWhereUniqueInput!): Post
   comment(where: CommentWhereUniqueInput!): Comment
   subjectSubscription(where: SubjectSubscriptionWhereUniqueInput!): SubjectSubscription
+  profile(where: ProfileWhereUniqueInput!): Profile
+  studentProfile(where: StudentProfileWhereUniqueInput!): StudentProfile
   suborg(where: SuborgWhereUniqueInput!): Suborg
   subject(where: SubjectWhereUniqueInput!): Subject
   role(where: RoleWhereUniqueInput!): Role
@@ -3066,6 +3448,8 @@ type Query {
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
   subjectSubscriptionsConnection(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectSubscriptionConnection!
+  profilesConnection(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfileConnection!
+  studentProfilesConnection(where: StudentProfileWhereInput, orderBy: StudentProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentProfileConnection!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
   subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
   rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
@@ -4280,6 +4664,1156 @@ input RoleWhereInput {
 }
 
 input RoleWhereUniqueInput {
+  id: ID
+}
+
+type StudentProfile implements Node {
+  id: ID!
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: Profile!
+}
+
+"""A connection to a list of items."""
+type StudentProfileConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StudentProfileEdge]!
+  aggregate: AggregateStudentProfile!
+}
+
+input StudentProfileCreateInput {
+  id: ID
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: ProfileCreateOneWithoutStudentProfileInput!
+}
+
+input StudentProfileCreateManyWithoutProfileIdInput {
+  create: [StudentProfileCreateWithoutProfileIdInput!]
+  connect: [StudentProfileWhereUniqueInput!]
+}
+
+input StudentProfileCreateWithoutProfileIdInput {
+  id: ID
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+"""An edge in a connection."""
+type StudentProfileEdge {
+  """The item at the end of the edge."""
+  node: StudentProfile!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum StudentProfileOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  profiileType_ASC
+  profiileType_DESC
+  educationLevel_ASC
+  educationLevel_DESC
+  educationType_ASC
+  educationType_DESC
+  specialization_ASC
+  specialization_DESC
+  std_ASC
+  std_DESC
+  startedYear_ASC
+  startedYear_DESC
+  completedYear_ASC
+  completedYear_DESC
+  result_ASC
+  result_DESC
+  status_ASC
+  status_DESC
+  remark_ASC
+  remark_DESC
+}
+
+type StudentProfilePreviousValues {
+  id: ID!
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudentProfileScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudentProfileScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudentProfileScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  profiileType: String
+
+  """All values that are not equal to given value."""
+  profiileType_not: String
+
+  """All values that are contained in given list."""
+  profiileType_in: [String!]
+
+  """All values that are not contained in given list."""
+  profiileType_not_in: [String!]
+
+  """All values less than the given value."""
+  profiileType_lt: String
+
+  """All values less than or equal the given value."""
+  profiileType_lte: String
+
+  """All values greater than the given value."""
+  profiileType_gt: String
+
+  """All values greater than or equal the given value."""
+  profiileType_gte: String
+
+  """All values containing the given string."""
+  profiileType_contains: String
+
+  """All values not containing the given string."""
+  profiileType_not_contains: String
+
+  """All values starting with the given string."""
+  profiileType_starts_with: String
+
+  """All values not starting with the given string."""
+  profiileType_not_starts_with: String
+
+  """All values ending with the given string."""
+  profiileType_ends_with: String
+
+  """All values not ending with the given string."""
+  profiileType_not_ends_with: String
+  educationLevel: String
+
+  """All values that are not equal to given value."""
+  educationLevel_not: String
+
+  """All values that are contained in given list."""
+  educationLevel_in: [String!]
+
+  """All values that are not contained in given list."""
+  educationLevel_not_in: [String!]
+
+  """All values less than the given value."""
+  educationLevel_lt: String
+
+  """All values less than or equal the given value."""
+  educationLevel_lte: String
+
+  """All values greater than the given value."""
+  educationLevel_gt: String
+
+  """All values greater than or equal the given value."""
+  educationLevel_gte: String
+
+  """All values containing the given string."""
+  educationLevel_contains: String
+
+  """All values not containing the given string."""
+  educationLevel_not_contains: String
+
+  """All values starting with the given string."""
+  educationLevel_starts_with: String
+
+  """All values not starting with the given string."""
+  educationLevel_not_starts_with: String
+
+  """All values ending with the given string."""
+  educationLevel_ends_with: String
+
+  """All values not ending with the given string."""
+  educationLevel_not_ends_with: String
+  educationType: String
+
+  """All values that are not equal to given value."""
+  educationType_not: String
+
+  """All values that are contained in given list."""
+  educationType_in: [String!]
+
+  """All values that are not contained in given list."""
+  educationType_not_in: [String!]
+
+  """All values less than the given value."""
+  educationType_lt: String
+
+  """All values less than or equal the given value."""
+  educationType_lte: String
+
+  """All values greater than the given value."""
+  educationType_gt: String
+
+  """All values greater than or equal the given value."""
+  educationType_gte: String
+
+  """All values containing the given string."""
+  educationType_contains: String
+
+  """All values not containing the given string."""
+  educationType_not_contains: String
+
+  """All values starting with the given string."""
+  educationType_starts_with: String
+
+  """All values not starting with the given string."""
+  educationType_not_starts_with: String
+
+  """All values ending with the given string."""
+  educationType_ends_with: String
+
+  """All values not ending with the given string."""
+  educationType_not_ends_with: String
+  specialization: String
+
+  """All values that are not equal to given value."""
+  specialization_not: String
+
+  """All values that are contained in given list."""
+  specialization_in: [String!]
+
+  """All values that are not contained in given list."""
+  specialization_not_in: [String!]
+
+  """All values less than the given value."""
+  specialization_lt: String
+
+  """All values less than or equal the given value."""
+  specialization_lte: String
+
+  """All values greater than the given value."""
+  specialization_gt: String
+
+  """All values greater than or equal the given value."""
+  specialization_gte: String
+
+  """All values containing the given string."""
+  specialization_contains: String
+
+  """All values not containing the given string."""
+  specialization_not_contains: String
+
+  """All values starting with the given string."""
+  specialization_starts_with: String
+
+  """All values not starting with the given string."""
+  specialization_not_starts_with: String
+
+  """All values ending with the given string."""
+  specialization_ends_with: String
+
+  """All values not ending with the given string."""
+  specialization_not_ends_with: String
+  std: String
+
+  """All values that are not equal to given value."""
+  std_not: String
+
+  """All values that are contained in given list."""
+  std_in: [String!]
+
+  """All values that are not contained in given list."""
+  std_not_in: [String!]
+
+  """All values less than the given value."""
+  std_lt: String
+
+  """All values less than or equal the given value."""
+  std_lte: String
+
+  """All values greater than the given value."""
+  std_gt: String
+
+  """All values greater than or equal the given value."""
+  std_gte: String
+
+  """All values containing the given string."""
+  std_contains: String
+
+  """All values not containing the given string."""
+  std_not_contains: String
+
+  """All values starting with the given string."""
+  std_starts_with: String
+
+  """All values not starting with the given string."""
+  std_not_starts_with: String
+
+  """All values ending with the given string."""
+  std_ends_with: String
+
+  """All values not ending with the given string."""
+  std_not_ends_with: String
+  startedYear: DateTime
+
+  """All values that are not equal to given value."""
+  startedYear_not: DateTime
+
+  """All values that are contained in given list."""
+  startedYear_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  startedYear_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  startedYear_lt: DateTime
+
+  """All values less than or equal the given value."""
+  startedYear_lte: DateTime
+
+  """All values greater than the given value."""
+  startedYear_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  startedYear_gte: DateTime
+  completedYear: DateTime
+
+  """All values that are not equal to given value."""
+  completedYear_not: DateTime
+
+  """All values that are contained in given list."""
+  completedYear_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  completedYear_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  completedYear_lt: DateTime
+
+  """All values less than or equal the given value."""
+  completedYear_lte: DateTime
+
+  """All values greater than the given value."""
+  completedYear_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  completedYear_gte: DateTime
+  result: String
+
+  """All values that are not equal to given value."""
+  result_not: String
+
+  """All values that are contained in given list."""
+  result_in: [String!]
+
+  """All values that are not contained in given list."""
+  result_not_in: [String!]
+
+  """All values less than the given value."""
+  result_lt: String
+
+  """All values less than or equal the given value."""
+  result_lte: String
+
+  """All values greater than the given value."""
+  result_gt: String
+
+  """All values greater than or equal the given value."""
+  result_gte: String
+
+  """All values containing the given string."""
+  result_contains: String
+
+  """All values not containing the given string."""
+  result_not_contains: String
+
+  """All values starting with the given string."""
+  result_starts_with: String
+
+  """All values not starting with the given string."""
+  result_not_starts_with: String
+
+  """All values ending with the given string."""
+  result_ends_with: String
+
+  """All values not ending with the given string."""
+  result_not_ends_with: String
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  remark: String
+
+  """All values that are not equal to given value."""
+  remark_not: String
+
+  """All values that are contained in given list."""
+  remark_in: [String!]
+
+  """All values that are not contained in given list."""
+  remark_not_in: [String!]
+
+  """All values less than the given value."""
+  remark_lt: String
+
+  """All values less than or equal the given value."""
+  remark_lte: String
+
+  """All values greater than the given value."""
+  remark_gt: String
+
+  """All values greater than or equal the given value."""
+  remark_gte: String
+
+  """All values containing the given string."""
+  remark_contains: String
+
+  """All values not containing the given string."""
+  remark_not_contains: String
+
+  """All values starting with the given string."""
+  remark_starts_with: String
+
+  """All values not starting with the given string."""
+  remark_not_starts_with: String
+
+  """All values ending with the given string."""
+  remark_ends_with: String
+
+  """All values not ending with the given string."""
+  remark_not_ends_with: String
+}
+
+type StudentProfileSubscriptionPayload {
+  mutation: MutationType!
+  node: StudentProfile
+  updatedFields: [String!]
+  previousValues: StudentProfilePreviousValues
+}
+
+input StudentProfileSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudentProfileSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudentProfileSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudentProfileSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: StudentProfileWhereInput
+}
+
+input StudentProfileUpdateInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: ProfileUpdateOneRequiredWithoutStudentProfileInput
+}
+
+input StudentProfileUpdateManyDataInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileUpdateManyMutationInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileUpdateManyWithoutProfileIdInput {
+  create: [StudentProfileCreateWithoutProfileIdInput!]
+  connect: [StudentProfileWhereUniqueInput!]
+  set: [StudentProfileWhereUniqueInput!]
+  disconnect: [StudentProfileWhereUniqueInput!]
+  delete: [StudentProfileWhereUniqueInput!]
+  update: [StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput!]
+  updateMany: [StudentProfileUpdateManyWithWhereNestedInput!]
+  deleteMany: [StudentProfileScalarWhereInput!]
+  upsert: [StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput!]
+}
+
+input StudentProfileUpdateManyWithWhereNestedInput {
+  where: StudentProfileScalarWhereInput!
+  data: StudentProfileUpdateManyDataInput!
+}
+
+input StudentProfileUpdateWithoutProfileIdDataInput {
+  name: String
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  std: String
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+}
+
+input StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput {
+  where: StudentProfileWhereUniqueInput!
+  data: StudentProfileUpdateWithoutProfileIdDataInput!
+}
+
+input StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput {
+  where: StudentProfileWhereUniqueInput!
+  update: StudentProfileUpdateWithoutProfileIdDataInput!
+  create: StudentProfileCreateWithoutProfileIdInput!
+}
+
+input StudentProfileWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudentProfileWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudentProfileWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudentProfileWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  profiileType: String
+
+  """All values that are not equal to given value."""
+  profiileType_not: String
+
+  """All values that are contained in given list."""
+  profiileType_in: [String!]
+
+  """All values that are not contained in given list."""
+  profiileType_not_in: [String!]
+
+  """All values less than the given value."""
+  profiileType_lt: String
+
+  """All values less than or equal the given value."""
+  profiileType_lte: String
+
+  """All values greater than the given value."""
+  profiileType_gt: String
+
+  """All values greater than or equal the given value."""
+  profiileType_gte: String
+
+  """All values containing the given string."""
+  profiileType_contains: String
+
+  """All values not containing the given string."""
+  profiileType_not_contains: String
+
+  """All values starting with the given string."""
+  profiileType_starts_with: String
+
+  """All values not starting with the given string."""
+  profiileType_not_starts_with: String
+
+  """All values ending with the given string."""
+  profiileType_ends_with: String
+
+  """All values not ending with the given string."""
+  profiileType_not_ends_with: String
+  educationLevel: String
+
+  """All values that are not equal to given value."""
+  educationLevel_not: String
+
+  """All values that are contained in given list."""
+  educationLevel_in: [String!]
+
+  """All values that are not contained in given list."""
+  educationLevel_not_in: [String!]
+
+  """All values less than the given value."""
+  educationLevel_lt: String
+
+  """All values less than or equal the given value."""
+  educationLevel_lte: String
+
+  """All values greater than the given value."""
+  educationLevel_gt: String
+
+  """All values greater than or equal the given value."""
+  educationLevel_gte: String
+
+  """All values containing the given string."""
+  educationLevel_contains: String
+
+  """All values not containing the given string."""
+  educationLevel_not_contains: String
+
+  """All values starting with the given string."""
+  educationLevel_starts_with: String
+
+  """All values not starting with the given string."""
+  educationLevel_not_starts_with: String
+
+  """All values ending with the given string."""
+  educationLevel_ends_with: String
+
+  """All values not ending with the given string."""
+  educationLevel_not_ends_with: String
+  educationType: String
+
+  """All values that are not equal to given value."""
+  educationType_not: String
+
+  """All values that are contained in given list."""
+  educationType_in: [String!]
+
+  """All values that are not contained in given list."""
+  educationType_not_in: [String!]
+
+  """All values less than the given value."""
+  educationType_lt: String
+
+  """All values less than or equal the given value."""
+  educationType_lte: String
+
+  """All values greater than the given value."""
+  educationType_gt: String
+
+  """All values greater than or equal the given value."""
+  educationType_gte: String
+
+  """All values containing the given string."""
+  educationType_contains: String
+
+  """All values not containing the given string."""
+  educationType_not_contains: String
+
+  """All values starting with the given string."""
+  educationType_starts_with: String
+
+  """All values not starting with the given string."""
+  educationType_not_starts_with: String
+
+  """All values ending with the given string."""
+  educationType_ends_with: String
+
+  """All values not ending with the given string."""
+  educationType_not_ends_with: String
+  specialization: String
+
+  """All values that are not equal to given value."""
+  specialization_not: String
+
+  """All values that are contained in given list."""
+  specialization_in: [String!]
+
+  """All values that are not contained in given list."""
+  specialization_not_in: [String!]
+
+  """All values less than the given value."""
+  specialization_lt: String
+
+  """All values less than or equal the given value."""
+  specialization_lte: String
+
+  """All values greater than the given value."""
+  specialization_gt: String
+
+  """All values greater than or equal the given value."""
+  specialization_gte: String
+
+  """All values containing the given string."""
+  specialization_contains: String
+
+  """All values not containing the given string."""
+  specialization_not_contains: String
+
+  """All values starting with the given string."""
+  specialization_starts_with: String
+
+  """All values not starting with the given string."""
+  specialization_not_starts_with: String
+
+  """All values ending with the given string."""
+  specialization_ends_with: String
+
+  """All values not ending with the given string."""
+  specialization_not_ends_with: String
+  std: String
+
+  """All values that are not equal to given value."""
+  std_not: String
+
+  """All values that are contained in given list."""
+  std_in: [String!]
+
+  """All values that are not contained in given list."""
+  std_not_in: [String!]
+
+  """All values less than the given value."""
+  std_lt: String
+
+  """All values less than or equal the given value."""
+  std_lte: String
+
+  """All values greater than the given value."""
+  std_gt: String
+
+  """All values greater than or equal the given value."""
+  std_gte: String
+
+  """All values containing the given string."""
+  std_contains: String
+
+  """All values not containing the given string."""
+  std_not_contains: String
+
+  """All values starting with the given string."""
+  std_starts_with: String
+
+  """All values not starting with the given string."""
+  std_not_starts_with: String
+
+  """All values ending with the given string."""
+  std_ends_with: String
+
+  """All values not ending with the given string."""
+  std_not_ends_with: String
+  startedYear: DateTime
+
+  """All values that are not equal to given value."""
+  startedYear_not: DateTime
+
+  """All values that are contained in given list."""
+  startedYear_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  startedYear_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  startedYear_lt: DateTime
+
+  """All values less than or equal the given value."""
+  startedYear_lte: DateTime
+
+  """All values greater than the given value."""
+  startedYear_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  startedYear_gte: DateTime
+  completedYear: DateTime
+
+  """All values that are not equal to given value."""
+  completedYear_not: DateTime
+
+  """All values that are contained in given list."""
+  completedYear_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  completedYear_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  completedYear_lt: DateTime
+
+  """All values less than or equal the given value."""
+  completedYear_lte: DateTime
+
+  """All values greater than the given value."""
+  completedYear_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  completedYear_gte: DateTime
+  result: String
+
+  """All values that are not equal to given value."""
+  result_not: String
+
+  """All values that are contained in given list."""
+  result_in: [String!]
+
+  """All values that are not contained in given list."""
+  result_not_in: [String!]
+
+  """All values less than the given value."""
+  result_lt: String
+
+  """All values less than or equal the given value."""
+  result_lte: String
+
+  """All values greater than the given value."""
+  result_gt: String
+
+  """All values greater than or equal the given value."""
+  result_gte: String
+
+  """All values containing the given string."""
+  result_contains: String
+
+  """All values not containing the given string."""
+  result_not_contains: String
+
+  """All values starting with the given string."""
+  result_starts_with: String
+
+  """All values not starting with the given string."""
+  result_not_starts_with: String
+
+  """All values ending with the given string."""
+  result_ends_with: String
+
+  """All values not ending with the given string."""
+  result_not_ends_with: String
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  remark: String
+
+  """All values that are not equal to given value."""
+  remark_not: String
+
+  """All values that are contained in given list."""
+  remark_in: [String!]
+
+  """All values that are not contained in given list."""
+  remark_not_in: [String!]
+
+  """All values less than the given value."""
+  remark_lt: String
+
+  """All values less than or equal the given value."""
+  remark_lte: String
+
+  """All values greater than the given value."""
+  remark_gt: String
+
+  """All values greater than or equal the given value."""
+  remark_gte: String
+
+  """All values containing the given string."""
+  remark_contains: String
+
+  """All values not containing the given string."""
+  remark_not_contains: String
+
+  """All values starting with the given string."""
+  remark_starts_with: String
+
+  """All values not starting with the given string."""
+  remark_not_starts_with: String
+
+  """All values ending with the given string."""
+  remark_ends_with: String
+
+  """All values not ending with the given string."""
+  remark_not_ends_with: String
+  profileId: ProfileWhereInput
+}
+
+input StudentProfileWhereUniqueInput {
   id: ID
 }
 
@@ -7098,6 +8632,8 @@ type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   subjectSubscription(where: SubjectSubscriptionSubscriptionWhereInput): SubjectSubscriptionSubscriptionPayload
+  profile(where: ProfileSubscriptionWhereInput): ProfileSubscriptionPayload
+  studentProfile(where: StudentProfileSubscriptionWhereInput): StudentProfileSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
   subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
@@ -7116,6 +8652,7 @@ type User implements Node {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   myRoles(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  myprofiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile!]
   subjectSubscription(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription!]
   createdBy: String
   updatedAt: DateTime!
@@ -7146,6 +8683,7 @@ input UserCreateInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7166,6 +8704,11 @@ input UserCreateOneWithoutCommentsInput {
 
 input UserCreateOneWithoutGroupmembersInput {
   create: UserCreateWithoutGroupmembersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMyprofilesInput {
+  create: UserCreateWithoutMyprofilesInput
   connect: UserWhereUniqueInput
 }
 
@@ -7202,6 +8745,7 @@ input UserCreateWithoutCommentsInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7214,6 +8758,24 @@ input UserCreateWithoutGroupmembersInput {
   createdBy: String
   org: OrganizationCreateOneWithoutAuthorInput
   suborg: SuborgCreateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+}
+
+input UserCreateWithoutMyprofilesInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdBy: String
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
@@ -7234,6 +8796,7 @@ input UserCreateWithoutMyRolesInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7250,6 +8813,7 @@ input UserCreateWithoutOrgInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7266,6 +8830,7 @@ input UserCreateWithoutPostsInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7282,6 +8847,7 @@ input UserCreateWithoutSubgroupmembersInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7299,6 +8865,7 @@ input UserCreateWithoutSubjectSubscriptionInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutSuborgInput {
@@ -7314,6 +8881,7 @@ input UserCreateWithoutSuborgInput {
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
   myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
 }
 
@@ -7701,6 +9269,7 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7763,6 +9332,13 @@ input UserUpdateOneRequiredWithoutGroupmembersInput {
   upsert: UserUpsertWithoutGroupmembersInput
 }
 
+input UserUpdateOneRequiredWithoutMyprofilesInput {
+  create: UserCreateWithoutMyprofilesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutMyprofilesDataInput
+  upsert: UserUpsertWithoutMyprofilesInput
+}
+
 input UserUpdateOneRequiredWithoutMyRolesInput {
   create: UserCreateWithoutMyRolesInput
   connect: UserWhereUniqueInput
@@ -7803,6 +9379,7 @@ input UserUpdateWithoutCommentsDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7814,6 +9391,23 @@ input UserUpdateWithoutGroupmembersDataInput {
   createdBy: String
   org: OrganizationUpdateOneWithoutAuthorInput
   suborg: SuborgUpdateManyWithoutAuthorInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+}
+
+input UserUpdateWithoutMyprofilesDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  createdBy: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
@@ -7833,6 +9427,7 @@ input UserUpdateWithoutMyRolesDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7848,6 +9443,7 @@ input UserUpdateWithoutOrgDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7863,6 +9459,7 @@ input UserUpdateWithoutPostsDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7878,6 +9475,7 @@ input UserUpdateWithoutSubgroupmembersDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7894,6 +9492,7 @@ input UserUpdateWithoutSubjectSubscriptionDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutSuborgDataInput {
@@ -7908,6 +9507,7 @@ input UserUpdateWithoutSuborgDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
   myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
 }
 
@@ -7929,6 +9529,11 @@ input UserUpsertWithoutCommentsInput {
 input UserUpsertWithoutGroupmembersInput {
   update: UserUpdateWithoutGroupmembersDataInput!
   create: UserCreateWithoutGroupmembersInput!
+}
+
+input UserUpsertWithoutMyprofilesInput {
+  update: UserUpdateWithoutMyprofilesDataInput!
+  create: UserCreateWithoutMyprofilesInput!
 }
 
 input UserUpsertWithoutMyRolesInput {
@@ -8275,6 +9880,9 @@ input UserWhereInput {
   myRoles_every: RoleMemberWhereInput
   myRoles_some: RoleMemberWhereInput
   myRoles_none: RoleMemberWhereInput
+  myprofiles_every: ProfileWhereInput
+  myprofiles_some: ProfileWhereInput
+  myprofiles_none: ProfileWhereInput
   subjectSubscription_every: SubjectSubscriptionWhereInput
   subjectSubscription_some: SubjectSubscriptionWhereInput
   subjectSubscription_none: SubjectSubscriptionWhereInput

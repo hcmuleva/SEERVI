@@ -10,8 +10,12 @@ enum MutationType {
     DELETED
 }
 
+type PostSubscriptionPayload {
+    mutation: MutationType!
+    node: Post!
+}
 
 type CommentSubscriptionPayload {
     mutation: MutationType!
-    node: Comment
+    node: Comment!
 }

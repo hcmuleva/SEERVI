@@ -13,7 +13,7 @@ type Query {
     allSubGroups:[SubGroup!]!
     subgroupsOfGroup(id:String!):[SubGroup!]!
     orgRoles(id:String!):[Role!]!
-    subOrgRoles(id:String!):[Role!]!
+    suborgRoles(id:String!):[Role!]!
     groupRoles(id:String!):[Role!]!
     subGroupRoles(id:String!):[Role!]!
     groupmember(query: String):[GroupMember]  
@@ -52,6 +52,7 @@ type Mutation{
      deleteRole(id:ID!):Role!
 
      createUserRole(data:CreateRoleMemberInput):RoleMember!
+     assignBulkRoleToUser(data:CreateRoleMemberInput):Boolean!
      updateUserRole(id:ID!,data:UpdateRoleMemberInput):RoleMember!
      deleteUserRole(id:ID!):RoleMember!
 

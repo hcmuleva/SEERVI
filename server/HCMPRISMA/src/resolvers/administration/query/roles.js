@@ -22,7 +22,7 @@ async function orgRoles(parent, args, { prisma ,request}, info) {
     }, info)
   
 }
-async function subOrgRoles(parent, args, { prisma ,request}, info) {
+async function suborgRoles(parent, args, { prisma ,request}, info) {
    return await prisma.query.roles({
        where: {suborg:{id:args.id }}
         
@@ -43,4 +43,4 @@ async function subGroupRoles(parent, args, { prisma ,request}, info) {
     }, info)
   
 }
-export {allRoles,myRoles,orgRoles,subOrgRoles,groupRoles,subGroupRoles}
+export {allRoles,myRoles,orgRoles,suborgRoles,groupRoles,subGroupRoles}

@@ -6,6 +6,7 @@ async function allorgs(parent, args, { prisma }, info) {
 }
 
 function orgById(parent, args, { prisma }, info) {
+    console.log("REQIEST FOR ORGBYIID Invoked for ",args)
    return prisma.query.organization({
          where :{
             id:args.id
