@@ -9,38 +9,36 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
-
+import SubjectAdder from './../education/admin/SubjectAdder'
+import AddStd from './../education/admin/addStd'
 import { Row,Col
 } from "shards-react";
 
-import SubOrgPage from '../../views/admin/subOrgPage.js'
-  const getOrgComponent = ()=>{
-        const metaData=JSON.parse(localStorage.getItem('metadata'))
-        console.log("METADATA for orgadmin",metaData.org)
-        return metaData.org.id
-        
-        
-    }
+
 function TabPanel(props) {
-    
+  const stdSelection =(data)=>{
+      console.log("STD Selected",data)
+  }  
   const { children, value, index, ...other } = props;
   const getBox=(index)=>{
-      let title="STD";
-      let listData=[]
+      let title="EDUCATION";
       switch(index){
           case 0:
-           title="SUBORG";
-           return (<div>{<SubOrgPage id={getOrgComponent()} title={"SUBORG Create"}/>} </div>)
+           title="SUBJECT";
+           return (<div><SubjectAdder/></div>)
            break;
          case 1:
-           title="USER";
-            return (<div><h1>USER Management</h1></div>)
+           title="STD";
+            return (<div><AddStd selectStdRow={stdSelection}/></div>)
            break;
          case 2:
            title="ROLE";
             return (<div><h1>ROLE Management</h1></div>)
            break;
-         
+         case 3:
+           title="MEDIUM";
+            return (<div><h1>MEDIUM Management</h1></div>)
+           break;
       }
        
   }
@@ -79,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function OrgAdmin() {
+export default function EducationAdmin() {
         
   const classes = useStyles();
   const theme = useTheme();
@@ -106,9 +104,10 @@ export default function OrgAdmin() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="SUBORG" />
-          <Tab label="USER"  />
+          <Tab label="SUBJECT" />
+          <Tab label="STD"  />
           <Tab label="ROLE"  />
+          <Tab label="MEDIUM"/>
          
         </Tabs>
       </AppBar>

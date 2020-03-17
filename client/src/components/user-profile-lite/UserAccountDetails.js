@@ -15,7 +15,9 @@ import {
   Button
 } from "shards-react";
 
-const UserAccountDetails = ({ title }) => (
+const UserAccountDetails = ({ title }) => {
+  console.log("Recieved Titled ",title)
+  return (
   <Card small className="mb-4">
     <CardHeader className="border-bottom">
       <h6 className="m-0">{title}</h6>
@@ -125,7 +127,7 @@ const UserAccountDetails = ({ title }) => (
     </ListGroup>
   </Card>
 );
-
+}
 UserAccountDetails.propTypes = {
   /**
    * The component's title.

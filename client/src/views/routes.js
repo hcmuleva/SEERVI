@@ -32,6 +32,7 @@ import SuperAdminManagementPage from './admin/SuperAdminManagementPage'
 import UserManagedByAdmin from './admin/UserManagedByAdmin'
 import CustomizedExpansionPanels from "./newsRegisteration"
 import HCMTBDPage from "./../POC_TBD/HCMTBDPage"
+import EducationAdmin from "./EducationRoles/EducationAdmin"
 // Layout Types
 import { DefaultLayout } from "../layouts";
 
@@ -190,6 +191,13 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: OrgAdmin
+    
+  },
+    {
+    path: "/educationadmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: EducationAdmin
     
   },
   {

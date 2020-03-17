@@ -3,16 +3,73 @@ import { useQuery ,useMutation,useSubscription} from '@apollo/react-hooks';
 import {GET_ALLPOSTS,GET_LIVE_POSTS} from '../query/postQuery'
 import TeacherContentLive from './teacherContentLive'
 import TestApp from "../../commontable/TestApp"
-export default function teacherView() {
-const { loading:allpostLoading, error:allpostError, data:allpostData } = useQuery(GET_ALLPOSTS)
-  if (allpostError) return <p>AllPost ERROR: {allpostError.message}</p>;
-  if (allpostData === undefined) return <p>ERROR</p>;
-  if (allpostLoading) {return <div>postData Loading</div>;}
- 
+import {useDropzone} from 'react-dropzone';
+import uploadFile from "../../../components/fileuploads/FileUploadFunction"
+import {CREATE_POST} from "../../mutations/post"
+import EducationAdmin from "./educationadmin"
 
+export default function teacherView() {
+
+
+ 
+function InnerDropzone(props) {
+  const {getRootProps} = useDropzone({noDragEventsBubbling: true});
+  return (
+    <div {...getRootProps({className: 'dropzone'})}>
+      <p>Inner dropzone</p>
+    </div>
+  );
+}
+
+function OuterDropzone(props) {
+  const [myFile,setMyFile] = useState(null)
+    const [postCreate] = useMutation(CREATE_POST);
+
+  const {getRootProps} = useDropzone({
+    // Note how this callback is never invoked if drop occurs on the inner dropzone
+    onDrop: files => {
+            setMyFile(files) 
+            console.log(files)
+    }
+  });
+
+  return (
+    <div className="container">
+    <EducationAdmin/>
+      <div {...getRootProps({className: 'dropzone'})}>
+        <InnerDropzone />
+        <p>Outer dropzone</p>
+
+         <button onClick={()=>{
+            console.log("Save file", myFile)
+                 
+            uploadFile(myFile[0]).then((resp)=>{
+                console.log("uploadFileRESP ",resp)
+                postCreate({ variables: {  title:"Testing",body:resp, published: true } })
+                    .then((res)=>{
+                        console.log("postCreate CREATION DATA using Dialog",res)
+                        
+                     }).catch((err)=>{
+                        throw new Error("Error in creating postCreate",err)
+                }).catch((err1)=>{
+                    
+                })
+
+            })
+
+        }}>Save File</button>
+      </div>
+    </div>
+  );
+}
     return (
         <div>
-            <TestApp/>
+        <h1>file upload  </h1>
+      <OuterDropzone />
+        <h1>file upload </h1>
+      
+       
+          {/** <TestApp/> */} 
         {/**    <TeacherContentLive/>
           <table className="table mb-0">
             <thead className="bg-light">

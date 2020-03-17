@@ -13,7 +13,7 @@ const config={
     config['dirName']="12th/profile"
     console.log("Using file funtion")
     console.log("Modified config",JSON.stringify(config))
-    ReactS3Client.uploadFile(file)
+    return ReactS3Client.uploadFile(file)
     .then((data)=>{
         console.log(data)
         console.log(data.location)

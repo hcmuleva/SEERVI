@@ -26,11 +26,69 @@ console.log("GROUP MANAGEMENT PROPS ",props)
  
   const columns = [ {name:"id",
     options: {
-          display: true,
+          display: false,
         }
 
-    },"name", "description","updatedAt"];
+    },"name", "description",
+    {
+        name: "GroupRole",
+        options: {
+          filter: false,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <button onClick={() => {
+               console.log("GroupRoleCreate Button Clicked ")
+              }}>
+                GroupRole
+              </button>
+            );
+          }
+        }
+      },
+    {
+        name: "Delete",
+        options: {
+          filter: false,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <button onClick={() => {
+               console.log("Delete Button Clicked ")
+              }}>
+                Delete
+              </button>
+            );
+          }
+        }
+      },
+      {
+        name: "Edit",
+        options: {
+          filter: false,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <button onClick={() =>   console.log("Edit Button Clicked ")}>
+                Edit
+              </button>
+            );
+          }
+        }
+      },
+
+
+    
+    ];
   const options={
+    print: false,
+    download:false,
+   
+
+
     selectableRows: 'single',
     rowsSelected:rowSel.rowsSelected,
     onRowsSelect: (rowsSelected, allRows) => {
@@ -70,6 +128,7 @@ console.log("GROUP MANAGEMENT PROPS ",props)
         <Col lg="1">
       <CreateDataDialog  createDataHandler={addGroupHandler} type="GROUP" title="Group" subtitle="Add Group" label1="Group Name" label2="Group Description"/>
       </Col>
+
       </Row>
       <Card small className="blog-comments">
       <MUIDataTable

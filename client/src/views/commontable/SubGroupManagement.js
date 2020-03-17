@@ -24,7 +24,23 @@ console.log("SUBGROUP MANAGEMENT PROPS ",props)
     return <div>SubGroup Loading</div>;
   }
   console.log("subgroupData",subgroupData)
-  const columns = ["name", "description","updatedAt"];
+  const columns = ["name", "description",{
+        name: "SubGroupRole",
+        options: {
+          filter: false,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <button onClick={() => {
+               console.log("SubGroupRoleCreate Button Clicked ")
+              }}>
+                SubGroupRole
+              </button>
+            );
+          }
+        }
+      },];
   const options={
     selectableRows: 'single',
     rowsSelected:rowSel.rowsSelected,
