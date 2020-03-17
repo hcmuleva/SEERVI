@@ -1,7 +1,7 @@
 import {users,getAllMedium} from './query/users'
-import loggedInUser from './query/me'
+import {loggedInUser,getMyOrg} from './query/me'
 export const UserQueryFunction={
     users,
-    loggedInUser,
+    loggedInUser,getMyOrg,
     getAllMedium
 }

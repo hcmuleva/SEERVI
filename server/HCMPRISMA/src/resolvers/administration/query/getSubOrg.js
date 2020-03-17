@@ -12,6 +12,7 @@ const suborgsData=  await prisma.query.suborgs({
 console.log("suborgsData",suborgsData)
 
 return suborgsData.filter((sorg)=>{
+    console.log("SORG",sorg.org)
     if(sorg.org.id===args.id) return sorg
 });
 }

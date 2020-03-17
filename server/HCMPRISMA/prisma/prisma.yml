@@ -6,7 +6,7 @@ datamodel:
   - users/comments.graphql
   - profiles/mysubscription.graphql
   - profiles/profiles.graphql
-
+  - education/education.graphql
    
 secret: ${env:PRISMA_SECRET}
 generate:

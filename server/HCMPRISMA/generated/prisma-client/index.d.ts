@@ -16,15 +16,18 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  address: (where?: AddressWhereInput) => Promise<boolean>;
   comment: (where?: CommentWhereInput) => Promise<boolean>;
   group: (where?: GroupWhereInput) => Promise<boolean>;
   groupMember: (where?: GroupMemberWhereInput) => Promise<boolean>;
   medium: (where?: MediumWhereInput) => Promise<boolean>;
   organization: (where?: OrganizationWhereInput) => Promise<boolean>;
+  personalProfile: (where?: PersonalProfileWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   profile: (where?: ProfileWhereInput) => Promise<boolean>;
   role: (where?: RoleWhereInput) => Promise<boolean>;
   roleMember: (where?: RoleMemberWhereInput) => Promise<boolean>;
+  std: (where?: StdWhereInput) => Promise<boolean>;
   studentProfile: (where?: StudentProfileWhereInput) => Promise<boolean>;
   subGroup: (where?: SubGroupWhereInput) => Promise<boolean>;
   subGroupMember: (where?: SubGroupMemberWhereInput) => Promise<boolean>;
@@ -55,6 +58,25 @@ export interface Prisma {
    * Queries
    */
 
+  address: (where: AddressWhereUniqueInput) => AddressNullablePromise;
+  addresses: (args?: {
+    where?: AddressWhereInput;
+    orderBy?: AddressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Address>;
+  addressesConnection: (args?: {
+    where?: AddressWhereInput;
+    orderBy?: AddressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AddressConnectionPromise;
   comment: (where: CommentWhereUniqueInput) => CommentNullablePromise;
   comments: (args?: {
     where?: CommentWhereInput;
@@ -154,6 +176,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => OrganizationConnectionPromise;
+  personalProfile: (
+    where: PersonalProfileWhereUniqueInput
+  ) => PersonalProfileNullablePromise;
+  personalProfiles: (args?: {
+    where?: PersonalProfileWhereInput;
+    orderBy?: PersonalProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<PersonalProfile>;
+  personalProfilesConnection: (args?: {
+    where?: PersonalProfileWhereInput;
+    orderBy?: PersonalProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => PersonalProfileConnectionPromise;
   post: (where: PostWhereUniqueInput) => PostNullablePromise;
   posts: (args?: {
     where?: PostWhereInput;
@@ -230,6 +273,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => RoleMemberConnectionPromise;
+  std: (where: StdWhereUniqueInput) => StdNullablePromise;
+  stds: (args?: {
+    where?: StdWhereInput;
+    orderBy?: StdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Std>;
+  stdsConnection: (args?: {
+    where?: StdWhereInput;
+    orderBy?: StdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => StdConnectionPromise;
   studentProfile: (
     where: StudentProfileWhereUniqueInput
   ) => StudentProfileNullablePromise;
@@ -375,6 +437,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createAddress: (data: AddressCreateInput) => AddressPromise;
+  updateAddress: (args: {
+    data: AddressUpdateInput;
+    where: AddressWhereUniqueInput;
+  }) => AddressPromise;
+  updateManyAddresses: (args: {
+    data: AddressUpdateManyMutationInput;
+    where?: AddressWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAddress: (args: {
+    where: AddressWhereUniqueInput;
+    create: AddressCreateInput;
+    update: AddressUpdateInput;
+  }) => AddressPromise;
+  deleteAddress: (where: AddressWhereUniqueInput) => AddressPromise;
+  deleteManyAddresses: (where?: AddressWhereInput) => BatchPayloadPromise;
   createComment: (data: CommentCreateInput) => CommentPromise;
   updateComment: (args: {
     data: CommentUpdateInput;
@@ -461,6 +539,28 @@ export interface Prisma {
   deleteManyOrganizations: (
     where?: OrganizationWhereInput
   ) => BatchPayloadPromise;
+  createPersonalProfile: (
+    data: PersonalProfileCreateInput
+  ) => PersonalProfilePromise;
+  updatePersonalProfile: (args: {
+    data: PersonalProfileUpdateInput;
+    where: PersonalProfileWhereUniqueInput;
+  }) => PersonalProfilePromise;
+  updateManyPersonalProfiles: (args: {
+    data: PersonalProfileUpdateManyMutationInput;
+    where?: PersonalProfileWhereInput;
+  }) => BatchPayloadPromise;
+  upsertPersonalProfile: (args: {
+    where: PersonalProfileWhereUniqueInput;
+    create: PersonalProfileCreateInput;
+    update: PersonalProfileUpdateInput;
+  }) => PersonalProfilePromise;
+  deletePersonalProfile: (
+    where: PersonalProfileWhereUniqueInput
+  ) => PersonalProfilePromise;
+  deleteManyPersonalProfiles: (
+    where?: PersonalProfileWhereInput
+  ) => BatchPayloadPromise;
   createPost: (data: PostCreateInput) => PostPromise;
   updatePost: (args: {
     data: PostUpdateInput;
@@ -525,6 +625,22 @@ export interface Prisma {
   }) => RoleMemberPromise;
   deleteRoleMember: (where: RoleMemberWhereUniqueInput) => RoleMemberPromise;
   deleteManyRoleMembers: (where?: RoleMemberWhereInput) => BatchPayloadPromise;
+  createStd: (data: StdCreateInput) => StdPromise;
+  updateStd: (args: {
+    data: StdUpdateInput;
+    where: StdWhereUniqueInput;
+  }) => StdPromise;
+  updateManyStds: (args: {
+    data: StdUpdateManyMutationInput;
+    where?: StdWhereInput;
+  }) => BatchPayloadPromise;
+  upsertStd: (args: {
+    where: StdWhereUniqueInput;
+    create: StdCreateInput;
+    update: StdUpdateInput;
+  }) => StdPromise;
+  deleteStd: (where: StdWhereUniqueInput) => StdPromise;
+  deleteManyStds: (where?: StdWhereInput) => BatchPayloadPromise;
   createStudentProfile: (
     data: StudentProfileCreateInput
   ) => StudentProfilePromise;
@@ -664,6 +780,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  address: (
+    where?: AddressSubscriptionWhereInput
+  ) => AddressSubscriptionPayloadSubscription;
   comment: (
     where?: CommentSubscriptionWhereInput
   ) => CommentSubscriptionPayloadSubscription;
@@ -679,6 +798,9 @@ export interface Subscription {
   organization: (
     where?: OrganizationSubscriptionWhereInput
   ) => OrganizationSubscriptionPayloadSubscription;
+  personalProfile: (
+    where?: PersonalProfileSubscriptionWhereInput
+  ) => PersonalProfileSubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
@@ -691,6 +813,9 @@ export interface Subscription {
   roleMember: (
     where?: RoleMemberSubscriptionWhereInput
   ) => RoleMemberSubscriptionPayloadSubscription;
+  std: (
+    where?: StdSubscriptionWhereInput
+  ) => StdSubscriptionPayloadSubscription;
   studentProfile: (
     where?: StudentProfileSubscriptionWhereInput
   ) => StudentProfileSubscriptionPayloadSubscription;
@@ -737,6 +862,22 @@ export type RoleStatus =
   | "DORMANT"
   | "RENEWED"
   | "SPECIALGRANT";
+
+export type AddressOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "adressline_ASC"
+  | "adressline_DESC"
+  | "tehsil_ASC"
+  | "tehsil_DESC"
+  | "city_ASC"
+  | "city_DESC"
+  | "district_ASC"
+  | "district_DESC"
+  | "state_ASC"
+  | "state_DESC"
+  | "pincode_ASC"
+  | "pincode_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -833,10 +974,10 @@ export type SubjectOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
-  | "std_ASC"
-  | "std_DESC"
   | "board_ASC"
-  | "board_DESC";
+  | "board_DESC"
+  | "category_ASC"
+  | "category_DESC";
 
 export type GroupMemberOrderByInput =
   | "id_ASC"
@@ -880,6 +1021,14 @@ export type ProfileOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
+export type SubjectSubscriptionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "subsType_ASC"
+  | "subsType_DESC"
+  | "subscribedAs_ASC"
+  | "subscribedAs_DESC";
+
 export type StudentProfileOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -906,13 +1055,17 @@ export type StudentProfileOrderByInput =
   | "remark_ASC"
   | "remark_DESC";
 
-export type SubjectSubscriptionOrderByInput =
+export type PersonalProfileOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "subsType_ASC"
-  | "subsType_DESC"
-  | "subscribedAs_ASC"
-  | "subscribedAs_DESC";
+  | "name_ASC"
+  | "name_DESC"
+  | "avatar_ASC"
+  | "avatar_DESC"
+  | "mobile_ASC"
+  | "mobile_DESC"
+  | "isMobilePublished_ASC"
+  | "isMobilePublished_DESC";
 
 export type MediumOrderByInput =
   | "id_ASC"
@@ -932,11 +1085,237 @@ export type OrganizationOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
+export type StdOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "stdname_ASC"
+  | "stdname_DESC"
+  | "category_ASC"
+  | "category_DESC"
+  | "branch_ASC"
+  | "branch_DESC"
+  | "year_ASC"
+  | "year_DESC";
+
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type CommentWhereUniqueInput = AtLeastOne<{
+export type AddressWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface AddressWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  adressline?: Maybe<String>;
+  adressline_not?: Maybe<String>;
+  adressline_in?: Maybe<String[] | String>;
+  adressline_not_in?: Maybe<String[] | String>;
+  adressline_lt?: Maybe<String>;
+  adressline_lte?: Maybe<String>;
+  adressline_gt?: Maybe<String>;
+  adressline_gte?: Maybe<String>;
+  adressline_contains?: Maybe<String>;
+  adressline_not_contains?: Maybe<String>;
+  adressline_starts_with?: Maybe<String>;
+  adressline_not_starts_with?: Maybe<String>;
+  adressline_ends_with?: Maybe<String>;
+  adressline_not_ends_with?: Maybe<String>;
+  tehsil?: Maybe<String>;
+  tehsil_not?: Maybe<String>;
+  tehsil_in?: Maybe<String[] | String>;
+  tehsil_not_in?: Maybe<String[] | String>;
+  tehsil_lt?: Maybe<String>;
+  tehsil_lte?: Maybe<String>;
+  tehsil_gt?: Maybe<String>;
+  tehsil_gte?: Maybe<String>;
+  tehsil_contains?: Maybe<String>;
+  tehsil_not_contains?: Maybe<String>;
+  tehsil_starts_with?: Maybe<String>;
+  tehsil_not_starts_with?: Maybe<String>;
+  tehsil_ends_with?: Maybe<String>;
+  tehsil_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
+  district?: Maybe<String>;
+  district_not?: Maybe<String>;
+  district_in?: Maybe<String[] | String>;
+  district_not_in?: Maybe<String[] | String>;
+  district_lt?: Maybe<String>;
+  district_lte?: Maybe<String>;
+  district_gt?: Maybe<String>;
+  district_gte?: Maybe<String>;
+  district_contains?: Maybe<String>;
+  district_not_contains?: Maybe<String>;
+  district_starts_with?: Maybe<String>;
+  district_not_starts_with?: Maybe<String>;
+  district_ends_with?: Maybe<String>;
+  district_not_ends_with?: Maybe<String>;
+  state?: Maybe<String>;
+  state_not?: Maybe<String>;
+  state_in?: Maybe<String[] | String>;
+  state_not_in?: Maybe<String[] | String>;
+  state_lt?: Maybe<String>;
+  state_lte?: Maybe<String>;
+  state_gt?: Maybe<String>;
+  state_gte?: Maybe<String>;
+  state_contains?: Maybe<String>;
+  state_not_contains?: Maybe<String>;
+  state_starts_with?: Maybe<String>;
+  state_not_starts_with?: Maybe<String>;
+  state_ends_with?: Maybe<String>;
+  state_not_ends_with?: Maybe<String>;
+  pincode?: Maybe<String>;
+  pincode_not?: Maybe<String>;
+  pincode_in?: Maybe<String[] | String>;
+  pincode_not_in?: Maybe<String[] | String>;
+  pincode_lt?: Maybe<String>;
+  pincode_lte?: Maybe<String>;
+  pincode_gt?: Maybe<String>;
+  pincode_gte?: Maybe<String>;
+  pincode_contains?: Maybe<String>;
+  pincode_not_contains?: Maybe<String>;
+  pincode_starts_with?: Maybe<String>;
+  pincode_not_starts_with?: Maybe<String>;
+  pincode_ends_with?: Maybe<String>;
+  pincode_not_ends_with?: Maybe<String>;
+  personalProfile?: Maybe<PersonalProfileWhereInput>;
+  AND?: Maybe<AddressWhereInput[] | AddressWhereInput>;
+  OR?: Maybe<AddressWhereInput[] | AddressWhereInput>;
+  NOT?: Maybe<AddressWhereInput[] | AddressWhereInput>;
+}
+
+export interface PersonalProfileWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  avatar?: Maybe<String>;
+  avatar_not?: Maybe<String>;
+  avatar_in?: Maybe<String[] | String>;
+  avatar_not_in?: Maybe<String[] | String>;
+  avatar_lt?: Maybe<String>;
+  avatar_lte?: Maybe<String>;
+  avatar_gt?: Maybe<String>;
+  avatar_gte?: Maybe<String>;
+  avatar_contains?: Maybe<String>;
+  avatar_not_contains?: Maybe<String>;
+  avatar_starts_with?: Maybe<String>;
+  avatar_not_starts_with?: Maybe<String>;
+  avatar_ends_with?: Maybe<String>;
+  avatar_not_ends_with?: Maybe<String>;
+  mobile?: Maybe<String>;
+  mobile_not?: Maybe<String>;
+  mobile_in?: Maybe<String[] | String>;
+  mobile_not_in?: Maybe<String[] | String>;
+  mobile_lt?: Maybe<String>;
+  mobile_lte?: Maybe<String>;
+  mobile_gt?: Maybe<String>;
+  mobile_gte?: Maybe<String>;
+  mobile_contains?: Maybe<String>;
+  mobile_not_contains?: Maybe<String>;
+  mobile_starts_with?: Maybe<String>;
+  mobile_not_starts_with?: Maybe<String>;
+  mobile_ends_with?: Maybe<String>;
+  mobile_not_ends_with?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+  isMobilePublished_not?: Maybe<Boolean>;
+  addresses_every?: Maybe<AddressWhereInput>;
+  addresses_some?: Maybe<AddressWhereInput>;
+  addresses_none?: Maybe<AddressWhereInput>;
+  profileId?: Maybe<ProfileWhereInput>;
+  AND?: Maybe<PersonalProfileWhereInput[] | PersonalProfileWhereInput>;
+  OR?: Maybe<PersonalProfileWhereInput[] | PersonalProfileWhereInput>;
+  NOT?: Maybe<PersonalProfileWhereInput[] | PersonalProfileWhereInput>;
+}
+
+export interface ProfileWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  userId?: Maybe<UserWhereInput>;
+  studentProfile_every?: Maybe<StudentProfileWhereInput>;
+  studentProfile_some?: Maybe<StudentProfileWhereInput>;
+  studentProfile_none?: Maybe<StudentProfileWhereInput>;
+  personalProfiile_every?: Maybe<PersonalProfileWhereInput>;
+  personalProfiile_some?: Maybe<PersonalProfileWhereInput>;
+  personalProfiile_none?: Maybe<PersonalProfileWhereInput>;
+  AND?: Maybe<ProfileWhereInput[] | ProfileWhereInput>;
+  OR?: Maybe<ProfileWhereInput[] | ProfileWhereInput>;
+  NOT?: Maybe<ProfileWhereInput[] | ProfileWhereInput>;
+}
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -1580,20 +1959,7 @@ export interface SubjectWhereInput {
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
   medium?: Maybe<MediumWhereInput>;
-  std?: Maybe<String>;
-  std_not?: Maybe<String>;
-  std_in?: Maybe<String[] | String>;
-  std_not_in?: Maybe<String[] | String>;
-  std_lt?: Maybe<String>;
-  std_lte?: Maybe<String>;
-  std_gt?: Maybe<String>;
-  std_gte?: Maybe<String>;
-  std_contains?: Maybe<String>;
-  std_not_contains?: Maybe<String>;
-  std_starts_with?: Maybe<String>;
-  std_not_starts_with?: Maybe<String>;
-  std_ends_with?: Maybe<String>;
-  std_not_ends_with?: Maybe<String>;
+  std?: Maybe<StdWhereInput>;
   board?: Maybe<String>;
   board_not?: Maybe<String>;
   board_in?: Maybe<String[] | String>;
@@ -1608,6 +1974,20 @@ export interface SubjectWhereInput {
   board_not_starts_with?: Maybe<String>;
   board_ends_with?: Maybe<String>;
   board_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
   group?: Maybe<GroupWhereInput>;
   subgroup?: Maybe<SubGroupWhereInput>;
   AND?: Maybe<SubjectWhereInput[] | SubjectWhereInput>;
@@ -1650,6 +2030,85 @@ export interface MediumWhereInput {
   AND?: Maybe<MediumWhereInput[] | MediumWhereInput>;
   OR?: Maybe<MediumWhereInput[] | MediumWhereInput>;
   NOT?: Maybe<MediumWhereInput[] | MediumWhereInput>;
+}
+
+export interface StdWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  stdname?: Maybe<String>;
+  stdname_not?: Maybe<String>;
+  stdname_in?: Maybe<String[] | String>;
+  stdname_not_in?: Maybe<String[] | String>;
+  stdname_lt?: Maybe<String>;
+  stdname_lte?: Maybe<String>;
+  stdname_gt?: Maybe<String>;
+  stdname_gte?: Maybe<String>;
+  stdname_contains?: Maybe<String>;
+  stdname_not_contains?: Maybe<String>;
+  stdname_starts_with?: Maybe<String>;
+  stdname_not_starts_with?: Maybe<String>;
+  stdname_ends_with?: Maybe<String>;
+  stdname_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
+  branch?: Maybe<String>;
+  branch_not?: Maybe<String>;
+  branch_in?: Maybe<String[] | String>;
+  branch_not_in?: Maybe<String[] | String>;
+  branch_lt?: Maybe<String>;
+  branch_lte?: Maybe<String>;
+  branch_gt?: Maybe<String>;
+  branch_gte?: Maybe<String>;
+  branch_contains?: Maybe<String>;
+  branch_not_contains?: Maybe<String>;
+  branch_starts_with?: Maybe<String>;
+  branch_not_starts_with?: Maybe<String>;
+  branch_ends_with?: Maybe<String>;
+  branch_not_ends_with?: Maybe<String>;
+  year?: Maybe<String>;
+  year_not?: Maybe<String>;
+  year_in?: Maybe<String[] | String>;
+  year_not_in?: Maybe<String[] | String>;
+  year_lt?: Maybe<String>;
+  year_lte?: Maybe<String>;
+  year_gt?: Maybe<String>;
+  year_gte?: Maybe<String>;
+  year_contains?: Maybe<String>;
+  year_not_contains?: Maybe<String>;
+  year_starts_with?: Maybe<String>;
+  year_not_starts_with?: Maybe<String>;
+  year_ends_with?: Maybe<String>;
+  year_not_ends_with?: Maybe<String>;
+  subject_every?: Maybe<SubjectWhereInput>;
+  subject_some?: Maybe<SubjectWhereInput>;
+  subject_none?: Maybe<SubjectWhereInput>;
+  AND?: Maybe<StdWhereInput[] | StdWhereInput>;
+  OR?: Maybe<StdWhereInput[] | StdWhereInput>;
+  NOT?: Maybe<StdWhereInput[] | StdWhereInput>;
 }
 
 export interface GroupMemberWhereInput {
@@ -1830,7 +2289,7 @@ export interface CommentWhereInput {
   NOT?: Maybe<CommentWhereInput[] | CommentWhereInput>;
 }
 
-export interface ProfileWhereInput {
+export interface SubjectSubscriptionWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1845,27 +2304,41 @@ export interface ProfileWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  userId?: Maybe<UserWhereInput>;
-  studentProfile_every?: Maybe<StudentProfileWhereInput>;
-  studentProfile_some?: Maybe<StudentProfileWhereInput>;
-  studentProfile_none?: Maybe<StudentProfileWhereInput>;
-  AND?: Maybe<ProfileWhereInput[] | ProfileWhereInput>;
-  OR?: Maybe<ProfileWhereInput[] | ProfileWhereInput>;
-  NOT?: Maybe<ProfileWhereInput[] | ProfileWhereInput>;
+  subsType?: Maybe<String>;
+  subsType_not?: Maybe<String>;
+  subsType_in?: Maybe<String[] | String>;
+  subsType_not_in?: Maybe<String[] | String>;
+  subsType_lt?: Maybe<String>;
+  subsType_lte?: Maybe<String>;
+  subsType_gt?: Maybe<String>;
+  subsType_gte?: Maybe<String>;
+  subsType_contains?: Maybe<String>;
+  subsType_not_contains?: Maybe<String>;
+  subsType_starts_with?: Maybe<String>;
+  subsType_not_starts_with?: Maybe<String>;
+  subsType_ends_with?: Maybe<String>;
+  subsType_not_ends_with?: Maybe<String>;
+  mySubjects_every?: Maybe<SubjectWhereInput>;
+  mySubjects_some?: Maybe<SubjectWhereInput>;
+  mySubjects_none?: Maybe<SubjectWhereInput>;
+  userid?: Maybe<UserWhereInput>;
+  subscribedAs?: Maybe<String>;
+  subscribedAs_not?: Maybe<String>;
+  subscribedAs_in?: Maybe<String[] | String>;
+  subscribedAs_not_in?: Maybe<String[] | String>;
+  subscribedAs_lt?: Maybe<String>;
+  subscribedAs_lte?: Maybe<String>;
+  subscribedAs_gt?: Maybe<String>;
+  subscribedAs_gte?: Maybe<String>;
+  subscribedAs_contains?: Maybe<String>;
+  subscribedAs_not_contains?: Maybe<String>;
+  subscribedAs_starts_with?: Maybe<String>;
+  subscribedAs_not_starts_with?: Maybe<String>;
+  subscribedAs_ends_with?: Maybe<String>;
+  subscribedAs_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
+  OR?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
+  NOT?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
 }
 
 export interface StudentProfileWhereInput {
@@ -2031,57 +2504,9 @@ export interface StudentProfileWhereInput {
   NOT?: Maybe<StudentProfileWhereInput[] | StudentProfileWhereInput>;
 }
 
-export interface SubjectSubscriptionWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  subsType?: Maybe<String>;
-  subsType_not?: Maybe<String>;
-  subsType_in?: Maybe<String[] | String>;
-  subsType_not_in?: Maybe<String[] | String>;
-  subsType_lt?: Maybe<String>;
-  subsType_lte?: Maybe<String>;
-  subsType_gt?: Maybe<String>;
-  subsType_gte?: Maybe<String>;
-  subsType_contains?: Maybe<String>;
-  subsType_not_contains?: Maybe<String>;
-  subsType_starts_with?: Maybe<String>;
-  subsType_not_starts_with?: Maybe<String>;
-  subsType_ends_with?: Maybe<String>;
-  subsType_not_ends_with?: Maybe<String>;
-  mySubjects_every?: Maybe<SubjectWhereInput>;
-  mySubjects_some?: Maybe<SubjectWhereInput>;
-  mySubjects_none?: Maybe<SubjectWhereInput>;
-  userid?: Maybe<UserWhereInput>;
-  subscribedAs?: Maybe<String>;
-  subscribedAs_not?: Maybe<String>;
-  subscribedAs_in?: Maybe<String[] | String>;
-  subscribedAs_not_in?: Maybe<String[] | String>;
-  subscribedAs_lt?: Maybe<String>;
-  subscribedAs_lte?: Maybe<String>;
-  subscribedAs_gt?: Maybe<String>;
-  subscribedAs_gte?: Maybe<String>;
-  subscribedAs_contains?: Maybe<String>;
-  subscribedAs_not_contains?: Maybe<String>;
-  subscribedAs_starts_with?: Maybe<String>;
-  subscribedAs_not_starts_with?: Maybe<String>;
-  subscribedAs_ends_with?: Maybe<String>;
-  subscribedAs_not_ends_with?: Maybe<String>;
-  AND?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-  OR?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-  NOT?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-}
+export type CommentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export type GroupWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -2099,6 +2524,10 @@ export type OrganizationWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export type PersonalProfileWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type PostWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -2112,6 +2541,10 @@ export type RoleWhereUniqueInput = AtLeastOne<{
 }>;
 
 export type RoleMemberWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type StdWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -2144,19 +2577,49 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface CommentCreateInput {
+export interface AddressCreateInput {
   id?: Maybe<ID_Input>;
-  text: String;
-  author: UserCreateOneWithoutCommentsInput;
-  post: PostCreateOneWithoutCommentsInput;
+  adressline: String;
+  tehsil: String;
+  city: String;
+  district: String;
+  state: String;
+  pincode: String;
+  personalProfile?: Maybe<PersonalProfileCreateOneWithoutAddressesInput>;
 }
 
-export interface UserCreateOneWithoutCommentsInput {
-  create?: Maybe<UserCreateWithoutCommentsInput>;
+export interface PersonalProfileCreateOneWithoutAddressesInput {
+  create?: Maybe<PersonalProfileCreateWithoutAddressesInput>;
+  connect?: Maybe<PersonalProfileWhereUniqueInput>;
+}
+
+export interface PersonalProfileCreateWithoutAddressesInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  avatar: String;
+  mobile: String;
+  isMobilePublished?: Maybe<Boolean>;
+  profileId: ProfileCreateOneWithoutPersonalProfiileInput;
+}
+
+export interface ProfileCreateOneWithoutPersonalProfiileInput {
+  create?: Maybe<ProfileCreateWithoutPersonalProfiileInput>;
+  connect?: Maybe<ProfileWhereUniqueInput>;
+}
+
+export interface ProfileCreateWithoutPersonalProfiileInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  userId: UserCreateOneWithoutMyprofilesInput;
+  studentProfile?: Maybe<StudentProfileCreateManyWithoutProfileIdInput>;
+}
+
+export interface UserCreateOneWithoutMyprofilesInput {
+  create?: Maybe<UserCreateWithoutMyprofilesInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutCommentsInput {
+export interface UserCreateWithoutMyprofilesInput {
   id?: Maybe<ID_Input>;
   firstname: String;
   lastname: String;
@@ -2167,8 +2630,8 @@ export interface UserCreateWithoutCommentsInput {
   groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
   subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   myRoles?: Maybe<RoleMemberCreateManyWithoutUseridInput>;
-  myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
   subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
   createdBy?: Maybe<String>;
 }
@@ -2414,38 +2877,12 @@ export interface CommentCreateWithoutPostInput {
   author: UserCreateOneWithoutCommentsInput;
 }
 
-export interface CommentCreateManyWithoutAuthorInput {
-  create?: Maybe<
-    CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-}
-
-export interface CommentCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  post: PostCreateOneWithoutCommentsInput;
-}
-
-export interface PostCreateOneWithoutCommentsInput {
-  create?: Maybe<PostCreateWithoutCommentsInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface PostCreateWithoutCommentsInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  body: String;
-  published: Boolean;
-  author: UserCreateOneWithoutPostsInput;
-}
-
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
+export interface UserCreateOneWithoutCommentsInput {
+  create?: Maybe<UserCreateWithoutCommentsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutPostsInput {
+export interface UserCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
   firstname: String;
   lastname: String;
@@ -2455,7 +2892,7 @@ export interface UserCreateWithoutPostsInput {
   suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
   groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
   subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
-  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
+  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   myRoles?: Maybe<RoleMemberCreateManyWithoutUseridInput>;
   myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
   subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
@@ -2537,6 +2974,54 @@ export interface UserCreateWithoutGroupmembersInput {
   suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
   subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
+  myRoles?: Maybe<RoleMemberCreateManyWithoutUseridInput>;
+  myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+}
+
+export interface CommentCreateManyWithoutAuthorInput {
+  create?: Maybe<
+    CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+}
+
+export interface CommentCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  post: PostCreateOneWithoutCommentsInput;
+}
+
+export interface PostCreateOneWithoutCommentsInput {
+  create?: Maybe<PostCreateWithoutCommentsInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface PostCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  body: String;
+  published: Boolean;
+  author: UserCreateOneWithoutPostsInput;
+}
+
+export interface UserCreateOneWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  firstname: String;
+  lastname: String;
+  email: String;
+  password: String;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   myRoles?: Maybe<RoleMemberCreateManyWithoutUseridInput>;
   myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
@@ -2626,8 +3111,9 @@ export interface SubjectCreateWithoutGroupInput {
   id?: Maybe<ID_Input>;
   name: String;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: String;
+  std: StdCreateOneWithoutSubjectInput;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
 }
 
@@ -2639,6 +3125,19 @@ export interface MediumCreateOneWithoutSubjectsInput {
 export interface MediumCreateWithoutSubjectsInput {
   id?: Maybe<ID_Input>;
   name: String;
+}
+
+export interface StdCreateOneWithoutSubjectInput {
+  create?: Maybe<StdCreateWithoutSubjectInput>;
+  connect?: Maybe<StdWhereUniqueInput>;
+}
+
+export interface StdCreateWithoutSubjectInput {
+  id?: Maybe<ID_Input>;
+  stdname: String;
+  category: String;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
 }
 
 export interface SubGroupCreateOneWithoutSubjectsInput {
@@ -2719,6 +3218,7 @@ export interface ProfileCreateWithoutUserIdInput {
   id?: Maybe<ID_Input>;
   name: String;
   studentProfile?: Maybe<StudentProfileCreateManyWithoutProfileIdInput>;
+  personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
 }
 
 export interface StudentProfileCreateManyWithoutProfileIdInput {
@@ -2744,6 +3244,43 @@ export interface StudentProfileCreateWithoutProfileIdInput {
   result?: Maybe<String>;
   status?: Maybe<String>;
   remark?: Maybe<String>;
+}
+
+export interface PersonalProfileCreateManyWithoutProfileIdInput {
+  create?: Maybe<
+    | PersonalProfileCreateWithoutProfileIdInput[]
+    | PersonalProfileCreateWithoutProfileIdInput
+  >;
+  connect?: Maybe<
+    PersonalProfileWhereUniqueInput[] | PersonalProfileWhereUniqueInput
+  >;
+}
+
+export interface PersonalProfileCreateWithoutProfileIdInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  avatar: String;
+  mobile: String;
+  isMobilePublished?: Maybe<Boolean>;
+  addresses?: Maybe<AddressCreateManyWithoutPersonalProfileInput>;
+}
+
+export interface AddressCreateManyWithoutPersonalProfileInput {
+  create?: Maybe<
+    | AddressCreateWithoutPersonalProfileInput[]
+    | AddressCreateWithoutPersonalProfileInput
+  >;
+  connect?: Maybe<AddressWhereUniqueInput[] | AddressWhereUniqueInput>;
+}
+
+export interface AddressCreateWithoutPersonalProfileInput {
+  id?: Maybe<ID_Input>;
+  adressline: String;
+  tehsil: String;
+  city: String;
+  district: String;
+  state: String;
+  pincode: String;
 }
 
 export interface SubjectSubscriptionCreateManyWithoutUseridInput {
@@ -2772,8 +3309,9 @@ export interface SubjectCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: String;
+  std: StdCreateOneWithoutSubjectInput;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
 }
@@ -2833,8 +3371,9 @@ export interface SubjectCreateWithoutSubgroupInput {
   id?: Maybe<ID_Input>;
   name: String;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: String;
+  std: StdCreateOneWithoutSubjectInput;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
 }
 
@@ -2868,20 +3407,54 @@ export interface RoleCreateWithoutOrgInput {
   description?: Maybe<String>;
 }
 
-export interface CommentUpdateInput {
-  text?: Maybe<String>;
-  author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
-  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+export interface AddressUpdateInput {
+  adressline?: Maybe<String>;
+  tehsil?: Maybe<String>;
+  city?: Maybe<String>;
+  district?: Maybe<String>;
+  state?: Maybe<String>;
+  pincode?: Maybe<String>;
+  personalProfile?: Maybe<PersonalProfileUpdateOneWithoutAddressesInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutCommentsInput {
-  create?: Maybe<UserCreateWithoutCommentsInput>;
-  update?: Maybe<UserUpdateWithoutCommentsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCommentsInput>;
+export interface PersonalProfileUpdateOneWithoutAddressesInput {
+  create?: Maybe<PersonalProfileCreateWithoutAddressesInput>;
+  update?: Maybe<PersonalProfileUpdateWithoutAddressesDataInput>;
+  upsert?: Maybe<PersonalProfileUpsertWithoutAddressesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PersonalProfileWhereUniqueInput>;
+}
+
+export interface PersonalProfileUpdateWithoutAddressesDataInput {
+  name?: Maybe<String>;
+  avatar?: Maybe<String>;
+  mobile?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+  profileId?: Maybe<ProfileUpdateOneRequiredWithoutPersonalProfiileInput>;
+}
+
+export interface ProfileUpdateOneRequiredWithoutPersonalProfiileInput {
+  create?: Maybe<ProfileCreateWithoutPersonalProfiileInput>;
+  update?: Maybe<ProfileUpdateWithoutPersonalProfiileDataInput>;
+  upsert?: Maybe<ProfileUpsertWithoutPersonalProfiileInput>;
+  connect?: Maybe<ProfileWhereUniqueInput>;
+}
+
+export interface ProfileUpdateWithoutPersonalProfiileDataInput {
+  name?: Maybe<String>;
+  userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
+  studentProfile?: Maybe<StudentProfileUpdateManyWithoutProfileIdInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutMyprofilesInput {
+  create?: Maybe<UserCreateWithoutMyprofilesInput>;
+  update?: Maybe<UserUpdateWithoutMyprofilesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutMyprofilesInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutCommentsDataInput {
+export interface UserUpdateWithoutMyprofilesDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
@@ -2891,8 +3464,8 @@ export interface UserUpdateWithoutCommentsDataInput {
   groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
   subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   myRoles?: Maybe<RoleMemberUpdateManyWithoutUseridInput>;
-  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
   subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
   createdBy?: Maybe<String>;
 }
@@ -3353,209 +3926,14 @@ export interface CommentUpdateWithoutPostDataInput {
   author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutPostInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutPostDataInput;
-  create: CommentCreateWithoutPostInput;
-}
-
-export interface CommentScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-}
-
-export interface CommentUpdateManyWithWhereNestedInput {
-  where: CommentScalarWhereInput;
-  data: CommentUpdateManyDataInput;
-}
-
-export interface CommentUpdateManyDataInput {
-  text?: Maybe<String>;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutAuthorDataInput;
-  create: PostCreateWithoutAuthorInput;
-}
-
-export interface PostScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  body?: Maybe<String>;
-  body_not?: Maybe<String>;
-  body_in?: Maybe<String[] | String>;
-  body_not_in?: Maybe<String[] | String>;
-  body_lt?: Maybe<String>;
-  body_lte?: Maybe<String>;
-  body_gt?: Maybe<String>;
-  body_gte?: Maybe<String>;
-  body_contains?: Maybe<String>;
-  body_not_contains?: Maybe<String>;
-  body_starts_with?: Maybe<String>;
-  body_not_starts_with?: Maybe<String>;
-  body_ends_with?: Maybe<String>;
-  body_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-}
-
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
-}
-
-export interface PostUpdateManyDataInput {
-  title?: Maybe<String>;
-  body?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface CommentUpdateManyWithoutAuthorInput {
-  create?: Maybe<
-    CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput
-  >;
-  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  update?: Maybe<
-    | CommentUpdateWithWhereUniqueWithoutAuthorInput[]
-    | CommentUpdateWithWhereUniqueWithoutAuthorInput
-  >;
-  upsert?: Maybe<
-    | CommentUpsertWithWhereUniqueWithoutAuthorInput[]
-    | CommentUpsertWithWhereUniqueWithoutAuthorInput
-  >;
-  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  updateMany?: Maybe<
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutAuthorDataInput;
-}
-
-export interface CommentUpdateWithoutAuthorDataInput {
-  text?: Maybe<String>;
-  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
-}
-
-export interface PostUpdateOneRequiredWithoutCommentsInput {
-  create?: Maybe<PostCreateWithoutCommentsInput>;
-  update?: Maybe<PostUpdateWithoutCommentsDataInput>;
-  upsert?: Maybe<PostUpsertWithoutCommentsInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface PostUpdateWithoutCommentsDataInput {
-  title?: Maybe<String>;
-  body?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  update?: Maybe<UserUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+export interface UserUpdateOneRequiredWithoutCommentsInput {
+  create?: Maybe<UserCreateWithoutCommentsInput>;
+  update?: Maybe<UserUpdateWithoutCommentsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCommentsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutPostsDataInput {
+export interface UserUpdateWithoutCommentsDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
@@ -3564,7 +3942,7 @@ export interface UserUpdateWithoutPostsDataInput {
   suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
   groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
   subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
-  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   myRoles?: Maybe<RoleMemberUpdateManyWithoutUseridInput>;
   myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
   subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
@@ -3701,6 +4079,76 @@ export interface UserUpdateWithoutGroupmembersDataInput {
   suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
   subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
+  myRoles?: Maybe<RoleMemberUpdateManyWithoutUseridInput>;
+  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+}
+
+export interface CommentUpdateManyWithoutAuthorInput {
+  create?: Maybe<
+    CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput
+  >;
+  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  update?: Maybe<
+    | CommentUpdateWithWhereUniqueWithoutAuthorInput[]
+    | CommentUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | CommentUpsertWithWhereUniqueWithoutAuthorInput[]
+    | CommentUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  updateMany?: Maybe<
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutAuthorDataInput;
+}
+
+export interface CommentUpdateWithoutAuthorDataInput {
+  text?: Maybe<String>;
+  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+}
+
+export interface PostUpdateOneRequiredWithoutCommentsInput {
+  create?: Maybe<PostCreateWithoutCommentsInput>;
+  update?: Maybe<PostUpdateWithoutCommentsDataInput>;
+  upsert?: Maybe<PostUpsertWithoutCommentsInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface PostUpdateWithoutCommentsDataInput {
+  title?: Maybe<String>;
+  body?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  update?: Maybe<UserUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutPostsDataInput {
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   myRoles?: Maybe<RoleMemberUpdateManyWithoutUseridInput>;
   myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
@@ -3850,8 +4298,9 @@ export interface SubjectUpdateWithWhereUniqueWithoutGroupInput {
 export interface SubjectUpdateWithoutGroupDataInput {
   name?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<String>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
 }
 
@@ -3871,6 +4320,25 @@ export interface MediumUpdateWithoutSubjectsDataInput {
 export interface MediumUpsertWithoutSubjectsInput {
   update: MediumUpdateWithoutSubjectsDataInput;
   create: MediumCreateWithoutSubjectsInput;
+}
+
+export interface StdUpdateOneRequiredWithoutSubjectInput {
+  create?: Maybe<StdCreateWithoutSubjectInput>;
+  update?: Maybe<StdUpdateWithoutSubjectDataInput>;
+  upsert?: Maybe<StdUpsertWithoutSubjectInput>;
+  connect?: Maybe<StdWhereUniqueInput>;
+}
+
+export interface StdUpdateWithoutSubjectDataInput {
+  stdname?: Maybe<String>;
+  category?: Maybe<String>;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+}
+
+export interface StdUpsertWithoutSubjectInput {
+  update: StdUpdateWithoutSubjectDataInput;
+  create: StdCreateWithoutSubjectInput;
 }
 
 export interface SubGroupUpdateOneWithoutSubjectsInput {
@@ -4014,6 +4482,7 @@ export interface ProfileUpdateWithWhereUniqueWithoutUserIdInput {
 export interface ProfileUpdateWithoutUserIdDataInput {
   name?: Maybe<String>;
   studentProfile?: Maybe<StudentProfileUpdateManyWithoutProfileIdInput>;
+  personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
 }
 
 export interface StudentProfileUpdateManyWithoutProfileIdInput {
@@ -4260,6 +4729,303 @@ export interface StudentProfileUpdateManyDataInput {
   remark?: Maybe<String>;
 }
 
+export interface PersonalProfileUpdateManyWithoutProfileIdInput {
+  create?: Maybe<
+    | PersonalProfileCreateWithoutProfileIdInput[]
+    | PersonalProfileCreateWithoutProfileIdInput
+  >;
+  delete?: Maybe<
+    PersonalProfileWhereUniqueInput[] | PersonalProfileWhereUniqueInput
+  >;
+  connect?: Maybe<
+    PersonalProfileWhereUniqueInput[] | PersonalProfileWhereUniqueInput
+  >;
+  set?: Maybe<
+    PersonalProfileWhereUniqueInput[] | PersonalProfileWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    PersonalProfileWhereUniqueInput[] | PersonalProfileWhereUniqueInput
+  >;
+  update?: Maybe<
+    | PersonalProfileUpdateWithWhereUniqueWithoutProfileIdInput[]
+    | PersonalProfileUpdateWithWhereUniqueWithoutProfileIdInput
+  >;
+  upsert?: Maybe<
+    | PersonalProfileUpsertWithWhereUniqueWithoutProfileIdInput[]
+    | PersonalProfileUpsertWithWhereUniqueWithoutProfileIdInput
+  >;
+  deleteMany?: Maybe<
+    PersonalProfileScalarWhereInput[] | PersonalProfileScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | PersonalProfileUpdateManyWithWhereNestedInput[]
+    | PersonalProfileUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PersonalProfileUpdateWithWhereUniqueWithoutProfileIdInput {
+  where: PersonalProfileWhereUniqueInput;
+  data: PersonalProfileUpdateWithoutProfileIdDataInput;
+}
+
+export interface PersonalProfileUpdateWithoutProfileIdDataInput {
+  name?: Maybe<String>;
+  avatar?: Maybe<String>;
+  mobile?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+  addresses?: Maybe<AddressUpdateManyWithoutPersonalProfileInput>;
+}
+
+export interface AddressUpdateManyWithoutPersonalProfileInput {
+  create?: Maybe<
+    | AddressCreateWithoutPersonalProfileInput[]
+    | AddressCreateWithoutPersonalProfileInput
+  >;
+  delete?: Maybe<AddressWhereUniqueInput[] | AddressWhereUniqueInput>;
+  connect?: Maybe<AddressWhereUniqueInput[] | AddressWhereUniqueInput>;
+  set?: Maybe<AddressWhereUniqueInput[] | AddressWhereUniqueInput>;
+  disconnect?: Maybe<AddressWhereUniqueInput[] | AddressWhereUniqueInput>;
+  update?: Maybe<
+    | AddressUpdateWithWhereUniqueWithoutPersonalProfileInput[]
+    | AddressUpdateWithWhereUniqueWithoutPersonalProfileInput
+  >;
+  upsert?: Maybe<
+    | AddressUpsertWithWhereUniqueWithoutPersonalProfileInput[]
+    | AddressUpsertWithWhereUniqueWithoutPersonalProfileInput
+  >;
+  deleteMany?: Maybe<AddressScalarWhereInput[] | AddressScalarWhereInput>;
+  updateMany?: Maybe<
+    | AddressUpdateManyWithWhereNestedInput[]
+    | AddressUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface AddressUpdateWithWhereUniqueWithoutPersonalProfileInput {
+  where: AddressWhereUniqueInput;
+  data: AddressUpdateWithoutPersonalProfileDataInput;
+}
+
+export interface AddressUpdateWithoutPersonalProfileDataInput {
+  adressline?: Maybe<String>;
+  tehsil?: Maybe<String>;
+  city?: Maybe<String>;
+  district?: Maybe<String>;
+  state?: Maybe<String>;
+  pincode?: Maybe<String>;
+}
+
+export interface AddressUpsertWithWhereUniqueWithoutPersonalProfileInput {
+  where: AddressWhereUniqueInput;
+  update: AddressUpdateWithoutPersonalProfileDataInput;
+  create: AddressCreateWithoutPersonalProfileInput;
+}
+
+export interface AddressScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  adressline?: Maybe<String>;
+  adressline_not?: Maybe<String>;
+  adressline_in?: Maybe<String[] | String>;
+  adressline_not_in?: Maybe<String[] | String>;
+  adressline_lt?: Maybe<String>;
+  adressline_lte?: Maybe<String>;
+  adressline_gt?: Maybe<String>;
+  adressline_gte?: Maybe<String>;
+  adressline_contains?: Maybe<String>;
+  adressline_not_contains?: Maybe<String>;
+  adressline_starts_with?: Maybe<String>;
+  adressline_not_starts_with?: Maybe<String>;
+  adressline_ends_with?: Maybe<String>;
+  adressline_not_ends_with?: Maybe<String>;
+  tehsil?: Maybe<String>;
+  tehsil_not?: Maybe<String>;
+  tehsil_in?: Maybe<String[] | String>;
+  tehsil_not_in?: Maybe<String[] | String>;
+  tehsil_lt?: Maybe<String>;
+  tehsil_lte?: Maybe<String>;
+  tehsil_gt?: Maybe<String>;
+  tehsil_gte?: Maybe<String>;
+  tehsil_contains?: Maybe<String>;
+  tehsil_not_contains?: Maybe<String>;
+  tehsil_starts_with?: Maybe<String>;
+  tehsil_not_starts_with?: Maybe<String>;
+  tehsil_ends_with?: Maybe<String>;
+  tehsil_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
+  district?: Maybe<String>;
+  district_not?: Maybe<String>;
+  district_in?: Maybe<String[] | String>;
+  district_not_in?: Maybe<String[] | String>;
+  district_lt?: Maybe<String>;
+  district_lte?: Maybe<String>;
+  district_gt?: Maybe<String>;
+  district_gte?: Maybe<String>;
+  district_contains?: Maybe<String>;
+  district_not_contains?: Maybe<String>;
+  district_starts_with?: Maybe<String>;
+  district_not_starts_with?: Maybe<String>;
+  district_ends_with?: Maybe<String>;
+  district_not_ends_with?: Maybe<String>;
+  state?: Maybe<String>;
+  state_not?: Maybe<String>;
+  state_in?: Maybe<String[] | String>;
+  state_not_in?: Maybe<String[] | String>;
+  state_lt?: Maybe<String>;
+  state_lte?: Maybe<String>;
+  state_gt?: Maybe<String>;
+  state_gte?: Maybe<String>;
+  state_contains?: Maybe<String>;
+  state_not_contains?: Maybe<String>;
+  state_starts_with?: Maybe<String>;
+  state_not_starts_with?: Maybe<String>;
+  state_ends_with?: Maybe<String>;
+  state_not_ends_with?: Maybe<String>;
+  pincode?: Maybe<String>;
+  pincode_not?: Maybe<String>;
+  pincode_in?: Maybe<String[] | String>;
+  pincode_not_in?: Maybe<String[] | String>;
+  pincode_lt?: Maybe<String>;
+  pincode_lte?: Maybe<String>;
+  pincode_gt?: Maybe<String>;
+  pincode_gte?: Maybe<String>;
+  pincode_contains?: Maybe<String>;
+  pincode_not_contains?: Maybe<String>;
+  pincode_starts_with?: Maybe<String>;
+  pincode_not_starts_with?: Maybe<String>;
+  pincode_ends_with?: Maybe<String>;
+  pincode_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AddressScalarWhereInput[] | AddressScalarWhereInput>;
+  OR?: Maybe<AddressScalarWhereInput[] | AddressScalarWhereInput>;
+  NOT?: Maybe<AddressScalarWhereInput[] | AddressScalarWhereInput>;
+}
+
+export interface AddressUpdateManyWithWhereNestedInput {
+  where: AddressScalarWhereInput;
+  data: AddressUpdateManyDataInput;
+}
+
+export interface AddressUpdateManyDataInput {
+  adressline?: Maybe<String>;
+  tehsil?: Maybe<String>;
+  city?: Maybe<String>;
+  district?: Maybe<String>;
+  state?: Maybe<String>;
+  pincode?: Maybe<String>;
+}
+
+export interface PersonalProfileUpsertWithWhereUniqueWithoutProfileIdInput {
+  where: PersonalProfileWhereUniqueInput;
+  update: PersonalProfileUpdateWithoutProfileIdDataInput;
+  create: PersonalProfileCreateWithoutProfileIdInput;
+}
+
+export interface PersonalProfileScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  avatar?: Maybe<String>;
+  avatar_not?: Maybe<String>;
+  avatar_in?: Maybe<String[] | String>;
+  avatar_not_in?: Maybe<String[] | String>;
+  avatar_lt?: Maybe<String>;
+  avatar_lte?: Maybe<String>;
+  avatar_gt?: Maybe<String>;
+  avatar_gte?: Maybe<String>;
+  avatar_contains?: Maybe<String>;
+  avatar_not_contains?: Maybe<String>;
+  avatar_starts_with?: Maybe<String>;
+  avatar_not_starts_with?: Maybe<String>;
+  avatar_ends_with?: Maybe<String>;
+  avatar_not_ends_with?: Maybe<String>;
+  mobile?: Maybe<String>;
+  mobile_not?: Maybe<String>;
+  mobile_in?: Maybe<String[] | String>;
+  mobile_not_in?: Maybe<String[] | String>;
+  mobile_lt?: Maybe<String>;
+  mobile_lte?: Maybe<String>;
+  mobile_gt?: Maybe<String>;
+  mobile_gte?: Maybe<String>;
+  mobile_contains?: Maybe<String>;
+  mobile_not_contains?: Maybe<String>;
+  mobile_starts_with?: Maybe<String>;
+  mobile_not_starts_with?: Maybe<String>;
+  mobile_ends_with?: Maybe<String>;
+  mobile_not_ends_with?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+  isMobilePublished_not?: Maybe<Boolean>;
+  AND?: Maybe<
+    PersonalProfileScalarWhereInput[] | PersonalProfileScalarWhereInput
+  >;
+  OR?: Maybe<
+    PersonalProfileScalarWhereInput[] | PersonalProfileScalarWhereInput
+  >;
+  NOT?: Maybe<
+    PersonalProfileScalarWhereInput[] | PersonalProfileScalarWhereInput
+  >;
+}
+
+export interface PersonalProfileUpdateManyWithWhereNestedInput {
+  where: PersonalProfileScalarWhereInput;
+  data: PersonalProfileUpdateManyDataInput;
+}
+
+export interface PersonalProfileUpdateManyDataInput {
+  name?: Maybe<String>;
+  avatar?: Maybe<String>;
+  mobile?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+}
+
 export interface ProfileUpsertWithWhereUniqueWithoutUserIdInput {
   where: ProfileWhereUniqueInput;
   update: ProfileUpdateWithoutUserIdDataInput;
@@ -4383,8 +5149,9 @@ export interface SubjectUpdateWithWhereUniqueNestedInput {
 export interface SubjectUpdateDataInput {
   name?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<String>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
 }
@@ -4489,8 +5256,9 @@ export interface SubjectUpdateWithWhereUniqueWithoutSubgroupInput {
 export interface SubjectUpdateWithoutSubgroupDataInput {
   name?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<String>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
 }
 
@@ -4529,20 +5297,6 @@ export interface SubjectScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  std?: Maybe<String>;
-  std_not?: Maybe<String>;
-  std_in?: Maybe<String[] | String>;
-  std_not_in?: Maybe<String[] | String>;
-  std_lt?: Maybe<String>;
-  std_lte?: Maybe<String>;
-  std_gt?: Maybe<String>;
-  std_gte?: Maybe<String>;
-  std_contains?: Maybe<String>;
-  std_not_contains?: Maybe<String>;
-  std_starts_with?: Maybe<String>;
-  std_not_starts_with?: Maybe<String>;
-  std_ends_with?: Maybe<String>;
-  std_not_ends_with?: Maybe<String>;
   board?: Maybe<String>;
   board_not?: Maybe<String>;
   board_in?: Maybe<String[] | String>;
@@ -4557,6 +5311,20 @@ export interface SubjectScalarWhereInput {
   board_not_starts_with?: Maybe<String>;
   board_ends_with?: Maybe<String>;
   board_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
   AND?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
   OR?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
   NOT?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
@@ -4569,8 +5337,8 @@ export interface SubjectUpdateManyWithWhereNestedInput {
 
 export interface SubjectUpdateManyDataInput {
   name?: Maybe<String>;
-  std?: Maybe<String>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
 }
 
 export interface SubGroupUpsertWithoutSubgroupRolesInput {
@@ -4847,6 +5615,81 @@ export interface RoleMemberUpsertWithWhereUniqueWithoutUseridInput {
   create: RoleMemberCreateWithoutUseridInput;
 }
 
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutAuthorDataInput;
+  create: CommentCreateWithoutAuthorInput;
+}
+
+export interface CommentScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+}
+
+export interface CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput;
+  data: CommentUpdateManyDataInput;
+}
+
+export interface CommentUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
 export interface UserUpsertWithoutGroupmembersInput {
   update: UserUpdateWithoutGroupmembersDataInput;
   create: UserCreateWithoutGroupmembersInput;
@@ -5006,20 +5849,98 @@ export interface SubGroupMemberUpdateManyDataInput {
   description?: Maybe<String>;
 }
 
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
+export interface UserUpsertWithoutCommentsInput {
+  update: UserUpdateWithoutCommentsDataInput;
+  create: UserCreateWithoutCommentsInput;
 }
 
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
+export interface CommentUpsertWithWhereUniqueWithoutPostInput {
   where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutAuthorDataInput;
-  create: CommentCreateWithoutAuthorInput;
+  update: CommentUpdateWithoutPostDataInput;
+  create: CommentCreateWithoutPostInput;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutAuthorDataInput;
+  create: PostCreateWithoutAuthorInput;
+}
+
+export interface PostScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  body?: Maybe<String>;
+  body_not?: Maybe<String>;
+  body_in?: Maybe<String[] | String>;
+  body_not_in?: Maybe<String[] | String>;
+  body_lt?: Maybe<String>;
+  body_lte?: Maybe<String>;
+  body_gt?: Maybe<String>;
+  body_gte?: Maybe<String>;
+  body_contains?: Maybe<String>;
+  body_not_contains?: Maybe<String>;
+  body_starts_with?: Maybe<String>;
+  body_not_starts_with?: Maybe<String>;
+  body_ends_with?: Maybe<String>;
+  body_not_ends_with?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export interface PostUpdateManyDataInput {
+  title?: Maybe<String>;
+  body?: Maybe<String>;
+  published?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithoutSubgroupmembersInput {
@@ -5516,9 +6437,41 @@ export interface OrganizationUpsertWithoutAuthorInput {
   create: OrganizationCreateWithoutAuthorInput;
 }
 
-export interface UserUpsertWithoutCommentsInput {
-  update: UserUpdateWithoutCommentsDataInput;
-  create: UserCreateWithoutCommentsInput;
+export interface UserUpsertWithoutMyprofilesInput {
+  update: UserUpdateWithoutMyprofilesDataInput;
+  create: UserCreateWithoutMyprofilesInput;
+}
+
+export interface ProfileUpsertWithoutPersonalProfiileInput {
+  update: ProfileUpdateWithoutPersonalProfiileDataInput;
+  create: ProfileCreateWithoutPersonalProfiileInput;
+}
+
+export interface PersonalProfileUpsertWithoutAddressesInput {
+  update: PersonalProfileUpdateWithoutAddressesDataInput;
+  create: PersonalProfileCreateWithoutAddressesInput;
+}
+
+export interface AddressUpdateManyMutationInput {
+  adressline?: Maybe<String>;
+  tehsil?: Maybe<String>;
+  city?: Maybe<String>;
+  district?: Maybe<String>;
+  state?: Maybe<String>;
+  pincode?: Maybe<String>;
+}
+
+export interface CommentCreateInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  author: UserCreateOneWithoutCommentsInput;
+  post: PostCreateOneWithoutCommentsInput;
+}
+
+export interface CommentUpdateInput {
+  text?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
+  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
 }
 
 export interface CommentUpdateManyMutationInput {
@@ -5587,8 +6540,9 @@ export interface SubjectCreateManyWithoutMediumInput {
 export interface SubjectCreateWithoutMediumInput {
   id?: Maybe<ID_Input>;
   name: String;
-  std: String;
+  std: StdCreateOneWithoutSubjectInput;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
 }
@@ -5628,8 +6582,9 @@ export interface SubjectUpdateWithWhereUniqueWithoutMediumInput {
 
 export interface SubjectUpdateWithoutMediumDataInput {
   name?: Maybe<String>;
-  std?: Maybe<String>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
 }
@@ -5666,6 +6621,32 @@ export interface OrganizationUpdateManyMutationInput {
   description?: Maybe<String>;
 }
 
+export interface PersonalProfileCreateInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  avatar: String;
+  mobile: String;
+  isMobilePublished?: Maybe<Boolean>;
+  addresses?: Maybe<AddressCreateManyWithoutPersonalProfileInput>;
+  profileId: ProfileCreateOneWithoutPersonalProfiileInput;
+}
+
+export interface PersonalProfileUpdateInput {
+  name?: Maybe<String>;
+  avatar?: Maybe<String>;
+  mobile?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+  addresses?: Maybe<AddressUpdateManyWithoutPersonalProfileInput>;
+  profileId?: Maybe<ProfileUpdateOneRequiredWithoutPersonalProfiileInput>;
+}
+
+export interface PersonalProfileUpdateManyMutationInput {
+  name?: Maybe<String>;
+  avatar?: Maybe<String>;
+  mobile?: Maybe<String>;
+  isMobilePublished?: Maybe<Boolean>;
+}
+
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
@@ -5694,62 +6675,14 @@ export interface ProfileCreateInput {
   name: String;
   userId: UserCreateOneWithoutMyprofilesInput;
   studentProfile?: Maybe<StudentProfileCreateManyWithoutProfileIdInput>;
-}
-
-export interface UserCreateOneWithoutMyprofilesInput {
-  create?: Maybe<UserCreateWithoutMyprofilesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutMyprofilesInput {
-  id?: Maybe<ID_Input>;
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
-  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  myRoles?: Maybe<RoleMemberCreateManyWithoutUseridInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
+  personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
 }
 
 export interface ProfileUpdateInput {
   name?: Maybe<String>;
   userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
   studentProfile?: Maybe<StudentProfileUpdateManyWithoutProfileIdInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutMyprofilesInput {
-  create?: Maybe<UserCreateWithoutMyprofilesInput>;
-  update?: Maybe<UserUpdateWithoutMyprofilesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutMyprofilesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutMyprofilesDataInput {
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  myRoles?: Maybe<RoleMemberUpdateManyWithoutUseridInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutMyprofilesInput {
-  update: UserUpdateWithoutMyprofilesDataInput;
-  create: UserCreateWithoutMyprofilesInput;
+  personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
 }
 
 export interface ProfileUpdateManyMutationInput {
@@ -5802,6 +6735,86 @@ export interface RoleMemberUpdateManyMutationInput {
   description?: Maybe<String>;
 }
 
+export interface StdCreateInput {
+  id?: Maybe<ID_Input>;
+  stdname: String;
+  category: String;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+  subject?: Maybe<SubjectCreateManyWithoutStdInput>;
+}
+
+export interface SubjectCreateManyWithoutStdInput {
+  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+}
+
+export interface SubjectCreateWithoutStdInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+}
+
+export interface StdUpdateInput {
+  stdname?: Maybe<String>;
+  category?: Maybe<String>;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+  subject?: Maybe<SubjectUpdateManyWithoutStdInput>;
+}
+
+export interface SubjectUpdateManyWithoutStdInput {
+  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
+  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  update?: Maybe<
+    | SubjectUpdateWithWhereUniqueWithoutStdInput[]
+    | SubjectUpdateWithWhereUniqueWithoutStdInput
+  >;
+  upsert?: Maybe<
+    | SubjectUpsertWithWhereUniqueWithoutStdInput[]
+    | SubjectUpsertWithWhereUniqueWithoutStdInput
+  >;
+  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | SubjectUpdateManyWithWhereNestedInput[]
+    | SubjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SubjectUpdateWithWhereUniqueWithoutStdInput {
+  where: SubjectWhereUniqueInput;
+  data: SubjectUpdateWithoutStdDataInput;
+}
+
+export interface SubjectUpdateWithoutStdDataInput {
+  name?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+}
+
+export interface SubjectUpsertWithWhereUniqueWithoutStdInput {
+  where: SubjectWhereUniqueInput;
+  update: SubjectUpdateWithoutStdDataInput;
+  create: SubjectCreateWithoutStdInput;
+}
+
+export interface StdUpdateManyMutationInput {
+  stdname?: Maybe<String>;
+  category?: Maybe<String>;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+}
+
 export interface StudentProfileCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
@@ -5827,6 +6840,7 @@ export interface ProfileCreateWithoutStudentProfileInput {
   id?: Maybe<ID_Input>;
   name: String;
   userId: UserCreateOneWithoutMyprofilesInput;
+  personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
 }
 
 export interface StudentProfileUpdateInput {
@@ -5854,6 +6868,7 @@ export interface ProfileUpdateOneRequiredWithoutStudentProfileInput {
 export interface ProfileUpdateWithoutStudentProfileDataInput {
   name?: Maybe<String>;
   userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
+  personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
 }
 
 export interface ProfileUpsertWithoutStudentProfileInput {
@@ -5922,16 +6937,17 @@ export interface SubGroupMemberUpdateManyMutationInput {
 export interface SubjectUpdateInput {
   name?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<String>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
 }
 
 export interface SubjectUpdateManyMutationInput {
   name?: Maybe<String>;
-  std?: Maybe<String>;
   board?: Maybe<String>;
+  category?: Maybe<String>;
 }
 
 export interface SubjectSubscriptionCreateInput {
@@ -6071,6 +7087,17 @@ export interface UserUpdateManyMutationInput {
   createdBy?: Maybe<String>;
 }
 
+export interface AddressSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AddressWhereInput>;
+  AND?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>;
+  OR?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>;
+  NOT?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>;
+}
+
 export interface CommentSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -6138,6 +7165,26 @@ export interface OrganizationSubscriptionWhereInput {
   >;
 }
 
+export interface PersonalProfileSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PersonalProfileWhereInput>;
+  AND?: Maybe<
+    | PersonalProfileSubscriptionWhereInput[]
+    | PersonalProfileSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | PersonalProfileSubscriptionWhereInput[]
+    | PersonalProfileSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | PersonalProfileSubscriptionWhereInput[]
+    | PersonalProfileSubscriptionWhereInput
+  >;
+}
+
 export interface PostSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -6186,6 +7233,17 @@ export interface RoleMemberSubscriptionWhereInput {
   NOT?: Maybe<
     RoleMemberSubscriptionWhereInput[] | RoleMemberSubscriptionWhereInput
   >;
+}
+
+export interface StdSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<StdWhereInput>;
+  AND?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
+  OR?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
+  NOT?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
 }
 
 export interface StudentProfileSubscriptionWhereInput {
@@ -6289,42 +7347,204 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Comment {
+export interface Address {
   id: ID_Output;
-  text: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
+  adressline: String;
+  tehsil: String;
+  city: String;
+  district: String;
+  state: String;
+  pincode: String;
 }
 
-export interface CommentPromise extends Promise<Comment>, Fragmentable {
+export interface AddressPromise extends Promise<Address>, Fragmentable {
   id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  author: <T = UserPromise>() => T;
-  post: <T = PostPromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
+  adressline: () => Promise<String>;
+  tehsil: () => Promise<String>;
+  city: () => Promise<String>;
+  district: () => Promise<String>;
+  state: () => Promise<String>;
+  pincode: () => Promise<String>;
+  personalProfile: <T = PersonalProfilePromise>() => T;
 }
 
-export interface CommentSubscription
-  extends Promise<AsyncIterator<Comment>>,
+export interface AddressSubscription
+  extends Promise<AsyncIterator<Address>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  author: <T = UserSubscription>() => T;
-  post: <T = PostSubscription>() => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  adressline: () => Promise<AsyncIterator<String>>;
+  tehsil: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  district: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  pincode: () => Promise<AsyncIterator<String>>;
+  personalProfile: <T = PersonalProfileSubscription>() => T;
 }
 
-export interface CommentNullablePromise
-  extends Promise<Comment | null>,
+export interface AddressNullablePromise
+  extends Promise<Address | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  author: <T = UserPromise>() => T;
-  post: <T = PostPromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
+  adressline: () => Promise<String>;
+  tehsil: () => Promise<String>;
+  city: () => Promise<String>;
+  district: () => Promise<String>;
+  state: () => Promise<String>;
+  pincode: () => Promise<String>;
+  personalProfile: <T = PersonalProfilePromise>() => T;
+}
+
+export interface PersonalProfile {
+  id: ID_Output;
+  name: String;
+  avatar: String;
+  mobile: String;
+  isMobilePublished?: Boolean;
+}
+
+export interface PersonalProfilePromise
+  extends Promise<PersonalProfile>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  avatar: () => Promise<String>;
+  mobile: () => Promise<String>;
+  isMobilePublished: () => Promise<Boolean>;
+  addresses: <T = FragmentableArray<Address>>(args?: {
+    where?: AddressWhereInput;
+    orderBy?: AddressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  profileId: <T = ProfilePromise>() => T;
+}
+
+export interface PersonalProfileSubscription
+  extends Promise<AsyncIterator<PersonalProfile>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  avatar: () => Promise<AsyncIterator<String>>;
+  mobile: () => Promise<AsyncIterator<String>>;
+  isMobilePublished: () => Promise<AsyncIterator<Boolean>>;
+  addresses: <T = Promise<AsyncIterator<AddressSubscription>>>(args?: {
+    where?: AddressWhereInput;
+    orderBy?: AddressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  profileId: <T = ProfileSubscription>() => T;
+}
+
+export interface PersonalProfileNullablePromise
+  extends Promise<PersonalProfile | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  avatar: () => Promise<String>;
+  mobile: () => Promise<String>;
+  isMobilePublished: () => Promise<Boolean>;
+  addresses: <T = FragmentableArray<Address>>(args?: {
+    where?: AddressWhereInput;
+    orderBy?: AddressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  profileId: <T = ProfilePromise>() => T;
+}
+
+export interface Profile {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ProfilePromise extends Promise<Profile>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  userId: <T = UserPromise>() => T;
+  studentProfile: <T = FragmentableArray<StudentProfile>>(args?: {
+    where?: StudentProfileWhereInput;
+    orderBy?: StudentProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  personalProfiile: <T = FragmentableArray<PersonalProfile>>(args?: {
+    where?: PersonalProfileWhereInput;
+    orderBy?: PersonalProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ProfileSubscription
+  extends Promise<AsyncIterator<Profile>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  userId: <T = UserSubscription>() => T;
+  studentProfile: <
+    T = Promise<AsyncIterator<StudentProfileSubscription>>
+  >(args?: {
+    where?: StudentProfileWhereInput;
+    orderBy?: StudentProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  personalProfiile: <
+    T = Promise<AsyncIterator<PersonalProfileSubscription>>
+  >(args?: {
+    where?: PersonalProfileWhereInput;
+    orderBy?: PersonalProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ProfileNullablePromise
+  extends Promise<Profile | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  userId: <T = UserPromise>() => T;
+  studentProfile: <T = FragmentableArray<StudentProfile>>(args?: {
+    where?: StudentProfileWhereInput;
+    orderBy?: StudentProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  personalProfiile: <T = FragmentableArray<PersonalProfile>>(args?: {
+    where?: PersonalProfileWhereInput;
+    orderBy?: PersonalProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface User {
@@ -7268,16 +8488,17 @@ export interface RoleMemberNullablePromise
 export interface Subject {
   id: ID_Output;
   name: String;
-  std: String;
   board?: String;
+  category?: String;
 }
 
 export interface SubjectPromise extends Promise<Subject>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   medium: <T = MediumPromise>() => T;
-  std: () => Promise<String>;
+  std: <T = StdPromise>() => T;
   board: () => Promise<String>;
+  category: () => Promise<String>;
   group: <T = GroupPromise>() => T;
   subgroup: <T = SubGroupPromise>() => T;
 }
@@ -7288,8 +8509,9 @@ export interface SubjectSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   medium: <T = MediumSubscription>() => T;
-  std: () => Promise<AsyncIterator<String>>;
+  std: <T = StdSubscription>() => T;
   board: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
   group: <T = GroupSubscription>() => T;
   subgroup: <T = SubGroupSubscription>() => T;
 }
@@ -7300,8 +8522,9 @@ export interface SubjectNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   medium: <T = MediumPromise>() => T;
-  std: () => Promise<String>;
+  std: <T = StdPromise>() => T;
   board: () => Promise<String>;
+  category: () => Promise<String>;
   group: <T = GroupPromise>() => T;
   subgroup: <T = SubGroupPromise>() => T;
 }
@@ -7347,6 +8570,67 @@ export interface MediumNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   subjects: <T = FragmentableArray<Subject>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Std {
+  id: ID_Output;
+  stdname: String;
+  category: String;
+  branch?: String;
+  year?: String;
+}
+
+export interface StdPromise extends Promise<Std>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  stdname: () => Promise<String>;
+  category: () => Promise<String>;
+  branch: () => Promise<String>;
+  year: () => Promise<String>;
+  subject: <T = FragmentableArray<Subject>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface StdSubscription
+  extends Promise<AsyncIterator<Std>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  stdname: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
+  branch: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<String>>;
+  subject: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface StdNullablePromise extends Promise<Std | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  stdname: () => Promise<String>;
+  category: () => Promise<String>;
+  branch: () => Promise<String>;
+  year: () => Promise<String>;
+  subject: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -7469,60 +8753,102 @@ export interface PostNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface Profile {
+export interface Comment {
   id: ID_Output;
-  name: String;
+  text: String;
+  updatedAt: DateTimeOutput;
+  createdAt: DateTimeOutput;
 }
 
-export interface ProfilePromise extends Promise<Profile>, Fragmentable {
+export interface CommentPromise extends Promise<Comment>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  userId: <T = UserPromise>() => T;
-  studentProfile: <T = FragmentableArray<StudentProfile>>(args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  text: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface ProfileSubscription
-  extends Promise<AsyncIterator<Profile>>,
+export interface CommentSubscription
+  extends Promise<AsyncIterator<Comment>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  userId: <T = UserSubscription>() => T;
-  studentProfile: <
-    T = Promise<AsyncIterator<StudentProfileSubscription>>
-  >(args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  text: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  post: <T = PostSubscription>() => T;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface ProfileNullablePromise
-  extends Promise<Profile | null>,
+export interface CommentNullablePromise
+  extends Promise<Comment | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  userId: <T = UserPromise>() => T;
-  studentProfile: <T = FragmentableArray<StudentProfile>>(args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
+  text: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface SubjectSubscription {
+  id: ID_Output;
+  subsType?: String;
+  subscribedAs?: String;
+}
+
+export interface SubjectSubscriptionPromise
+  extends Promise<SubjectSubscription>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  subsType: () => Promise<String>;
+  mySubjects: <T = FragmentableArray<Subject>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
   }) => T;
+  userid: <T = UserPromise>() => T;
+  subscribedAs: () => Promise<String>;
+}
+
+export interface SubjectSubscriptionSubscription
+  extends Promise<AsyncIterator<SubjectSubscription>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  subsType: () => Promise<AsyncIterator<String>>;
+  mySubjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  userid: <T = UserSubscription>() => T;
+  subscribedAs: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SubjectSubscriptionNullablePromise
+  extends Promise<SubjectSubscription | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  subsType: () => Promise<String>;
+  mySubjects: <T = FragmentableArray<Subject>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  userid: <T = UserPromise>() => T;
+  subscribedAs: () => Promise<String>;
 }
 
 export interface StudentProfile {
@@ -7594,85 +8920,25 @@ export interface StudentProfileNullablePromise
   profileId: <T = ProfilePromise>() => T;
 }
 
-export interface SubjectSubscription {
-  id: ID_Output;
-  subsType?: String;
-  subscribedAs?: String;
-}
-
-export interface SubjectSubscriptionPromise
-  extends Promise<SubjectSubscription>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  subsType: () => Promise<String>;
-  mySubjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userid: <T = UserPromise>() => T;
-  subscribedAs: () => Promise<String>;
-}
-
-export interface SubjectSubscriptionSubscription
-  extends Promise<AsyncIterator<SubjectSubscription>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  subsType: () => Promise<AsyncIterator<String>>;
-  mySubjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userid: <T = UserSubscription>() => T;
-  subscribedAs: () => Promise<AsyncIterator<String>>;
-}
-
-export interface SubjectSubscriptionNullablePromise
-  extends Promise<SubjectSubscription | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  subsType: () => Promise<String>;
-  mySubjects: <T = FragmentableArray<Subject>>(args?: {
-    where?: SubjectWhereInput;
-    orderBy?: SubjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userid: <T = UserPromise>() => T;
-  subscribedAs: () => Promise<String>;
-}
-
-export interface CommentConnection {
+export interface AddressConnection {
   pageInfo: PageInfo;
-  edges: CommentEdge[];
+  edges: AddressEdge[];
 }
 
-export interface CommentConnectionPromise
-  extends Promise<CommentConnection>,
+export interface AddressConnectionPromise
+  extends Promise<AddressConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CommentEdge>>() => T;
-  aggregate: <T = AggregateCommentPromise>() => T;
+  edges: <T = FragmentableArray<AddressEdge>>() => T;
+  aggregate: <T = AggregateAddressPromise>() => T;
 }
 
-export interface CommentConnectionSubscription
-  extends Promise<AsyncIterator<CommentConnection>>,
+export interface AddressConnectionSubscription
+  extends Promise<AsyncIterator<AddressConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCommentSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AddressEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAddressSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -7696,6 +8962,60 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AddressEdge {
+  node: Address;
+  cursor: String;
+}
+
+export interface AddressEdgePromise extends Promise<AddressEdge>, Fragmentable {
+  node: <T = AddressPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AddressEdgeSubscription
+  extends Promise<AsyncIterator<AddressEdge>>,
+    Fragmentable {
+  node: <T = AddressSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAddress {
+  count: Int;
+}
+
+export interface AggregateAddressPromise
+  extends Promise<AggregateAddress>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAddressSubscription
+  extends Promise<AsyncIterator<AggregateAddress>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CommentConnection {
+  pageInfo: PageInfo;
+  edges: CommentEdge[];
+}
+
+export interface CommentConnectionPromise
+  extends Promise<CommentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CommentEdge>>() => T;
+  aggregate: <T = AggregateCommentPromise>() => T;
+}
+
+export interface CommentConnectionSubscription
+  extends Promise<AsyncIterator<CommentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCommentSubscription>() => T;
 }
 
 export interface CommentEdge {
@@ -7951,6 +9271,62 @@ export interface AggregateOrganizationSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface PersonalProfileConnection {
+  pageInfo: PageInfo;
+  edges: PersonalProfileEdge[];
+}
+
+export interface PersonalProfileConnectionPromise
+  extends Promise<PersonalProfileConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PersonalProfileEdge>>() => T;
+  aggregate: <T = AggregatePersonalProfilePromise>() => T;
+}
+
+export interface PersonalProfileConnectionSubscription
+  extends Promise<AsyncIterator<PersonalProfileConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PersonalProfileEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePersonalProfileSubscription>() => T;
+}
+
+export interface PersonalProfileEdge {
+  node: PersonalProfile;
+  cursor: String;
+}
+
+export interface PersonalProfileEdgePromise
+  extends Promise<PersonalProfileEdge>,
+    Fragmentable {
+  node: <T = PersonalProfilePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PersonalProfileEdgeSubscription
+  extends Promise<AsyncIterator<PersonalProfileEdge>>,
+    Fragmentable {
+  node: <T = PersonalProfileSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePersonalProfile {
+  count: Int;
+}
+
+export interface AggregatePersonalProfilePromise
+  extends Promise<AggregatePersonalProfile>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePersonalProfileSubscription
+  extends Promise<AsyncIterator<AggregatePersonalProfile>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface PostConnection {
   pageInfo: PageInfo;
   edges: PostEdge[];
@@ -8165,6 +9541,60 @@ export interface AggregateRoleMemberPromise
 
 export interface AggregateRoleMemberSubscription
   extends Promise<AsyncIterator<AggregateRoleMember>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface StdConnection {
+  pageInfo: PageInfo;
+  edges: StdEdge[];
+}
+
+export interface StdConnectionPromise
+  extends Promise<StdConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<StdEdge>>() => T;
+  aggregate: <T = AggregateStdPromise>() => T;
+}
+
+export interface StdConnectionSubscription
+  extends Promise<AsyncIterator<StdConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StdEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStdSubscription>() => T;
+}
+
+export interface StdEdge {
+  node: Std;
+  cursor: String;
+}
+
+export interface StdEdgePromise extends Promise<StdEdge>, Fragmentable {
+  node: <T = StdPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface StdEdgeSubscription
+  extends Promise<AsyncIterator<StdEdge>>,
+    Fragmentable {
+  node: <T = StdSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateStd {
+  count: Int;
+}
+
+export interface AggregateStdPromise
+  extends Promise<AggregateStd>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStdSubscription
+  extends Promise<AsyncIterator<AggregateStd>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -8573,6 +10003,65 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface AddressSubscriptionPayload {
+  mutation: MutationType;
+  node: Address;
+  updatedFields: String[];
+  previousValues: AddressPreviousValues;
+}
+
+export interface AddressSubscriptionPayloadPromise
+  extends Promise<AddressSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AddressPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AddressPreviousValuesPromise>() => T;
+}
+
+export interface AddressSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AddressSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AddressSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AddressPreviousValuesSubscription>() => T;
+}
+
+export interface AddressPreviousValues {
+  id: ID_Output;
+  adressline: String;
+  tehsil: String;
+  city: String;
+  district: String;
+  state: String;
+  pincode: String;
+}
+
+export interface AddressPreviousValuesPromise
+  extends Promise<AddressPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  adressline: () => Promise<String>;
+  tehsil: () => Promise<String>;
+  city: () => Promise<String>;
+  district: () => Promise<String>;
+  state: () => Promise<String>;
+  pincode: () => Promise<String>;
+}
+
+export interface AddressPreviousValuesSubscription
+  extends Promise<AsyncIterator<AddressPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  adressline: () => Promise<AsyncIterator<String>>;
+  tehsil: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  district: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  pincode: () => Promise<AsyncIterator<String>>;
+}
+
 export interface CommentSubscriptionPayload {
   mutation: MutationType;
   node: Comment;
@@ -8826,6 +10315,59 @@ export interface OrganizationPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface PersonalProfileSubscriptionPayload {
+  mutation: MutationType;
+  node: PersonalProfile;
+  updatedFields: String[];
+  previousValues: PersonalProfilePreviousValues;
+}
+
+export interface PersonalProfileSubscriptionPayloadPromise
+  extends Promise<PersonalProfileSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PersonalProfilePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PersonalProfilePreviousValuesPromise>() => T;
+}
+
+export interface PersonalProfileSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PersonalProfileSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PersonalProfileSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PersonalProfilePreviousValuesSubscription>() => T;
+}
+
+export interface PersonalProfilePreviousValues {
+  id: ID_Output;
+  name: String;
+  avatar: String;
+  mobile: String;
+  isMobilePublished?: Boolean;
+}
+
+export interface PersonalProfilePreviousValuesPromise
+  extends Promise<PersonalProfilePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  avatar: () => Promise<String>;
+  mobile: () => Promise<String>;
+  isMobilePublished: () => Promise<Boolean>;
+}
+
+export interface PersonalProfilePreviousValuesSubscription
+  extends Promise<AsyncIterator<PersonalProfilePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  avatar: () => Promise<AsyncIterator<String>>;
+  mobile: () => Promise<AsyncIterator<String>>;
+  isMobilePublished: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface PostSubscriptionPayload {
   mutation: MutationType;
   node: Post;
@@ -9030,6 +10572,59 @@ export interface RoleMemberPreviousValuesSubscription
   description: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface StdSubscriptionPayload {
+  mutation: MutationType;
+  node: Std;
+  updatedFields: String[];
+  previousValues: StdPreviousValues;
+}
+
+export interface StdSubscriptionPayloadPromise
+  extends Promise<StdSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = StdPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StdPreviousValuesPromise>() => T;
+}
+
+export interface StdSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StdSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StdSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StdPreviousValuesSubscription>() => T;
+}
+
+export interface StdPreviousValues {
+  id: ID_Output;
+  stdname: String;
+  category: String;
+  branch?: String;
+  year?: String;
+}
+
+export interface StdPreviousValuesPromise
+  extends Promise<StdPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  stdname: () => Promise<String>;
+  category: () => Promise<String>;
+  branch: () => Promise<String>;
+  year: () => Promise<String>;
+}
+
+export interface StdPreviousValuesSubscription
+  extends Promise<AsyncIterator<StdPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  stdname: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
+  branch: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<String>>;
 }
 
 export interface StudentProfileSubscriptionPayload {
@@ -9240,8 +10835,8 @@ export interface SubjectSubscriptionPayloadSubscription
 export interface SubjectPreviousValues {
   id: ID_Output;
   name: String;
-  std: String;
   board?: String;
+  category?: String;
 }
 
 export interface SubjectPreviousValuesPromise
@@ -9249,8 +10844,8 @@ export interface SubjectPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  std: () => Promise<String>;
   board: () => Promise<String>;
+  category: () => Promise<String>;
 }
 
 export interface SubjectPreviousValuesSubscription
@@ -9258,8 +10853,8 @@ export interface SubjectPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  std: () => Promise<AsyncIterator<String>>;
   board: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SubjectSubscriptionSubscriptionPayload {
@@ -9436,6 +11031,11 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -9444,11 +11044,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -9531,7 +11126,19 @@ export const models: Model[] = [
     embedded: false
   },
   {
+    name: "PersonalProfile",
+    embedded: false
+  },
+  {
+    name: "Address",
+    embedded: false
+  },
+  {
     name: "StudentProfile",
+    embedded: false
+  },
+  {
+    name: "Std",
     embedded: false
   }
 ];

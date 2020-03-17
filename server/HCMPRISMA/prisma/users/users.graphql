@@ -21,6 +21,6 @@ type User {
 type Medium{
   id:ID! @id
   name: String!
-  subjects:[Subject!]!        @relation(name: "SubjectToMedium", onDelete: CASCADE)
+  subjects:[Subject!]!  @relation(name: "SubjectToMedium", onDelete: CASCADE)
 }
 

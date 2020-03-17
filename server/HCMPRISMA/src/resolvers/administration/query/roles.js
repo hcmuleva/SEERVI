@@ -7,10 +7,12 @@ async function allRoles(parent, args, { prisma }, info) {
 
 async function myRoles(parent, args, { prisma ,request}, info) {
     const user = getUserId(request) 
-   return await prisma.query.roleMembers({
+   const myRoleData= await prisma.query.roleMembers({
        where: {userid:{id:user }}
         
     }, info)
+    console.log("myRoleData",myRoleData)
+    return myRoleData
   
 }
 

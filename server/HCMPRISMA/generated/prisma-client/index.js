@@ -73,7 +73,19 @@ var models = [
     embedded: false
   },
   {
+    name: "PersonalProfile",
+    embedded: false
+  },
+  {
+    name: "Address",
+    embedded: false
+  },
+  {
     name: "StudentProfile",
+    embedded: false
+  },
+  {
+    name: "Std",
     embedded: false
   }
 ];

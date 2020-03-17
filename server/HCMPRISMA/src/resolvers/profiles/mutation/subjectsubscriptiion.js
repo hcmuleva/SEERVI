@@ -18,14 +18,43 @@ async function createSubjectSubscription(parent,args,{prisma,request},info){
      const createdSubject=await prisma.mutation.createSubject({
         data: {
             name:args.data.name,
-            std:args.data.std,
-            medium:{connect:{id:args.data.medium}},     
+            std:{connect:{id:args.data.std}},
             board:args.data.board,
+            category:args.data.category,
+            medium:{connect:{id:args.data.medium}},     
             group:{connect:{id:args.data.group}},       
             subgroup:{connect:{id:args.data.subgroup}}   
         }
     }, info)
     return createdSubject;
 }
-export {createSubjectSubscription,createSubject}
+
+
+async function updateSubject(parent, args, { prisma, request }, info) {
+   const subjectExists = await prisma.exists.Subject({ id: args.data.id})
+    if (!subjectExists) {
+        throw new Error('Unable to update subject')
+    } 
+    return await prisma.mutation.updateSubject({
+        where: {
+            id: args.id
+        },
+        data: args.data
+    }, info)
+  
+}
+async function deleteSubject(parent, args, { prisma, request }, info) {
+   const subjectExists = await prisma.exists.Subject({ id: args.id})
+    if (!subjectExists) {
+        throw new Error('Unable to Delete Subject')
+    } 
+    return await prisma.mutation.deleteSubject({
+        where: {
+            id: args.id
+        }
+        
+    }, info)
+  
+}
+export {createSubjectSubscription,createSubject,updateSubject,deleteSubject}
  

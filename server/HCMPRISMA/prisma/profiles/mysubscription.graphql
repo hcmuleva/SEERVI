@@ -1,9 +1,16 @@
+"""
+name: Subject Name
+medium: Select Medium teach them
+category: Techno, CBSE, STATE
+board: CBSE, MPBOARD, RAJSTHAN BOARD etc...
+"""
 type Subject{
   id:ID! @id
   name:String!
   medium:Medium     @relation(name: "SubjectToMedium", onDelete: SET_NULL)
-  std:String!
+  std:Std!          @relation(name: "SubjectToStd", onDelete: SET_NULL)
   board:String 
+  category:String
   group:Group       @relation(name: "SubjectToGroup", onDelete: SET_NULL)
   subgroup:SubGroup @relation(name: "SubjectToSubGroup", onDelete: SET_NULL)
 }

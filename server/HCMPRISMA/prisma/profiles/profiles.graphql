@@ -3,6 +3,27 @@ type Profile{
     name:String!
     userId:User! @relation(name: "ProfilesToUser", onDelete: SET_NULL)
     studentProfile:[StudentProfile!]! @relation(name: "StudentProfiileToProfiles", onDelete: CASCADE)
+    personalProfiile:[PersonalProfile!]! @relation(name: "PersonalProfileToProfile", onDelete: CASCADE)
+}
+type PersonalProfile{
+    id:ID! @id
+    name:String!  @default(value: "DefaultProfileName")
+    avatar:String!
+    mobile:String!
+    isMobilePublished:Boolean
+    addresses:[Address!]! @relation(name: "AddressToPersonalProfile", onDelete: CASCADE)
+    profileId:Profile! @relation(name: "PersonalProfileToProfile", onDelete: SET_NULL)
+
+}
+type Address {
+  id:ID! @id
+  adressline:String!
+  tehsil:String!
+  city:String!
+  district:String!
+  state:String!
+  pincode:String!
+  personalProfile:PersonalProfile @relation(name: "AddressToPersonalProfile", onDelete: CASCADE)
 }
 
 type StudentProfile{

@@ -5,21 +5,35 @@ type Query {
 }
 type Mutation {
   createSubject(data:SubjectInputData!):Subject!
+  updateSubject(id:ID!,data: SubjectUpdateInputData!):Subject!
+  deleteSubject(id:ID!):Subject!
   createSubjectSubscription(data:SubjectSubscriptionInputData!):SubjectSubscription!
 }
 type Subject{
   id:ID! 
   name:String!
   medium:Medium     
-  std:String!
+  std:Std!
+  category:String
   board:String 
   group:Group       
   subgroup:SubGroup 
+
 }
 input SubjectInputData{
   name:String!
-  medium:String     
+  medium:String   
   std:String!
+  category:String
+  board:String 
+  group:String       
+  subgroup:String 
+}
+input SubjectUpdateInputData{
+  name:String
+  medium:String   
+  std:String
+  category:String
   board:String 
   group:String       
   subgroup:String 

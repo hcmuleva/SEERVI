@@ -7,4 +7,14 @@ function loggedInUser(parent, args, { prisma, request }, info) {
         }
     })
 }
-export default loggedInUser
+function getMyOrg(parent, args, { prisma, request }, info) {
+        const userId = getUserId(request)  
+
+    return prisma.query.organizations({
+
+      where :{
+            author_some:userId
+         }
+    })
+}
+export  {loggedInUser,getMyOrg}

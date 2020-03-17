@@ -15,7 +15,8 @@ async function groupmember(parent, args, { prisma, request }, info) {
      })
     return matchedMember;
 }
-function mymembeship(parent,args,{prisma,request},info){
+async function mymembeship(parent,args,{prisma,request},info){
+    console.log("args.query  ",args.query)
      const opArgs = {
             first: args.first,
             skip: args.skip,
@@ -24,6 +25,8 @@ function mymembeship(parent,args,{prisma,request},info){
         }
        
 
-        return prisma.query.groupMembers(opArgs,info) 
+        const myData= await prisma.query.groupMembers(opArgs,info) 
+        console.log("myData",myData)
+        return myData
 }
 export {groupmember,mymembeship}

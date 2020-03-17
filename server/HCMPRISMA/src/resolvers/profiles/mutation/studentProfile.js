@@ -28,4 +28,34 @@ async function createStudentProfile(parent,args,{prisma,request},info){
     }, info)
     return createdStudentProfile;
 }
-export {createProfile,createStudentProfile}
+
+async function  createPersonalProfile(parent,args,{prisma,request},info){
+     return await prisma.mutation.createPersonalProfile({
+        data: {
+
+            name:args.data.name,
+            avatar:args.data.avatar,
+            mobile:args.data.mobile,
+            isMobilePublished:args.data.isMobilePublished,
+            profileId:{connect:{id:args.data.profileId}}
+        }
+    }, info)
+    
+}
+async function  createAddress(parent,args,{prisma,request},info){
+     return await prisma.mutation.createAddress({
+        data: {
+
+            adressline:args.data.adressline,
+            tehsil:args.data.tehsil,
+            city:args.data.city,
+            district:args.data.district,
+            state:args.data.state,
+            pincode:args.data.pincode,
+            personalProfile:{connect:{id:args.data.personalProfile}}
+        }
+    }, info)
+    
+}
+
+export {createProfile,createStudentProfile,createPersonalProfile,createAddress}
