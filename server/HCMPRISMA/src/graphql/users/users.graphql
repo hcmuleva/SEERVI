@@ -33,6 +33,9 @@ type User {
     myprofiles:[Profile!]!
     subjectSubscription:[SubjectSubscription!]! 
     myRoles:[RoleMember!]!
+    teachers:[EducationRelationship!]!
+    students:[EducationRelationship!]!
+    parents:[EducationRelationship!]! 
     createdBy:ID
     createdAt:String!
     updatedAt:String!

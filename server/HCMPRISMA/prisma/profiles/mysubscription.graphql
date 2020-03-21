@@ -3,23 +3,52 @@ name: Subject Name
 medium: Select Medium teach them
 category: Techno, CBSE, STATE
 board: CBSE, MPBOARD, RAJSTHAN BOARD etc...
+
+units : units may belongs to subject
+topics: there may be list of Topics belongs to subject
+contents: there may be list of content belongs to subject
+createdBy: To track who has created this
+updatedBy: to track who has update this
+plandate: we can plan in advance, when Unit need to release
+isPublished: we can mark Unit publish/unpublish so that user can view only publised Unit.
+state: ACTIVE,DORMANT, DEACTIVE
+status: APPROVED/SUBMITTED/REJECTED
+available: Free/Paid/Subscription based etc....
+
 """
 type Subject{
   id:ID! @id
   name:String!
-  medium:Medium     @relation(name: "SubjectToMedium", onDelete: SET_NULL)
-  std:Std!          @relation(name: "SubjectToStd", onDelete: SET_NULL)
+  medium:Medium                @relation(name: "SubjectToMedium",   onDelete: SET_NULL)
+  std:Std!                     @relation(name: "SubjectToStd",      onDelete: SET_NULL)
   board:String 
   category:String
-  group:Group       @relation(name: "SubjectToGroup", onDelete: SET_NULL)
-  subgroup:SubGroup @relation(name: "SubjectToSubGroup", onDelete: SET_NULL)
+  group:Group                 @relation(name: "SubjectToGroup",     onDelete: SET_NULL)
+  subgroup:SubGroup           @relation(name: "SubjectToSubGroup",  sonDelete: SET_NULL)
+  updatedAt:DateTime!         @updatedAt
+  createdAt:DateTime!         @createdAt
+
+
+  units:[Unit!]!              @relation(name: "UnitToSubject",      onDelete: CASCADE)
+  topic:[Topic!]!             @relation(name: "TopicToSubject",     onDelete: CASCADE)
+  contents:[Content!]!        @relation(name: "ContentToSubject",   onDelete: CASCADE)
+  createdBy:User              @relation(name: "SubjectToUser",      onDelete: SET_NULL)
+  updateBy:[User!]!           @relation(name: "SubjectToUserUpdate",   onDelete: SET_NULL)
+  plantDate:DateTime    
+  isPublished:Boolean
+  state:String
+  status:String
+  available:String
+  description:String      
 }
 
 
 type SubjectSubscription{
-    id:ID! @id
-    subsType:String @default(value: "FREE")
+    id:ID!                      @id
+    subsType:String             @default(value: "FREE")
     mySubjects:[Subject!]! 
-    userid:User! @relation(name: "SubjectSubscriptionToUser", onDelete: SET_NULL)
-    subscribedAs:String @default(value: "VIEWER")
+    userid:User!                @relation(name: "SubjectSubscriptionToUser", onDelete: SET_NULL)
+    subscribedAs:Role!          @relation(name: "SubjectSubscriptionToRole", onDelete: SET_NULL)
+    updatedAt:DateTime!         @updatedAt
+    createdAt:DateTime!         @createdAt
 }

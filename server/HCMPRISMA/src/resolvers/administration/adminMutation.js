@@ -1,5 +1,5 @@
 
-import {createOrganization,deleteOrg,updateOrg} from './mutation/Organization'
+import {createOrganization,deleteOrg,updateOrg,orgOnboardBySuperAdmin} from './mutation/Organization'
 import {createSubOrg,deleteSubOrg,updateSuborg} from './mutation/SubOrg'
 import {createGroup,updateGroup,deleteGroup} from './mutation/Group'
 import {createSubGroup,deleteSubGroup,updateSubGroup} from './mutation/SubGroup'
@@ -8,7 +8,7 @@ import {assignUserToSubGroup,deleteUserToSubGroup,updateUserToSubGroup} from './
 import {createOrgRole,createSubOrgRole, createGroupRole,createSubGroupRole,updateRole,deleteRole} from './mutation/Role'
 import {createUserRole,assignBulkRoleToUser,deleteUserRole,updateUserRole} from './mutation/UserRole'
 export const AdminMutation = {
-    createOrganization,deleteOrg,updateOrg,
+    createOrganization,deleteOrg,updateOrg,orgOnboardBySuperAdmin,
     createSubOrg,deleteSubOrg,updateSuborg,
     createGroup,updateGroup,deleteGroup,
     createSubGroup,deleteSubGroup,updateSubGroup,

@@ -1,0 +1,36 @@
+type Content{
+     """
+     Content: 
+     in this 
+     type: HTML/UTube, vdo/audio/image/docs etc...
+     Subject : content may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
+     Unit: content may belongs to  units
+     Topic: content may belongs to  topic 
+     createdBy: To track who has created this
+     updatedBy: to track who has update this
+     plandate: we can plan in advance, when conent need to release
+     isPublished: we can mark content publish/unpublish so that user can view only publised content.
+     state: ACTIVE,DORMANT, DEACTIVE
+     status: APPROVED/SUBMITTED/REJECTED
+     available: Free/Paid/Subscription based etc....
+     """
+     id: ID! @id
+     name:String!
+     number:Int
+     fileInfo:Json
+     type:String!
+     url:String
+     subject:Subject!           @relation(name: "ContentToSubject", onDelete: SET_NULL)
+     unit:Unit                  @relation(name: "ContentToUnit", onDelete: SET_NULL)
+     topic:Topic                @relation(name: "ContentToTopic", onDelete: SET_NULL)
+     createdBy:User             @relation(name: "ContentToUser", onDelete: SET_NULL)
+     updateBy:[User]            @relation(name: "ContentToUserUpdate", onDelete: SET_NULL)
+     plantDate:DateTime
+     isPublished:Boolean!
+     state:String!
+     status:String!
+     available:String 
+     updatedAt:DateTime!         @updatedAt
+     createdAt:DateTime!         @createdAt
+}
+

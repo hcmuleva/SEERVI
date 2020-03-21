@@ -87,6 +87,22 @@ var models = [
   {
     name: "Std",
     embedded: false
+  },
+  {
+    name: "EducationRelationship",
+    embedded: false
+  },
+  {
+    name: "Content",
+    embedded: false
+  },
+  {
+    name: "Topic",
+    embedded: false
+  },
+  {
+    name: "Unit",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

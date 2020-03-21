@@ -13,5 +13,6 @@ type Std{
      branch:String
      year:String
      subject:[Subject!]! @relation(name: "SubjectToStd", onDelete: SET_NULL)
-    
+     updatedAt:DateTime!         @updatedAt
+     createdAt:DateTime!         @createdAt
 }

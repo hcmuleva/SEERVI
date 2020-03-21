@@ -24,6 +24,7 @@ type Query {
 
 }
 type Mutation{
+     orgOnboardBySuperAdmin(data:CreateOrganizationInput):Organization!
      createOrganization(data: CreateOrganizationInput!): Organization!
      createSubOrg(data:CreateSubOrganizationInput!):Suborg!
      deleteOrg(id:ID!):Organization!
@@ -189,6 +190,7 @@ type Role{
   group:Group                
   subgroup:SubGroup             
   description:String
+  subjectSubscriptions: [SubjectSubscription!]! 
 }
 input CreateRoleInput{
   name:String!

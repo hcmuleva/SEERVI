@@ -1,9 +1,11 @@
+import getUserId from '../../../utils/getUserId'
+
 async function createSubjectSubscription(parent,args,{prisma,request},info){
     console.log("REquest ",args)
      const createdSubjectSubscription=await prisma.mutation.createSubjectSubscription({
         data: {
             subsType:args.data.subsType,    
-            subscribedAs:args.data.subscribedAs,
+            subscribedAs:{connect:{id:args.data.subscribedAs}},
             mySubjects:{connect:{id:args.data.mySubject}},
             userid:{connect:{id:args.data.userid}}
         }
@@ -14,18 +16,25 @@ async function createSubjectSubscription(parent,args,{prisma,request},info){
 
  async function createSubject(parent,args,{prisma,request},info){
     console.log("REquest ",args)
-      
-     const createdSubject=await prisma.mutation.createSubject({
-        data: {
-            name:args.data.name,
-            std:{connect:{id:args.data.std}},
-            board:args.data.board,
-            category:args.data.category,
-            medium:{connect:{id:args.data.medium}},     
-            group:{connect:{id:args.data.group}},       
-            subgroup:{connect:{id:args.data.subgroup}}   
-        }
-    }, info)
+    const userId = getUserId(request)
+ 
+
+     const createdSubject=await prisma.mutation.createSubject({data: {
+        name:args.data.name,
+        std:{connect:{id:args.data.std}},
+        board:args.data.board,
+        category:args.data.category,
+        medium:{connect:{id:args.data.medium}},     
+        group:{connect:{id:args.data.group}},       
+        subgroup:{connect:{id:args.data.subgroup}},
+        createdBy:{connect:{id:userId}}  ,
+        plantDate:args.data.plantDate,
+        isPublished:args.data.isPublished ,
+        state:args.data.state,
+        status:args.data.status,
+        available:args.data.available,
+        description:args.data.description
+            }}, info)
     return createdSubject;
 }
 

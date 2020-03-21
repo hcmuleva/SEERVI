@@ -19,6 +19,17 @@ type Subject{
   group:Group       
   subgroup:SubGroup 
 
+  units:[Unit!]!              
+  topic:[Topic!]!             
+  contents:[Content!]!        
+  createdBy:User              
+  updateBy:[User!]!           
+  plantDate:DateTime    
+  isPublished:Boolean
+  state:String
+  status:String
+  available:String
+  description:String
 }
 input SubjectInputData{
   name:String!
@@ -28,6 +39,12 @@ input SubjectInputData{
   board:String 
   group:String       
   subgroup:String 
+  plantDate:DateTime    
+  isPublished:Boolean
+  state:String
+  status:String
+  available:String
+  description:String
 }
 input SubjectUpdateInputData{
   name:String
@@ -37,6 +54,12 @@ input SubjectUpdateInputData{
   board:String 
   group:String       
   subgroup:String 
+   plantDate:DateTime    
+  isPublished:Boolean
+  state:String
+  status:String
+  available:String
+  description:String
 }
 
 type SubjectSubscription{
@@ -44,7 +67,8 @@ type SubjectSubscription{
     subsType:String @default(value: "FREE")
     mySubjects:[Subject!]! 
     userid:User! 
-    subscribedAs:String @default(value: "VIEWER")
+    subscribedAs:Role!
+    
 }
 input SubjectSubscriptionInputData{
     subsType:String 

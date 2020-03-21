@@ -81,6 +81,7 @@ type Role{
   description:String
   updatedAt:DateTime!         @updatedAt
   createdAt:DateTime!         @createdAt
+  subjectSubscriptions: [SubjectSubscription!]!    @relation(name: "SubjectSubscriptionToRole", onDelete: CASCADE)
 }
 
 
