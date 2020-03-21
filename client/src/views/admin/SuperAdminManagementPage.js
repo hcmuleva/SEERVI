@@ -7,15 +7,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import SelectComponent from './SelectComponent'
-import { Row,Col
-} from "shards-react";
-import {GET_ORGS, GET_GROUPS,GET_ROLES} from '../queries/getAllOrgs'
 import { useQuery } from '@apollo/react-hooks';
-import CardForList from './CardForList'
-import CardUser from './CardUser'
+import {GET_ORGS, GET_GROUPS} from '../queries/getAllOrgs'
+
 import Orgs from './orgPage'
-import SubOrgs from './subOrgPage'
+
 import SubOrgView from './SubOrgView'
 import GroupView from './GroupView'
 import SubGroupView from './SUBGroupView'

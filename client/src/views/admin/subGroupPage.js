@@ -167,21 +167,19 @@ function  SubGroupPage(props) {
                     <td >{subgroup.name}</td>  
                     <td >{subgroup.description}</td> 
                     <td>
-                      <div onClick={
+                      <div className="material-icons" onClick={
                           ()=>{addSubGroupRole(subgroup)}}>
-                          <a className="material-icons" href="#">
-                            group_add
-                          </a><a href="#"> SubGroupRole</a>
+                         
                       </div>
                     </td>
                     <td>
-                          <div onClick={()=>{
+                          <div className="material-icons ml-5" onClick={()=>{
                                  
                                    editGroup(subgroup)
                                 }}>
-                              <a className="material-icons ml-5" href="#">
+                             
                                 edit
-                              </a>
+                              
                           </div>
                       </td>  
                     <td> 

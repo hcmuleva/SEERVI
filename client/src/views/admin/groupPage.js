@@ -169,11 +169,9 @@ function  Groups(props) {
                     <td >{group.name}</td>  
                     <td >{group.description}</td> 
                     <td>
-                      <div onClick={
+                      <div  className="material-icons" onClick={
                           ()=>{addGroupRole(group)}}>
-                          <a className="material-icons" href="#">
-                            group_add
-                          </a><a href="#"> GroupRole</a>
+                          GroupRole
                       </div>
                     </td>
                     <td>

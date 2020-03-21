@@ -7,13 +7,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { useQuery ,useMutation} from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useMutation} from '@apollo/react-hooks';
 import {DELETE_ORG} from '../mutations/org'
 import {GET_ORGS} from '../queries/getAllOrgs'
 import OrgDetails from './OrgDetails'
-import { Redirect } from "react-router-dom";
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 const useStyles = makeStyles({
   card: {

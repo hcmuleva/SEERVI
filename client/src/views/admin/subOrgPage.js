@@ -12,10 +12,9 @@ import {
   ListGroupItem,
   Button
 } from "shards-react";
-import SelectComponent from "./SelectComponent";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { CREATE_SUBORG ,UPDATE_SUBORG,DELETE_SUBORG} from "../mutations/org.js";
-import { GET_ORGS ,GET_SUBORGS,GET_SUBORGROLES} from "../queries/getAllOrgs";
+import { GET_SUBORGS,GET_SUBORGROLES} from "../queries/getAllOrgs";
 import RoleViewComponent from './RoleViewComponent'
 function SubOrgs(props) {
   console.log("SUBORGS ",props.id);

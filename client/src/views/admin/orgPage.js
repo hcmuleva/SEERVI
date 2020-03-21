@@ -14,7 +14,7 @@ import {
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { CREATE_ORG,UPDATE_ORG,DELETE_ORG } from "../mutations/org.js";
 
-import {GET_ORGS,GET_ORGROLES,GET_SUBGROUPSOFGROUP } from "../queries/getAllOrgs";
+import {GET_ORGS,GET_ORGROLES } from "../queries/getAllOrgs";
 import RoleViewComponent from './RoleViewComponent'
 function Orgs(props) {
   const [orgname, setOrgname] = useState("");

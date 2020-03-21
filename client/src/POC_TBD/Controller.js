@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Login from './login'
-import Register from './Register'
 import { ApolloProvider } from "@apollo/react-hooks";
 import {client}  from '../apollo'
 import GroupSubscription from './GroupSubscription'

@@ -13,7 +13,6 @@ import {
   Button
 } from "shards-react";
 import {
-  GET_ORGS,
   GET_ORGROLES,
   GET_SUBORGROLES,
   GET_GROUPROLES,
@@ -36,7 +35,8 @@ export default function RoleViewComponent(props) {
       case "SUBGROUP":
         return GET_SUBGROUPROLES;
         break;
-
+      default :
+      break;
     }
       console.log("selectRoleQuery ",selectRoleQuery)
     return roleLiistValue;

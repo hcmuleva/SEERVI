@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
-
+import UserCreateController from './UserCreateController'
 import { Row,Col
 } from "shards-react";
 
@@ -34,7 +34,7 @@ function TabPanel(props) {
            break;
          case 1:
            title="USER";
-            return (<div><h1>USER Management</h1></div>)
+            return (<div><UserCreateController/></div>)
            break;
          case 2:
            title="ROLE";
