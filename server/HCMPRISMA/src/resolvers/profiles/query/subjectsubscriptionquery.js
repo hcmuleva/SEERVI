@@ -14,15 +14,11 @@ function mySubscription(parent, args, { prisma, request }, info) {
 
     return prisma.query.subjectSubscriptions(opArgs, info)
 }
-async function getAllSubjects(parent, args, { prisma ,request}, info) {
-    const subjects = await prisma.query.subjects(null, info)
 
-    return subjects
-}
 async function getAllSubjectSubscription(parent, args, { prisma ,request}, info) {
     const subjectsubscription = await prisma.query.subjectSubscriptions(null, info)
 
     return subjectsubscription
 }
 
-export  {getAllSubjects,getAllSubjectSubscription,mySubscription};
+export  {getAllSubjectSubscription,mySubscription};

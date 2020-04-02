@@ -11,6 +11,9 @@ datamodel:
   - education/content.graphql
   - education/topic.graphql
   - education/unit.graphql
+  - education/question.graphql
+  - education/quiz.graphql
+  - education/subject.graphql
    
 secret: ${env:PRISMA_SECRET}
 generate:

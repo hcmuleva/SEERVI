@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Mar 21 2020 11:40:01 GMT+0530 (India Standard Time)
+# timestamp: Wed Apr 01 2020 15:56:57 GMT+0530 (India Standard Time)
 
 type Address implements Node {
   id: ID!
@@ -814,6 +814,14 @@ type AggregatePost {
 }
 
 type AggregateProfile {
+  count: Int!
+}
+
+type AggregateQuestion {
+  count: Int!
+}
+
+type AggregateQuiz {
   count: Int!
 }
 
@@ -4618,6 +4626,8 @@ type Mutation {
   createContent(data: ContentCreateInput!): Content!
   createTopic(data: TopicCreateInput!): Topic!
   createUnit(data: UnitCreateInput!): Unit!
+  createQuestion(data: QuestionCreateInput!): Question!
+  createQuiz(data: QuizCreateInput!): Quiz!
   createSuborg(data: SuborgCreateInput!): Suborg!
   createSubject(data: SubjectCreateInput!): Subject!
   createRole(data: RoleCreateInput!): Role!
@@ -4641,6 +4651,8 @@ type Mutation {
   updateContent(data: ContentUpdateInput!, where: ContentWhereUniqueInput!): Content
   updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
   updateUnit(data: UnitUpdateInput!, where: UnitWhereUniqueInput!): Unit
+  updateQuestion(data: QuestionUpdateInput!, where: QuestionWhereUniqueInput!): Question
+  updateQuiz(data: QuizUpdateInput!, where: QuizWhereUniqueInput!): Quiz
   updateSuborg(data: SuborgUpdateInput!, where: SuborgWhereUniqueInput!): Suborg
   updateSubject(data: SubjectUpdateInput!, where: SubjectWhereUniqueInput!): Subject
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
@@ -4664,6 +4676,8 @@ type Mutation {
   deleteContent(where: ContentWhereUniqueInput!): Content
   deleteTopic(where: TopicWhereUniqueInput!): Topic
   deleteUnit(where: UnitWhereUniqueInput!): Unit
+  deleteQuestion(where: QuestionWhereUniqueInput!): Question
+  deleteQuiz(where: QuizWhereUniqueInput!): Quiz
   deleteSuborg(where: SuborgWhereUniqueInput!): Suborg
   deleteSubject(where: SubjectWhereUniqueInput!): Subject
   deleteRole(where: RoleWhereUniqueInput!): Role
@@ -4687,6 +4701,8 @@ type Mutation {
   upsertContent(where: ContentWhereUniqueInput!, create: ContentCreateInput!, update: ContentUpdateInput!): Content!
   upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
   upsertUnit(where: UnitWhereUniqueInput!, create: UnitCreateInput!, update: UnitUpdateInput!): Unit!
+  upsertQuestion(where: QuestionWhereUniqueInput!, create: QuestionCreateInput!, update: QuestionUpdateInput!): Question!
+  upsertQuiz(where: QuizWhereUniqueInput!, create: QuizCreateInput!, update: QuizUpdateInput!): Quiz!
   upsertSuborg(where: SuborgWhereUniqueInput!, create: SuborgCreateInput!, update: SuborgUpdateInput!): Suborg!
   upsertSubject(where: SubjectWhereUniqueInput!, create: SubjectCreateInput!, update: SubjectUpdateInput!): Subject!
   upsertRole(where: RoleWhereUniqueInput!, create: RoleCreateInput!, update: RoleUpdateInput!): Role!
@@ -4710,6 +4726,8 @@ type Mutation {
   updateManyContents(data: ContentUpdateManyMutationInput!, where: ContentWhereInput): BatchPayload!
   updateManyTopics(data: TopicUpdateManyMutationInput!, where: TopicWhereInput): BatchPayload!
   updateManyUnits(data: UnitUpdateManyMutationInput!, where: UnitWhereInput): BatchPayload!
+  updateManyQuestions(data: QuestionUpdateManyMutationInput!, where: QuestionWhereInput): BatchPayload!
+  updateManyQuizzes(data: QuizUpdateManyMutationInput!, where: QuizWhereInput): BatchPayload!
   updateManySuborgs(data: SuborgUpdateManyMutationInput!, where: SuborgWhereInput): BatchPayload!
   updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
   updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
@@ -4733,6 +4751,8 @@ type Mutation {
   deleteManyContents(where: ContentWhereInput): BatchPayload!
   deleteManyTopics(where: TopicWhereInput): BatchPayload!
   deleteManyUnits(where: UnitWhereInput): BatchPayload!
+  deleteManyQuestions(where: QuestionWhereInput): BatchPayload!
+  deleteManyQuizzes(where: QuizWhereInput): BatchPayload!
   deleteManySuborgs(where: SuborgWhereInput): BatchPayload!
   deleteManySubjects(where: SubjectWhereInput): BatchPayload!
   deleteManyRoles(where: RoleWhereInput): BatchPayload!
@@ -6717,6 +6737,8 @@ type Query {
   contents(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content]!
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
   units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit]!
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question]!
+  quizzes(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz]!
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg]!
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
@@ -6740,6 +6762,8 @@ type Query {
   content(where: ContentWhereUniqueInput!): Content
   topic(where: TopicWhereUniqueInput!): Topic
   unit(where: UnitWhereUniqueInput!): Unit
+  question(where: QuestionWhereUniqueInput!): Question
+  quiz(where: QuizWhereUniqueInput!): Quiz
   suborg(where: SuborgWhereUniqueInput!): Suborg
   subject(where: SubjectWhereUniqueInput!): Subject
   role(where: RoleWhereUniqueInput!): Role
@@ -6763,6 +6787,8 @@ type Query {
   contentsConnection(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContentConnection!
   topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
   unitsConnection(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UnitConnection!
+  questionsConnection(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuestionConnection!
+  quizzesConnection(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuizConnection!
   suborgsConnection(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuborgConnection!
   subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
   rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
@@ -6772,6 +6798,3265 @@ type Query {
     """The ID of an object"""
     id: ID!
   ): Node
+}
+
+type Question implements Node {
+  id: ID!
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  createdBy: User
+  level: Int!
+  updatedBy: User
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
+  explaination: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type QuestionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [QuestionEdge]!
+  aggregate: AggregateQuestion!
+}
+
+input QuestionCreateInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  quiz: QuizCreateManyWithoutQuestionsInput
+}
+
+input QuestionCreateManyWithoutCreatedByInput {
+  create: [QuestionCreateWithoutCreatedByInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutQuizInput {
+  create: [QuestionCreateWithoutQuizInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutSubjectInput {
+  create: [QuestionCreateWithoutSubjectInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutTopicInput {
+  create: [QuestionCreateWithoutTopicInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutUnitInput {
+  create: [QuestionCreateWithoutUnitInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutUpdatedByInput {
+  create: [QuestionCreateWithoutUpdatedByInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateWithoutCreatedByInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  quiz: QuizCreateManyWithoutQuestionsInput
+}
+
+input QuestionCreateWithoutQuizInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+}
+
+input QuestionCreateWithoutSubjectInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  quiz: QuizCreateManyWithoutQuestionsInput
+}
+
+input QuestionCreateWithoutTopicInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  quiz: QuizCreateManyWithoutQuestionsInput
+}
+
+input QuestionCreateWithoutUnitInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  quiz: QuizCreateManyWithoutQuestionsInput
+}
+
+input QuestionCreateWithoutUpdatedByInput {
+  id: ID
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  quiz: QuizCreateManyWithoutQuestionsInput
+}
+
+"""An edge in a connection."""
+type QuestionEdge {
+  """The item at the end of the edge."""
+  node: Question!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum QuestionOrderByInput {
+  id_ASC
+  id_DESC
+  quetype_ASC
+  quetype_DESC
+  categories_ASC
+  categories_DESC
+  title_ASC
+  title_DESC
+  descriptionType_ASC
+  descriptionType_DESC
+  descriptionurl_ASC
+  descriptionurl_DESC
+  options_ASC
+  options_DESC
+  level_ASC
+  level_DESC
+  plandate_ASC
+  plandate_DESC
+  isPublished_ASC
+  isPublished_DESC
+  state_ASC
+  state_DESC
+  status_ASC
+  status_DESC
+  available_ASC
+  available_DESC
+  isReviewed_ASC
+  isReviewed_DESC
+  explainationType_ASC
+  explainationType_DESC
+  explaination_ASC
+  explaination_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type QuestionPreviousValues {
+  id: ID!
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  level: Int!
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input QuestionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [QuestionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [QuestionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [QuestionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quetype: String
+
+  """All values that are not equal to given value."""
+  quetype_not: String
+
+  """All values that are contained in given list."""
+  quetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  quetype_not_in: [String!]
+
+  """All values less than the given value."""
+  quetype_lt: String
+
+  """All values less than or equal the given value."""
+  quetype_lte: String
+
+  """All values greater than the given value."""
+  quetype_gt: String
+
+  """All values greater than or equal the given value."""
+  quetype_gte: String
+
+  """All values containing the given string."""
+  quetype_contains: String
+
+  """All values not containing the given string."""
+  quetype_not_contains: String
+
+  """All values starting with the given string."""
+  quetype_starts_with: String
+
+  """All values not starting with the given string."""
+  quetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  quetype_ends_with: String
+
+  """All values not ending with the given string."""
+  quetype_not_ends_with: String
+  categories: String
+
+  """All values that are not equal to given value."""
+  categories_not: String
+
+  """All values that are contained in given list."""
+  categories_in: [String!]
+
+  """All values that are not contained in given list."""
+  categories_not_in: [String!]
+
+  """All values less than the given value."""
+  categories_lt: String
+
+  """All values less than or equal the given value."""
+  categories_lte: String
+
+  """All values greater than the given value."""
+  categories_gt: String
+
+  """All values greater than or equal the given value."""
+  categories_gte: String
+
+  """All values containing the given string."""
+  categories_contains: String
+
+  """All values not containing the given string."""
+  categories_not_contains: String
+
+  """All values starting with the given string."""
+  categories_starts_with: String
+
+  """All values not starting with the given string."""
+  categories_not_starts_with: String
+
+  """All values ending with the given string."""
+  categories_ends_with: String
+
+  """All values not ending with the given string."""
+  categories_not_ends_with: String
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  descriptionType: String
+
+  """All values that are not equal to given value."""
+  descriptionType_not: String
+
+  """All values that are contained in given list."""
+  descriptionType_in: [String!]
+
+  """All values that are not contained in given list."""
+  descriptionType_not_in: [String!]
+
+  """All values less than the given value."""
+  descriptionType_lt: String
+
+  """All values less than or equal the given value."""
+  descriptionType_lte: String
+
+  """All values greater than the given value."""
+  descriptionType_gt: String
+
+  """All values greater than or equal the given value."""
+  descriptionType_gte: String
+
+  """All values containing the given string."""
+  descriptionType_contains: String
+
+  """All values not containing the given string."""
+  descriptionType_not_contains: String
+
+  """All values starting with the given string."""
+  descriptionType_starts_with: String
+
+  """All values not starting with the given string."""
+  descriptionType_not_starts_with: String
+
+  """All values ending with the given string."""
+  descriptionType_ends_with: String
+
+  """All values not ending with the given string."""
+  descriptionType_not_ends_with: String
+  descriptionurl: String
+
+  """All values that are not equal to given value."""
+  descriptionurl_not: String
+
+  """All values that are contained in given list."""
+  descriptionurl_in: [String!]
+
+  """All values that are not contained in given list."""
+  descriptionurl_not_in: [String!]
+
+  """All values less than the given value."""
+  descriptionurl_lt: String
+
+  """All values less than or equal the given value."""
+  descriptionurl_lte: String
+
+  """All values greater than the given value."""
+  descriptionurl_gt: String
+
+  """All values greater than or equal the given value."""
+  descriptionurl_gte: String
+
+  """All values containing the given string."""
+  descriptionurl_contains: String
+
+  """All values not containing the given string."""
+  descriptionurl_not_contains: String
+
+  """All values starting with the given string."""
+  descriptionurl_starts_with: String
+
+  """All values not starting with the given string."""
+  descriptionurl_not_starts_with: String
+
+  """All values ending with the given string."""
+  descriptionurl_ends_with: String
+
+  """All values not ending with the given string."""
+  descriptionurl_not_ends_with: String
+  level: Int
+
+  """All values that are not equal to given value."""
+  level_not: Int
+
+  """All values that are contained in given list."""
+  level_in: [Int!]
+
+  """All values that are not contained in given list."""
+  level_not_in: [Int!]
+
+  """All values less than the given value."""
+  level_lt: Int
+
+  """All values less than or equal the given value."""
+  level_lte: Int
+
+  """All values greater than the given value."""
+  level_gt: Int
+
+  """All values greater than or equal the given value."""
+  level_gte: Int
+  plandate: DateTime
+
+  """All values that are not equal to given value."""
+  plandate_not: DateTime
+
+  """All values that are contained in given list."""
+  plandate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  plandate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  plandate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  plandate_lte: DateTime
+
+  """All values greater than the given value."""
+  plandate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  plandate_gte: DateTime
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
+  state: String
+
+  """All values that are not equal to given value."""
+  state_not: String
+
+  """All values that are contained in given list."""
+  state_in: [String!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [String!]
+
+  """All values less than the given value."""
+  state_lt: String
+
+  """All values less than or equal the given value."""
+  state_lte: String
+
+  """All values greater than the given value."""
+  state_gt: String
+
+  """All values greater than or equal the given value."""
+  state_gte: String
+
+  """All values containing the given string."""
+  state_contains: String
+
+  """All values not containing the given string."""
+  state_not_contains: String
+
+  """All values starting with the given string."""
+  state_starts_with: String
+
+  """All values not starting with the given string."""
+  state_not_starts_with: String
+
+  """All values ending with the given string."""
+  state_ends_with: String
+
+  """All values not ending with the given string."""
+  state_not_ends_with: String
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  available: String
+
+  """All values that are not equal to given value."""
+  available_not: String
+
+  """All values that are contained in given list."""
+  available_in: [String!]
+
+  """All values that are not contained in given list."""
+  available_not_in: [String!]
+
+  """All values less than the given value."""
+  available_lt: String
+
+  """All values less than or equal the given value."""
+  available_lte: String
+
+  """All values greater than the given value."""
+  available_gt: String
+
+  """All values greater than or equal the given value."""
+  available_gte: String
+
+  """All values containing the given string."""
+  available_contains: String
+
+  """All values not containing the given string."""
+  available_not_contains: String
+
+  """All values starting with the given string."""
+  available_starts_with: String
+
+  """All values not starting with the given string."""
+  available_not_starts_with: String
+
+  """All values ending with the given string."""
+  available_ends_with: String
+
+  """All values not ending with the given string."""
+  available_not_ends_with: String
+  isReviewed: Boolean
+
+  """All values that are not equal to given value."""
+  isReviewed_not: Boolean
+  explainationType: String
+
+  """All values that are not equal to given value."""
+  explainationType_not: String
+
+  """All values that are contained in given list."""
+  explainationType_in: [String!]
+
+  """All values that are not contained in given list."""
+  explainationType_not_in: [String!]
+
+  """All values less than the given value."""
+  explainationType_lt: String
+
+  """All values less than or equal the given value."""
+  explainationType_lte: String
+
+  """All values greater than the given value."""
+  explainationType_gt: String
+
+  """All values greater than or equal the given value."""
+  explainationType_gte: String
+
+  """All values containing the given string."""
+  explainationType_contains: String
+
+  """All values not containing the given string."""
+  explainationType_not_contains: String
+
+  """All values starting with the given string."""
+  explainationType_starts_with: String
+
+  """All values not starting with the given string."""
+  explainationType_not_starts_with: String
+
+  """All values ending with the given string."""
+  explainationType_ends_with: String
+
+  """All values not ending with the given string."""
+  explainationType_not_ends_with: String
+  explaination: String
+
+  """All values that are not equal to given value."""
+  explaination_not: String
+
+  """All values that are contained in given list."""
+  explaination_in: [String!]
+
+  """All values that are not contained in given list."""
+  explaination_not_in: [String!]
+
+  """All values less than the given value."""
+  explaination_lt: String
+
+  """All values less than or equal the given value."""
+  explaination_lte: String
+
+  """All values greater than the given value."""
+  explaination_gt: String
+
+  """All values greater than or equal the given value."""
+  explaination_gte: String
+
+  """All values containing the given string."""
+  explaination_contains: String
+
+  """All values not containing the given string."""
+  explaination_not_contains: String
+
+  """All values starting with the given string."""
+  explaination_starts_with: String
+
+  """All values not starting with the given string."""
+  explaination_not_starts_with: String
+
+  """All values ending with the given string."""
+  explaination_ends_with: String
+
+  """All values not ending with the given string."""
+  explaination_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
+type QuestionSubscriptionPayload {
+  mutation: MutationType!
+  node: Question
+  updatedFields: [String!]
+  previousValues: QuestionPreviousValues
+}
+
+input QuestionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [QuestionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [QuestionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [QuestionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: QuestionWhereInput
+}
+
+input QuestionUpdateInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  quiz: QuizUpdateManyWithoutQuestionsInput
+}
+
+input QuestionUpdateManyDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+}
+
+input QuestionUpdateManyMutationInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+}
+
+input QuestionUpdateManyWithoutCreatedByInput {
+  create: [QuestionCreateWithoutCreatedByInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  delete: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutCreatedByInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutCreatedByInput!]
+}
+
+input QuestionUpdateManyWithoutQuizInput {
+  create: [QuestionCreateWithoutQuizInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  delete: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutQuizInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutQuizInput!]
+}
+
+input QuestionUpdateManyWithoutSubjectInput {
+  create: [QuestionCreateWithoutSubjectInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  delete: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutSubjectInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutSubjectInput!]
+}
+
+input QuestionUpdateManyWithoutTopicInput {
+  create: [QuestionCreateWithoutTopicInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  delete: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutTopicInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutTopicInput!]
+}
+
+input QuestionUpdateManyWithoutUnitInput {
+  create: [QuestionCreateWithoutUnitInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  delete: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutUnitInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutUnitInput!]
+}
+
+input QuestionUpdateManyWithoutUpdatedByInput {
+  create: [QuestionCreateWithoutUpdatedByInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  delete: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutUpdatedByInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutUpdatedByInput!]
+}
+
+input QuestionUpdateManyWithWhereNestedInput {
+  where: QuestionScalarWhereInput!
+  data: QuestionUpdateManyDataInput!
+}
+
+input QuestionUpdateWithoutCreatedByDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  quiz: QuizUpdateManyWithoutQuestionsInput
+}
+
+input QuestionUpdateWithoutQuizDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+}
+
+input QuestionUpdateWithoutSubjectDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  quiz: QuizUpdateManyWithoutQuestionsInput
+}
+
+input QuestionUpdateWithoutTopicDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  quiz: QuizUpdateManyWithoutQuestionsInput
+}
+
+input QuestionUpdateWithoutUnitDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  quiz: QuizUpdateManyWithoutQuestionsInput
+}
+
+input QuestionUpdateWithoutUpdatedByDataInput {
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  level: Int
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  explaination: String
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  quiz: QuizUpdateManyWithoutQuestionsInput
+}
+
+input QuestionUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutCreatedByDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutQuizInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutQuizDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutSubjectInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutSubjectDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutTopicInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutTopicDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutUnitInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutUnitDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutUpdatedByInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutUpdatedByDataInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutCreatedByDataInput!
+  create: QuestionCreateWithoutCreatedByInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutQuizInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutQuizDataInput!
+  create: QuestionCreateWithoutQuizInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutSubjectInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutSubjectDataInput!
+  create: QuestionCreateWithoutSubjectInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutTopicInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutTopicDataInput!
+  create: QuestionCreateWithoutTopicInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutUnitInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutUnitDataInput!
+  create: QuestionCreateWithoutUnitInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutUpdatedByInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutUpdatedByDataInput!
+  create: QuestionCreateWithoutUpdatedByInput!
+}
+
+input QuestionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [QuestionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [QuestionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [QuestionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quetype: String
+
+  """All values that are not equal to given value."""
+  quetype_not: String
+
+  """All values that are contained in given list."""
+  quetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  quetype_not_in: [String!]
+
+  """All values less than the given value."""
+  quetype_lt: String
+
+  """All values less than or equal the given value."""
+  quetype_lte: String
+
+  """All values greater than the given value."""
+  quetype_gt: String
+
+  """All values greater than or equal the given value."""
+  quetype_gte: String
+
+  """All values containing the given string."""
+  quetype_contains: String
+
+  """All values not containing the given string."""
+  quetype_not_contains: String
+
+  """All values starting with the given string."""
+  quetype_starts_with: String
+
+  """All values not starting with the given string."""
+  quetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  quetype_ends_with: String
+
+  """All values not ending with the given string."""
+  quetype_not_ends_with: String
+  categories: String
+
+  """All values that are not equal to given value."""
+  categories_not: String
+
+  """All values that are contained in given list."""
+  categories_in: [String!]
+
+  """All values that are not contained in given list."""
+  categories_not_in: [String!]
+
+  """All values less than the given value."""
+  categories_lt: String
+
+  """All values less than or equal the given value."""
+  categories_lte: String
+
+  """All values greater than the given value."""
+  categories_gt: String
+
+  """All values greater than or equal the given value."""
+  categories_gte: String
+
+  """All values containing the given string."""
+  categories_contains: String
+
+  """All values not containing the given string."""
+  categories_not_contains: String
+
+  """All values starting with the given string."""
+  categories_starts_with: String
+
+  """All values not starting with the given string."""
+  categories_not_starts_with: String
+
+  """All values ending with the given string."""
+  categories_ends_with: String
+
+  """All values not ending with the given string."""
+  categories_not_ends_with: String
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  descriptionType: String
+
+  """All values that are not equal to given value."""
+  descriptionType_not: String
+
+  """All values that are contained in given list."""
+  descriptionType_in: [String!]
+
+  """All values that are not contained in given list."""
+  descriptionType_not_in: [String!]
+
+  """All values less than the given value."""
+  descriptionType_lt: String
+
+  """All values less than or equal the given value."""
+  descriptionType_lte: String
+
+  """All values greater than the given value."""
+  descriptionType_gt: String
+
+  """All values greater than or equal the given value."""
+  descriptionType_gte: String
+
+  """All values containing the given string."""
+  descriptionType_contains: String
+
+  """All values not containing the given string."""
+  descriptionType_not_contains: String
+
+  """All values starting with the given string."""
+  descriptionType_starts_with: String
+
+  """All values not starting with the given string."""
+  descriptionType_not_starts_with: String
+
+  """All values ending with the given string."""
+  descriptionType_ends_with: String
+
+  """All values not ending with the given string."""
+  descriptionType_not_ends_with: String
+  descriptionurl: String
+
+  """All values that are not equal to given value."""
+  descriptionurl_not: String
+
+  """All values that are contained in given list."""
+  descriptionurl_in: [String!]
+
+  """All values that are not contained in given list."""
+  descriptionurl_not_in: [String!]
+
+  """All values less than the given value."""
+  descriptionurl_lt: String
+
+  """All values less than or equal the given value."""
+  descriptionurl_lte: String
+
+  """All values greater than the given value."""
+  descriptionurl_gt: String
+
+  """All values greater than or equal the given value."""
+  descriptionurl_gte: String
+
+  """All values containing the given string."""
+  descriptionurl_contains: String
+
+  """All values not containing the given string."""
+  descriptionurl_not_contains: String
+
+  """All values starting with the given string."""
+  descriptionurl_starts_with: String
+
+  """All values not starting with the given string."""
+  descriptionurl_not_starts_with: String
+
+  """All values ending with the given string."""
+  descriptionurl_ends_with: String
+
+  """All values not ending with the given string."""
+  descriptionurl_not_ends_with: String
+  level: Int
+
+  """All values that are not equal to given value."""
+  level_not: Int
+
+  """All values that are contained in given list."""
+  level_in: [Int!]
+
+  """All values that are not contained in given list."""
+  level_not_in: [Int!]
+
+  """All values less than the given value."""
+  level_lt: Int
+
+  """All values less than or equal the given value."""
+  level_lte: Int
+
+  """All values greater than the given value."""
+  level_gt: Int
+
+  """All values greater than or equal the given value."""
+  level_gte: Int
+  plandate: DateTime
+
+  """All values that are not equal to given value."""
+  plandate_not: DateTime
+
+  """All values that are contained in given list."""
+  plandate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  plandate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  plandate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  plandate_lte: DateTime
+
+  """All values greater than the given value."""
+  plandate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  plandate_gte: DateTime
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
+  state: String
+
+  """All values that are not equal to given value."""
+  state_not: String
+
+  """All values that are contained in given list."""
+  state_in: [String!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [String!]
+
+  """All values less than the given value."""
+  state_lt: String
+
+  """All values less than or equal the given value."""
+  state_lte: String
+
+  """All values greater than the given value."""
+  state_gt: String
+
+  """All values greater than or equal the given value."""
+  state_gte: String
+
+  """All values containing the given string."""
+  state_contains: String
+
+  """All values not containing the given string."""
+  state_not_contains: String
+
+  """All values starting with the given string."""
+  state_starts_with: String
+
+  """All values not starting with the given string."""
+  state_not_starts_with: String
+
+  """All values ending with the given string."""
+  state_ends_with: String
+
+  """All values not ending with the given string."""
+  state_not_ends_with: String
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  available: String
+
+  """All values that are not equal to given value."""
+  available_not: String
+
+  """All values that are contained in given list."""
+  available_in: [String!]
+
+  """All values that are not contained in given list."""
+  available_not_in: [String!]
+
+  """All values less than the given value."""
+  available_lt: String
+
+  """All values less than or equal the given value."""
+  available_lte: String
+
+  """All values greater than the given value."""
+  available_gt: String
+
+  """All values greater than or equal the given value."""
+  available_gte: String
+
+  """All values containing the given string."""
+  available_contains: String
+
+  """All values not containing the given string."""
+  available_not_contains: String
+
+  """All values starting with the given string."""
+  available_starts_with: String
+
+  """All values not starting with the given string."""
+  available_not_starts_with: String
+
+  """All values ending with the given string."""
+  available_ends_with: String
+
+  """All values not ending with the given string."""
+  available_not_ends_with: String
+  isReviewed: Boolean
+
+  """All values that are not equal to given value."""
+  isReviewed_not: Boolean
+  explainationType: String
+
+  """All values that are not equal to given value."""
+  explainationType_not: String
+
+  """All values that are contained in given list."""
+  explainationType_in: [String!]
+
+  """All values that are not contained in given list."""
+  explainationType_not_in: [String!]
+
+  """All values less than the given value."""
+  explainationType_lt: String
+
+  """All values less than or equal the given value."""
+  explainationType_lte: String
+
+  """All values greater than the given value."""
+  explainationType_gt: String
+
+  """All values greater than or equal the given value."""
+  explainationType_gte: String
+
+  """All values containing the given string."""
+  explainationType_contains: String
+
+  """All values not containing the given string."""
+  explainationType_not_contains: String
+
+  """All values starting with the given string."""
+  explainationType_starts_with: String
+
+  """All values not starting with the given string."""
+  explainationType_not_starts_with: String
+
+  """All values ending with the given string."""
+  explainationType_ends_with: String
+
+  """All values not ending with the given string."""
+  explainationType_not_ends_with: String
+  explaination: String
+
+  """All values that are not equal to given value."""
+  explaination_not: String
+
+  """All values that are contained in given list."""
+  explaination_in: [String!]
+
+  """All values that are not contained in given list."""
+  explaination_not_in: [String!]
+
+  """All values less than the given value."""
+  explaination_lt: String
+
+  """All values less than or equal the given value."""
+  explaination_lte: String
+
+  """All values greater than the given value."""
+  explaination_gt: String
+
+  """All values greater than or equal the given value."""
+  explaination_gte: String
+
+  """All values containing the given string."""
+  explaination_contains: String
+
+  """All values not containing the given string."""
+  explaination_not_contains: String
+
+  """All values starting with the given string."""
+  explaination_starts_with: String
+
+  """All values not starting with the given string."""
+  explaination_not_starts_with: String
+
+  """All values ending with the given string."""
+  explaination_ends_with: String
+
+  """All values not ending with the given string."""
+  explaination_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  subject: SubjectWhereInput
+  unit: UnitWhereInput
+  topic: TopicWhereInput
+  createdBy: UserWhereInput
+  updatedBy: UserWhereInput
+  quiz_every: QuizWhereInput
+  quiz_some: QuizWhereInput
+  quiz_none: QuizWhereInput
+}
+
+input QuestionWhereUniqueInput {
+  id: ID
+}
+
+type Quiz implements Node {
+  id: ID!
+  quizeName: String!
+  quizeType: String!
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  createdBy: User!
+  weightage: Float
+  totalmarks: Float
+  validFrom: DateTime
+  validTo: DateTime
+  retryAllowed: Boolean
+}
+
+"""A connection to a list of items."""
+type QuizConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [QuizEdge]!
+  aggregate: AggregateQuiz!
+}
+
+input QuizCreateInput {
+  id: ID
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectCreateOneWithoutQuizesInput
+  unit: UnitCreateOneWithoutQuizsInput
+  topic: TopicCreateOneWithoutQuizsInput
+  questions: QuestionCreateManyWithoutQuizInput
+  createdBy: UserCreateOneWithoutQuizCreatedByInput!
+}
+
+input QuizCreateManyWithoutCreatedByInput {
+  create: [QuizCreateWithoutCreatedByInput!]
+  connect: [QuizWhereUniqueInput!]
+}
+
+input QuizCreateManyWithoutQuestionsInput {
+  create: [QuizCreateWithoutQuestionsInput!]
+  connect: [QuizWhereUniqueInput!]
+}
+
+input QuizCreateManyWithoutSubjectInput {
+  create: [QuizCreateWithoutSubjectInput!]
+  connect: [QuizWhereUniqueInput!]
+}
+
+input QuizCreateManyWithoutTopicInput {
+  create: [QuizCreateWithoutTopicInput!]
+  connect: [QuizWhereUniqueInput!]
+}
+
+input QuizCreateManyWithoutUnitInput {
+  create: [QuizCreateWithoutUnitInput!]
+  connect: [QuizWhereUniqueInput!]
+}
+
+input QuizCreateWithoutCreatedByInput {
+  id: ID
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectCreateOneWithoutQuizesInput
+  unit: UnitCreateOneWithoutQuizsInput
+  topic: TopicCreateOneWithoutQuizsInput
+  questions: QuestionCreateManyWithoutQuizInput
+}
+
+input QuizCreateWithoutQuestionsInput {
+  id: ID
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectCreateOneWithoutQuizesInput
+  unit: UnitCreateOneWithoutQuizsInput
+  topic: TopicCreateOneWithoutQuizsInput
+  createdBy: UserCreateOneWithoutQuizCreatedByInput!
+}
+
+input QuizCreateWithoutSubjectInput {
+  id: ID
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  unit: UnitCreateOneWithoutQuizsInput
+  topic: TopicCreateOneWithoutQuizsInput
+  questions: QuestionCreateManyWithoutQuizInput
+  createdBy: UserCreateOneWithoutQuizCreatedByInput!
+}
+
+input QuizCreateWithoutTopicInput {
+  id: ID
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectCreateOneWithoutQuizesInput
+  unit: UnitCreateOneWithoutQuizsInput
+  questions: QuestionCreateManyWithoutQuizInput
+  createdBy: UserCreateOneWithoutQuizCreatedByInput!
+}
+
+input QuizCreateWithoutUnitInput {
+  id: ID
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectCreateOneWithoutQuizesInput
+  topic: TopicCreateOneWithoutQuizsInput
+  questions: QuestionCreateManyWithoutQuizInput
+  createdBy: UserCreateOneWithoutQuizCreatedByInput!
+}
+
+"""An edge in a connection."""
+type QuizEdge {
+  """The item at the end of the edge."""
+  node: Quiz!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum QuizOrderByInput {
+  id_ASC
+  id_DESC
+  quizeName_ASC
+  quizeName_DESC
+  quizeType_ASC
+  quizeType_DESC
+  markingscheme_ASC
+  markingscheme_DESC
+  quizlevel_ASC
+  quizlevel_DESC
+  threshold_ASC
+  threshold_DESC
+  isForLevelPromotion_ASC
+  isForLevelPromotion_DESC
+  showExplaination_ASC
+  showExplaination_DESC
+  showanswer_ASC
+  showanswer_DESC
+  description_ASC
+  description_DESC
+  allowedCorrection_ASC
+  allowedCorrection_DESC
+  duration_ASC
+  duration_DESC
+  commentFromTeacher_ASC
+  commentFromTeacher_DESC
+  isPublished_ASC
+  isPublished_DESC
+  isApproved_ASC
+  isApproved_DESC
+  weightage_ASC
+  weightage_DESC
+  totalmarks_ASC
+  totalmarks_DESC
+  validFrom_ASC
+  validFrom_DESC
+  validTo_ASC
+  validTo_DESC
+  retryAllowed_ASC
+  retryAllowed_DESC
+}
+
+type QuizPreviousValues {
+  id: ID!
+  quizeName: String!
+  quizeType: String!
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validFrom: DateTime
+  validTo: DateTime
+  retryAllowed: Boolean
+}
+
+input QuizScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [QuizScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [QuizScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [QuizScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quizeName: String
+
+  """All values that are not equal to given value."""
+  quizeName_not: String
+
+  """All values that are contained in given list."""
+  quizeName_in: [String!]
+
+  """All values that are not contained in given list."""
+  quizeName_not_in: [String!]
+
+  """All values less than the given value."""
+  quizeName_lt: String
+
+  """All values less than or equal the given value."""
+  quizeName_lte: String
+
+  """All values greater than the given value."""
+  quizeName_gt: String
+
+  """All values greater than or equal the given value."""
+  quizeName_gte: String
+
+  """All values containing the given string."""
+  quizeName_contains: String
+
+  """All values not containing the given string."""
+  quizeName_not_contains: String
+
+  """All values starting with the given string."""
+  quizeName_starts_with: String
+
+  """All values not starting with the given string."""
+  quizeName_not_starts_with: String
+
+  """All values ending with the given string."""
+  quizeName_ends_with: String
+
+  """All values not ending with the given string."""
+  quizeName_not_ends_with: String
+  quizeType: String
+
+  """All values that are not equal to given value."""
+  quizeType_not: String
+
+  """All values that are contained in given list."""
+  quizeType_in: [String!]
+
+  """All values that are not contained in given list."""
+  quizeType_not_in: [String!]
+
+  """All values less than the given value."""
+  quizeType_lt: String
+
+  """All values less than or equal the given value."""
+  quizeType_lte: String
+
+  """All values greater than the given value."""
+  quizeType_gt: String
+
+  """All values greater than or equal the given value."""
+  quizeType_gte: String
+
+  """All values containing the given string."""
+  quizeType_contains: String
+
+  """All values not containing the given string."""
+  quizeType_not_contains: String
+
+  """All values starting with the given string."""
+  quizeType_starts_with: String
+
+  """All values not starting with the given string."""
+  quizeType_not_starts_with: String
+
+  """All values ending with the given string."""
+  quizeType_ends_with: String
+
+  """All values not ending with the given string."""
+  quizeType_not_ends_with: String
+  quizlevel: Int
+
+  """All values that are not equal to given value."""
+  quizlevel_not: Int
+
+  """All values that are contained in given list."""
+  quizlevel_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quizlevel_not_in: [Int!]
+
+  """All values less than the given value."""
+  quizlevel_lt: Int
+
+  """All values less than or equal the given value."""
+  quizlevel_lte: Int
+
+  """All values greater than the given value."""
+  quizlevel_gt: Int
+
+  """All values greater than or equal the given value."""
+  quizlevel_gte: Int
+  isForLevelPromotion: Boolean
+
+  """All values that are not equal to given value."""
+  isForLevelPromotion_not: Boolean
+  showExplaination: String
+
+  """All values that are not equal to given value."""
+  showExplaination_not: String
+
+  """All values that are contained in given list."""
+  showExplaination_in: [String!]
+
+  """All values that are not contained in given list."""
+  showExplaination_not_in: [String!]
+
+  """All values less than the given value."""
+  showExplaination_lt: String
+
+  """All values less than or equal the given value."""
+  showExplaination_lte: String
+
+  """All values greater than the given value."""
+  showExplaination_gt: String
+
+  """All values greater than or equal the given value."""
+  showExplaination_gte: String
+
+  """All values containing the given string."""
+  showExplaination_contains: String
+
+  """All values not containing the given string."""
+  showExplaination_not_contains: String
+
+  """All values starting with the given string."""
+  showExplaination_starts_with: String
+
+  """All values not starting with the given string."""
+  showExplaination_not_starts_with: String
+
+  """All values ending with the given string."""
+  showExplaination_ends_with: String
+
+  """All values not ending with the given string."""
+  showExplaination_not_ends_with: String
+  showanswer: Boolean
+
+  """All values that are not equal to given value."""
+  showanswer_not: Boolean
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  allowedCorrection: Boolean
+
+  """All values that are not equal to given value."""
+  allowedCorrection_not: Boolean
+  duration: Int
+
+  """All values that are not equal to given value."""
+  duration_not: Int
+
+  """All values that are contained in given list."""
+  duration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  duration_not_in: [Int!]
+
+  """All values less than the given value."""
+  duration_lt: Int
+
+  """All values less than or equal the given value."""
+  duration_lte: Int
+
+  """All values greater than the given value."""
+  duration_gt: Int
+
+  """All values greater than or equal the given value."""
+  duration_gte: Int
+  commentFromTeacher: String
+
+  """All values that are not equal to given value."""
+  commentFromTeacher_not: String
+
+  """All values that are contained in given list."""
+  commentFromTeacher_in: [String!]
+
+  """All values that are not contained in given list."""
+  commentFromTeacher_not_in: [String!]
+
+  """All values less than the given value."""
+  commentFromTeacher_lt: String
+
+  """All values less than or equal the given value."""
+  commentFromTeacher_lte: String
+
+  """All values greater than the given value."""
+  commentFromTeacher_gt: String
+
+  """All values greater than or equal the given value."""
+  commentFromTeacher_gte: String
+
+  """All values containing the given string."""
+  commentFromTeacher_contains: String
+
+  """All values not containing the given string."""
+  commentFromTeacher_not_contains: String
+
+  """All values starting with the given string."""
+  commentFromTeacher_starts_with: String
+
+  """All values not starting with the given string."""
+  commentFromTeacher_not_starts_with: String
+
+  """All values ending with the given string."""
+  commentFromTeacher_ends_with: String
+
+  """All values not ending with the given string."""
+  commentFromTeacher_not_ends_with: String
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
+  isApproved: Boolean
+
+  """All values that are not equal to given value."""
+  isApproved_not: Boolean
+  weightage: Float
+
+  """All values that are not equal to given value."""
+  weightage_not: Float
+
+  """All values that are contained in given list."""
+  weightage_in: [Float!]
+
+  """All values that are not contained in given list."""
+  weightage_not_in: [Float!]
+
+  """All values less than the given value."""
+  weightage_lt: Float
+
+  """All values less than or equal the given value."""
+  weightage_lte: Float
+
+  """All values greater than the given value."""
+  weightage_gt: Float
+
+  """All values greater than or equal the given value."""
+  weightage_gte: Float
+  totalmarks: Float
+
+  """All values that are not equal to given value."""
+  totalmarks_not: Float
+
+  """All values that are contained in given list."""
+  totalmarks_in: [Float!]
+
+  """All values that are not contained in given list."""
+  totalmarks_not_in: [Float!]
+
+  """All values less than the given value."""
+  totalmarks_lt: Float
+
+  """All values less than or equal the given value."""
+  totalmarks_lte: Float
+
+  """All values greater than the given value."""
+  totalmarks_gt: Float
+
+  """All values greater than or equal the given value."""
+  totalmarks_gte: Float
+  validFrom: DateTime
+
+  """All values that are not equal to given value."""
+  validFrom_not: DateTime
+
+  """All values that are contained in given list."""
+  validFrom_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  validFrom_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  validFrom_lt: DateTime
+
+  """All values less than or equal the given value."""
+  validFrom_lte: DateTime
+
+  """All values greater than the given value."""
+  validFrom_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  validFrom_gte: DateTime
+  validTo: DateTime
+
+  """All values that are not equal to given value."""
+  validTo_not: DateTime
+
+  """All values that are contained in given list."""
+  validTo_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  validTo_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  validTo_lt: DateTime
+
+  """All values less than or equal the given value."""
+  validTo_lte: DateTime
+
+  """All values greater than the given value."""
+  validTo_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  validTo_gte: DateTime
+  retryAllowed: Boolean
+
+  """All values that are not equal to given value."""
+  retryAllowed_not: Boolean
+}
+
+type QuizSubscriptionPayload {
+  mutation: MutationType!
+  node: Quiz
+  updatedFields: [String!]
+  previousValues: QuizPreviousValues
+}
+
+input QuizSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [QuizSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [QuizSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [QuizSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: QuizWhereInput
+}
+
+input QuizUpdateInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectUpdateOneWithoutQuizesInput
+  unit: UnitUpdateOneWithoutQuizsInput
+  topic: TopicUpdateOneWithoutQuizsInput
+  questions: QuestionUpdateManyWithoutQuizInput
+  createdBy: UserUpdateOneRequiredWithoutQuizCreatedByInput
+}
+
+input QuizUpdateManyDataInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+}
+
+input QuizUpdateManyMutationInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+}
+
+input QuizUpdateManyWithoutCreatedByInput {
+  create: [QuizCreateWithoutCreatedByInput!]
+  connect: [QuizWhereUniqueInput!]
+  set: [QuizWhereUniqueInput!]
+  disconnect: [QuizWhereUniqueInput!]
+  delete: [QuizWhereUniqueInput!]
+  update: [QuizUpdateWithWhereUniqueWithoutCreatedByInput!]
+  updateMany: [QuizUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuizScalarWhereInput!]
+  upsert: [QuizUpsertWithWhereUniqueWithoutCreatedByInput!]
+}
+
+input QuizUpdateManyWithoutQuestionsInput {
+  create: [QuizCreateWithoutQuestionsInput!]
+  connect: [QuizWhereUniqueInput!]
+  set: [QuizWhereUniqueInput!]
+  disconnect: [QuizWhereUniqueInput!]
+  delete: [QuizWhereUniqueInput!]
+  update: [QuizUpdateWithWhereUniqueWithoutQuestionsInput!]
+  updateMany: [QuizUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuizScalarWhereInput!]
+  upsert: [QuizUpsertWithWhereUniqueWithoutQuestionsInput!]
+}
+
+input QuizUpdateManyWithoutSubjectInput {
+  create: [QuizCreateWithoutSubjectInput!]
+  connect: [QuizWhereUniqueInput!]
+  set: [QuizWhereUniqueInput!]
+  disconnect: [QuizWhereUniqueInput!]
+  delete: [QuizWhereUniqueInput!]
+  update: [QuizUpdateWithWhereUniqueWithoutSubjectInput!]
+  updateMany: [QuizUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuizScalarWhereInput!]
+  upsert: [QuizUpsertWithWhereUniqueWithoutSubjectInput!]
+}
+
+input QuizUpdateManyWithoutTopicInput {
+  create: [QuizCreateWithoutTopicInput!]
+  connect: [QuizWhereUniqueInput!]
+  set: [QuizWhereUniqueInput!]
+  disconnect: [QuizWhereUniqueInput!]
+  delete: [QuizWhereUniqueInput!]
+  update: [QuizUpdateWithWhereUniqueWithoutTopicInput!]
+  updateMany: [QuizUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuizScalarWhereInput!]
+  upsert: [QuizUpsertWithWhereUniqueWithoutTopicInput!]
+}
+
+input QuizUpdateManyWithoutUnitInput {
+  create: [QuizCreateWithoutUnitInput!]
+  connect: [QuizWhereUniqueInput!]
+  set: [QuizWhereUniqueInput!]
+  disconnect: [QuizWhereUniqueInput!]
+  delete: [QuizWhereUniqueInput!]
+  update: [QuizUpdateWithWhereUniqueWithoutUnitInput!]
+  updateMany: [QuizUpdateManyWithWhereNestedInput!]
+  deleteMany: [QuizScalarWhereInput!]
+  upsert: [QuizUpsertWithWhereUniqueWithoutUnitInput!]
+}
+
+input QuizUpdateManyWithWhereNestedInput {
+  where: QuizScalarWhereInput!
+  data: QuizUpdateManyDataInput!
+}
+
+input QuizUpdateWithoutCreatedByDataInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectUpdateOneWithoutQuizesInput
+  unit: UnitUpdateOneWithoutQuizsInput
+  topic: TopicUpdateOneWithoutQuizsInput
+  questions: QuestionUpdateManyWithoutQuizInput
+}
+
+input QuizUpdateWithoutQuestionsDataInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectUpdateOneWithoutQuizesInput
+  unit: UnitUpdateOneWithoutQuizsInput
+  topic: TopicUpdateOneWithoutQuizsInput
+  createdBy: UserUpdateOneRequiredWithoutQuizCreatedByInput
+}
+
+input QuizUpdateWithoutSubjectDataInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  unit: UnitUpdateOneWithoutQuizsInput
+  topic: TopicUpdateOneWithoutQuizsInput
+  questions: QuestionUpdateManyWithoutQuizInput
+  createdBy: UserUpdateOneRequiredWithoutQuizCreatedByInput
+}
+
+input QuizUpdateWithoutTopicDataInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectUpdateOneWithoutQuizesInput
+  unit: UnitUpdateOneWithoutQuizsInput
+  questions: QuestionUpdateManyWithoutQuizInput
+  createdBy: UserUpdateOneRequiredWithoutQuizCreatedByInput
+}
+
+input QuizUpdateWithoutUnitDataInput {
+  quizeName: String
+  quizeType: String
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  subject: SubjectUpdateOneWithoutQuizesInput
+  topic: TopicUpdateOneWithoutQuizsInput
+  questions: QuestionUpdateManyWithoutQuizInput
+  createdBy: UserUpdateOneRequiredWithoutQuizCreatedByInput
+}
+
+input QuizUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: QuizWhereUniqueInput!
+  data: QuizUpdateWithoutCreatedByDataInput!
+}
+
+input QuizUpdateWithWhereUniqueWithoutQuestionsInput {
+  where: QuizWhereUniqueInput!
+  data: QuizUpdateWithoutQuestionsDataInput!
+}
+
+input QuizUpdateWithWhereUniqueWithoutSubjectInput {
+  where: QuizWhereUniqueInput!
+  data: QuizUpdateWithoutSubjectDataInput!
+}
+
+input QuizUpdateWithWhereUniqueWithoutTopicInput {
+  where: QuizWhereUniqueInput!
+  data: QuizUpdateWithoutTopicDataInput!
+}
+
+input QuizUpdateWithWhereUniqueWithoutUnitInput {
+  where: QuizWhereUniqueInput!
+  data: QuizUpdateWithoutUnitDataInput!
+}
+
+input QuizUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: QuizWhereUniqueInput!
+  update: QuizUpdateWithoutCreatedByDataInput!
+  create: QuizCreateWithoutCreatedByInput!
+}
+
+input QuizUpsertWithWhereUniqueWithoutQuestionsInput {
+  where: QuizWhereUniqueInput!
+  update: QuizUpdateWithoutQuestionsDataInput!
+  create: QuizCreateWithoutQuestionsInput!
+}
+
+input QuizUpsertWithWhereUniqueWithoutSubjectInput {
+  where: QuizWhereUniqueInput!
+  update: QuizUpdateWithoutSubjectDataInput!
+  create: QuizCreateWithoutSubjectInput!
+}
+
+input QuizUpsertWithWhereUniqueWithoutTopicInput {
+  where: QuizWhereUniqueInput!
+  update: QuizUpdateWithoutTopicDataInput!
+  create: QuizCreateWithoutTopicInput!
+}
+
+input QuizUpsertWithWhereUniqueWithoutUnitInput {
+  where: QuizWhereUniqueInput!
+  update: QuizUpdateWithoutUnitDataInput!
+  create: QuizCreateWithoutUnitInput!
+}
+
+input QuizWhereInput {
+  """Logical AND on all given filters."""
+  AND: [QuizWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [QuizWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [QuizWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quizeName: String
+
+  """All values that are not equal to given value."""
+  quizeName_not: String
+
+  """All values that are contained in given list."""
+  quizeName_in: [String!]
+
+  """All values that are not contained in given list."""
+  quizeName_not_in: [String!]
+
+  """All values less than the given value."""
+  quizeName_lt: String
+
+  """All values less than or equal the given value."""
+  quizeName_lte: String
+
+  """All values greater than the given value."""
+  quizeName_gt: String
+
+  """All values greater than or equal the given value."""
+  quizeName_gte: String
+
+  """All values containing the given string."""
+  quizeName_contains: String
+
+  """All values not containing the given string."""
+  quizeName_not_contains: String
+
+  """All values starting with the given string."""
+  quizeName_starts_with: String
+
+  """All values not starting with the given string."""
+  quizeName_not_starts_with: String
+
+  """All values ending with the given string."""
+  quizeName_ends_with: String
+
+  """All values not ending with the given string."""
+  quizeName_not_ends_with: String
+  quizeType: String
+
+  """All values that are not equal to given value."""
+  quizeType_not: String
+
+  """All values that are contained in given list."""
+  quizeType_in: [String!]
+
+  """All values that are not contained in given list."""
+  quizeType_not_in: [String!]
+
+  """All values less than the given value."""
+  quizeType_lt: String
+
+  """All values less than or equal the given value."""
+  quizeType_lte: String
+
+  """All values greater than the given value."""
+  quizeType_gt: String
+
+  """All values greater than or equal the given value."""
+  quizeType_gte: String
+
+  """All values containing the given string."""
+  quizeType_contains: String
+
+  """All values not containing the given string."""
+  quizeType_not_contains: String
+
+  """All values starting with the given string."""
+  quizeType_starts_with: String
+
+  """All values not starting with the given string."""
+  quizeType_not_starts_with: String
+
+  """All values ending with the given string."""
+  quizeType_ends_with: String
+
+  """All values not ending with the given string."""
+  quizeType_not_ends_with: String
+  quizlevel: Int
+
+  """All values that are not equal to given value."""
+  quizlevel_not: Int
+
+  """All values that are contained in given list."""
+  quizlevel_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quizlevel_not_in: [Int!]
+
+  """All values less than the given value."""
+  quizlevel_lt: Int
+
+  """All values less than or equal the given value."""
+  quizlevel_lte: Int
+
+  """All values greater than the given value."""
+  quizlevel_gt: Int
+
+  """All values greater than or equal the given value."""
+  quizlevel_gte: Int
+  isForLevelPromotion: Boolean
+
+  """All values that are not equal to given value."""
+  isForLevelPromotion_not: Boolean
+  showExplaination: String
+
+  """All values that are not equal to given value."""
+  showExplaination_not: String
+
+  """All values that are contained in given list."""
+  showExplaination_in: [String!]
+
+  """All values that are not contained in given list."""
+  showExplaination_not_in: [String!]
+
+  """All values less than the given value."""
+  showExplaination_lt: String
+
+  """All values less than or equal the given value."""
+  showExplaination_lte: String
+
+  """All values greater than the given value."""
+  showExplaination_gt: String
+
+  """All values greater than or equal the given value."""
+  showExplaination_gte: String
+
+  """All values containing the given string."""
+  showExplaination_contains: String
+
+  """All values not containing the given string."""
+  showExplaination_not_contains: String
+
+  """All values starting with the given string."""
+  showExplaination_starts_with: String
+
+  """All values not starting with the given string."""
+  showExplaination_not_starts_with: String
+
+  """All values ending with the given string."""
+  showExplaination_ends_with: String
+
+  """All values not ending with the given string."""
+  showExplaination_not_ends_with: String
+  showanswer: Boolean
+
+  """All values that are not equal to given value."""
+  showanswer_not: Boolean
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  allowedCorrection: Boolean
+
+  """All values that are not equal to given value."""
+  allowedCorrection_not: Boolean
+  duration: Int
+
+  """All values that are not equal to given value."""
+  duration_not: Int
+
+  """All values that are contained in given list."""
+  duration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  duration_not_in: [Int!]
+
+  """All values less than the given value."""
+  duration_lt: Int
+
+  """All values less than or equal the given value."""
+  duration_lte: Int
+
+  """All values greater than the given value."""
+  duration_gt: Int
+
+  """All values greater than or equal the given value."""
+  duration_gte: Int
+  commentFromTeacher: String
+
+  """All values that are not equal to given value."""
+  commentFromTeacher_not: String
+
+  """All values that are contained in given list."""
+  commentFromTeacher_in: [String!]
+
+  """All values that are not contained in given list."""
+  commentFromTeacher_not_in: [String!]
+
+  """All values less than the given value."""
+  commentFromTeacher_lt: String
+
+  """All values less than or equal the given value."""
+  commentFromTeacher_lte: String
+
+  """All values greater than the given value."""
+  commentFromTeacher_gt: String
+
+  """All values greater than or equal the given value."""
+  commentFromTeacher_gte: String
+
+  """All values containing the given string."""
+  commentFromTeacher_contains: String
+
+  """All values not containing the given string."""
+  commentFromTeacher_not_contains: String
+
+  """All values starting with the given string."""
+  commentFromTeacher_starts_with: String
+
+  """All values not starting with the given string."""
+  commentFromTeacher_not_starts_with: String
+
+  """All values ending with the given string."""
+  commentFromTeacher_ends_with: String
+
+  """All values not ending with the given string."""
+  commentFromTeacher_not_ends_with: String
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
+  isApproved: Boolean
+
+  """All values that are not equal to given value."""
+  isApproved_not: Boolean
+  weightage: Float
+
+  """All values that are not equal to given value."""
+  weightage_not: Float
+
+  """All values that are contained in given list."""
+  weightage_in: [Float!]
+
+  """All values that are not contained in given list."""
+  weightage_not_in: [Float!]
+
+  """All values less than the given value."""
+  weightage_lt: Float
+
+  """All values less than or equal the given value."""
+  weightage_lte: Float
+
+  """All values greater than the given value."""
+  weightage_gt: Float
+
+  """All values greater than or equal the given value."""
+  weightage_gte: Float
+  totalmarks: Float
+
+  """All values that are not equal to given value."""
+  totalmarks_not: Float
+
+  """All values that are contained in given list."""
+  totalmarks_in: [Float!]
+
+  """All values that are not contained in given list."""
+  totalmarks_not_in: [Float!]
+
+  """All values less than the given value."""
+  totalmarks_lt: Float
+
+  """All values less than or equal the given value."""
+  totalmarks_lte: Float
+
+  """All values greater than the given value."""
+  totalmarks_gt: Float
+
+  """All values greater than or equal the given value."""
+  totalmarks_gte: Float
+  validFrom: DateTime
+
+  """All values that are not equal to given value."""
+  validFrom_not: DateTime
+
+  """All values that are contained in given list."""
+  validFrom_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  validFrom_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  validFrom_lt: DateTime
+
+  """All values less than or equal the given value."""
+  validFrom_lte: DateTime
+
+  """All values greater than the given value."""
+  validFrom_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  validFrom_gte: DateTime
+  validTo: DateTime
+
+  """All values that are not equal to given value."""
+  validTo_not: DateTime
+
+  """All values that are contained in given list."""
+  validTo_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  validTo_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  validTo_lt: DateTime
+
+  """All values less than or equal the given value."""
+  validTo_lte: DateTime
+
+  """All values greater than the given value."""
+  validTo_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  validTo_gte: DateTime
+  retryAllowed: Boolean
+
+  """All values that are not equal to given value."""
+  retryAllowed_not: Boolean
+  subject: SubjectWhereInput
+  unit: UnitWhereInput
+  topic: TopicWhereInput
+  questions_every: QuestionWhereInput
+  questions_some: QuestionWhereInput
+  questions_none: QuestionWhereInput
+  createdBy: UserWhereInput
+}
+
+input QuizWhereUniqueInput {
+  id: ID
 }
 
 type Role implements Node {
@@ -10731,6 +14016,7 @@ input SubGroupWhereUniqueInput {
 type Subject implements Node {
   id: ID!
   name: String!
+  picture: String
   medium: Medium
   std: Std!
   board: String
@@ -10750,6 +14036,8 @@ type Subject implements Node {
   status: String
   available: String
   description: String
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  quizes(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
 }
 
 """A connection to a list of items."""
@@ -10765,6 +14053,7 @@ type SubjectConnection {
 input SubjectCreateInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10782,6 +14071,8 @@ input SubjectCreateInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateManyInput {
@@ -10824,6 +14115,16 @@ input SubjectCreateOneWithoutContentsInput {
   connect: SubjectWhereUniqueInput
 }
 
+input SubjectCreateOneWithoutQuestionsInput {
+  create: SubjectCreateWithoutQuestionsInput
+  connect: SubjectWhereUniqueInput
+}
+
+input SubjectCreateOneWithoutQuizesInput {
+  create: SubjectCreateWithoutQuizesInput
+  connect: SubjectWhereUniqueInput
+}
+
 input SubjectCreateOneWithoutTopicInput {
   create: SubjectCreateWithoutTopicInput
   connect: SubjectWhereUniqueInput
@@ -10837,6 +14138,7 @@ input SubjectCreateOneWithoutUnitsInput {
 input SubjectCreateWithoutContentsInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10853,11 +14155,14 @@ input SubjectCreateWithoutContentsInput {
   topic: TopicCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutCreatedByInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10874,11 +14179,14 @@ input SubjectCreateWithoutCreatedByInput {
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutGroupInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10895,11 +14203,14 @@ input SubjectCreateWithoutGroupInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutMediumInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10916,11 +14227,62 @@ input SubjectCreateWithoutMediumInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
+}
+
+input SubjectCreateWithoutQuestionsInput {
+  id: ID
+  name: String!
+  picture: String
+  board: String
+  category: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  description: String
+  medium: MediumCreateOneWithoutSubjectsInput
+  std: StdCreateOneWithoutSubjectInput!
+  group: GroupCreateOneWithoutSubjectsInput
+  subgroup: SubGroupCreateOneWithoutSubjectsInput
+  units: UnitCreateManyWithoutSubjectInput
+  topic: TopicCreateManyWithoutSubjectInput
+  contents: ContentCreateManyWithoutSubjectInput
+  createdBy: UserCreateOneWithoutSubjectByMeInput
+  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  quizes: QuizCreateManyWithoutSubjectInput
+}
+
+input SubjectCreateWithoutQuizesInput {
+  id: ID
+  name: String!
+  picture: String
+  board: String
+  category: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  description: String
+  medium: MediumCreateOneWithoutSubjectsInput
+  std: StdCreateOneWithoutSubjectInput!
+  group: GroupCreateOneWithoutSubjectsInput
+  subgroup: SubGroupCreateOneWithoutSubjectsInput
+  units: UnitCreateManyWithoutSubjectInput
+  topic: TopicCreateManyWithoutSubjectInput
+  contents: ContentCreateManyWithoutSubjectInput
+  createdBy: UserCreateOneWithoutSubjectByMeInput
+  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutStdInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10937,11 +14299,14 @@ input SubjectCreateWithoutStdInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutSubgroupInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10958,11 +14323,14 @@ input SubjectCreateWithoutSubgroupInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutTopicInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -10979,11 +14347,14 @@ input SubjectCreateWithoutTopicInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutUnitsInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -11000,11 +14371,14 @@ input SubjectCreateWithoutUnitsInput {
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
   updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 input SubjectCreateWithoutUpdateByInput {
   id: ID
   name: String!
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -11021,6 +14395,8 @@ input SubjectCreateWithoutUpdateByInput {
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
   createdBy: UserCreateOneWithoutSubjectByMeInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
 }
 
 """An edge in a connection."""
@@ -11037,6 +14413,8 @@ enum SubjectOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  picture_ASC
+  picture_DESC
   board_ASC
   board_DESC
   category_ASC
@@ -11062,6 +14440,7 @@ enum SubjectOrderByInput {
 type SubjectPreviousValues {
   id: ID!
   name: String!
+  picture: String
   board: String
   category: String
   updatedAt: DateTime!
@@ -11163,6 +14542,46 @@ input SubjectScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
   board: String
 
   """All values that are not equal to given value."""
@@ -11957,6 +15376,7 @@ input SubjectSubscriptionWhereUniqueInput {
 
 input SubjectUpdateDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -11974,10 +15394,13 @@ input SubjectUpdateDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -11995,10 +15418,13 @@ input SubjectUpdateInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateManyDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12023,6 +15449,7 @@ input SubjectUpdateManyInput {
 
 input SubjectUpdateManyMutationInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12124,6 +15551,24 @@ input SubjectUpdateOneRequiredWithoutUnitsInput {
   upsert: SubjectUpsertWithoutUnitsInput
 }
 
+input SubjectUpdateOneWithoutQuestionsInput {
+  create: SubjectCreateWithoutQuestionsInput
+  connect: SubjectWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: SubjectUpdateWithoutQuestionsDataInput
+  upsert: SubjectUpsertWithoutQuestionsInput
+}
+
+input SubjectUpdateOneWithoutQuizesInput {
+  create: SubjectCreateWithoutQuizesInput
+  connect: SubjectWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: SubjectUpdateWithoutQuizesDataInput
+  upsert: SubjectUpsertWithoutQuizesInput
+}
+
 input SubjectUpdateOneWithoutTopicInput {
   create: SubjectCreateWithoutTopicInput
   connect: SubjectWhereUniqueInput
@@ -12135,6 +15580,7 @@ input SubjectUpdateOneWithoutTopicInput {
 
 input SubjectUpdateWithoutContentsDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12151,10 +15597,13 @@ input SubjectUpdateWithoutContentsDataInput {
   topic: TopicUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutCreatedByDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12171,10 +15620,13 @@ input SubjectUpdateWithoutCreatedByDataInput {
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutGroupDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12191,10 +15643,13 @@ input SubjectUpdateWithoutGroupDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutMediumDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12211,10 +15666,59 @@ input SubjectUpdateWithoutMediumDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
+}
+
+input SubjectUpdateWithoutQuestionsDataInput {
+  name: String
+  picture: String
+  board: String
+  category: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  description: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  std: StdUpdateOneRequiredWithoutSubjectInput
+  group: GroupUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  units: UnitUpdateManyWithoutSubjectInput
+  topic: TopicUpdateManyWithoutSubjectInput
+  contents: ContentUpdateManyWithoutSubjectInput
+  createdBy: UserUpdateOneWithoutSubjectByMeInput
+  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  quizes: QuizUpdateManyWithoutSubjectInput
+}
+
+input SubjectUpdateWithoutQuizesDataInput {
+  name: String
+  picture: String
+  board: String
+  category: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  description: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  std: StdUpdateOneRequiredWithoutSubjectInput
+  group: GroupUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  units: UnitUpdateManyWithoutSubjectInput
+  topic: TopicUpdateManyWithoutSubjectInput
+  contents: ContentUpdateManyWithoutSubjectInput
+  createdBy: UserUpdateOneWithoutSubjectByMeInput
+  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutStdDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12231,10 +15735,13 @@ input SubjectUpdateWithoutStdDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutSubgroupDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12251,10 +15758,13 @@ input SubjectUpdateWithoutSubgroupDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutTopicDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12271,10 +15781,13 @@ input SubjectUpdateWithoutTopicDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutUnitsDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12291,10 +15804,13 @@ input SubjectUpdateWithoutUnitsDataInput {
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
   updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithoutUpdateByDataInput {
   name: String
+  picture: String
   board: String
   category: String
   plantDate: DateTime
@@ -12311,6 +15827,8 @@ input SubjectUpdateWithoutUpdateByDataInput {
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
   createdBy: UserUpdateOneWithoutSubjectByMeInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
 }
 
 input SubjectUpdateWithWhereUniqueNestedInput {
@@ -12351,6 +15869,16 @@ input SubjectUpdateWithWhereUniqueWithoutUpdateByInput {
 input SubjectUpsertWithoutContentsInput {
   update: SubjectUpdateWithoutContentsDataInput!
   create: SubjectCreateWithoutContentsInput!
+}
+
+input SubjectUpsertWithoutQuestionsInput {
+  update: SubjectUpdateWithoutQuestionsDataInput!
+  create: SubjectCreateWithoutQuestionsInput!
+}
+
+input SubjectUpsertWithoutQuizesInput {
+  update: SubjectUpdateWithoutQuizesDataInput!
+  create: SubjectCreateWithoutQuizesInput!
 }
 
 input SubjectUpsertWithoutTopicInput {
@@ -12494,6 +16022,46 @@ input SubjectWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
   board: String
 
   """All values that are not equal to given value."""
@@ -12821,6 +16389,12 @@ input SubjectWhereInput {
   updateBy_every: UserWhereInput
   updateBy_some: UserWhereInput
   updateBy_none: UserWhereInput
+  questions_every: QuestionWhereInput
+  questions_some: QuestionWhereInput
+  questions_none: QuestionWhereInput
+  quizes_every: QuizWhereInput
+  quizes_some: QuizWhereInput
+  quizes_none: QuizWhereInput
 }
 
 input SubjectWhereUniqueInput {
@@ -13487,6 +17061,8 @@ type Subscription {
   content(where: ContentSubscriptionWhereInput): ContentSubscriptionPayload
   topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
   unit(where: UnitSubscriptionWhereInput): UnitSubscriptionPayload
+  question(where: QuestionSubscriptionWhereInput): QuestionSubscriptionPayload
+  quiz(where: QuizSubscriptionWhereInput): QuizSubscriptionPayload
   suborg(where: SuborgSubscriptionWhereInput): SuborgSubscriptionPayload
   subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
@@ -13505,6 +17081,8 @@ type Topic implements Node {
   state: String!
   status: String!
   available: String
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  quizs(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -13532,6 +17110,8 @@ input TopicCreateInput {
   contents: ContentCreateManyWithoutTopicInput
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
 }
 
 input TopicCreateManyWithoutCreatedByInput {
@@ -13559,6 +17139,16 @@ input TopicCreateOneWithoutContentsInput {
   connect: TopicWhereUniqueInput
 }
 
+input TopicCreateOneWithoutQuestionsInput {
+  create: TopicCreateWithoutQuestionsInput
+  connect: TopicWhereUniqueInput
+}
+
+input TopicCreateOneWithoutQuizsInput {
+  create: TopicCreateWithoutQuizsInput
+  connect: TopicWhereUniqueInput
+}
+
 input TopicCreateWithoutContentsInput {
   id: ID
   name: String!
@@ -13571,6 +17161,8 @@ input TopicCreateWithoutContentsInput {
   unit: UnitCreateOneWithoutTopicsInput
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutCreatedByInput {
@@ -13585,6 +17177,40 @@ input TopicCreateWithoutCreatedByInput {
   unit: UnitCreateOneWithoutTopicsInput
   contents: ContentCreateManyWithoutTopicInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
+}
+
+input TopicCreateWithoutQuestionsInput {
+  id: ID
+  name: String!
+  plantDate: DateTime
+  isPublished: Boolean!
+  state: String!
+  status: String!
+  available: String
+  subject: SubjectCreateOneWithoutTopicInput
+  unit: UnitCreateOneWithoutTopicsInput
+  contents: ContentCreateManyWithoutTopicInput
+  createdBy: UserCreateOneWithoutTopicByMeInput
+  updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  quizs: QuizCreateManyWithoutTopicInput
+}
+
+input TopicCreateWithoutQuizsInput {
+  id: ID
+  name: String!
+  plantDate: DateTime
+  isPublished: Boolean!
+  state: String!
+  status: String!
+  available: String
+  subject: SubjectCreateOneWithoutTopicInput
+  unit: UnitCreateOneWithoutTopicsInput
+  contents: ContentCreateManyWithoutTopicInput
+  createdBy: UserCreateOneWithoutTopicByMeInput
+  updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutSubjectInput {
@@ -13599,6 +17225,8 @@ input TopicCreateWithoutSubjectInput {
   contents: ContentCreateManyWithoutTopicInput
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutUnitInput {
@@ -13613,6 +17241,8 @@ input TopicCreateWithoutUnitInput {
   contents: ContentCreateManyWithoutTopicInput
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutUpdateByInput {
@@ -13627,6 +17257,8 @@ input TopicCreateWithoutUpdateByInput {
   unit: UnitCreateOneWithoutTopicsInput
   contents: ContentCreateManyWithoutTopicInput
   createdBy: UserCreateOneWithoutTopicByMeInput
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
 }
 
 """An edge in a connection."""
@@ -14001,6 +17633,8 @@ input TopicUpdateInput {
   contents: ContentUpdateManyWithoutTopicInput
   createdBy: UserUpdateOneWithoutTopicByMeInput
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateManyDataInput {
@@ -14083,6 +17717,24 @@ input TopicUpdateOneWithoutContentsInput {
   upsert: TopicUpsertWithoutContentsInput
 }
 
+input TopicUpdateOneWithoutQuestionsInput {
+  create: TopicCreateWithoutQuestionsInput
+  connect: TopicWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TopicUpdateWithoutQuestionsDataInput
+  upsert: TopicUpsertWithoutQuestionsInput
+}
+
+input TopicUpdateOneWithoutQuizsInput {
+  create: TopicCreateWithoutQuizsInput
+  connect: TopicWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TopicUpdateWithoutQuizsDataInput
+  upsert: TopicUpsertWithoutQuizsInput
+}
+
 input TopicUpdateWithoutContentsDataInput {
   name: String
   plantDate: DateTime
@@ -14094,6 +17746,8 @@ input TopicUpdateWithoutContentsDataInput {
   unit: UnitUpdateOneWithoutTopicsInput
   createdBy: UserUpdateOneWithoutTopicByMeInput
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutCreatedByDataInput {
@@ -14107,6 +17761,38 @@ input TopicUpdateWithoutCreatedByDataInput {
   unit: UnitUpdateOneWithoutTopicsInput
   contents: ContentUpdateManyWithoutTopicInput
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
+}
+
+input TopicUpdateWithoutQuestionsDataInput {
+  name: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  subject: SubjectUpdateOneWithoutTopicInput
+  unit: UnitUpdateOneWithoutTopicsInput
+  contents: ContentUpdateManyWithoutTopicInput
+  createdBy: UserUpdateOneWithoutTopicByMeInput
+  updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  quizs: QuizUpdateManyWithoutTopicInput
+}
+
+input TopicUpdateWithoutQuizsDataInput {
+  name: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  subject: SubjectUpdateOneWithoutTopicInput
+  unit: UnitUpdateOneWithoutTopicsInput
+  contents: ContentUpdateManyWithoutTopicInput
+  createdBy: UserUpdateOneWithoutTopicByMeInput
+  updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutSubjectDataInput {
@@ -14120,6 +17806,8 @@ input TopicUpdateWithoutSubjectDataInput {
   contents: ContentUpdateManyWithoutTopicInput
   createdBy: UserUpdateOneWithoutTopicByMeInput
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutUnitDataInput {
@@ -14133,6 +17821,8 @@ input TopicUpdateWithoutUnitDataInput {
   contents: ContentUpdateManyWithoutTopicInput
   createdBy: UserUpdateOneWithoutTopicByMeInput
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutUpdateByDataInput {
@@ -14146,6 +17836,8 @@ input TopicUpdateWithoutUpdateByDataInput {
   unit: UnitUpdateOneWithoutTopicsInput
   contents: ContentUpdateManyWithoutTopicInput
   createdBy: UserUpdateOneWithoutTopicByMeInput
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -14171,6 +17863,16 @@ input TopicUpdateWithWhereUniqueWithoutUpdateByInput {
 input TopicUpsertWithoutContentsInput {
   update: TopicUpdateWithoutContentsDataInput!
   create: TopicCreateWithoutContentsInput!
+}
+
+input TopicUpsertWithoutQuestionsInput {
+  update: TopicUpdateWithoutQuestionsDataInput!
+  create: TopicCreateWithoutQuestionsInput!
+}
+
+input TopicUpsertWithoutQuizsInput {
+  update: TopicUpdateWithoutQuizsDataInput!
+  create: TopicCreateWithoutQuizsInput!
 }
 
 input TopicUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -14483,6 +18185,12 @@ input TopicWhereInput {
   contents_none: ContentWhereInput
   createdBy: UserWhereInput
   updateBy: UserWhereInput
+  questions_every: QuestionWhereInput
+  questions_some: QuestionWhereInput
+  questions_none: QuestionWhereInput
+  quizs_every: QuizWhereInput
+  quizs_some: QuizWhereInput
+  quizs_none: QuizWhereInput
 }
 
 input TopicWhereUniqueInput {
@@ -14502,8 +18210,10 @@ type Unit implements Node {
   state: String!
   status: String!
   available: String
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   updatedAt: DateTime!
   createdAt: DateTime!
+  quizs(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
 }
 
 """A connection to a list of items."""
@@ -14529,6 +18239,8 @@ input UnitCreateInput {
   contents: ContentCreateManyWithoutUnitInput
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
 }
 
 input UnitCreateManyWithoutCreatedByInput {
@@ -14551,6 +18263,16 @@ input UnitCreateOneWithoutContentsInput {
   connect: UnitWhereUniqueInput
 }
 
+input UnitCreateOneWithoutQuestionsInput {
+  create: UnitCreateWithoutQuestionsInput
+  connect: UnitWhereUniqueInput
+}
+
+input UnitCreateOneWithoutQuizsInput {
+  create: UnitCreateWithoutQuizsInput
+  connect: UnitWhereUniqueInput
+}
+
 input UnitCreateOneWithoutTopicsInput {
   create: UnitCreateWithoutTopicsInput
   connect: UnitWhereUniqueInput
@@ -14568,6 +18290,8 @@ input UnitCreateWithoutContentsInput {
   topics: TopicCreateManyWithoutUnitInput
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutCreatedByInput {
@@ -14582,6 +18306,40 @@ input UnitCreateWithoutCreatedByInput {
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
+}
+
+input UnitCreateWithoutQuestionsInput {
+  id: ID
+  name: String!
+  plantDate: DateTime
+  isPublished: Boolean!
+  state: String!
+  status: String!
+  available: String
+  subject: SubjectCreateOneWithoutUnitsInput!
+  topics: TopicCreateManyWithoutUnitInput
+  contents: ContentCreateManyWithoutUnitInput
+  createdBy: UserCreateOneWithoutUnitByMeInput
+  updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  quizs: QuizCreateManyWithoutUnitInput
+}
+
+input UnitCreateWithoutQuizsInput {
+  id: ID
+  name: String!
+  plantDate: DateTime
+  isPublished: Boolean!
+  state: String!
+  status: String!
+  available: String
+  subject: SubjectCreateOneWithoutUnitsInput!
+  topics: TopicCreateManyWithoutUnitInput
+  contents: ContentCreateManyWithoutUnitInput
+  createdBy: UserCreateOneWithoutUnitByMeInput
+  updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutSubjectInput {
@@ -14596,6 +18354,8 @@ input UnitCreateWithoutSubjectInput {
   contents: ContentCreateManyWithoutUnitInput
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutTopicsInput {
@@ -14610,6 +18370,8 @@ input UnitCreateWithoutTopicsInput {
   contents: ContentCreateManyWithoutUnitInput
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutUpdateByInput {
@@ -14624,6 +18386,8 @@ input UnitCreateWithoutUpdateByInput {
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
   createdBy: UserCreateOneWithoutUnitByMeInput
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
 }
 
 """An edge in a connection."""
@@ -14998,6 +18762,8 @@ input UnitUpdateInput {
   contents: ContentUpdateManyWithoutUnitInput
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateManyDataInput {
@@ -15068,6 +18834,24 @@ input UnitUpdateOneWithoutContentsInput {
   upsert: UnitUpsertWithoutContentsInput
 }
 
+input UnitUpdateOneWithoutQuestionsInput {
+  create: UnitCreateWithoutQuestionsInput
+  connect: UnitWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UnitUpdateWithoutQuestionsDataInput
+  upsert: UnitUpsertWithoutQuestionsInput
+}
+
+input UnitUpdateOneWithoutQuizsInput {
+  create: UnitCreateWithoutQuizsInput
+  connect: UnitWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UnitUpdateWithoutQuizsDataInput
+  upsert: UnitUpsertWithoutQuizsInput
+}
+
 input UnitUpdateOneWithoutTopicsInput {
   create: UnitCreateWithoutTopicsInput
   connect: UnitWhereUniqueInput
@@ -15088,6 +18872,8 @@ input UnitUpdateWithoutContentsDataInput {
   topics: TopicUpdateManyWithoutUnitInput
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutCreatedByDataInput {
@@ -15101,6 +18887,38 @@ input UnitUpdateWithoutCreatedByDataInput {
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
+}
+
+input UnitUpdateWithoutQuestionsDataInput {
+  name: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  subject: SubjectUpdateOneRequiredWithoutUnitsInput
+  topics: TopicUpdateManyWithoutUnitInput
+  contents: ContentUpdateManyWithoutUnitInput
+  createdBy: UserUpdateOneWithoutUnitByMeInput
+  updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  quizs: QuizUpdateManyWithoutUnitInput
+}
+
+input UnitUpdateWithoutQuizsDataInput {
+  name: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  subject: SubjectUpdateOneRequiredWithoutUnitsInput
+  topics: TopicUpdateManyWithoutUnitInput
+  contents: ContentUpdateManyWithoutUnitInput
+  createdBy: UserUpdateOneWithoutUnitByMeInput
+  updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutSubjectDataInput {
@@ -15114,6 +18932,8 @@ input UnitUpdateWithoutSubjectDataInput {
   contents: ContentUpdateManyWithoutUnitInput
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutTopicsDataInput {
@@ -15127,6 +18947,8 @@ input UnitUpdateWithoutTopicsDataInput {
   contents: ContentUpdateManyWithoutUnitInput
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutUpdateByDataInput {
@@ -15140,6 +18962,8 @@ input UnitUpdateWithoutUpdateByDataInput {
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
   createdBy: UserUpdateOneWithoutUnitByMeInput
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -15160,6 +18984,16 @@ input UnitUpdateWithWhereUniqueWithoutUpdateByInput {
 input UnitUpsertWithoutContentsInput {
   update: UnitUpdateWithoutContentsDataInput!
   create: UnitCreateWithoutContentsInput!
+}
+
+input UnitUpsertWithoutQuestionsInput {
+  update: UnitUpdateWithoutQuestionsDataInput!
+  create: UnitCreateWithoutQuestionsInput!
+}
+
+input UnitUpsertWithoutQuizsInput {
+  update: UnitUpdateWithoutQuizsDataInput!
+  create: UnitCreateWithoutQuizsInput!
 }
 
 input UnitUpsertWithoutTopicsInput {
@@ -15475,6 +19309,12 @@ input UnitWhereInput {
   updateBy_every: UserWhereInput
   updateBy_some: UserWhereInput
   updateBy_none: UserWhereInput
+  questions_every: QuestionWhereInput
+  questions_some: QuestionWhereInput
+  questions_none: QuestionWhereInput
+  quizs_every: QuizWhereInput
+  quizs_some: QuizWhereInput
+  quizs_none: QuizWhereInput
 }
 
 input UnitWhereUniqueInput {
@@ -15508,6 +19348,9 @@ type User implements Node {
   topicUpdateByMe(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   contentByMe(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content!]
   contentUpdateByMe(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content!]
+  questionCreatedBy(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  questionUpdateddBy(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  quizCreatedBy(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -15549,6 +19392,9 @@ input UserCreateInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateManyWithoutContentUpdateByMeInput {
@@ -15608,6 +19454,21 @@ input UserCreateOneWithoutParentsInput {
 
 input UserCreateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutQuestionCreatedByInput {
+  create: UserCreateWithoutQuestionCreatedByInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutQuestionUpdateddByInput {
+  create: UserCreateWithoutQuestionUpdateddByInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutQuizCreatedByInput {
+  create: UserCreateWithoutQuizCreatedByInput
   connect: UserWhereUniqueInput
 }
 
@@ -15677,6 +19538,9 @@ input UserCreateWithoutCommentsInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutContentByMeInput {
@@ -15705,6 +19569,9 @@ input UserCreateWithoutContentByMeInput {
   topicByMe: TopicCreateManyWithoutCreatedByInput
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutContentUpdateByMeInput {
@@ -15733,6 +19600,9 @@ input UserCreateWithoutContentUpdateByMeInput {
   topicByMe: TopicCreateManyWithoutCreatedByInput
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutGroupmembersInput {
@@ -15761,6 +19631,9 @@ input UserCreateWithoutGroupmembersInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutMyprofilesInput {
@@ -15789,6 +19662,9 @@ input UserCreateWithoutMyprofilesInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutMyRolesInput {
@@ -15817,6 +19693,9 @@ input UserCreateWithoutMyRolesInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutOrgInput {
@@ -15845,6 +19724,9 @@ input UserCreateWithoutOrgInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutParentsInput {
@@ -15873,6 +19755,9 @@ input UserCreateWithoutParentsInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -15901,6 +19786,102 @@ input UserCreateWithoutPostsInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+}
+
+input UserCreateWithoutQuestionCreatedByInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdBy: String
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+  teachers: EducationRelationshipCreateManyWithoutTeacherInput
+  students: EducationRelationshipCreateManyWithoutStudentInput
+  parents: EducationRelationshipCreateManyWithoutParentInput
+  subjectByMe: SubjectCreateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
+  unitByMe: UnitCreateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
+  topicByMe: TopicCreateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
+  contentByMe: ContentCreateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+}
+
+input UserCreateWithoutQuestionUpdateddByInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdBy: String
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+  teachers: EducationRelationshipCreateManyWithoutTeacherInput
+  students: EducationRelationshipCreateManyWithoutStudentInput
+  parents: EducationRelationshipCreateManyWithoutParentInput
+  subjectByMe: SubjectCreateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
+  unitByMe: UnitCreateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
+  topicByMe: TopicCreateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
+  contentByMe: ContentCreateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+}
+
+input UserCreateWithoutQuizCreatedByInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdBy: String
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myRoles: RoleMemberCreateManyWithoutUseridInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+  teachers: EducationRelationshipCreateManyWithoutTeacherInput
+  students: EducationRelationshipCreateManyWithoutStudentInput
+  parents: EducationRelationshipCreateManyWithoutParentInput
+  subjectByMe: SubjectCreateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
+  unitByMe: UnitCreateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
+  topicByMe: TopicCreateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
+  contentByMe: ContentCreateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
 }
 
 input UserCreateWithoutStudentsInput {
@@ -15929,6 +19910,9 @@ input UserCreateWithoutStudentsInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutSubgroupmembersInput {
@@ -15957,6 +19941,9 @@ input UserCreateWithoutSubgroupmembersInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutSubjectByMeInput {
@@ -15985,6 +19972,9 @@ input UserCreateWithoutSubjectByMeInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutSubjectSubscriptionInput {
@@ -16013,6 +20003,9 @@ input UserCreateWithoutSubjectSubscriptionInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutSubjectUpddateByMeInput {
@@ -16041,6 +20034,9 @@ input UserCreateWithoutSubjectUpddateByMeInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutSuborgInput {
@@ -16069,6 +20065,9 @@ input UserCreateWithoutSuborgInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutTeachersInput {
@@ -16097,6 +20096,9 @@ input UserCreateWithoutTeachersInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutTopicByMeInput {
@@ -16125,6 +20127,9 @@ input UserCreateWithoutTopicByMeInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutTopicUpdateByMeInput {
@@ -16153,6 +20158,9 @@ input UserCreateWithoutTopicUpdateByMeInput {
   topicByMe: TopicCreateManyWithoutCreatedByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutUnitByMeInput {
@@ -16181,6 +20189,9 @@ input UserCreateWithoutUnitByMeInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutUnitUpdatedByMeInput {
@@ -16209,6 +20220,9 @@ input UserCreateWithoutUnitUpdatedByMeInput {
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
   contentByMe: ContentCreateManyWithoutCreatedByInput
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
 }
 
 """An edge in a connection."""
@@ -16608,6 +20622,9 @@ input UserUpdateInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateManyDataInput {
@@ -16726,6 +20743,13 @@ input UserUpdateOneRequiredWithoutPostsInput {
   upsert: UserUpsertWithoutPostsInput
 }
 
+input UserUpdateOneRequiredWithoutQuizCreatedByInput {
+  create: UserCreateWithoutQuizCreatedByInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutQuizCreatedByDataInput
+  upsert: UserUpsertWithoutQuizCreatedByInput
+}
+
 input UserUpdateOneRequiredWithoutSubgroupmembersInput {
   create: UserCreateWithoutSubgroupmembersInput
   connect: UserWhereUniqueInput
@@ -16756,6 +20780,24 @@ input UserUpdateOneWithoutParentsInput {
   delete: Boolean
   update: UserUpdateWithoutParentsDataInput
   upsert: UserUpsertWithoutParentsInput
+}
+
+input UserUpdateOneWithoutQuestionCreatedByInput {
+  create: UserCreateWithoutQuestionCreatedByInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutQuestionCreatedByDataInput
+  upsert: UserUpsertWithoutQuestionCreatedByInput
+}
+
+input UserUpdateOneWithoutQuestionUpdateddByInput {
+  create: UserCreateWithoutQuestionUpdateddByInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutQuestionUpdateddByDataInput
+  upsert: UserUpsertWithoutQuestionUpdateddByInput
 }
 
 input UserUpdateOneWithoutStudentsInput {
@@ -16837,6 +20879,9 @@ input UserUpdateWithoutCommentsDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutContentByMeDataInput {
@@ -16864,6 +20909,9 @@ input UserUpdateWithoutContentByMeDataInput {
   topicByMe: TopicUpdateManyWithoutCreatedByInput
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutContentUpdateByMeDataInput {
@@ -16891,6 +20939,9 @@ input UserUpdateWithoutContentUpdateByMeDataInput {
   topicByMe: TopicUpdateManyWithoutCreatedByInput
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutGroupmembersDataInput {
@@ -16918,6 +20969,9 @@ input UserUpdateWithoutGroupmembersDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutMyprofilesDataInput {
@@ -16945,6 +20999,9 @@ input UserUpdateWithoutMyprofilesDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutMyRolesDataInput {
@@ -16972,6 +21029,9 @@ input UserUpdateWithoutMyRolesDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutOrgDataInput {
@@ -16999,6 +21059,9 @@ input UserUpdateWithoutOrgDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutParentsDataInput {
@@ -17026,6 +21089,9 @@ input UserUpdateWithoutParentsDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -17053,6 +21119,99 @@ input UserUpdateWithoutPostsDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+}
+
+input UserUpdateWithoutQuestionCreatedByDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  createdBy: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
+  students: EducationRelationshipUpdateManyWithoutStudentInput
+  parents: EducationRelationshipUpdateManyWithoutParentInput
+  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
+  unitByMe: UnitUpdateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
+  topicByMe: TopicUpdateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
+  contentByMe: ContentUpdateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+}
+
+input UserUpdateWithoutQuestionUpdateddByDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  createdBy: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
+  students: EducationRelationshipUpdateManyWithoutStudentInput
+  parents: EducationRelationshipUpdateManyWithoutParentInput
+  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
+  unitByMe: UnitUpdateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
+  topicByMe: TopicUpdateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
+  contentByMe: ContentUpdateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+}
+
+input UserUpdateWithoutQuizCreatedByDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  createdBy: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
+  students: EducationRelationshipUpdateManyWithoutStudentInput
+  parents: EducationRelationshipUpdateManyWithoutParentInput
+  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
+  unitByMe: UnitUpdateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
+  topicByMe: TopicUpdateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
+  contentByMe: ContentUpdateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
 }
 
 input UserUpdateWithoutStudentsDataInput {
@@ -17080,6 +21239,9 @@ input UserUpdateWithoutStudentsDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutSubgroupmembersDataInput {
@@ -17107,6 +21269,9 @@ input UserUpdateWithoutSubgroupmembersDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutSubjectByMeDataInput {
@@ -17134,6 +21299,9 @@ input UserUpdateWithoutSubjectByMeDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutSubjectSubscriptionDataInput {
@@ -17161,6 +21329,9 @@ input UserUpdateWithoutSubjectSubscriptionDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutSubjectUpddateByMeDataInput {
@@ -17188,6 +21359,9 @@ input UserUpdateWithoutSubjectUpddateByMeDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutSuborgDataInput {
@@ -17215,6 +21389,9 @@ input UserUpdateWithoutSuborgDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutTeachersDataInput {
@@ -17242,6 +21419,9 @@ input UserUpdateWithoutTeachersDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutTopicByMeDataInput {
@@ -17269,6 +21449,9 @@ input UserUpdateWithoutTopicByMeDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutTopicUpdateByMeDataInput {
@@ -17296,6 +21479,9 @@ input UserUpdateWithoutTopicUpdateByMeDataInput {
   topicByMe: TopicUpdateManyWithoutCreatedByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutUnitByMeDataInput {
@@ -17323,6 +21509,9 @@ input UserUpdateWithoutUnitByMeDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithoutUnitUpdatedByMeDataInput {
@@ -17350,6 +21539,9 @@ input UserUpdateWithoutUnitUpdatedByMeDataInput {
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
   contentByMe: ContentUpdateManyWithoutCreatedByInput
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateWithWhereUniqueWithoutContentUpdateByMeInput {
@@ -17410,6 +21602,21 @@ input UserUpsertWithoutParentsInput {
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
+}
+
+input UserUpsertWithoutQuestionCreatedByInput {
+  update: UserUpdateWithoutQuestionCreatedByDataInput!
+  create: UserCreateWithoutQuestionCreatedByInput!
+}
+
+input UserUpsertWithoutQuestionUpdateddByInput {
+  update: UserUpdateWithoutQuestionUpdateddByDataInput!
+  create: UserCreateWithoutQuestionUpdateddByInput!
+}
+
+input UserUpsertWithoutQuizCreatedByInput {
+  update: UserUpdateWithoutQuizCreatedByDataInput!
+  create: UserCreateWithoutQuizCreatedByInput!
 }
 
 input UserUpsertWithoutStudentsInput {
@@ -17833,6 +22040,15 @@ input UserWhereInput {
   contentUpdateByMe_every: ContentWhereInput
   contentUpdateByMe_some: ContentWhereInput
   contentUpdateByMe_none: ContentWhereInput
+  questionCreatedBy_every: QuestionWhereInput
+  questionCreatedBy_some: QuestionWhereInput
+  questionCreatedBy_none: QuestionWhereInput
+  questionUpdateddBy_every: QuestionWhereInput
+  questionUpdateddBy_some: QuestionWhereInput
+  questionUpdateddBy_none: QuestionWhereInput
+  quizCreatedBy_every: QuizWhereInput
+  quizCreatedBy_some: QuizWhereInput
+  quizCreatedBy_none: QuizWhereInput
 }
 
 input UserWhereUniqueInput {

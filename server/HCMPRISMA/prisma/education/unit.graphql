@@ -17,17 +17,19 @@ type Unit{
      """
      id: ID! @id
      name:String!
-     subject:Subject!       @relation(name: "UnitToSubject", onDelete: SET_NULL)
-     topics: [Topic!]!     @relation(name: "TopicToUnit", onDelete: CASCADE)
-     contents:[Content!]!  @relation(name: "ContentToUnit", onDelete: CASCADE)
+     subject:Subject!            @relation(name: "UnitToSubject", onDelete: SET_NULL)
+     topics: [Topic!]!           @relation(name: "TopicToUnit", onDelete: CASCADE)
+     contents:[Content!]!        @relation(name: "ContentToUnit", onDelete: CASCADE)
      
-     createdBy:User         @relation(name: "UnitToUser", onDelete: SET_NULL)
-     updateBy:[User]         @relation(name: "UnitToUserUpdate", onDelete: SET_NULL)
+     createdBy:User              @relation(name: "UnitToUser", onDelete: SET_NULL)
+     updateBy:[User]             @relation(name: "UnitToUserUpdate", onDelete: SET_NULL)
      plantDate:DateTime
      isPublished:Boolean!
      state:String!
      status:String!
      available:String 
+     questions:[Question!]!      @relation(name: "QuestionToUnit", onDelete: SET_NULL)
      updatedAt:DateTime!         @updatedAt
      createdAt:DateTime!         @createdAt
+     quizs:[Quiz!]!              @relation(name: "QuizToUnit", onDelete: CASCADE)
 }

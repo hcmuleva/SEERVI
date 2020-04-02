@@ -1,66 +1,11 @@
 type Query {
-  getAllSubjects:[Subject!]!
   getAllSubjectSubscription:[SubjectSubscription!]!
   mySubscription(query: String):[SubjectSubscription!]!
 }
 type Mutation {
-  createSubject(data:SubjectInputData!):Subject!
-  updateSubject(id:ID!,data: SubjectUpdateInputData!):Subject!
-  deleteSubject(id:ID!):Subject!
   createSubjectSubscription(data:SubjectSubscriptionInputData!):SubjectSubscription!
 }
-type Subject{
-  id:ID! 
-  name:String!
-  medium:Medium     
-  std:Std!
-  category:String
-  board:String 
-  group:Group       
-  subgroup:SubGroup 
 
-  units:[Unit!]!              
-  topic:[Topic!]!             
-  contents:[Content!]!        
-  createdBy:User              
-  updateBy:[User!]!           
-  plantDate:DateTime    
-  isPublished:Boolean
-  state:String
-  status:String
-  available:String
-  description:String
-}
-input SubjectInputData{
-  name:String!
-  medium:String   
-  std:String!
-  category:String
-  board:String 
-  group:String       
-  subgroup:String 
-  plantDate:DateTime    
-  isPublished:Boolean
-  state:String
-  status:String
-  available:String
-  description:String
-}
-input SubjectUpdateInputData{
-  name:String
-  medium:String   
-  std:String
-  category:String
-  board:String 
-  group:String       
-  subgroup:String 
-   plantDate:DateTime    
-  isPublished:Boolean
-  state:String
-  status:String
-  available:String
-  description:String
-}
 
 type SubjectSubscription{
     id:ID! 

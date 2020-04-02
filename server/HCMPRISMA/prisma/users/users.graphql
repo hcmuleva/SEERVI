@@ -25,8 +25,13 @@ type User {
   topicUpdateByMe:[Topic!]!                   @relation(name: "TopicToUserUpdate", onDelete: CASCADE)
   contentByMe:[Content!]!                     @relation(name: "ContentToUser", onDelete: CASCADE)
   contentUpdateByMe:[Content!]!               @relation(name: "ContentToUserUpdate", onDelete: CASCADE)
+  questionCreatedBy: [Question!]!             @relation(name: "CreateQuestionToUser", onDelete: CASCADE)
+  questionUpdateddBy: [Question!]!            @relation(name: "UpdateQuestionToUser", onDelete: CASCADE)
+  quizCreatedBy:[Quiz!]!                      @relation(name: "QuizCreatedByToUser", onDelete: CASCADE)
+  votes: [Vote!]!                             @relation(name: "VoteToUser", onDelete: CASCADE)
   updatedAt:DateTime!                         @updatedAt
   createdAt:DateTime!                         @createdAt
+  result:[Result!]!                           @relation(name: "ResultToUser", onDelete: CASCADE)
 }
 
 type Medium{

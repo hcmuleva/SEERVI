@@ -26,7 +26,8 @@ type Topic{
      state:String!
      status:String!
      available:String 
-     
+     questions:[Question!]!        @relation(name: "QuestionToTopic", onDelete: CASCADE)
+     quizs:[Quiz!]!                @relation(name: "QuizToTopic", onDelete: CASCADE)
      updatedAt:DateTime!    @updatedAt
      createdAt:DateTime!    @createdAt
 }

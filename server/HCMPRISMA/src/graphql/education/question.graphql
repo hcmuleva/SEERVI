@@ -1,0 +1,100 @@
+     """
+     Question:
+     
+     Subject : Question belong which Subject may belongs to subject ART/Commorce ELX Mech etc.... its optional because some subject may not have it
+     quetype: quetype can be single/multi choice , true/false, matching etc...
+     title: this is an option field because if html type is there then this field is not requirie
+            this is applicable when we have text or image type of description
+     descriptionType:   html/fiile/vdo 
+     descriptionurl
+     options: this is an json array
+            [{optiontype:html/fiile/vdo , optionurl:"",isCorrect:true/falsex, descriptiontype:"html/fiile/vdo", description:"",  }]
+     
+     createdBy: To track who has created this
+     level:1/2/3/4/5
+     updatedBy: to track who has update this
+     plandate: we can plan in advance, when Topic need to release
+     isPublished: we can mark content publish/unpublish so that user can view only publised Topic.
+     state: ACTIVE,DORMANT, DEACTIVE
+     status: APPROVED/SUBMITTED/REJECTED
+     available: Free/Paid/Subscription based etc....
+     isReviewed:
+     explaination: This will have exmplantion for soultion
+     categories: Special Type of question, general type of question
+     """
+ type Query {
+  getAllQuestion:[Question!]!
+
+}
+type Mutation {
+  createQuestion(data:QuestionInputData!):Question!
+  updateQuestion(id:ID!,data: QuestionUpdateInputData!):Question!
+  deleteQuestion(id:ID!):Question!
+}       
+type Question {
+    id: ID! 
+    subject:Subject        
+    unit:Unit             
+    topic:Topic           
+    quetype:String!
+    categories:String
+    title:String
+    descriptionType:String!
+    descriptionurl:String
+    options:Json!
+    createdBy:User         
+    level:Int!
+    updatedBy:User         
+    plandate:DateTime
+    isPublished:Boolean
+    state:String
+    status:String
+    available:String
+    isReviewed:Boolean
+    explainationType:String
+    explaination:String
+   
+}
+
+input QuestionInputData { 
+    subject:String        
+    unit:String             
+    topic:String           
+    quetype:String!
+    title:String
+    categories:String
+    descriptionType:String!
+    descriptionurl:String
+    options:Json!            
+    level:Int!      
+    plandate:DateTime
+    isPublished:Boolean
+    state:String
+    status:String
+    available:String
+    isReviewed:Boolean
+    explainationType:String
+    explaination:String
+   
+}
+input QuestionUpdateInputData {
+    subject:String        
+    unit:String             
+    topic:String           
+    quetype:String
+    title:String
+    categories:String
+    descriptionType:String
+    descriptionurl:String
+    options:Json            
+    level:Int      
+    plandate:DateTime
+    isPublished:Boolean
+    state:String
+    status:String
+    available:String
+    isReviewed:Boolean
+    explainationType:String
+    explaination:String
+   
+}

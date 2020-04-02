@@ -1,0 +1,31 @@
+type Poll  {
+  id: ID! @id
+  title: String!
+  createdAt:DateTime!        @createdAt
+  updatedAt:DateTime!        @updatedAt
+  options: [Option!]!        @relation(name: "OptionToPoll", onDelete: CASCADE)
+}
+
+enum Color {
+  red,
+  blue,
+  green
+}
+
+type Option {
+  id: ID! @id
+  name: String!
+  color: Color!
+  createdAt:DateTime!        @createdAt
+  updatedAt:DateTime!        @updatedAt
+  poll: Poll                 @relation(name: "OptionToPoll", onDelete: SET_NULL)
+  votes: [Vote!]!            @relation(name: "VotesToOption", onDelete: CASCADE)
+}
+
+type Vote {
+  id: ID! @id
+  createdAt:DateTime!        @createdAt
+  updatedAt:DateTime!        @updatedAt
+  option: Option             @relation(name: "VotesToOption", onDelete: SET_NULL)
+  user: User                 @relation(name: "VoteToUser", onDelete: SET_NULL)
+}
