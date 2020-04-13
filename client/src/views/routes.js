@@ -1,38 +1,38 @@
 import LoginMd from "../components/authentication/LoginMd";
-import UserPage from "../components/authentication/UserPage";
-import Register from "../components/authentication/RegisterForm";
-import BlogPosts from "../views/BlogPosts";
-import AddNewPost from "../views/AddNewPost";
+// import UserPage from "../components/authentication/UserPage";
+// import Register from "../components/authentication/RegisterForm";
+// import BlogPosts from "../views/BlogPosts";
+// import AddNewPost from "../views/AddNewPost";
 
-import {
-  CreateContent,
-  CreateGroup,
-  CreateRole,
-  CreateSubOrg,
-  CreateUser
-} from "./common";
+// import {
+//   CreateContent,
+//   CreateGroup,
+//   CreateRole,
+//   CreateSubOrg,
+//   CreateUser
+// } from "./common";
 
-import SuperAdmin from './EducationRoles/SuperAdmin'
-import OrgAdmin from "./EducationRoles/OrgAdmin";
-import GroupAdmin from './EducationRoles/GroupAdmin';
-import SubGroupAdmin from './EducationRoles/SubGroupAdmin';
-import Principal from "./EducationRoles/Principal";
-import Teacher from "./EducationRoles/Teacher";
-import Student from "./EducationRoles/Student";
-import Parent from "./EducationRoles/Parent";
+import SuperAdmin from "./users/superadmin";
+import OrgAdmin from "./users/orgadmin";
+// import OrgAdmin from "./EducationRoles/OrgAdmin";
+// import GroupAdmin from './EducationRoles/GroupAdmin';
+// import SubGroupAdmin from './EducationRoles/SubGroupAdmin';
+// import Principal from "./EducationRoles/Principal";
+// import Teacher from "./EducationRoles/Teacher";
+// import Student from "./EducationRoles/Student";
+// import Parent from "./EducationRoles/Parent";
 
-import ResetPassword from '../views/userprofile/ResetPassword';
-import Profile from '../views/userprofile/Profile';
-import Subscription from '../views/userprofile/Subscription';
-import CreateOrg from "./superadmin/CreateOrg";
-import BlogOverview from "./BlogOverview";
-import OrgDetails from "../views/superadmin/OrgDetails";
-import UserProfileLite from "./UserProfileLite";
-import SuperAdminManagementPage from './admin/SuperAdminManagementPage'
-import UserManagedByAdmin from './admin/UserManagedByAdmin'
-import CustomizedExpansionPanels from "./newsRegisteration"
-import HCMTBDPage from "./../POC_TBD/HCMTBDPage"
-import EducationAdmin from "./EducationRoles/EducationAdmin"
+// import ResetPassword from '../views/userprofile/ResetPassword';
+// import Profile from '../views/userprofile/Profile';
+// import Subscription from '../views/userprofile/Subscription';
+// import CreateOrg from "./superadmin/CreateOrg";
+//import BlogOverview from "./BlogOverview";
+// import OrgDetails from "../views/superadmin/OrgDetails";
+// import UserProfileLite from "./UserProfileLite";
+// import SuperAdminManagementPage from './admin/SuperAdminManagementPage'
+// import UserManagedByAdmin from './admin/UserManagedByAdmin'
+// import CustomizedExpansionPanels from "./newsRegisteration"
+// import EducationAdmin from "./EducationRoles/EducationAdmin"
 // Layout Types
 import { DefaultLayout } from "../layouts";
 
@@ -41,20 +41,27 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: LoginMd
+    component: LoginMd,
   },
   {
+    path: "/superadmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: SuperAdmin,
+  },
+  {
+    path: "/orgadmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: OrgAdmin,
+  },
+  /** {
     path: "/register",
     exact: true,
     layout: DefaultLayout,
     component: Register
   },
-    {
-    path: "/hcmtbd",
-    exact: true,
-    layout: DefaultLayout,
-    component: HCMTBDPage
-  },
+  
    {
     path: "/superadmin",
     exact: true,
@@ -236,5 +243,5 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: BlogOverview
-  }
+  }*/
 ];

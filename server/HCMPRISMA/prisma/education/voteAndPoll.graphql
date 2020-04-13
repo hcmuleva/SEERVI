@@ -7,9 +7,9 @@ type Poll  {
 }
 
 enum Color {
-  red,
-  blue,
-  green
+  RED,
+  BLLUE,
+  GREEN
 }
 
 type Option {

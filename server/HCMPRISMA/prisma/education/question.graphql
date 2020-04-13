@@ -50,4 +50,7 @@ type Question {
     results:[Result!]!       @relation(name: "QuestionToResult", onDelete: CASCADE)
     atemptedResult:[Result!]!@relation(name: "AttemptedQuestionToResult", onDelete: CASCADE) 
     notattempted: [Result!]! @relation(name: "NotAttemptedQuestionToResult", onDelete: CASCADE)
+    correct:[Result!]!       @relation(name: "CorrectQuestionToResult", onDelete: CASCADE)
+    wrong: [Result!]!        @relation(name: "WrongQuestionToResult", onDelete: CASCADE)
+    
 }

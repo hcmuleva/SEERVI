@@ -78,10 +78,11 @@ const getClient = (jwt, httpURL = 'http://localhost:4000', websocketURL = 'ws://
     const httpLink = ApolloLink.from([
         onError(({ graphQLErrors, networkError }) => {
             if (graphQLErrors) {
-                graphQLErrors.map(({ message, locations, path }) =>{
+                return graphQLErrors.map(({ message, locations, path }) =>{
                     console.log(
                         `[GraphQL error]: Message: ${message}, Path: ${path}`,
                     )
+                    return  `[GraphQL error]: Message: ${message}, Path: ${path}`
                 }
                 )
             }

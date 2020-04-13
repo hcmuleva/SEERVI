@@ -3,8 +3,8 @@ import { EventEmitter } from "events";
 import Dispatcher from "./dispatcher";
 import Constants from "./constants";
 import publicnavitems from "../data/public-nav-items";
-import superadminitems from "../data/superadmin-nav";
-import adminitems from "../data/admin-nav";
+// import superadminitems from "../data/superadmin-nav";
+// import adminitems from "../data/admin-nav";
 
 class Store extends EventEmitter {
   constructor() {

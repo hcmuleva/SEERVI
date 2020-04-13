@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row,Col,Button } from "shards-react";
+import { Row,Col } from "shards-react";
 import ResponsiveDialog from './Component/Dialog/StudiesSelection'
 
 export default function RegisterForm(props) {
@@ -38,7 +38,7 @@ export default function RegisterForm(props) {
               >
                 <h3 className="text-center text-info">Register</h3>
                    <br/>
-                 <div className="form-group" className="col-md-12">
+                 <div className="form-group col-md-12">
                  
                  <Row>
                  <Col>
@@ -76,7 +76,7 @@ export default function RegisterForm(props) {
                      <br/>
                 </div>
                 
-                <div className="form-group" className="col-md-12">
+                <div className="form-group col-md-12">
                  <Row><Col>
                   <input
                     type="email"
@@ -109,6 +109,7 @@ export default function RegisterForm(props) {
                     type="password"
                     name="confirmpassword"
                     id="confirmpassword"
+                    value={confirmPassword}
                     placeholder="Confirm Password"
                     className="form-control"
                     onChange={e => {

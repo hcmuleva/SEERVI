@@ -3,16 +3,16 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+//import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { Redirect } from 'react-router'
+//import { Redirect } from 'react-router'
 import Tabs from '../TAB/Tabs'
 import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
+//import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -28,10 +28,10 @@ export default function ResponsiveDialog(props) {
       const classes = useStyles();
   const [value, setValue] = React.useState(null);
 
-  const handleChange = event => {
-      console.log("Event ",event.tartget)
-    setValue(event.target.value);
-  };
+  // const handleChange = event => {
+  //     console.log("Event ",event.tartget)
+  //   setValue(event.target.value);
+  // };
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [dialog, setDialog] =useState(props.open)

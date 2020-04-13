@@ -16,4 +16,20 @@ async function updateUser(parent, args, { prisma, request }, info) {
         data: args.data
     }, info)
 }
-export default updateUser  
+async function assignUserToRoles(parent, args, { prisma, request }, info) {   
+     const data=args.data
+     let rolelist=[]
+     data.roles.map((elm)=>{
+         rolelist.push(elm)
+     })
+     
+     data['roles']={connect:rolelist}
+
+    return prisma.mutation.updateUser({
+        where: {
+            id: args.id
+        },
+        data: args.data
+    }, info)
+}
+export {updateUser,assignUserToRoles}  

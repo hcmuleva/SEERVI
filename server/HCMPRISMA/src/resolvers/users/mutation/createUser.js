@@ -3,32 +3,15 @@ import jwt from 'jsonwebtoken'
 import getUserId from '../../../utils/getUserId'   
 
 async function createUser(parent, args, { prisma }, info) {
-    console.log("RECIEVED CREATE USER REQUEST ",args.data)
-    const {firstname,lastname,email,myorg, mysuborg}=args.data
     const password = await hashPassword(args.data.password)
-    let org=myorg
-    let suborg =mysuborg
-    if(!org){
-        console.log("orgDataList before")
-        const orgData= await prisma.query.organizations({name:"SEERVI"})
-        //const orgData= orgDataList.filter((elm)=>elm.name=="SEERVI")
-        console.log("orgData",orgData)
-        org=orgData[0].id
+    const data=args.data
+    if(data.org){
+       data['org']={connect:{id:data.org}}
     }
-    if(!suborg){
-        const suborgData=await prisma.query.suborgs({name:"KARI"})
-        suborg=suborgData[0].id
-    }
+    data['password']=password
     const userData=await prisma.mutation.createUser({
-        data: {firstname,lastname,email,password,org:{connect: {id:org}},suborg:{connect: {id: suborg}}}
-        })
-    
-    //Self user should be part of education->acadamic group, and role =student.
-    //return group and role...
-    // TBD: This need to fix it...
-    console.log("\n***********Warning*********\n")
-    console.log("\nCreated URS ",userData,"\n Self user should be part of education->acadamic group, and role =student\n This need to fix it")
-    const myuser= {
+        data  })
+        const myuser= {
         user:userData,
         token: jwt.sign({ userId: userData.id }, process.env.JWT_SECRET)
     }

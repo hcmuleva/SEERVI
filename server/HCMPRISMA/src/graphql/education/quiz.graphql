@@ -1,7 +1,7 @@
 """
 Quiz or exam
-quizeName:weekly/monthly/surpries
-quizeType:MOCK/PREPRATION/ANUULAEXAM/ 
+quizName:weekly/monthly/surpries
+quizType:MOCK/PREPRATION/ANUULAEXAM/ 
 subject/unit/topic
 questions[]
 markingscheme: JSON{
@@ -10,7 +10,7 @@ markingscheme: JSON{
     mcq:marks
     descriptive:marks
     special:marks
-    explainationoption: oncomplete quize/evertquestion/dontshow
+    explainationoption: oncomplete quiz/evertquestion/dontshow
 }
 
 quizlevel
@@ -44,8 +44,8 @@ type Mutation {
 } 
 type Quiz{
     id:ID! 
-    quizeName:String!
-    quizeType:String!
+    quizName:String!
+    quizType:String!
     subject:Subject 
     unit:Unit       
     topic:Topic     
@@ -72,8 +72,8 @@ type Quiz{
 }
 
 input QuizInputData{
-    quizeName:String!
-    quizeType:String!
+    quizName:String!
+    quizType:String!
     subject:String 
     questions:Json
     unit:String       
@@ -99,8 +99,8 @@ input QuizInputData{
 }
 
 input QuizUpdateInputData{
-    quizeName:String
-    quizeType:String
+    quizName:String
+    quizType:String
     subject:String 
     questions:Json
     unit:String       

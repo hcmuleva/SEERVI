@@ -1,245 +1,201 @@
 type Query {
-    allorgs: [Organization!]! 
-    orgById(id:ID!):Organization!
-    orgByname(name:String!):Organization! 
-    allsuborgs:[Suborg!]!
-    suborgsoforg(id:String!):[Suborg!]!
-    suborgById(id:ID!):Suborg!
-    groupsOfSubOrg(id:String!):[Group!]!
-    
-    groupById(id:ID!):Group!
-    allGroups:[Group!]!
-    subgroupById(id:ID!):SubGroup!
-    allSubGroups:[SubGroup!]!
-    subgroupsOfGroup(id:String!):[SubGroup!]!
-    orgRoles(id:String!):[Role!]!
-    suborgRoles(id:String!):[Role!]!
-    groupRoles(id:String!):[Role!]!
-    subGroupRoles(id:String!):[Role!]!
-    groupmember(query: String):[GroupMember]  
-    mymembeship(query: String, first: Int, skip: Int, after: String): [GroupMember!]!
-    allRoles:[RoleMember!]!
-    myRoles:[RoleMember!]!
+  allorgs: [Organization!]!
+  orgById(id: ID!): Organization!
+  orgByname(name: String!): Organization!
+  allsuborgs: [Suborg!]!
+  suborgsoforg(id: String!): [Suborg!]!
+  suborgById(id: ID!): Suborg!
+  groupsOfSubOrg(id: String!): [Group!]!
 
-
+  groupById(id: ID!): Group!
+  allGroups: [Group!]!
+  subgroupById(id: ID!): SubGroup!
+  allSubGroups: [SubGroup!]!
+  subgroupsOfGroup(id: String!): [SubGroup!]!
+  groupmember(query: String): [GroupMember]
+  mymembeship(
+    query: String
+    first: Int
+    skip: Int
+    after: String
+  ): [GroupMember!]!
+  allRoleMembers: [RoleMember!]!
+  myRoleMembers: [RoleMember!]!
 }
-type Mutation{
-     orgOnboardBySuperAdmin(data:CreateOrganizationInput):Organization!
-     createOrganization(data: CreateOrganizationInput!): Organization!
-     createSubOrg(data:CreateSubOrganizationInput!):Suborg!
-     deleteOrg(id:ID!):Organization!
-     updateOrg(id:ID! , data:UpdateOrganizationInpput): Organization!
-     deleteSubOrg(id:ID!):Suborg!
-     updateSuborg(id:ID!,data:UpdateSubOrgInpput!):Suborg!
-     createGroup(data:CreateGroupInput!):Group!
-     deleteGroup(id:ID!):Group!
-     updateGroup(id:ID!,data:UpdateGroupInput!):Group!
-     createSubGroup(data:CreateSubGroupInput!):SubGroup!
-     deleteSubGroup(id:ID!):SubGroup!
-     updateSubGroup(id:ID!,data:UpdateSubGroupInput!):SubGroup!
-     assignUserToGroup(data:CreateGroupMemberInput!):GroupMember!
-     deleteUserToGroup(id:ID!):GroupMember!
-     updateUserToGroup(id:ID!,data:UpdateGroupMemberInput):GroupMember!
+type Mutation {
+  orgOnboardBySuperAdmin(data: CreateOrganizationInput): Organization!
+  createOrganization(data: CreateOrganizationInput!): Organization!
+  createSubOrg(data: CreateSubOrganizationInput!): Suborg!
+  deleteOrg(id: ID!): Organization!
+  updateOrg(id: ID!, data: UpdateOrganizationInpput): Organization!
+  deleteSubOrg(id: ID!): Suborg!
+  updateSuborg(id: ID!, data: UpdateSubOrgInpput!): Suborg!
+  createGroup(data: CreateGroupInput!): Group!
+  deleteGroup(id: ID!): Group!
+  updateGroup(id: ID!, data: UpdateGroupInput!): Group!
+  createSubGroup(data: CreateSubGroupInput!): SubGroup!
+  deleteSubGroup(id: ID!): SubGroup!
+  updateSubGroup(id: ID!, data: UpdateSubGroupInput!): SubGroup!
+  assignUserToGroup(data: CreateGroupMemberInput!): GroupMember!
+  deleteUserToGroup(id: ID!): GroupMember!
+  updateUserToGroup(id: ID!, data: UpdateGroupMemberInput): GroupMember!
 
-     assignUserToSubGroup(data:CreateSubGroupMemberInput!):SubGroupMember!
-     deleteUserToSubGroup(id:ID!):SubGroupMember!
-     updateUserToSubGroup(id:ID!,data:UpdateSubGroupMemberInput):SubGroupMember!
+  assignUserToSubGroup(data: CreateSubGroupMemberInput!): SubGroupMember!
+  deleteUserToSubGroup(id: ID!): SubGroupMember!
+  updateUserToSubGroup(
+    id: ID!
+    data: UpdateSubGroupMemberInput
+  ): SubGroupMember!
 
-     createOrgRole(data:CreateRoleInput):Role!
-     createSubOrgRole(data:CreateRoleInput):Role!
-     createGroupRole(data:CreateRoleInput):Role!
-     createSubGroupRole(data:CreateRoleInput):Role!
-     updateRole(id:ID!, data:UpdateRoleInput):Role!
-     deleteRole(id:ID!):Role!
-
-     createUserRole(data:CreateRoleMemberInput):RoleMember!
-     assignBulkRoleToUser(data:CreateRoleMemberInput):Boolean!
-     updateUserRole(id:ID!,data:UpdateRoleMemberInput):RoleMember!
-     deleteUserRole(id:ID!):RoleMember!
-
+  createUserRole(data: CreateRoleMemberInput): RoleMember!
+  assignBulkRoleToUser(data: CreateRoleMemberInput): Boolean!
+  updateUserRole(id: ID!, data: UpdateRoleMemberInput): RoleMember!
+  deleteUserRole(id: ID!): RoleMember!
 }
-type Organization{
-  id:ID!
-  name:String!
-  author:[User!]!
-  orgRoles:[Role!]!
-  description:String!
-  
-  
+type Organization {
+  id: ID!
+  name: String!
+  logo: String
+  color: String
+  author: [User!]!
+  orgRoles: [Role!]!
+  description: String!
 }
 
-input CreateOrganizationInput{
-  name:String!
-  description:String 
+input CreateOrganizationInput {
+  name: String!
+  logo: String
+  description: String
 }
-input UpdateOrganizationInpput{
-  name:String
-  description:String 
+input UpdateOrganizationInpput {
+  name: String
+  logo: String
+  description: String
 }
-type Suborg{
-    id:ID!
-    name:String!
-    description:String
-    author:[User!]!
-    orgid:Organization!
-    userGroups:[Group!]!
-    suborgRoles:[Role!]!    
-    
-}
-
-input CreateSubOrganizationInput{
-    name:String!
-    description:String
-    orgid:String!
-
-}
-input UpdateSubOrgInpput{
-  name:String
-  description:String 
+type Suborg {
+  id: ID!
+  name: String!
+  description: String
+  author: [User!]!
+  orgid: Organization!
+  userGroups: [Group!]!
+  suborgRoles: [Role!]!
 }
 
-type Group{
-  id: ID! 
-  name:String!
-  description:String 
-  suborgid:Suborg!
-  subgroups:[SubGroup!]!
-  members:[GroupMember!]! 
-  groupRoles:[Role!]!
-  
+input CreateSubOrganizationInput {
+  name: String!
+  description: String
+  orgid: String!
 }
-input CreateGroupInput{
-    name:String!
-    description:String
-    suborgid:String!
-
-}
-input UpdateGroupInput{
-    name:String
-    description:String
+input UpdateSubOrgInpput {
+  name: String
+  description: String
 }
 
-type GroupMember{
-  id:ID!                      
-  userid:User!
-  member:Group!               
-  status:MemberStatus 
-  description:String      
+type Group {
+  id: ID!
+  name: String!
+  description: String
+  suborgid: Suborg!
+  subgroups: [SubGroup!]!
+  members: [GroupMember!]!
+  groupRoles: [Role!]!
+}
+input CreateGroupInput {
+  name: String!
+  description: String
+  suborgid: String!
+}
+input UpdateGroupInput {
+  name: String
+  description: String
 }
 
-input CreateGroupMemberInput{
-  userid:String!
-  member:String!               
-  status:String 
-  description:String      
-}
-input UpdateGroupMemberInput{
-  userid:String
-  member:String               
-  status:String 
-  description:String      
-}
-type SubGroup{
-  id: ID! 
-  name:String!
-  description:String 
-  groupid:Group! 
-  members:[SubGroupMember!]! 
-  subgroupRoles:[Role!]!
-  
+type GroupMember {
+  id: ID!
+  userid: User!
+  member: Group!
+  status: MemberStatus
+  description: String
 }
 
-input CreateSubGroupInput{
-    name:String!
-    description:String
-    groupid:String!
-
+input CreateGroupMemberInput {
+  userid: String!
+  member: String!
+  status: String
+  description: String
 }
-input UpdateSubGroupInput{
-    name:String
-    description:String
+input UpdateGroupMemberInput {
+  userid: String
+  member: String
+  status: String
+  description: String
 }
-
-type SubGroupMember{
-  id:ID!                      
-  userid:User!                
-  member:SubGroup!            
-  status:MemberStatus 
-  description:String
-}
-
-input CreateSubGroupMemberInput{
-  userid:String!
-  member:String!               
-  status:String 
-  description:String      
-}
-input UpdateSubGroupMemberInput{
-  userid:String
-  member:String               
-  status:String 
-  description:String      
+type SubGroup {
+  id: ID!
+  name: String!
+  description: String
+  groupid: Group!
+  members: [SubGroupMember!]!
+  subgroupRoles: [Role!]!
 }
 
-
-type Role{
-  id:ID!                      
-  name:RoleLevelEnum!
-  org:Organization           
-  suborg:Suborg              
-  group:Group                
-  subgroup:SubGroup             
-  description:String
-  subjectSubscriptions: [SubjectSubscription!]! 
+input CreateSubGroupInput {
+  name: String!
+  description: String
+  groupid: String!
 }
-input CreateRoleInput{
-  name:String!
-  org:String           
-  suborg:String              
-  group:String                
-  subgroup:String 
-  description:String  
-}
-input UpdateRoleInput{
-  name:String
-  org:String           
-  suborg:String              
-  group:String                
-  subgroup:String
-  description:String   
+input UpdateSubGroupInput {
+  name: String
+  description: String
 }
 
-type RoleMember{
-  id:ID!                      
-  userid:User!                
-  role:Role!                  
-  status:RoleStatus 
-  description:String
+type SubGroupMember {
+  id: ID!
+  userid: User!
+  member: SubGroup!
+  status: MemberStatus
+  description: String
 }
-input CreateRoleMemberInput{
-  userid:String!                
-  role:String!                  
-  status:String 
-  description:String
+
+input CreateSubGroupMemberInput {
+  userid: String!
+  member: String!
+  status: String
+  description: String
 }
-input UpdateRoleMemberInput{
-  userid:String                
-  role:String                  
-  status:String 
-  description:String
+input UpdateSubGroupMemberInput {
+  userid: String
+  member: String
+  status: String
+  description: String
 }
-enum RoleLevelEnum{
-  ORG 
-  SUBORG
-  GROUP 
-  SUBGROUP 
+
+type RoleMember {
+  id: ID!
+  userid: User!
+  role: Role!
+  status: RoleStatus
+  description: String
 }
-enum MembershipStatus{
+input CreateRoleMemberInput {
+  userid: String!
+  role: String!
+  status: String
+  description: String
+}
+input UpdateRoleMemberInput {
+  userid: String
+  role: String
+  status: String
+  description: String
+}
+
+enum MembershipStatus {
   ACTIVE
   EXPIRED
   INACTIVE
   DORMANT
   RENEWED
   SPECIALGRANT
-
 }

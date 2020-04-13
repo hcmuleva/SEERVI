@@ -11,6 +11,7 @@ import {
   Badge,
   Button
 } from "shards-react";
+import ReactPlayer from 'react-player'
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -194,10 +195,15 @@ class BlogPosts extends React.Component {
           {PostsListOne.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
               <Card small className="card-post card-post--1">
-                <div
-                  className="card-post__image"
-                  style={{ backgroundImage: `url(${post.backgroundImage})` }}
-                >
+              
+                <div className='player-wrapper'>
+        <ReactPlayer
+          className='react-player'
+          url='https://www.youtube.com/watch?v=Ny5WUK9kFdc'
+          width='100%'
+          height='100%'
+        />
+     
                   <Badge
                     pill
                     className={`card-post__category bg-${post.categoryTheme}`}

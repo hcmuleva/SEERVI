@@ -1,7 +1,7 @@
 import getUserId from '../../../utils/getUserId'
 
 
-async function allRoles(parent, args, { prisma }, info) {
+async function allroles(parent, args, { prisma }, info) {
     return await prisma.query.roles(null, info)
 }
 
@@ -45,4 +45,4 @@ async function subGroupRoles(parent, args, { prisma ,request}, info) {
     }, info)
   
 }
-export {allRoles,myRoles,orgRoles,suborgRoles,groupRoles,subGroupRoles}
+export {allroles,myRoles,orgRoles,suborgRoles,groupRoles,subGroupRoles}

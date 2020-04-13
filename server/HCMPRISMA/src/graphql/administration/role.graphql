@@ -1,0 +1,70 @@
+type Query {
+  allroles: [Role!]!
+  myRoles: [Role!]!
+  orgRoles(id: String!): [Role!]!
+  suborgRoles(id: String!): [Role!]!
+  groupRoles(id: String!): [Role!]!
+  subGroupRoles(id: String!): [Role!]!
+}
+type Mutation {
+  createRole(data: CreateRoleInput): Role!
+  updateRole(id: ID!, data: UpdateRoleInput): Role!
+  deleteRole(id: ID!): Role!
+  assignRoleToUser(id: ID!): Role!
+  assignRoleToUsers(id: ID!, data: UserListInput): Role!
+}
+type Role {
+  id: ID!
+  name: ROLENAME!
+  org: Organization
+  suborg: Suborg
+  group: Group
+  subgroup: SubGroup
+  users: [User!]!
+  description: String
+  status: String
+  state: String
+  subjectSubscriptions: [SubjectSubscription!]!
+}
+input CreateRoleInput {
+  name: String!
+  org: String
+  suborg: String
+  group: String
+  subgroup: String
+  users: Json
+  description: String
+  status: String
+  state: String
+}
+input UpdateRoleInput {
+  name: String
+  org: String
+  suborg: String
+  group: String
+  subgroup: String
+  description: String
+  status: String
+  state: String
+}
+input UserListInput {
+  users: Json
+}
+
+enum ROLENAME {
+  SUPERADMIN
+  ORGADMIN
+  SUBORGADMIN
+  GROUPADMIN
+  SUBGROUPADMIN
+  PARENT
+  TEACHER
+  TUTOR
+  CONTRIBUTOR
+  STUDENT
+  PLAYER
+  CAPTAIN
+  OWNER
+  SERVENT
+  SERVICE
+}

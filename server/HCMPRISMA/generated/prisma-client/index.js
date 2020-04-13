@@ -29,10 +29,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Role",
-    embedded: false
-  },
-  {
     name: "RoleMember",
     embedded: false
   },
@@ -42,6 +38,14 @@ var models = [
   },
   {
     name: "MemberStatus",
+    embedded: false
+  },
+  {
+    name: "Role",
+    embedded: false
+  },
+  {
+    name: "ROLENAME",
     embedded: false
   },
   {
@@ -58,10 +62,6 @@ var models = [
   },
   {
     name: "Comment",
-    embedded: false
-  },
-  {
-    name: "Subject",
     embedded: false
   },
   {
@@ -89,10 +89,6 @@ var models = [
     embedded: false
   },
   {
-    name: "EducationRelationship",
-    embedded: false
-  },
-  {
     name: "Content",
     embedded: false
   },
@@ -110,6 +106,30 @@ var models = [
   },
   {
     name: "Quiz",
+    embedded: false
+  },
+  {
+    name: "Result",
+    embedded: false
+  },
+  {
+    name: "Subject",
+    embedded: false
+  },
+  {
+    name: "Poll",
+    embedded: false
+  },
+  {
+    name: "Color",
+    embedded: false
+  },
+  {
+    name: "Option",
+    embedded: false
+  },
+  {
+    name: "Vote",
     embedded: false
   }
 ];

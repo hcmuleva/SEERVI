@@ -1,10 +1,10 @@
 import './Login.css'
 import React, { useState } from "react";
-import { Redirect } from 'react-router'
-import { useMutation,useQuery } from '@apollo/react-hooks';
+//import { Redirect } from 'react-router'
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Register from './RegisterForm'
-import newsregistration from "../../data/newsregistration";
+//import newsregistration from "../../data/newsregistration";
 import { createBrowserHistory } from "history";
 import { Button} from "shards-react";
 import RoleNavBarController from "./RoleNavBarController" 
@@ -21,9 +21,11 @@ const history = createBrowserHistory();
     const [userLogin] = useMutation(LOGIN_USER);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const[register, setRegister]=useState(false);
-    const[compType,setCompType]=useState("login")
+    //const[compType,setCompType]=useState("login")
     const handleRegister=(event)=>{
+        setRegister(true)
         history.push("/register")
+        
     }
     const handleSubmit = async (event) => {
         event.preventDefault();

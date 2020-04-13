@@ -1,7 +1,7 @@
 """
 Result will store quiz result
-quizeName:
-quizeType:
+quizName:
+quizType:
 questions[]
 result
 quizlevel
@@ -21,16 +21,16 @@ rank:JSON{ class,school,state,india,}
 type Result{
 id:ID! @id
 quiz:Quiz!                   @relation(name: "ResultToQuiz", onDelete: SET_NULL)
-quizeName:String!
-quizeType:String!
+quizName:String!
+quizType:String!
 questions:[Question!]!      @relation(name: "QuestionToResult", onDelete: SET_NULL)
 result:String!
 quizlevel:Int! 
 score:Float
-attempted:[Questions]        @relation(name: "AttemptedQuestionToResult", onDelete: SET_NULL)
-notattempted:[Questions]     @relation(name: "NotAttemptedQuestionToResult", onDelete: SET_NULL)
-correct:[Questions]          @relation(name: "CorrectQuestionToResult", onDelete: SET_NULL)
-wrong:[Questions]            @relation(name: "WrongQuestionToResult", onDelete: SET_NULL)
+attempted:[Question]        @relation(name: "AttemptedQuestionToResult", onDelete: SET_NULL)
+notattempted:[Question]     @relation(name: "NotAttemptedQuestionToResult", onDelete: SET_NULL)
+correct:[Question]          @relation(name: "CorrectQuestionToResult", onDelete: SET_NULL)
+wrong:[Question]            @relation(name: "WrongQuestionToResult", onDelete: SET_NULL)
 achievement:String
 duration:Int
 attemptedDate:DateTime!

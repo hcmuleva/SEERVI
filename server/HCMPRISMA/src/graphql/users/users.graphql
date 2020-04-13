@@ -16,6 +16,7 @@ type Mutation {
     createMedium(data:MediumCreateInput!):Medium!
     updateMedium(id:ID!,data:MediumUpdateInput!):Medium!
     deleteMedium(id: ID!):Medium!
+    assignUserToRoles(id:ID!, data:UserToRolesInput!):User!
 
 }
 
@@ -32,10 +33,7 @@ type User {
     groupmembers:[GroupMember!]!
     myprofiles:[Profile!]!
     subjectSubscription:[SubjectSubscription!]! 
-    myRoles:[RoleMember!]!
-    teachers:[EducationRelationship!]!
-    students:[EducationRelationship!]!
-    parents:[EducationRelationship!]! 
+    roles:[Role!]!    
     createdBy:ID
     createdAt:String!
     updatedAt:String!
@@ -52,6 +50,7 @@ input CreateUserInput {
     password: String!
     org:String
     suborg:String
+   
 }
 
 input UpdateUserInputByAdmin{
@@ -61,6 +60,9 @@ input UpdateUserInputByAdmin{
     password: String
     org:String
     suborg:String
+}
+input UserToRolesInput{
+     roles:Json
 }
 input LoginUserInput {
     email: String!

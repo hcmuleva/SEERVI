@@ -386,10 +386,6 @@ type AggregateContent {
   count: Int!
 }
 
-type AggregateEducationRelationship {
-  count: Int!
-}
-
 type AggregateGroup {
   count: Int!
 }
@@ -402,11 +398,19 @@ type AggregateMedium {
   count: Int!
 }
 
+type AggregateOption {
+  count: Int!
+}
+
 type AggregateOrganization {
   count: Int!
 }
 
 type AggregatePersonalProfile {
+  count: Int!
+}
+
+type AggregatePoll {
   count: Int!
 }
 
@@ -423,6 +427,10 @@ type AggregateQuestion {
 }
 
 type AggregateQuiz {
+  count: Int!
+}
+
+type AggregateResult {
   count: Int!
 }
 
@@ -474,8 +482,18 @@ type AggregateUser {
   count: Int!
 }
 
+type AggregateVote {
+  count: Int!
+}
+
 type BatchPayload {
   count: Long!
+}
+
+enum Color {
+  RED
+  BLLUE
+  GREEN
 }
 
 type Comment {
@@ -1511,321 +1529,6 @@ input ContentWhereUniqueInput {
 
 scalar DateTime
 
-type EducationRelationship {
-  id: ID!
-  description: String
-  teacher: User
-  parent: User
-  student: User
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type EducationRelationshipConnection {
-  pageInfo: PageInfo!
-  edges: [EducationRelationshipEdge]!
-  aggregate: AggregateEducationRelationship!
-}
-
-input EducationRelationshipCreateInput {
-  id: ID
-  description: String
-  teacher: UserCreateOneWithoutTeachersInput
-  parent: UserCreateOneWithoutParentsInput
-  student: UserCreateOneWithoutStudentsInput
-}
-
-input EducationRelationshipCreateManyWithoutParentInput {
-  create: [EducationRelationshipCreateWithoutParentInput!]
-  connect: [EducationRelationshipWhereUniqueInput!]
-}
-
-input EducationRelationshipCreateManyWithoutStudentInput {
-  create: [EducationRelationshipCreateWithoutStudentInput!]
-  connect: [EducationRelationshipWhereUniqueInput!]
-}
-
-input EducationRelationshipCreateManyWithoutTeacherInput {
-  create: [EducationRelationshipCreateWithoutTeacherInput!]
-  connect: [EducationRelationshipWhereUniqueInput!]
-}
-
-input EducationRelationshipCreateWithoutParentInput {
-  id: ID
-  description: String
-  teacher: UserCreateOneWithoutTeachersInput
-  student: UserCreateOneWithoutStudentsInput
-}
-
-input EducationRelationshipCreateWithoutStudentInput {
-  id: ID
-  description: String
-  teacher: UserCreateOneWithoutTeachersInput
-  parent: UserCreateOneWithoutParentsInput
-}
-
-input EducationRelationshipCreateWithoutTeacherInput {
-  id: ID
-  description: String
-  parent: UserCreateOneWithoutParentsInput
-  student: UserCreateOneWithoutStudentsInput
-}
-
-type EducationRelationshipEdge {
-  node: EducationRelationship!
-  cursor: String!
-}
-
-enum EducationRelationshipOrderByInput {
-  id_ASC
-  id_DESC
-  description_ASC
-  description_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type EducationRelationshipPreviousValues {
-  id: ID!
-  description: String
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-input EducationRelationshipScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [EducationRelationshipScalarWhereInput!]
-  OR: [EducationRelationshipScalarWhereInput!]
-  NOT: [EducationRelationshipScalarWhereInput!]
-}
-
-type EducationRelationshipSubscriptionPayload {
-  mutation: MutationType!
-  node: EducationRelationship
-  updatedFields: [String!]
-  previousValues: EducationRelationshipPreviousValues
-}
-
-input EducationRelationshipSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: EducationRelationshipWhereInput
-  AND: [EducationRelationshipSubscriptionWhereInput!]
-  OR: [EducationRelationshipSubscriptionWhereInput!]
-  NOT: [EducationRelationshipSubscriptionWhereInput!]
-}
-
-input EducationRelationshipUpdateInput {
-  description: String
-  teacher: UserUpdateOneWithoutTeachersInput
-  parent: UserUpdateOneWithoutParentsInput
-  student: UserUpdateOneWithoutStudentsInput
-}
-
-input EducationRelationshipUpdateManyDataInput {
-  description: String
-}
-
-input EducationRelationshipUpdateManyMutationInput {
-  description: String
-}
-
-input EducationRelationshipUpdateManyWithoutParentInput {
-  create: [EducationRelationshipCreateWithoutParentInput!]
-  delete: [EducationRelationshipWhereUniqueInput!]
-  connect: [EducationRelationshipWhereUniqueInput!]
-  set: [EducationRelationshipWhereUniqueInput!]
-  disconnect: [EducationRelationshipWhereUniqueInput!]
-  update: [EducationRelationshipUpdateWithWhereUniqueWithoutParentInput!]
-  upsert: [EducationRelationshipUpsertWithWhereUniqueWithoutParentInput!]
-  deleteMany: [EducationRelationshipScalarWhereInput!]
-  updateMany: [EducationRelationshipUpdateManyWithWhereNestedInput!]
-}
-
-input EducationRelationshipUpdateManyWithoutStudentInput {
-  create: [EducationRelationshipCreateWithoutStudentInput!]
-  delete: [EducationRelationshipWhereUniqueInput!]
-  connect: [EducationRelationshipWhereUniqueInput!]
-  set: [EducationRelationshipWhereUniqueInput!]
-  disconnect: [EducationRelationshipWhereUniqueInput!]
-  update: [EducationRelationshipUpdateWithWhereUniqueWithoutStudentInput!]
-  upsert: [EducationRelationshipUpsertWithWhereUniqueWithoutStudentInput!]
-  deleteMany: [EducationRelationshipScalarWhereInput!]
-  updateMany: [EducationRelationshipUpdateManyWithWhereNestedInput!]
-}
-
-input EducationRelationshipUpdateManyWithoutTeacherInput {
-  create: [EducationRelationshipCreateWithoutTeacherInput!]
-  delete: [EducationRelationshipWhereUniqueInput!]
-  connect: [EducationRelationshipWhereUniqueInput!]
-  set: [EducationRelationshipWhereUniqueInput!]
-  disconnect: [EducationRelationshipWhereUniqueInput!]
-  update: [EducationRelationshipUpdateWithWhereUniqueWithoutTeacherInput!]
-  upsert: [EducationRelationshipUpsertWithWhereUniqueWithoutTeacherInput!]
-  deleteMany: [EducationRelationshipScalarWhereInput!]
-  updateMany: [EducationRelationshipUpdateManyWithWhereNestedInput!]
-}
-
-input EducationRelationshipUpdateManyWithWhereNestedInput {
-  where: EducationRelationshipScalarWhereInput!
-  data: EducationRelationshipUpdateManyDataInput!
-}
-
-input EducationRelationshipUpdateWithoutParentDataInput {
-  description: String
-  teacher: UserUpdateOneWithoutTeachersInput
-  student: UserUpdateOneWithoutStudentsInput
-}
-
-input EducationRelationshipUpdateWithoutStudentDataInput {
-  description: String
-  teacher: UserUpdateOneWithoutTeachersInput
-  parent: UserUpdateOneWithoutParentsInput
-}
-
-input EducationRelationshipUpdateWithoutTeacherDataInput {
-  description: String
-  parent: UserUpdateOneWithoutParentsInput
-  student: UserUpdateOneWithoutStudentsInput
-}
-
-input EducationRelationshipUpdateWithWhereUniqueWithoutParentInput {
-  where: EducationRelationshipWhereUniqueInput!
-  data: EducationRelationshipUpdateWithoutParentDataInput!
-}
-
-input EducationRelationshipUpdateWithWhereUniqueWithoutStudentInput {
-  where: EducationRelationshipWhereUniqueInput!
-  data: EducationRelationshipUpdateWithoutStudentDataInput!
-}
-
-input EducationRelationshipUpdateWithWhereUniqueWithoutTeacherInput {
-  where: EducationRelationshipWhereUniqueInput!
-  data: EducationRelationshipUpdateWithoutTeacherDataInput!
-}
-
-input EducationRelationshipUpsertWithWhereUniqueWithoutParentInput {
-  where: EducationRelationshipWhereUniqueInput!
-  update: EducationRelationshipUpdateWithoutParentDataInput!
-  create: EducationRelationshipCreateWithoutParentInput!
-}
-
-input EducationRelationshipUpsertWithWhereUniqueWithoutStudentInput {
-  where: EducationRelationshipWhereUniqueInput!
-  update: EducationRelationshipUpdateWithoutStudentDataInput!
-  create: EducationRelationshipCreateWithoutStudentInput!
-}
-
-input EducationRelationshipUpsertWithWhereUniqueWithoutTeacherInput {
-  where: EducationRelationshipWhereUniqueInput!
-  update: EducationRelationshipUpdateWithoutTeacherDataInput!
-  create: EducationRelationshipCreateWithoutTeacherInput!
-}
-
-input EducationRelationshipWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  teacher: UserWhereInput
-  parent: UserWhereInput
-  student: UserWhereInput
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [EducationRelationshipWhereInput!]
-  OR: [EducationRelationshipWhereInput!]
-  NOT: [EducationRelationshipWhereInput!]
-}
-
-input EducationRelationshipWhereUniqueInput {
-  id: ID
-}
-
 type Group {
   id: ID!
   name: String!
@@ -2738,12 +2441,6 @@ type Mutation {
   upsertContent(where: ContentWhereUniqueInput!, create: ContentCreateInput!, update: ContentUpdateInput!): Content!
   deleteContent(where: ContentWhereUniqueInput!): Content
   deleteManyContents(where: ContentWhereInput): BatchPayload!
-  createEducationRelationship(data: EducationRelationshipCreateInput!): EducationRelationship!
-  updateEducationRelationship(data: EducationRelationshipUpdateInput!, where: EducationRelationshipWhereUniqueInput!): EducationRelationship
-  updateManyEducationRelationships(data: EducationRelationshipUpdateManyMutationInput!, where: EducationRelationshipWhereInput): BatchPayload!
-  upsertEducationRelationship(where: EducationRelationshipWhereUniqueInput!, create: EducationRelationshipCreateInput!, update: EducationRelationshipUpdateInput!): EducationRelationship!
-  deleteEducationRelationship(where: EducationRelationshipWhereUniqueInput!): EducationRelationship
-  deleteManyEducationRelationships(where: EducationRelationshipWhereInput): BatchPayload!
   createGroup(data: GroupCreateInput!): Group!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
@@ -2762,6 +2459,12 @@ type Mutation {
   upsertMedium(where: MediumWhereUniqueInput!, create: MediumCreateInput!, update: MediumUpdateInput!): Medium!
   deleteMedium(where: MediumWhereUniqueInput!): Medium
   deleteManyMediums(where: MediumWhereInput): BatchPayload!
+  createOption(data: OptionCreateInput!): Option!
+  updateOption(data: OptionUpdateInput!, where: OptionWhereUniqueInput!): Option
+  updateManyOptions(data: OptionUpdateManyMutationInput!, where: OptionWhereInput): BatchPayload!
+  upsertOption(where: OptionWhereUniqueInput!, create: OptionCreateInput!, update: OptionUpdateInput!): Option!
+  deleteOption(where: OptionWhereUniqueInput!): Option
+  deleteManyOptions(where: OptionWhereInput): BatchPayload!
   createOrganization(data: OrganizationCreateInput!): Organization!
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateManyOrganizations(data: OrganizationUpdateManyMutationInput!, where: OrganizationWhereInput): BatchPayload!
@@ -2774,6 +2477,12 @@ type Mutation {
   upsertPersonalProfile(where: PersonalProfileWhereUniqueInput!, create: PersonalProfileCreateInput!, update: PersonalProfileUpdateInput!): PersonalProfile!
   deletePersonalProfile(where: PersonalProfileWhereUniqueInput!): PersonalProfile
   deleteManyPersonalProfiles(where: PersonalProfileWhereInput): BatchPayload!
+  createPoll(data: PollCreateInput!): Poll!
+  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
+  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
+  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
+  deletePoll(where: PollWhereUniqueInput!): Poll
+  deleteManyPolls(where: PollWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -2798,6 +2507,12 @@ type Mutation {
   upsertQuiz(where: QuizWhereUniqueInput!, create: QuizCreateInput!, update: QuizUpdateInput!): Quiz!
   deleteQuiz(where: QuizWhereUniqueInput!): Quiz
   deleteManyQuizzes(where: QuizWhereInput): BatchPayload!
+  createResult(data: ResultCreateInput!): Result!
+  updateResult(data: ResultUpdateInput!, where: ResultWhereUniqueInput!): Result
+  updateManyResults(data: ResultUpdateManyMutationInput!, where: ResultWhereInput): BatchPayload!
+  upsertResult(where: ResultWhereUniqueInput!, create: ResultCreateInput!, update: ResultUpdateInput!): Result!
+  deleteResult(where: ResultWhereUniqueInput!): Result
+  deleteManyResults(where: ResultWhereInput): BatchPayload!
   createRole(data: RoleCreateInput!): Role!
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
   updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
@@ -2870,6 +2585,11 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createVote(data: VoteCreateInput!): Vote!
+  updateVote(data: VoteUpdateInput!, where: VoteWhereUniqueInput!): Vote
+  upsertVote(where: VoteWhereUniqueInput!, create: VoteCreateInput!, update: VoteUpdateInput!): Vote!
+  deleteVote(where: VoteWhereUniqueInput!): Vote
+  deleteManyVotes(where: VoteWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -2882,9 +2602,290 @@ interface Node {
   id: ID!
 }
 
+type Option {
+  id: ID!
+  name: String!
+  color: Color!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  poll: Poll
+  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
+}
+
+type OptionConnection {
+  pageInfo: PageInfo!
+  edges: [OptionEdge]!
+  aggregate: AggregateOption!
+}
+
+input OptionCreateInput {
+  id: ID
+  name: String!
+  color: Color!
+  poll: PollCreateOneWithoutOptionsInput
+  votes: VoteCreateManyWithoutOptionInput
+}
+
+input OptionCreateManyWithoutPollInput {
+  create: [OptionCreateWithoutPollInput!]
+  connect: [OptionWhereUniqueInput!]
+}
+
+input OptionCreateOneWithoutVotesInput {
+  create: OptionCreateWithoutVotesInput
+  connect: OptionWhereUniqueInput
+}
+
+input OptionCreateWithoutPollInput {
+  id: ID
+  name: String!
+  color: Color!
+  votes: VoteCreateManyWithoutOptionInput
+}
+
+input OptionCreateWithoutVotesInput {
+  id: ID
+  name: String!
+  color: Color!
+  poll: PollCreateOneWithoutOptionsInput
+}
+
+type OptionEdge {
+  node: Option!
+  cursor: String!
+}
+
+enum OptionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  color_ASC
+  color_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type OptionPreviousValues {
+  id: ID!
+  name: String!
+  color: Color!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input OptionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  color: Color
+  color_not: Color
+  color_in: [Color!]
+  color_not_in: [Color!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [OptionScalarWhereInput!]
+  OR: [OptionScalarWhereInput!]
+  NOT: [OptionScalarWhereInput!]
+}
+
+type OptionSubscriptionPayload {
+  mutation: MutationType!
+  node: Option
+  updatedFields: [String!]
+  previousValues: OptionPreviousValues
+}
+
+input OptionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OptionWhereInput
+  AND: [OptionSubscriptionWhereInput!]
+  OR: [OptionSubscriptionWhereInput!]
+  NOT: [OptionSubscriptionWhereInput!]
+}
+
+input OptionUpdateInput {
+  name: String
+  color: Color
+  poll: PollUpdateOneWithoutOptionsInput
+  votes: VoteUpdateManyWithoutOptionInput
+}
+
+input OptionUpdateManyDataInput {
+  name: String
+  color: Color
+}
+
+input OptionUpdateManyMutationInput {
+  name: String
+  color: Color
+}
+
+input OptionUpdateManyWithoutPollInput {
+  create: [OptionCreateWithoutPollInput!]
+  delete: [OptionWhereUniqueInput!]
+  connect: [OptionWhereUniqueInput!]
+  set: [OptionWhereUniqueInput!]
+  disconnect: [OptionWhereUniqueInput!]
+  update: [OptionUpdateWithWhereUniqueWithoutPollInput!]
+  upsert: [OptionUpsertWithWhereUniqueWithoutPollInput!]
+  deleteMany: [OptionScalarWhereInput!]
+  updateMany: [OptionUpdateManyWithWhereNestedInput!]
+}
+
+input OptionUpdateManyWithWhereNestedInput {
+  where: OptionScalarWhereInput!
+  data: OptionUpdateManyDataInput!
+}
+
+input OptionUpdateOneWithoutVotesInput {
+  create: OptionCreateWithoutVotesInput
+  update: OptionUpdateWithoutVotesDataInput
+  upsert: OptionUpsertWithoutVotesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: OptionWhereUniqueInput
+}
+
+input OptionUpdateWithoutPollDataInput {
+  name: String
+  color: Color
+  votes: VoteUpdateManyWithoutOptionInput
+}
+
+input OptionUpdateWithoutVotesDataInput {
+  name: String
+  color: Color
+  poll: PollUpdateOneWithoutOptionsInput
+}
+
+input OptionUpdateWithWhereUniqueWithoutPollInput {
+  where: OptionWhereUniqueInput!
+  data: OptionUpdateWithoutPollDataInput!
+}
+
+input OptionUpsertWithoutVotesInput {
+  update: OptionUpdateWithoutVotesDataInput!
+  create: OptionCreateWithoutVotesInput!
+}
+
+input OptionUpsertWithWhereUniqueWithoutPollInput {
+  where: OptionWhereUniqueInput!
+  update: OptionUpdateWithoutPollDataInput!
+  create: OptionCreateWithoutPollInput!
+}
+
+input OptionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  color: Color
+  color_not: Color
+  color_in: [Color!]
+  color_not_in: [Color!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  poll: PollWhereInput
+  votes_every: VoteWhereInput
+  votes_some: VoteWhereInput
+  votes_none: VoteWhereInput
+  AND: [OptionWhereInput!]
+  OR: [OptionWhereInput!]
+  NOT: [OptionWhereInput!]
+}
+
+input OptionWhereUniqueInput {
+  id: ID
+}
+
 type Organization {
   id: ID!
   name: String!
+  logo: String
+  color: String
   description: String
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   suborgs(where: SuborgWhereInput, orderBy: SuborgOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Suborg!]
@@ -2902,6 +2903,8 @@ type OrganizationConnection {
 input OrganizationCreateInput {
   id: ID
   name: String!
+  logo: String
+  color: String
   description: String
   author: UserCreateManyWithoutOrgInput
   suborgs: SuborgCreateManyWithoutOrgInput
@@ -2926,6 +2929,8 @@ input OrganizationCreateOneWithoutSuborgsInput {
 input OrganizationCreateWithoutAuthorInput {
   id: ID
   name: String!
+  logo: String
+  color: String
   description: String
   suborgs: SuborgCreateManyWithoutOrgInput
   orgRoles: RoleCreateManyWithoutOrgInput
@@ -2934,6 +2939,8 @@ input OrganizationCreateWithoutAuthorInput {
 input OrganizationCreateWithoutOrgRolesInput {
   id: ID
   name: String!
+  logo: String
+  color: String
   description: String
   author: UserCreateManyWithoutOrgInput
   suborgs: SuborgCreateManyWithoutOrgInput
@@ -2942,6 +2949,8 @@ input OrganizationCreateWithoutOrgRolesInput {
 input OrganizationCreateWithoutSuborgsInput {
   id: ID
   name: String!
+  logo: String
+  color: String
   description: String
   author: UserCreateManyWithoutOrgInput
   orgRoles: RoleCreateManyWithoutOrgInput
@@ -2957,6 +2966,10 @@ enum OrganizationOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  logo_ASC
+  logo_DESC
+  color_ASC
+  color_DESC
   description_ASC
   description_DESC
   updatedAt_ASC
@@ -2968,6 +2981,8 @@ enum OrganizationOrderByInput {
 type OrganizationPreviousValues {
   id: ID!
   name: String!
+  logo: String
+  color: String
   description: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -2993,6 +3008,8 @@ input OrganizationSubscriptionWhereInput {
 
 input OrganizationUpdateInput {
   name: String
+  logo: String
+  color: String
   description: String
   author: UserUpdateManyWithoutOrgInput
   suborgs: SuborgUpdateManyWithoutOrgInput
@@ -3001,6 +3018,8 @@ input OrganizationUpdateInput {
 
 input OrganizationUpdateManyMutationInput {
   name: String
+  logo: String
+  color: String
   description: String
 }
 
@@ -3031,6 +3050,8 @@ input OrganizationUpdateOneWithoutOrgRolesInput {
 
 input OrganizationUpdateWithoutAuthorDataInput {
   name: String
+  logo: String
+  color: String
   description: String
   suborgs: SuborgUpdateManyWithoutOrgInput
   orgRoles: RoleUpdateManyWithoutOrgInput
@@ -3038,6 +3059,8 @@ input OrganizationUpdateWithoutAuthorDataInput {
 
 input OrganizationUpdateWithoutOrgRolesDataInput {
   name: String
+  logo: String
+  color: String
   description: String
   author: UserUpdateManyWithoutOrgInput
   suborgs: SuborgUpdateManyWithoutOrgInput
@@ -3045,6 +3068,8 @@ input OrganizationUpdateWithoutOrgRolesDataInput {
 
 input OrganizationUpdateWithoutSuborgsDataInput {
   name: String
+  logo: String
+  color: String
   description: String
   author: UserUpdateManyWithoutOrgInput
   orgRoles: RoleUpdateManyWithoutOrgInput
@@ -3094,6 +3119,34 @@ input OrganizationWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  logo: String
+  logo_not: String
+  logo_in: [String!]
+  logo_not_in: [String!]
+  logo_lt: String
+  logo_lte: String
+  logo_gt: String
+  logo_gte: String
+  logo_contains: String
+  logo_not_contains: String
+  logo_starts_with: String
+  logo_not_starts_with: String
+  logo_ends_with: String
+  logo_not_ends_with: String
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -3461,6 +3514,161 @@ input PersonalProfileWhereInput {
 }
 
 input PersonalProfileWhereUniqueInput {
+  id: ID
+}
+
+type Poll {
+  id: ID!
+  title: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option!]
+}
+
+type PollConnection {
+  pageInfo: PageInfo!
+  edges: [PollEdge]!
+  aggregate: AggregatePoll!
+}
+
+input PollCreateInput {
+  id: ID
+  title: String!
+  options: OptionCreateManyWithoutPollInput
+}
+
+input PollCreateOneWithoutOptionsInput {
+  create: PollCreateWithoutOptionsInput
+  connect: PollWhereUniqueInput
+}
+
+input PollCreateWithoutOptionsInput {
+  id: ID
+  title: String!
+}
+
+type PollEdge {
+  node: Poll!
+  cursor: String!
+}
+
+enum PollOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PollPreviousValues {
+  id: ID!
+  title: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PollSubscriptionPayload {
+  mutation: MutationType!
+  node: Poll
+  updatedFields: [String!]
+  previousValues: PollPreviousValues
+}
+
+input PollSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PollWhereInput
+  AND: [PollSubscriptionWhereInput!]
+  OR: [PollSubscriptionWhereInput!]
+  NOT: [PollSubscriptionWhereInput!]
+}
+
+input PollUpdateInput {
+  title: String
+  options: OptionUpdateManyWithoutPollInput
+}
+
+input PollUpdateManyMutationInput {
+  title: String
+}
+
+input PollUpdateOneWithoutOptionsInput {
+  create: PollCreateWithoutOptionsInput
+  update: PollUpdateWithoutOptionsDataInput
+  upsert: PollUpsertWithoutOptionsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PollWhereUniqueInput
+}
+
+input PollUpdateWithoutOptionsDataInput {
+  title: String
+}
+
+input PollUpsertWithoutOptionsInput {
+  update: PollUpdateWithoutOptionsDataInput!
+  create: PollCreateWithoutOptionsInput!
+}
+
+input PollWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  options_every: OptionWhereInput
+  options_some: OptionWhereInput
+  options_none: OptionWhereInput
+  AND: [PollWhereInput!]
+  OR: [PollWhereInput!]
+  NOT: [PollWhereInput!]
+}
+
+input PollWhereUniqueInput {
   id: ID
 }
 
@@ -4044,9 +4252,6 @@ type Query {
   content(where: ContentWhereUniqueInput!): Content
   contents(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content]!
   contentsConnection(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContentConnection!
-  educationRelationship(where: EducationRelationshipWhereUniqueInput!): EducationRelationship
-  educationRelationships(where: EducationRelationshipWhereInput, orderBy: EducationRelationshipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationRelationship]!
-  educationRelationshipsConnection(where: EducationRelationshipWhereInput, orderBy: EducationRelationshipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EducationRelationshipConnection!
   group(where: GroupWhereUniqueInput!): Group
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
@@ -4056,12 +4261,18 @@ type Query {
   medium(where: MediumWhereUniqueInput!): Medium
   mediums(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Medium]!
   mediumsConnection(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MediumConnection!
+  option(where: OptionWhereUniqueInput!): Option
+  options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option]!
+  optionsConnection(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OptionConnection!
   organization(where: OrganizationWhereUniqueInput!): Organization
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   personalProfile(where: PersonalProfileWhereUniqueInput!): PersonalProfile
   personalProfiles(where: PersonalProfileWhereInput, orderBy: PersonalProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PersonalProfile]!
   personalProfilesConnection(where: PersonalProfileWhereInput, orderBy: PersonalProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PersonalProfileConnection!
+  poll(where: PollWhereUniqueInput!): Poll
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
+  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -4074,6 +4285,9 @@ type Query {
   quiz(where: QuizWhereUniqueInput!): Quiz
   quizzes(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz]!
   quizzesConnection(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuizConnection!
+  result(where: ResultWhereUniqueInput!): Result
+  results(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result]!
+  resultsConnection(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResultConnection!
   role(where: RoleWhereUniqueInput!): Role
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
   rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
@@ -4110,6 +4324,9 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  vote(where: VoteWhereUniqueInput!): Vote
+  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote]!
+  votesConnection(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VoteConnection!
   node(id: ID!): Node
 }
 
@@ -4138,6 +4355,11 @@ type Question {
   explaination: String
   updatedAt: DateTime!
   createdAt: DateTime!
+  results(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
+  atemptedResult(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
+  notattempted(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
+  correct(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
+  wrong(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
 }
 
 type QuestionConnection {
@@ -4169,6 +4391,21 @@ input QuestionCreateInput {
   explainationType: String
   quiz: QuizCreateManyWithoutQuestionsInput
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
+}
+
+input QuestionCreateManyWithoutAtemptedResultInput {
+  create: [QuestionCreateWithoutAtemptedResultInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutCorrectInput {
+  create: [QuestionCreateWithoutCorrectInput!]
+  connect: [QuestionWhereUniqueInput!]
 }
 
 input QuestionCreateManyWithoutCreatedByInput {
@@ -4176,8 +4413,18 @@ input QuestionCreateManyWithoutCreatedByInput {
   connect: [QuestionWhereUniqueInput!]
 }
 
+input QuestionCreateManyWithoutNotattemptedInput {
+  create: [QuestionCreateWithoutNotattemptedInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
 input QuestionCreateManyWithoutQuizInput {
   create: [QuestionCreateWithoutQuizInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutResultsInput {
+  create: [QuestionCreateWithoutResultsInput!]
   connect: [QuestionWhereUniqueInput!]
 }
 
@@ -4199,6 +4446,69 @@ input QuestionCreateManyWithoutUnitInput {
 input QuestionCreateManyWithoutUpdatedByInput {
   create: [QuestionCreateWithoutUpdatedByInput!]
   connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateManyWithoutWrongInput {
+  create: [QuestionCreateWithoutWrongInput!]
+  connect: [QuestionWhereUniqueInput!]
+}
+
+input QuestionCreateWithoutAtemptedResultInput {
+  id: ID
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  level: Int!
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizCreateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
+}
+
+input QuestionCreateWithoutCorrectInput {
+  id: ID
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  level: Int!
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizCreateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  wrong: ResultCreateManyWithoutWrongInput
 }
 
 input QuestionCreateWithoutCreatedByInput {
@@ -4223,6 +4533,40 @@ input QuestionCreateWithoutCreatedByInput {
   explainationType: String
   quiz: QuizCreateManyWithoutQuestionsInput
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
+}
+
+input QuestionCreateWithoutNotattemptedInput {
+  id: ID
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  level: Int!
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizCreateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
 }
 
 input QuestionCreateWithoutQuizInput {
@@ -4247,6 +4591,40 @@ input QuestionCreateWithoutQuizInput {
   isReviewed: Boolean
   explainationType: String
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
+}
+
+input QuestionCreateWithoutResultsInput {
+  id: ID
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  level: Int!
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizCreateManyWithoutQuestionsInput
+  explaination: String
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
 }
 
 input QuestionCreateWithoutSubjectInput {
@@ -4271,6 +4649,11 @@ input QuestionCreateWithoutSubjectInput {
   explainationType: String
   quiz: QuizCreateManyWithoutQuestionsInput
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
 }
 
 input QuestionCreateWithoutTopicInput {
@@ -4295,6 +4678,11 @@ input QuestionCreateWithoutTopicInput {
   explainationType: String
   quiz: QuizCreateManyWithoutQuestionsInput
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
 }
 
 input QuestionCreateWithoutUnitInput {
@@ -4319,6 +4707,11 @@ input QuestionCreateWithoutUnitInput {
   explainationType: String
   quiz: QuizCreateManyWithoutQuestionsInput
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
 }
 
 input QuestionCreateWithoutUpdatedByInput {
@@ -4343,6 +4736,40 @@ input QuestionCreateWithoutUpdatedByInput {
   explainationType: String
   quiz: QuizCreateManyWithoutQuestionsInput
   explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
+  wrong: ResultCreateManyWithoutWrongInput
+}
+
+input QuestionCreateWithoutWrongInput {
+  id: ID
+  subject: SubjectCreateOneWithoutQuestionsInput
+  unit: UnitCreateOneWithoutQuestionsInput
+  topic: TopicCreateOneWithoutQuestionsInput
+  quetype: String!
+  categories: String
+  title: String
+  descriptionType: String!
+  descriptionurl: String
+  options: Json!
+  createdBy: UserCreateOneWithoutQuestionCreatedByInput
+  level: Int!
+  updatedBy: UserCreateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizCreateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultCreateManyWithoutQuestionsInput
+  atemptedResult: ResultCreateManyWithoutAttemptedInput
+  notattempted: ResultCreateManyWithoutNotattemptedInput
+  correct: ResultCreateManyWithoutCorrectInput
 }
 
 type QuestionEdge {
@@ -4646,6 +5073,11 @@ input QuestionUpdateInput {
   explainationType: String
   quiz: QuizUpdateManyWithoutQuestionsInput
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateManyDataInput {
@@ -4684,6 +5116,30 @@ input QuestionUpdateManyMutationInput {
   explaination: String
 }
 
+input QuestionUpdateManyWithoutAtemptedResultInput {
+  create: [QuestionCreateWithoutAtemptedResultInput!]
+  delete: [QuestionWhereUniqueInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutAtemptedResultInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutAtemptedResultInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+}
+
+input QuestionUpdateManyWithoutCorrectInput {
+  create: [QuestionCreateWithoutCorrectInput!]
+  delete: [QuestionWhereUniqueInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutCorrectInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutCorrectInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+}
+
 input QuestionUpdateManyWithoutCreatedByInput {
   create: [QuestionCreateWithoutCreatedByInput!]
   delete: [QuestionWhereUniqueInput!]
@@ -4696,6 +5152,18 @@ input QuestionUpdateManyWithoutCreatedByInput {
   updateMany: [QuestionUpdateManyWithWhereNestedInput!]
 }
 
+input QuestionUpdateManyWithoutNotattemptedInput {
+  create: [QuestionCreateWithoutNotattemptedInput!]
+  delete: [QuestionWhereUniqueInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutNotattemptedInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutNotattemptedInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+}
+
 input QuestionUpdateManyWithoutQuizInput {
   create: [QuestionCreateWithoutQuizInput!]
   delete: [QuestionWhereUniqueInput!]
@@ -4704,6 +5172,18 @@ input QuestionUpdateManyWithoutQuizInput {
   disconnect: [QuestionWhereUniqueInput!]
   update: [QuestionUpdateWithWhereUniqueWithoutQuizInput!]
   upsert: [QuestionUpsertWithWhereUniqueWithoutQuizInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+}
+
+input QuestionUpdateManyWithoutResultsInput {
+  create: [QuestionCreateWithoutResultsInput!]
+  delete: [QuestionWhereUniqueInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutResultsInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutResultsInput!]
   deleteMany: [QuestionScalarWhereInput!]
   updateMany: [QuestionUpdateManyWithWhereNestedInput!]
 }
@@ -4756,9 +5236,77 @@ input QuestionUpdateManyWithoutUpdatedByInput {
   updateMany: [QuestionUpdateManyWithWhereNestedInput!]
 }
 
+input QuestionUpdateManyWithoutWrongInput {
+  create: [QuestionCreateWithoutWrongInput!]
+  delete: [QuestionWhereUniqueInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutWrongInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutWrongInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
+}
+
 input QuestionUpdateManyWithWhereNestedInput {
   where: QuestionScalarWhereInput!
   data: QuestionUpdateManyDataInput!
+}
+
+input QuestionUpdateWithoutAtemptedResultDataInput {
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  level: Int
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizUpdateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
+}
+
+input QuestionUpdateWithoutCorrectDataInput {
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  level: Int
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizUpdateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateWithoutCreatedByDataInput {
@@ -4782,6 +5330,39 @@ input QuestionUpdateWithoutCreatedByDataInput {
   explainationType: String
   quiz: QuizUpdateManyWithoutQuestionsInput
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
+}
+
+input QuestionUpdateWithoutNotattemptedDataInput {
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  level: Int
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizUpdateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateWithoutQuizDataInput {
@@ -4805,6 +5386,39 @@ input QuestionUpdateWithoutQuizDataInput {
   isReviewed: Boolean
   explainationType: String
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
+}
+
+input QuestionUpdateWithoutResultsDataInput {
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  level: Int
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizUpdateManyWithoutQuestionsInput
+  explaination: String
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateWithoutSubjectDataInput {
@@ -4828,6 +5442,11 @@ input QuestionUpdateWithoutSubjectDataInput {
   explainationType: String
   quiz: QuizUpdateManyWithoutQuestionsInput
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateWithoutTopicDataInput {
@@ -4851,6 +5470,11 @@ input QuestionUpdateWithoutTopicDataInput {
   explainationType: String
   quiz: QuizUpdateManyWithoutQuestionsInput
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateWithoutUnitDataInput {
@@ -4874,6 +5498,11 @@ input QuestionUpdateWithoutUnitDataInput {
   explainationType: String
   quiz: QuizUpdateManyWithoutQuestionsInput
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
 }
 
 input QuestionUpdateWithoutUpdatedByDataInput {
@@ -4897,6 +5526,49 @@ input QuestionUpdateWithoutUpdatedByDataInput {
   explainationType: String
   quiz: QuizUpdateManyWithoutQuestionsInput
   explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+  wrong: ResultUpdateManyWithoutWrongInput
+}
+
+input QuestionUpdateWithoutWrongDataInput {
+  subject: SubjectUpdateOneWithoutQuestionsInput
+  unit: UnitUpdateOneWithoutQuestionsInput
+  topic: TopicUpdateOneWithoutQuestionsInput
+  quetype: String
+  categories: String
+  title: String
+  descriptionType: String
+  descriptionurl: String
+  options: Json
+  createdBy: UserUpdateOneWithoutQuestionCreatedByInput
+  level: Int
+  updatedBy: UserUpdateOneWithoutQuestionUpdateddByInput
+  plandate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  isReviewed: Boolean
+  explainationType: String
+  quiz: QuizUpdateManyWithoutQuestionsInput
+  explaination: String
+  results: ResultUpdateManyWithoutQuestionsInput
+  atemptedResult: ResultUpdateManyWithoutAttemptedInput
+  notattempted: ResultUpdateManyWithoutNotattemptedInput
+  correct: ResultUpdateManyWithoutCorrectInput
+}
+
+input QuestionUpdateWithWhereUniqueWithoutAtemptedResultInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutAtemptedResultDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutCorrectInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutCorrectDataInput!
 }
 
 input QuestionUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -4904,9 +5576,19 @@ input QuestionUpdateWithWhereUniqueWithoutCreatedByInput {
   data: QuestionUpdateWithoutCreatedByDataInput!
 }
 
+input QuestionUpdateWithWhereUniqueWithoutNotattemptedInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutNotattemptedDataInput!
+}
+
 input QuestionUpdateWithWhereUniqueWithoutQuizInput {
   where: QuestionWhereUniqueInput!
   data: QuestionUpdateWithoutQuizDataInput!
+}
+
+input QuestionUpdateWithWhereUniqueWithoutResultsInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutResultsDataInput!
 }
 
 input QuestionUpdateWithWhereUniqueWithoutSubjectInput {
@@ -4929,16 +5611,45 @@ input QuestionUpdateWithWhereUniqueWithoutUpdatedByInput {
   data: QuestionUpdateWithoutUpdatedByDataInput!
 }
 
+input QuestionUpdateWithWhereUniqueWithoutWrongInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutWrongDataInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutAtemptedResultInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutAtemptedResultDataInput!
+  create: QuestionCreateWithoutAtemptedResultInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutCorrectInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutCorrectDataInput!
+  create: QuestionCreateWithoutCorrectInput!
+}
+
 input QuestionUpsertWithWhereUniqueWithoutCreatedByInput {
   where: QuestionWhereUniqueInput!
   update: QuestionUpdateWithoutCreatedByDataInput!
   create: QuestionCreateWithoutCreatedByInput!
 }
 
+input QuestionUpsertWithWhereUniqueWithoutNotattemptedInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutNotattemptedDataInput!
+  create: QuestionCreateWithoutNotattemptedInput!
+}
+
 input QuestionUpsertWithWhereUniqueWithoutQuizInput {
   where: QuestionWhereUniqueInput!
   update: QuestionUpdateWithoutQuizDataInput!
   create: QuestionCreateWithoutQuizInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutResultsInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutResultsDataInput!
+  create: QuestionCreateWithoutResultsInput!
 }
 
 input QuestionUpsertWithWhereUniqueWithoutSubjectInput {
@@ -4963,6 +5674,12 @@ input QuestionUpsertWithWhereUniqueWithoutUpdatedByInput {
   where: QuestionWhereUniqueInput!
   update: QuestionUpdateWithoutUpdatedByDataInput!
   create: QuestionCreateWithoutUpdatedByInput!
+}
+
+input QuestionUpsertWithWhereUniqueWithoutWrongInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutWrongDataInput!
+  create: QuestionCreateWithoutWrongInput!
 }
 
 input QuestionWhereInput {
@@ -5164,6 +5881,21 @@ input QuestionWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  results_every: ResultWhereInput
+  results_some: ResultWhereInput
+  results_none: ResultWhereInput
+  atemptedResult_every: ResultWhereInput
+  atemptedResult_some: ResultWhereInput
+  atemptedResult_none: ResultWhereInput
+  notattempted_every: ResultWhereInput
+  notattempted_some: ResultWhereInput
+  notattempted_none: ResultWhereInput
+  correct_every: ResultWhereInput
+  correct_some: ResultWhereInput
+  correct_none: ResultWhereInput
+  wrong_every: ResultWhereInput
+  wrong_some: ResultWhereInput
+  wrong_none: ResultWhereInput
   AND: [QuestionWhereInput!]
   OR: [QuestionWhereInput!]
   NOT: [QuestionWhereInput!]
@@ -5175,8 +5907,8 @@ input QuestionWhereUniqueInput {
 
 type Quiz {
   id: ID!
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   subject: Subject
   unit: Unit
   topic: Topic
@@ -5199,6 +5931,7 @@ type Quiz {
   validFrom: DateTime
   validTo: DateTime
   retryAllowed: Boolean
+  results(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
 }
 
 type QuizConnection {
@@ -5209,8 +5942,8 @@ type QuizConnection {
 
 input QuizCreateInput {
   id: ID
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   subject: SubjectCreateOneWithoutQuizesInput
   unit: UnitCreateOneWithoutQuizsInput
   topic: TopicCreateOneWithoutQuizsInput
@@ -5232,6 +5965,7 @@ input QuizCreateInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultCreateManyWithoutQuizInput
 }
 
 input QuizCreateManyWithoutCreatedByInput {
@@ -5259,10 +5993,15 @@ input QuizCreateManyWithoutUnitInput {
   connect: [QuizWhereUniqueInput!]
 }
 
+input QuizCreateOneWithoutResultsInput {
+  create: QuizCreateWithoutResultsInput
+  connect: QuizWhereUniqueInput
+}
+
 input QuizCreateWithoutCreatedByInput {
   id: ID
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   subject: SubjectCreateOneWithoutQuizesInput
   unit: UnitCreateOneWithoutQuizsInput
   topic: TopicCreateOneWithoutQuizsInput
@@ -5283,15 +6022,44 @@ input QuizCreateWithoutCreatedByInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultCreateManyWithoutQuizInput
 }
 
 input QuizCreateWithoutQuestionsInput {
   id: ID
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   subject: SubjectCreateOneWithoutQuizesInput
   unit: UnitCreateOneWithoutQuizsInput
   topic: TopicCreateOneWithoutQuizsInput
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  createdBy: UserCreateOneWithoutQuizCreatedByInput!
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  results: ResultCreateManyWithoutQuizInput
+}
+
+input QuizCreateWithoutResultsInput {
+  id: ID
+  quizName: String!
+  quizType: String!
+  subject: SubjectCreateOneWithoutQuizesInput
+  unit: UnitCreateOneWithoutQuizsInput
+  topic: TopicCreateOneWithoutQuizsInput
+  questions: QuestionCreateManyWithoutQuizInput
   markingscheme: Json
   quizlevel: Int
   threshold: Json
@@ -5313,8 +6081,8 @@ input QuizCreateWithoutQuestionsInput {
 
 input QuizCreateWithoutSubjectInput {
   id: ID
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   unit: UnitCreateOneWithoutQuizsInput
   topic: TopicCreateOneWithoutQuizsInput
   questions: QuestionCreateManyWithoutQuizInput
@@ -5335,12 +6103,13 @@ input QuizCreateWithoutSubjectInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultCreateManyWithoutQuizInput
 }
 
 input QuizCreateWithoutTopicInput {
   id: ID
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   subject: SubjectCreateOneWithoutQuizesInput
   unit: UnitCreateOneWithoutQuizsInput
   questions: QuestionCreateManyWithoutQuizInput
@@ -5361,12 +6130,13 @@ input QuizCreateWithoutTopicInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultCreateManyWithoutQuizInput
 }
 
 input QuizCreateWithoutUnitInput {
   id: ID
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   subject: SubjectCreateOneWithoutQuizesInput
   topic: TopicCreateOneWithoutQuizsInput
   questions: QuestionCreateManyWithoutQuizInput
@@ -5387,6 +6157,7 @@ input QuizCreateWithoutUnitInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultCreateManyWithoutQuizInput
 }
 
 type QuizEdge {
@@ -5397,10 +6168,10 @@ type QuizEdge {
 enum QuizOrderByInput {
   id_ASC
   id_DESC
-  quizeName_ASC
-  quizeName_DESC
-  quizeType_ASC
-  quizeType_DESC
+  quizName_ASC
+  quizName_DESC
+  quizType_ASC
+  quizType_DESC
   markingscheme_ASC
   markingscheme_DESC
   quizlevel_ASC
@@ -5439,8 +6210,8 @@ enum QuizOrderByInput {
 
 type QuizPreviousValues {
   id: ID!
-  quizeName: String!
-  quizeType: String!
+  quizName: String!
+  quizType: String!
   markingscheme: Json
   quizlevel: Int
   threshold: Json
@@ -5475,34 +6246,34 @@ input QuizScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  quizeName: String
-  quizeName_not: String
-  quizeName_in: [String!]
-  quizeName_not_in: [String!]
-  quizeName_lt: String
-  quizeName_lte: String
-  quizeName_gt: String
-  quizeName_gte: String
-  quizeName_contains: String
-  quizeName_not_contains: String
-  quizeName_starts_with: String
-  quizeName_not_starts_with: String
-  quizeName_ends_with: String
-  quizeName_not_ends_with: String
-  quizeType: String
-  quizeType_not: String
-  quizeType_in: [String!]
-  quizeType_not_in: [String!]
-  quizeType_lt: String
-  quizeType_lte: String
-  quizeType_gt: String
-  quizeType_gte: String
-  quizeType_contains: String
-  quizeType_not_contains: String
-  quizeType_starts_with: String
-  quizeType_not_starts_with: String
-  quizeType_ends_with: String
-  quizeType_not_ends_with: String
+  quizName: String
+  quizName_not: String
+  quizName_in: [String!]
+  quizName_not_in: [String!]
+  quizName_lt: String
+  quizName_lte: String
+  quizName_gt: String
+  quizName_gte: String
+  quizName_contains: String
+  quizName_not_contains: String
+  quizName_starts_with: String
+  quizName_not_starts_with: String
+  quizName_ends_with: String
+  quizName_not_ends_with: String
+  quizType: String
+  quizType_not: String
+  quizType_in: [String!]
+  quizType_not_in: [String!]
+  quizType_lt: String
+  quizType_lte: String
+  quizType_gt: String
+  quizType_gte: String
+  quizType_contains: String
+  quizType_not_contains: String
+  quizType_starts_with: String
+  quizType_not_starts_with: String
+  quizType_ends_with: String
+  quizType_not_ends_with: String
   quizlevel: Int
   quizlevel_not: Int
   quizlevel_in: [Int!]
@@ -5629,8 +6400,8 @@ input QuizSubscriptionWhereInput {
 }
 
 input QuizUpdateInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   subject: SubjectUpdateOneWithoutQuizesInput
   unit: UnitUpdateOneWithoutQuizsInput
   topic: TopicUpdateOneWithoutQuizsInput
@@ -5652,11 +6423,12 @@ input QuizUpdateInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultUpdateManyWithoutQuizInput
 }
 
 input QuizUpdateManyDataInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   markingscheme: Json
   quizlevel: Int
   threshold: Json
@@ -5676,8 +6448,8 @@ input QuizUpdateManyDataInput {
 }
 
 input QuizUpdateManyMutationInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   markingscheme: Json
   quizlevel: Int
   threshold: Json
@@ -5761,9 +6533,16 @@ input QuizUpdateManyWithWhereNestedInput {
   data: QuizUpdateManyDataInput!
 }
 
+input QuizUpdateOneRequiredWithoutResultsInput {
+  create: QuizCreateWithoutResultsInput
+  update: QuizUpdateWithoutResultsDataInput
+  upsert: QuizUpsertWithoutResultsInput
+  connect: QuizWhereUniqueInput
+}
+
 input QuizUpdateWithoutCreatedByDataInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   subject: SubjectUpdateOneWithoutQuizesInput
   unit: UnitUpdateOneWithoutQuizsInput
   topic: TopicUpdateOneWithoutQuizsInput
@@ -5784,14 +6563,42 @@ input QuizUpdateWithoutCreatedByDataInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultUpdateManyWithoutQuizInput
 }
 
 input QuizUpdateWithoutQuestionsDataInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   subject: SubjectUpdateOneWithoutQuizesInput
   unit: UnitUpdateOneWithoutQuizsInput
   topic: TopicUpdateOneWithoutQuizsInput
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean
+  showExplaination: String
+  showanswer: Boolean
+  description: String
+  allowedCorrection: Boolean
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean
+  isApproved: Boolean
+  createdBy: UserUpdateOneRequiredWithoutQuizCreatedByInput
+  weightage: Float
+  totalmarks: Float
+  validTo: DateTime
+  retryAllowed: Boolean
+  results: ResultUpdateManyWithoutQuizInput
+}
+
+input QuizUpdateWithoutResultsDataInput {
+  quizName: String
+  quizType: String
+  subject: SubjectUpdateOneWithoutQuizesInput
+  unit: UnitUpdateOneWithoutQuizsInput
+  topic: TopicUpdateOneWithoutQuizsInput
+  questions: QuestionUpdateManyWithoutQuizInput
   markingscheme: Json
   quizlevel: Int
   threshold: Json
@@ -5812,8 +6619,8 @@ input QuizUpdateWithoutQuestionsDataInput {
 }
 
 input QuizUpdateWithoutSubjectDataInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   unit: UnitUpdateOneWithoutQuizsInput
   topic: TopicUpdateOneWithoutQuizsInput
   questions: QuestionUpdateManyWithoutQuizInput
@@ -5834,11 +6641,12 @@ input QuizUpdateWithoutSubjectDataInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultUpdateManyWithoutQuizInput
 }
 
 input QuizUpdateWithoutTopicDataInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   subject: SubjectUpdateOneWithoutQuizesInput
   unit: UnitUpdateOneWithoutQuizsInput
   questions: QuestionUpdateManyWithoutQuizInput
@@ -5859,11 +6667,12 @@ input QuizUpdateWithoutTopicDataInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultUpdateManyWithoutQuizInput
 }
 
 input QuizUpdateWithoutUnitDataInput {
-  quizeName: String
-  quizeType: String
+  quizName: String
+  quizType: String
   subject: SubjectUpdateOneWithoutQuizesInput
   topic: TopicUpdateOneWithoutQuizsInput
   questions: QuestionUpdateManyWithoutQuizInput
@@ -5884,6 +6693,7 @@ input QuizUpdateWithoutUnitDataInput {
   totalmarks: Float
   validTo: DateTime
   retryAllowed: Boolean
+  results: ResultUpdateManyWithoutQuizInput
 }
 
 input QuizUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -5909,6 +6719,11 @@ input QuizUpdateWithWhereUniqueWithoutTopicInput {
 input QuizUpdateWithWhereUniqueWithoutUnitInput {
   where: QuizWhereUniqueInput!
   data: QuizUpdateWithoutUnitDataInput!
+}
+
+input QuizUpsertWithoutResultsInput {
+  update: QuizUpdateWithoutResultsDataInput!
+  create: QuizCreateWithoutResultsInput!
 }
 
 input QuizUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -5956,34 +6771,34 @@ input QuizWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  quizeName: String
-  quizeName_not: String
-  quizeName_in: [String!]
-  quizeName_not_in: [String!]
-  quizeName_lt: String
-  quizeName_lte: String
-  quizeName_gt: String
-  quizeName_gte: String
-  quizeName_contains: String
-  quizeName_not_contains: String
-  quizeName_starts_with: String
-  quizeName_not_starts_with: String
-  quizeName_ends_with: String
-  quizeName_not_ends_with: String
-  quizeType: String
-  quizeType_not: String
-  quizeType_in: [String!]
-  quizeType_not_in: [String!]
-  quizeType_lt: String
-  quizeType_lte: String
-  quizeType_gt: String
-  quizeType_gte: String
-  quizeType_contains: String
-  quizeType_not_contains: String
-  quizeType_starts_with: String
-  quizeType_not_starts_with: String
-  quizeType_ends_with: String
-  quizeType_not_ends_with: String
+  quizName: String
+  quizName_not: String
+  quizName_in: [String!]
+  quizName_not_in: [String!]
+  quizName_lt: String
+  quizName_lte: String
+  quizName_gt: String
+  quizName_gte: String
+  quizName_contains: String
+  quizName_not_contains: String
+  quizName_starts_with: String
+  quizName_not_starts_with: String
+  quizName_ends_with: String
+  quizName_not_ends_with: String
+  quizType: String
+  quizType_not: String
+  quizType_in: [String!]
+  quizType_not_in: [String!]
+  quizType_lt: String
+  quizType_lte: String
+  quizType_gt: String
+  quizType_gte: String
+  quizType_contains: String
+  quizType_not_contains: String
+  quizType_starts_with: String
+  quizType_not_starts_with: String
+  quizType_ends_with: String
+  quizType_not_ends_with: String
   subject: SubjectWhereInput
   unit: UnitWhereInput
   topic: TopicWhereInput
@@ -6093,6 +6908,9 @@ input QuizWhereInput {
   validTo_gte: DateTime
   retryAllowed: Boolean
   retryAllowed_not: Boolean
+  results_every: ResultWhereInput
+  results_some: ResultWhereInput
+  results_none: ResultWhereInput
   AND: [QuizWhereInput!]
   OR: [QuizWhereInput!]
   NOT: [QuizWhereInput!]
@@ -6102,15 +6920,928 @@ input QuizWhereUniqueInput {
   id: ID
 }
 
+type Result {
+  id: ID!
+  quiz: Quiz!
+  quizName: String!
+  quizType: String!
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  notattempted(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  correct(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  wrong(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: User!
+}
+
+type ResultConnection {
+  pageInfo: PageInfo!
+  edges: [ResultEdge]!
+  aggregate: AggregateResult!
+}
+
+input ResultCreateInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+input ResultCreateManyWithoutAttemptedInput {
+  create: [ResultCreateWithoutAttemptedInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateManyWithoutCorrectInput {
+  create: [ResultCreateWithoutCorrectInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateManyWithoutNotattemptedInput {
+  create: [ResultCreateWithoutNotattemptedInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateManyWithoutQuestionsInput {
+  create: [ResultCreateWithoutQuestionsInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateManyWithoutQuizInput {
+  create: [ResultCreateWithoutQuizInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateManyWithoutUserIdInput {
+  create: [ResultCreateWithoutUserIdInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateManyWithoutWrongInput {
+  create: [ResultCreateWithoutWrongInput!]
+  connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateWithoutAttemptedInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+input ResultCreateWithoutCorrectInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+input ResultCreateWithoutNotattemptedInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+input ResultCreateWithoutQuestionsInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+input ResultCreateWithoutQuizInput {
+  id: ID
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+input ResultCreateWithoutUserIdInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  wrong: QuestionCreateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+}
+
+input ResultCreateWithoutWrongInput {
+  id: ID
+  quiz: QuizCreateOneWithoutResultsInput!
+  quizName: String!
+  quizType: String!
+  questions: QuestionCreateManyWithoutResultsInput
+  result: String!
+  quizlevel: Int!
+  score: Float
+  attempted: QuestionCreateManyWithoutAtemptedResultInput
+  notattempted: QuestionCreateManyWithoutNotattemptedInput
+  correct: QuestionCreateManyWithoutCorrectInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: UserCreateOneWithoutResultInput!
+}
+
+type ResultEdge {
+  node: Result!
+  cursor: String!
+}
+
+enum ResultOrderByInput {
+  id_ASC
+  id_DESC
+  quizName_ASC
+  quizName_DESC
+  quizType_ASC
+  quizType_DESC
+  result_ASC
+  result_DESC
+  quizlevel_ASC
+  quizlevel_DESC
+  score_ASC
+  score_DESC
+  achievement_ASC
+  achievement_DESC
+  duration_ASC
+  duration_DESC
+  attemptedDate_ASC
+  attemptedDate_DESC
+  commentFromTeacher_ASC
+  commentFromTeacher_DESC
+  rank_ASC
+  rank_DESC
+}
+
+type ResultPreviousValues {
+  id: ID!
+  quizName: String!
+  quizType: String!
+  result: String!
+  quizlevel: Int!
+  score: Float
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+}
+
+input ResultScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  quizName: String
+  quizName_not: String
+  quizName_in: [String!]
+  quizName_not_in: [String!]
+  quizName_lt: String
+  quizName_lte: String
+  quizName_gt: String
+  quizName_gte: String
+  quizName_contains: String
+  quizName_not_contains: String
+  quizName_starts_with: String
+  quizName_not_starts_with: String
+  quizName_ends_with: String
+  quizName_not_ends_with: String
+  quizType: String
+  quizType_not: String
+  quizType_in: [String!]
+  quizType_not_in: [String!]
+  quizType_lt: String
+  quizType_lte: String
+  quizType_gt: String
+  quizType_gte: String
+  quizType_contains: String
+  quizType_not_contains: String
+  quizType_starts_with: String
+  quizType_not_starts_with: String
+  quizType_ends_with: String
+  quizType_not_ends_with: String
+  result: String
+  result_not: String
+  result_in: [String!]
+  result_not_in: [String!]
+  result_lt: String
+  result_lte: String
+  result_gt: String
+  result_gte: String
+  result_contains: String
+  result_not_contains: String
+  result_starts_with: String
+  result_not_starts_with: String
+  result_ends_with: String
+  result_not_ends_with: String
+  quizlevel: Int
+  quizlevel_not: Int
+  quizlevel_in: [Int!]
+  quizlevel_not_in: [Int!]
+  quizlevel_lt: Int
+  quizlevel_lte: Int
+  quizlevel_gt: Int
+  quizlevel_gte: Int
+  score: Float
+  score_not: Float
+  score_in: [Float!]
+  score_not_in: [Float!]
+  score_lt: Float
+  score_lte: Float
+  score_gt: Float
+  score_gte: Float
+  achievement: String
+  achievement_not: String
+  achievement_in: [String!]
+  achievement_not_in: [String!]
+  achievement_lt: String
+  achievement_lte: String
+  achievement_gt: String
+  achievement_gte: String
+  achievement_contains: String
+  achievement_not_contains: String
+  achievement_starts_with: String
+  achievement_not_starts_with: String
+  achievement_ends_with: String
+  achievement_not_ends_with: String
+  duration: Int
+  duration_not: Int
+  duration_in: [Int!]
+  duration_not_in: [Int!]
+  duration_lt: Int
+  duration_lte: Int
+  duration_gt: Int
+  duration_gte: Int
+  attemptedDate: DateTime
+  attemptedDate_not: DateTime
+  attemptedDate_in: [DateTime!]
+  attemptedDate_not_in: [DateTime!]
+  attemptedDate_lt: DateTime
+  attemptedDate_lte: DateTime
+  attemptedDate_gt: DateTime
+  attemptedDate_gte: DateTime
+  commentFromTeacher: String
+  commentFromTeacher_not: String
+  commentFromTeacher_in: [String!]
+  commentFromTeacher_not_in: [String!]
+  commentFromTeacher_lt: String
+  commentFromTeacher_lte: String
+  commentFromTeacher_gt: String
+  commentFromTeacher_gte: String
+  commentFromTeacher_contains: String
+  commentFromTeacher_not_contains: String
+  commentFromTeacher_starts_with: String
+  commentFromTeacher_not_starts_with: String
+  commentFromTeacher_ends_with: String
+  commentFromTeacher_not_ends_with: String
+  rank: Int
+  rank_not: Int
+  rank_in: [Int!]
+  rank_not_in: [Int!]
+  rank_lt: Int
+  rank_lte: Int
+  rank_gt: Int
+  rank_gte: Int
+  AND: [ResultScalarWhereInput!]
+  OR: [ResultScalarWhereInput!]
+  NOT: [ResultScalarWhereInput!]
+}
+
+type ResultSubscriptionPayload {
+  mutation: MutationType!
+  node: Result
+  updatedFields: [String!]
+  previousValues: ResultPreviousValues
+}
+
+input ResultSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ResultWhereInput
+  AND: [ResultSubscriptionWhereInput!]
+  OR: [ResultSubscriptionWhereInput!]
+  NOT: [ResultSubscriptionWhereInput!]
+}
+
+input ResultUpdateInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateManyDataInput {
+  quizName: String
+  quizType: String
+  result: String
+  quizlevel: Int
+  score: Float
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+}
+
+input ResultUpdateManyMutationInput {
+  quizName: String
+  quizType: String
+  result: String
+  quizlevel: Int
+  score: Float
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+}
+
+input ResultUpdateManyWithoutAttemptedInput {
+  create: [ResultCreateWithoutAttemptedInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutAttemptedInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutAttemptedInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithoutCorrectInput {
+  create: [ResultCreateWithoutCorrectInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutCorrectInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutCorrectInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithoutNotattemptedInput {
+  create: [ResultCreateWithoutNotattemptedInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutNotattemptedInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutNotattemptedInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithoutQuestionsInput {
+  create: [ResultCreateWithoutQuestionsInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutQuestionsInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutQuestionsInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithoutQuizInput {
+  create: [ResultCreateWithoutQuizInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutQuizInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutQuizInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithoutUserIdInput {
+  create: [ResultCreateWithoutUserIdInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutUserIdInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutUserIdInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithoutWrongInput {
+  create: [ResultCreateWithoutWrongInput!]
+  delete: [ResultWhereUniqueInput!]
+  connect: [ResultWhereUniqueInput!]
+  set: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutWrongInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutWrongInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+}
+
+input ResultUpdateManyWithWhereNestedInput {
+  where: ResultScalarWhereInput!
+  data: ResultUpdateManyDataInput!
+}
+
+input ResultUpdateWithoutAttemptedDataInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateWithoutCorrectDataInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateWithoutNotattemptedDataInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateWithoutQuestionsDataInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateWithoutQuizDataInput {
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateWithoutUserIdDataInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  wrong: QuestionUpdateManyWithoutWrongInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+}
+
+input ResultUpdateWithoutWrongDataInput {
+  quiz: QuizUpdateOneRequiredWithoutResultsInput
+  quizName: String
+  quizType: String
+  questions: QuestionUpdateManyWithoutResultsInput
+  result: String
+  quizlevel: Int
+  score: Float
+  attempted: QuestionUpdateManyWithoutAtemptedResultInput
+  notattempted: QuestionUpdateManyWithoutNotattemptedInput
+  correct: QuestionUpdateManyWithoutCorrectInput
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime
+  commentFromTeacher: String
+  rank: Int
+  userId: UserUpdateOneRequiredWithoutResultInput
+}
+
+input ResultUpdateWithWhereUniqueWithoutAttemptedInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutAttemptedDataInput!
+}
+
+input ResultUpdateWithWhereUniqueWithoutCorrectInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutCorrectDataInput!
+}
+
+input ResultUpdateWithWhereUniqueWithoutNotattemptedInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutNotattemptedDataInput!
+}
+
+input ResultUpdateWithWhereUniqueWithoutQuestionsInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutQuestionsDataInput!
+}
+
+input ResultUpdateWithWhereUniqueWithoutQuizInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutQuizDataInput!
+}
+
+input ResultUpdateWithWhereUniqueWithoutUserIdInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutUserIdDataInput!
+}
+
+input ResultUpdateWithWhereUniqueWithoutWrongInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutWrongDataInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutAttemptedInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutAttemptedDataInput!
+  create: ResultCreateWithoutAttemptedInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutCorrectInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutCorrectDataInput!
+  create: ResultCreateWithoutCorrectInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutNotattemptedInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutNotattemptedDataInput!
+  create: ResultCreateWithoutNotattemptedInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutQuestionsInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutQuestionsDataInput!
+  create: ResultCreateWithoutQuestionsInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutQuizInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutQuizDataInput!
+  create: ResultCreateWithoutQuizInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutUserIdInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutUserIdDataInput!
+  create: ResultCreateWithoutUserIdInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutWrongInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutWrongDataInput!
+  create: ResultCreateWithoutWrongInput!
+}
+
+input ResultWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  quiz: QuizWhereInput
+  quizName: String
+  quizName_not: String
+  quizName_in: [String!]
+  quizName_not_in: [String!]
+  quizName_lt: String
+  quizName_lte: String
+  quizName_gt: String
+  quizName_gte: String
+  quizName_contains: String
+  quizName_not_contains: String
+  quizName_starts_with: String
+  quizName_not_starts_with: String
+  quizName_ends_with: String
+  quizName_not_ends_with: String
+  quizType: String
+  quizType_not: String
+  quizType_in: [String!]
+  quizType_not_in: [String!]
+  quizType_lt: String
+  quizType_lte: String
+  quizType_gt: String
+  quizType_gte: String
+  quizType_contains: String
+  quizType_not_contains: String
+  quizType_starts_with: String
+  quizType_not_starts_with: String
+  quizType_ends_with: String
+  quizType_not_ends_with: String
+  questions_every: QuestionWhereInput
+  questions_some: QuestionWhereInput
+  questions_none: QuestionWhereInput
+  result: String
+  result_not: String
+  result_in: [String!]
+  result_not_in: [String!]
+  result_lt: String
+  result_lte: String
+  result_gt: String
+  result_gte: String
+  result_contains: String
+  result_not_contains: String
+  result_starts_with: String
+  result_not_starts_with: String
+  result_ends_with: String
+  result_not_ends_with: String
+  quizlevel: Int
+  quizlevel_not: Int
+  quizlevel_in: [Int!]
+  quizlevel_not_in: [Int!]
+  quizlevel_lt: Int
+  quizlevel_lte: Int
+  quizlevel_gt: Int
+  quizlevel_gte: Int
+  score: Float
+  score_not: Float
+  score_in: [Float!]
+  score_not_in: [Float!]
+  score_lt: Float
+  score_lte: Float
+  score_gt: Float
+  score_gte: Float
+  attempted_every: QuestionWhereInput
+  attempted_some: QuestionWhereInput
+  attempted_none: QuestionWhereInput
+  notattempted_every: QuestionWhereInput
+  notattempted_some: QuestionWhereInput
+  notattempted_none: QuestionWhereInput
+  correct_every: QuestionWhereInput
+  correct_some: QuestionWhereInput
+  correct_none: QuestionWhereInput
+  wrong_every: QuestionWhereInput
+  wrong_some: QuestionWhereInput
+  wrong_none: QuestionWhereInput
+  achievement: String
+  achievement_not: String
+  achievement_in: [String!]
+  achievement_not_in: [String!]
+  achievement_lt: String
+  achievement_lte: String
+  achievement_gt: String
+  achievement_gte: String
+  achievement_contains: String
+  achievement_not_contains: String
+  achievement_starts_with: String
+  achievement_not_starts_with: String
+  achievement_ends_with: String
+  achievement_not_ends_with: String
+  duration: Int
+  duration_not: Int
+  duration_in: [Int!]
+  duration_not_in: [Int!]
+  duration_lt: Int
+  duration_lte: Int
+  duration_gt: Int
+  duration_gte: Int
+  attemptedDate: DateTime
+  attemptedDate_not: DateTime
+  attemptedDate_in: [DateTime!]
+  attemptedDate_not_in: [DateTime!]
+  attemptedDate_lt: DateTime
+  attemptedDate_lte: DateTime
+  attemptedDate_gt: DateTime
+  attemptedDate_gte: DateTime
+  commentFromTeacher: String
+  commentFromTeacher_not: String
+  commentFromTeacher_in: [String!]
+  commentFromTeacher_not_in: [String!]
+  commentFromTeacher_lt: String
+  commentFromTeacher_lte: String
+  commentFromTeacher_gt: String
+  commentFromTeacher_gte: String
+  commentFromTeacher_contains: String
+  commentFromTeacher_not_contains: String
+  commentFromTeacher_starts_with: String
+  commentFromTeacher_not_starts_with: String
+  commentFromTeacher_ends_with: String
+  commentFromTeacher_not_ends_with: String
+  rank: Int
+  rank_not: Int
+  rank_in: [Int!]
+  rank_not_in: [Int!]
+  rank_lt: Int
+  rank_lte: Int
+  rank_gt: Int
+  rank_gte: Int
+  userId: UserWhereInput
+  AND: [ResultWhereInput!]
+  OR: [ResultWhereInput!]
+  NOT: [ResultWhereInput!]
+}
+
+input ResultWhereUniqueInput {
+  id: ID
+}
+
 type Role {
   id: ID!
-  name: String!
+  name: ROLENAME!
   org: Organization
   suborg: Suborg
   group: Group
   subgroup: SubGroup
-  members(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   description: String
+  status: String
+  state: String
   updatedAt: DateTime!
   createdAt: DateTime!
   subjectSubscriptions(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription!]
@@ -6124,13 +7855,15 @@ type RoleConnection {
 
 input RoleCreateInput {
   id: ID
-  name: String!
+  name: ROLENAME!
   org: OrganizationCreateOneWithoutOrgRolesInput
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  members: RoleMemberCreateManyWithoutRoleInput
+  users: UserCreateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
 }
 
@@ -6154,8 +7887,13 @@ input RoleCreateManyWithoutSuborgInput {
   connect: [RoleWhereUniqueInput!]
 }
 
-input RoleCreateOneWithoutMembersInput {
-  create: RoleCreateWithoutMembersInput
+input RoleCreateManyWithoutUsersInput {
+  create: [RoleCreateWithoutUsersInput!]
+  connect: [RoleWhereUniqueInput!]
+}
+
+input RoleCreateOneInput {
+  create: RoleCreateInput
   connect: RoleWhereUniqueInput
 }
 
@@ -6166,67 +7904,79 @@ input RoleCreateOneWithoutSubjectSubscriptionsInput {
 
 input RoleCreateWithoutGroupInput {
   id: ID
-  name: String!
+  name: ROLENAME!
   org: OrganizationCreateOneWithoutOrgRolesInput
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  members: RoleMemberCreateManyWithoutRoleInput
+  users: UserCreateManyWithoutRolesInput
   description: String
-  subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
-}
-
-input RoleCreateWithoutMembersInput {
-  id: ID
-  name: String!
-  org: OrganizationCreateOneWithoutOrgRolesInput
-  suborg: SuborgCreateOneWithoutSuborgRolesInput
-  group: GroupCreateOneWithoutGroupRolesInput
-  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
 }
 
 input RoleCreateWithoutOrgInput {
   id: ID
-  name: String!
+  name: ROLENAME!
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  members: RoleMemberCreateManyWithoutRoleInput
+  users: UserCreateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
 }
 
 input RoleCreateWithoutSubgroupInput {
   id: ID
-  name: String!
+  name: ROLENAME!
   org: OrganizationCreateOneWithoutOrgRolesInput
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
-  members: RoleMemberCreateManyWithoutRoleInput
+  users: UserCreateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
 }
 
 input RoleCreateWithoutSubjectSubscriptionsInput {
   id: ID
-  name: String!
+  name: ROLENAME!
   org: OrganizationCreateOneWithoutOrgRolesInput
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  members: RoleMemberCreateManyWithoutRoleInput
+  users: UserCreateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
 }
 
 input RoleCreateWithoutSuborgInput {
   id: ID
-  name: String!
+  name: ROLENAME!
   org: OrganizationCreateOneWithoutOrgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  members: RoleMemberCreateManyWithoutRoleInput
+  users: UserCreateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
+  subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
+}
+
+input RoleCreateWithoutUsersInput {
+  id: ID
+  name: ROLENAME!
+  org: OrganizationCreateOneWithoutOrgRolesInput
+  suborg: SuborgCreateOneWithoutSuborgRolesInput
+  group: GroupCreateOneWithoutGroupRolesInput
+  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
+  description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
 }
 
@@ -6253,32 +8003,8 @@ type RoleMemberConnection {
 
 input RoleMemberCreateInput {
   id: ID
-  userid: UserCreateOneWithoutMyRolesInput!
-  role: RoleCreateOneWithoutMembersInput!
-  status: RoleStatus
-  description: String
-}
-
-input RoleMemberCreateManyWithoutRoleInput {
-  create: [RoleMemberCreateWithoutRoleInput!]
-  connect: [RoleMemberWhereUniqueInput!]
-}
-
-input RoleMemberCreateManyWithoutUseridInput {
-  create: [RoleMemberCreateWithoutUseridInput!]
-  connect: [RoleMemberWhereUniqueInput!]
-}
-
-input RoleMemberCreateWithoutRoleInput {
-  id: ID
-  userid: UserCreateOneWithoutMyRolesInput!
-  status: RoleStatus
-  description: String
-}
-
-input RoleMemberCreateWithoutUseridInput {
-  id: ID
-  role: RoleCreateOneWithoutMembersInput!
+  userid: UserCreateOneInput!
+  role: RoleCreateOneInput!
   status: RoleStatus
   description: String
 }
@@ -6309,60 +8035,6 @@ type RoleMemberPreviousValues {
   createdAt: DateTime!
 }
 
-input RoleMemberScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  status: RoleStatus
-  status_not: RoleStatus
-  status_in: [RoleStatus!]
-  status_not_in: [RoleStatus!]
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  AND: [RoleMemberScalarWhereInput!]
-  OR: [RoleMemberScalarWhereInput!]
-  NOT: [RoleMemberScalarWhereInput!]
-}
-
 type RoleMemberSubscriptionPayload {
   mutation: MutationType!
   node: RoleMember
@@ -6382,13 +8054,8 @@ input RoleMemberSubscriptionWhereInput {
 }
 
 input RoleMemberUpdateInput {
-  userid: UserUpdateOneRequiredWithoutMyRolesInput
-  role: RoleUpdateOneRequiredWithoutMembersInput
-  status: RoleStatus
-  description: String
-}
-
-input RoleMemberUpdateManyDataInput {
+  userid: UserUpdateOneRequiredInput
+  role: RoleUpdateOneRequiredInput
   status: RoleStatus
   description: String
 }
@@ -6396,69 +8063,6 @@ input RoleMemberUpdateManyDataInput {
 input RoleMemberUpdateManyMutationInput {
   status: RoleStatus
   description: String
-}
-
-input RoleMemberUpdateManyWithoutRoleInput {
-  create: [RoleMemberCreateWithoutRoleInput!]
-  delete: [RoleMemberWhereUniqueInput!]
-  connect: [RoleMemberWhereUniqueInput!]
-  set: [RoleMemberWhereUniqueInput!]
-  disconnect: [RoleMemberWhereUniqueInput!]
-  update: [RoleMemberUpdateWithWhereUniqueWithoutRoleInput!]
-  upsert: [RoleMemberUpsertWithWhereUniqueWithoutRoleInput!]
-  deleteMany: [RoleMemberScalarWhereInput!]
-  updateMany: [RoleMemberUpdateManyWithWhereNestedInput!]
-}
-
-input RoleMemberUpdateManyWithoutUseridInput {
-  create: [RoleMemberCreateWithoutUseridInput!]
-  delete: [RoleMemberWhereUniqueInput!]
-  connect: [RoleMemberWhereUniqueInput!]
-  set: [RoleMemberWhereUniqueInput!]
-  disconnect: [RoleMemberWhereUniqueInput!]
-  update: [RoleMemberUpdateWithWhereUniqueWithoutUseridInput!]
-  upsert: [RoleMemberUpsertWithWhereUniqueWithoutUseridInput!]
-  deleteMany: [RoleMemberScalarWhereInput!]
-  updateMany: [RoleMemberUpdateManyWithWhereNestedInput!]
-}
-
-input RoleMemberUpdateManyWithWhereNestedInput {
-  where: RoleMemberScalarWhereInput!
-  data: RoleMemberUpdateManyDataInput!
-}
-
-input RoleMemberUpdateWithoutRoleDataInput {
-  userid: UserUpdateOneRequiredWithoutMyRolesInput
-  status: RoleStatus
-  description: String
-}
-
-input RoleMemberUpdateWithoutUseridDataInput {
-  role: RoleUpdateOneRequiredWithoutMembersInput
-  status: RoleStatus
-  description: String
-}
-
-input RoleMemberUpdateWithWhereUniqueWithoutRoleInput {
-  where: RoleMemberWhereUniqueInput!
-  data: RoleMemberUpdateWithoutRoleDataInput!
-}
-
-input RoleMemberUpdateWithWhereUniqueWithoutUseridInput {
-  where: RoleMemberWhereUniqueInput!
-  data: RoleMemberUpdateWithoutUseridDataInput!
-}
-
-input RoleMemberUpsertWithWhereUniqueWithoutRoleInput {
-  where: RoleMemberWhereUniqueInput!
-  update: RoleMemberUpdateWithoutRoleDataInput!
-  create: RoleMemberCreateWithoutRoleInput!
-}
-
-input RoleMemberUpsertWithWhereUniqueWithoutUseridInput {
-  where: RoleMemberWhereUniqueInput!
-  update: RoleMemberUpdateWithoutUseridDataInput!
-  create: RoleMemberCreateWithoutUseridInput!
 }
 
 input RoleMemberWhereInput {
@@ -6521,6 +8125,24 @@ input RoleMemberWhereUniqueInput {
   id: ID
 }
 
+enum ROLENAME {
+  SUPERADMIN
+  ORGADMIN
+  SUBORGADMIN
+  GROUPADMIN
+  SUBGROUPADMIN
+  PARENT
+  TEACHER
+  TUTOR
+  CONTRIBUTOR
+  STUDENT
+  PLAYER
+  CAPTAIN
+  OWNER
+  SERVENT
+  SERVICE
+}
+
 enum RoleOrderByInput {
   id_ASC
   id_DESC
@@ -6528,6 +8150,10 @@ enum RoleOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  status_ASC
+  status_DESC
+  state_ASC
+  state_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -6536,8 +8162,10 @@ enum RoleOrderByInput {
 
 type RolePreviousValues {
   id: ID!
-  name: String!
+  name: ROLENAME!
   description: String
+  status: String
+  state: String
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -6557,20 +8185,10 @@ input RoleScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  name: ROLENAME
+  name_not: ROLENAME
+  name_in: [ROLENAME!]
+  name_not_in: [ROLENAME!]
   description: String
   description_not: String
   description_in: [String!]
@@ -6585,6 +8203,34 @@ input RoleScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  state: String
+  state_not: String
+  state_in: [String!]
+  state_not_in: [String!]
+  state_lt: String
+  state_lte: String
+  state_gt: String
+  state_gte: String
+  state_contains: String
+  state_not_contains: String
+  state_starts_with: String
+  state_not_starts_with: String
+  state_ends_with: String
+  state_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -6633,25 +8279,44 @@ input RoleSubscriptionWhereInput {
   NOT: [RoleSubscriptionWhereInput!]
 }
 
-input RoleUpdateInput {
-  name: String
+input RoleUpdateDataInput {
+  name: ROLENAME
   org: OrganizationUpdateOneWithoutOrgRolesInput
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  members: RoleMemberUpdateManyWithoutRoleInput
+  users: UserUpdateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
+  subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
+}
+
+input RoleUpdateInput {
+  name: ROLENAME
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  users: UserUpdateManyWithoutRolesInput
+  description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
 }
 
 input RoleUpdateManyDataInput {
-  name: String
+  name: ROLENAME
   description: String
+  status: String
+  state: String
 }
 
 input RoleUpdateManyMutationInput {
-  name: String
+  name: ROLENAME
   description: String
+  status: String
+  state: String
 }
 
 input RoleUpdateManyWithoutGroupInput {
@@ -6702,15 +8367,27 @@ input RoleUpdateManyWithoutSuborgInput {
   updateMany: [RoleUpdateManyWithWhereNestedInput!]
 }
 
+input RoleUpdateManyWithoutUsersInput {
+  create: [RoleCreateWithoutUsersInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutUsersInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
+}
+
 input RoleUpdateManyWithWhereNestedInput {
   where: RoleScalarWhereInput!
   data: RoleUpdateManyDataInput!
 }
 
-input RoleUpdateOneRequiredWithoutMembersInput {
-  create: RoleCreateWithoutMembersInput
-  update: RoleUpdateWithoutMembersDataInput
-  upsert: RoleUpsertWithoutMembersInput
+input RoleUpdateOneRequiredInput {
+  create: RoleCreateInput
+  update: RoleUpdateDataInput
+  upsert: RoleUpsertNestedInput
   connect: RoleWhereUniqueInput
 }
 
@@ -6722,62 +8399,74 @@ input RoleUpdateOneRequiredWithoutSubjectSubscriptionsInput {
 }
 
 input RoleUpdateWithoutGroupDataInput {
-  name: String
+  name: ROLENAME
   org: OrganizationUpdateOneWithoutOrgRolesInput
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  members: RoleMemberUpdateManyWithoutRoleInput
+  users: UserUpdateManyWithoutRolesInput
   description: String
-  subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
-}
-
-input RoleUpdateWithoutMembersDataInput {
-  name: String
-  org: OrganizationUpdateOneWithoutOrgRolesInput
-  suborg: SuborgUpdateOneWithoutSuborgRolesInput
-  group: GroupUpdateOneWithoutGroupRolesInput
-  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
 }
 
 input RoleUpdateWithoutOrgDataInput {
-  name: String
+  name: ROLENAME
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  members: RoleMemberUpdateManyWithoutRoleInput
+  users: UserUpdateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
 }
 
 input RoleUpdateWithoutSubgroupDataInput {
-  name: String
+  name: ROLENAME
   org: OrganizationUpdateOneWithoutOrgRolesInput
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
-  members: RoleMemberUpdateManyWithoutRoleInput
+  users: UserUpdateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
 }
 
 input RoleUpdateWithoutSubjectSubscriptionsDataInput {
-  name: String
+  name: ROLENAME
   org: OrganizationUpdateOneWithoutOrgRolesInput
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  members: RoleMemberUpdateManyWithoutRoleInput
+  users: UserUpdateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
 }
 
 input RoleUpdateWithoutSuborgDataInput {
-  name: String
+  name: ROLENAME
   org: OrganizationUpdateOneWithoutOrgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  members: RoleMemberUpdateManyWithoutRoleInput
+  users: UserUpdateManyWithoutRolesInput
   description: String
+  status: String
+  state: String
+  subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
+}
+
+input RoleUpdateWithoutUsersDataInput {
+  name: ROLENAME
+  org: OrganizationUpdateOneWithoutOrgRolesInput
+  suborg: SuborgUpdateOneWithoutSuborgRolesInput
+  group: GroupUpdateOneWithoutGroupRolesInput
+  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
+  description: String
+  status: String
+  state: String
   subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
 }
 
@@ -6801,9 +8490,14 @@ input RoleUpdateWithWhereUniqueWithoutSuborgInput {
   data: RoleUpdateWithoutSuborgDataInput!
 }
 
-input RoleUpsertWithoutMembersInput {
-  update: RoleUpdateWithoutMembersDataInput!
-  create: RoleCreateWithoutMembersInput!
+input RoleUpdateWithWhereUniqueWithoutUsersInput {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateWithoutUsersDataInput!
+}
+
+input RoleUpsertNestedInput {
+  update: RoleUpdateDataInput!
+  create: RoleCreateInput!
 }
 
 input RoleUpsertWithoutSubjectSubscriptionsInput {
@@ -6835,6 +8529,12 @@ input RoleUpsertWithWhereUniqueWithoutSuborgInput {
   create: RoleCreateWithoutSuborgInput!
 }
 
+input RoleUpsertWithWhereUniqueWithoutUsersInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateWithoutUsersDataInput!
+  create: RoleCreateWithoutUsersInput!
+}
+
 input RoleWhereInput {
   id: ID
   id_not: ID
@@ -6850,27 +8550,17 @@ input RoleWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  name: ROLENAME
+  name_not: ROLENAME
+  name_in: [ROLENAME!]
+  name_not_in: [ROLENAME!]
   org: OrganizationWhereInput
   suborg: SuborgWhereInput
   group: GroupWhereInput
   subgroup: SubGroupWhereInput
-  members_every: RoleMemberWhereInput
-  members_some: RoleMemberWhereInput
-  members_none: RoleMemberWhereInput
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
   description: String
   description_not: String
   description_in: [String!]
@@ -6885,6 +8575,34 @@ input RoleWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  state: String
+  state_not: String
+  state_in: [String!]
+  state_not_in: [String!]
+  state_lt: String
+  state_lte: String
+  state_gt: String
+  state_gte: String
+  state_contains: String
+  state_not_contains: String
+  state_starts_with: String
+  state_not_starts_with: String
+  state_ends_with: String
+  state_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -10366,16 +12084,18 @@ type Subscription {
   address(where: AddressSubscriptionWhereInput): AddressSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   content(where: ContentSubscriptionWhereInput): ContentSubscriptionPayload
-  educationRelationship(where: EducationRelationshipSubscriptionWhereInput): EducationRelationshipSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   groupMember(where: GroupMemberSubscriptionWhereInput): GroupMemberSubscriptionPayload
   medium(where: MediumSubscriptionWhereInput): MediumSubscriptionPayload
+  option(where: OptionSubscriptionWhereInput): OptionSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   personalProfile(where: PersonalProfileSubscriptionWhereInput): PersonalProfileSubscriptionPayload
+  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   profile(where: ProfileSubscriptionWhereInput): ProfileSubscriptionPayload
   question(where: QuestionSubscriptionWhereInput): QuestionSubscriptionPayload
   quiz(where: QuizSubscriptionWhereInput): QuizSubscriptionPayload
+  result(where: ResultSubscriptionWhereInput): ResultSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
   roleMember(where: RoleMemberSubscriptionWhereInput): RoleMemberSubscriptionPayload
   std(where: StdSubscriptionWhereInput): StdSubscriptionPayload
@@ -10388,6 +12108,7 @@ type Subscription {
   topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
   unit(where: UnitSubscriptionWhereInput): UnitSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
 }
 
 type Topic {
@@ -11885,12 +13606,9 @@ type User {
   subgroupmembers(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  myRoles(where: RoleMemberWhereInput, orderBy: RoleMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoleMember!]
+  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   myprofiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile!]
   subjectSubscription(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription!]
-  teachers(where: EducationRelationshipWhereInput, orderBy: EducationRelationshipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationRelationship!]
-  students(where: EducationRelationshipWhereInput, orderBy: EducationRelationshipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationRelationship!]
-  parents(where: EducationRelationshipWhereInput, orderBy: EducationRelationshipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationRelationship!]
   createdBy: String
   subjectByMe(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
   subjectUpddateByMe(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
@@ -11903,8 +13621,10 @@ type User {
   questionCreatedBy(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   questionUpdateddBy(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   quizCreatedBy(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
+  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
   updatedAt: DateTime!
   createdAt: DateTime!
+  result(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
 }
 
 type UserConnection {
@@ -11925,12 +13645,9 @@ input UserCreateInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -11943,6 +13660,8 @@ input UserCreateInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateManyWithoutContentUpdateByMeInput {
@@ -11952,6 +13671,11 @@ input UserCreateManyWithoutContentUpdateByMeInput {
 
 input UserCreateManyWithoutOrgInput {
   create: [UserCreateWithoutOrgInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutRolesInput {
+  create: [UserCreateWithoutRolesInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -11968,6 +13692,11 @@ input UserCreateManyWithoutSuborgInput {
 input UserCreateManyWithoutUnitUpdatedByMeInput {
   create: [UserCreateWithoutUnitUpdatedByMeInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCommentsInput {
@@ -11987,16 +13716,6 @@ input UserCreateOneWithoutGroupmembersInput {
 
 input UserCreateOneWithoutMyprofilesInput {
   create: UserCreateWithoutMyprofilesInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutMyRolesInput {
-  create: UserCreateWithoutMyRolesInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutParentsInput {
-  create: UserCreateWithoutParentsInput
   connect: UserWhereUniqueInput
 }
 
@@ -12020,8 +13739,8 @@ input UserCreateOneWithoutQuizCreatedByInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutStudentsInput {
-  create: UserCreateWithoutStudentsInput
+input UserCreateOneWithoutResultInput {
+  create: UserCreateWithoutResultInput
   connect: UserWhereUniqueInput
 }
 
@@ -12040,11 +13759,6 @@ input UserCreateOneWithoutSubjectSubscriptionInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutTeachersInput {
-  create: UserCreateWithoutTeachersInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreateOneWithoutTopicByMeInput {
   create: UserCreateWithoutTopicByMeInput
   connect: UserWhereUniqueInput
@@ -12060,6 +13774,11 @@ input UserCreateOneWithoutUnitByMeInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutVotesInput {
+  create: UserCreateWithoutVotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutCommentsInput {
   id: ID
   firstname: String!
@@ -12071,12 +13790,9 @@ input UserCreateWithoutCommentsInput {
   groupmembers: GroupMemberCreateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12089,6 +13805,8 @@ input UserCreateWithoutCommentsInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutContentByMeInput {
@@ -12103,12 +13821,9 @@ input UserCreateWithoutContentByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12120,6 +13835,8 @@ input UserCreateWithoutContentByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutContentUpdateByMeInput {
@@ -12134,12 +13851,9 @@ input UserCreateWithoutContentUpdateByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12151,6 +13865,8 @@ input UserCreateWithoutContentUpdateByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutGroupmembersInput {
@@ -12164,12 +13880,9 @@ input UserCreateWithoutGroupmembersInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12182,6 +13895,8 @@ input UserCreateWithoutGroupmembersInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutMyprofilesInput {
@@ -12196,11 +13911,8 @@ input UserCreateWithoutMyprofilesInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12213,37 +13925,8 @@ input UserCreateWithoutMyprofilesInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
-}
-
-input UserCreateWithoutMyRolesInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  org: OrganizationCreateOneWithoutAuthorInput
-  suborg: SuborgCreateManyWithoutAuthorInput
-  groupmembers: GroupMemberCreateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  myprofiles: ProfileCreateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
-  createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
-  unitByMe: UnitCreateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
-  topicByMe: TopicCreateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
-  contentByMe: ContentCreateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutOrgInput {
@@ -12257,12 +13940,9 @@ input UserCreateWithoutOrgInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12275,37 +13955,8 @@ input UserCreateWithoutOrgInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
-}
-
-input UserCreateWithoutParentsInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  org: OrganizationCreateOneWithoutAuthorInput
-  suborg: SuborgCreateManyWithoutAuthorInput
-  groupmembers: GroupMemberCreateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
-  myprofiles: ProfileCreateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
-  unitByMe: UnitCreateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
-  topicByMe: TopicCreateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
-  contentByMe: ContentCreateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -12319,12 +13970,9 @@ input UserCreateWithoutPostsInput {
   groupmembers: GroupMemberCreateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12337,6 +13985,8 @@ input UserCreateWithoutPostsInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutQuestionCreatedByInput {
@@ -12351,12 +14001,9 @@ input UserCreateWithoutQuestionCreatedByInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12368,6 +14015,8 @@ input UserCreateWithoutQuestionCreatedByInput {
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutQuestionUpdateddByInput {
@@ -12382,12 +14031,9 @@ input UserCreateWithoutQuestionUpdateddByInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12399,6 +14045,8 @@ input UserCreateWithoutQuestionUpdateddByInput {
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutQuizCreatedByInput {
@@ -12413,12 +14061,9 @@ input UserCreateWithoutQuizCreatedByInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12430,9 +14075,11 @@ input UserCreateWithoutQuizCreatedByInput {
   contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
-input UserCreateWithoutStudentsInput {
+input UserCreateWithoutResultInput {
   id: ID
   firstname: String!
   lastname: String!
@@ -12444,11 +14091,9 @@ input UserCreateWithoutStudentsInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12461,6 +14106,37 @@ input UserCreateWithoutStudentsInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutRolesInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+  createdBy: String
+  subjectByMe: SubjectCreateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
+  unitByMe: UnitCreateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
+  topicByMe: TopicCreateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
+  contentByMe: ContentCreateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutSubgroupmembersInput {
@@ -12474,12 +14150,9 @@ input UserCreateWithoutSubgroupmembersInput {
   groupmembers: GroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12492,6 +14165,8 @@ input UserCreateWithoutSubgroupmembersInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutSubjectByMeInput {
@@ -12506,12 +14181,9 @@ input UserCreateWithoutSubjectByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
@@ -12523,6 +14195,8 @@ input UserCreateWithoutSubjectByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutSubjectSubscriptionInput {
@@ -12537,11 +14211,8 @@ input UserCreateWithoutSubjectSubscriptionInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12554,6 +14225,8 @@ input UserCreateWithoutSubjectSubscriptionInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutSubjectUpddateByMeInput {
@@ -12568,12 +14241,9 @@ input UserCreateWithoutSubjectUpddateByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
@@ -12585,6 +14255,8 @@ input UserCreateWithoutSubjectUpddateByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutSuborgInput {
@@ -12598,12 +14270,9 @@ input UserCreateWithoutSuborgInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12616,37 +14285,8 @@ input UserCreateWithoutSuborgInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
-}
-
-input UserCreateWithoutTeachersInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  org: OrganizationCreateOneWithoutAuthorInput
-  suborg: SuborgCreateManyWithoutAuthorInput
-  groupmembers: GroupMemberCreateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
-  myprofiles: ProfileCreateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
-  createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
-  unitByMe: UnitCreateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
-  topicByMe: TopicCreateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
-  contentByMe: ContentCreateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutTopicByMeInput {
@@ -12661,12 +14301,9 @@ input UserCreateWithoutTopicByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12678,6 +14315,8 @@ input UserCreateWithoutTopicByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutTopicUpdateByMeInput {
@@ -12692,12 +14331,9 @@ input UserCreateWithoutTopicUpdateByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12709,6 +14345,8 @@ input UserCreateWithoutTopicUpdateByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutUnitByMeInput {
@@ -12723,12 +14361,9 @@ input UserCreateWithoutUnitByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12740,6 +14375,8 @@ input UserCreateWithoutUnitByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 input UserCreateWithoutUnitUpdatedByMeInput {
@@ -12754,12 +14391,9 @@ input UserCreateWithoutUnitUpdatedByMeInput {
   subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
   posts: PostCreateManyWithoutAuthorInput
   comments: CommentCreateManyWithoutAuthorInput
-  myRoles: RoleMemberCreateManyWithoutUseridInput
+  roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  teachers: EducationRelationshipCreateManyWithoutTeacherInput
-  students: EducationRelationshipCreateManyWithoutStudentInput
-  parents: EducationRelationshipCreateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectCreateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
@@ -12771,6 +14405,38 @@ input UserCreateWithoutUnitUpdatedByMeInput {
   questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
   quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  votes: VoteCreateManyWithoutUserInput
+  result: ResultCreateManyWithoutUserIdInput
+}
+
+input UserCreateWithoutVotesInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: OrganizationCreateOneWithoutAuthorInput
+  suborg: SuborgCreateManyWithoutAuthorInput
+  groupmembers: GroupMemberCreateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  roles: RoleCreateManyWithoutUsersInput
+  myprofiles: ProfileCreateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
+  createdBy: String
+  subjectByMe: SubjectCreateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
+  unitByMe: UnitCreateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
+  topicByMe: TopicCreateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
+  contentByMe: ContentCreateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
+  result: ResultCreateManyWithoutUserIdInput
 }
 
 type UserEdge {
@@ -12932,7 +14598,7 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateInput {
+input UserUpdateDataInput {
   firstname: String
   lastname: String
   email: String
@@ -12943,12 +14609,9 @@ input UserUpdateInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -12961,6 +14624,38 @@ input UserUpdateInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
+}
+
+input UserUpdateInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  roles: RoleUpdateManyWithoutUsersInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  createdBy: String
+  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
+  unitByMe: UnitUpdateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
+  topicByMe: TopicUpdateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
+  contentByMe: ContentUpdateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateManyDataInput {
@@ -12999,6 +14694,18 @@ input UserUpdateManyWithoutOrgInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutOrgInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutOrgInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutRolesInput {
+  create: [UserCreateWithoutRolesInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRolesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRolesInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -13044,6 +14751,13 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
   update: UserUpdateWithoutCommentsDataInput
@@ -13065,13 +14779,6 @@ input UserUpdateOneRequiredWithoutMyprofilesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutMyRolesInput {
-  create: UserCreateWithoutMyRolesInput
-  update: UserUpdateWithoutMyRolesDataInput
-  upsert: UserUpsertWithoutMyRolesInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneRequiredWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
@@ -13083,6 +14790,13 @@ input UserUpdateOneRequiredWithoutQuizCreatedByInput {
   create: UserCreateWithoutQuizCreatedByInput
   update: UserUpdateWithoutQuizCreatedByDataInput
   upsert: UserUpsertWithoutQuizCreatedByInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutResultInput {
+  create: UserCreateWithoutResultInput
+  update: UserUpdateWithoutResultDataInput
+  upsert: UserUpsertWithoutResultInput
   connect: UserWhereUniqueInput
 }
 
@@ -13109,15 +14823,6 @@ input UserUpdateOneWithoutContentByMeInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutParentsInput {
-  create: UserCreateWithoutParentsInput
-  update: UserUpdateWithoutParentsDataInput
-  upsert: UserUpsertWithoutParentsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneWithoutQuestionCreatedByInput {
   create: UserCreateWithoutQuestionCreatedByInput
   update: UserUpdateWithoutQuestionCreatedByDataInput
@@ -13136,28 +14841,10 @@ input UserUpdateOneWithoutQuestionUpdateddByInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutStudentsInput {
-  create: UserCreateWithoutStudentsInput
-  update: UserUpdateWithoutStudentsDataInput
-  upsert: UserUpsertWithoutStudentsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneWithoutSubjectByMeInput {
   create: UserCreateWithoutSubjectByMeInput
   update: UserUpdateWithoutSubjectByMeDataInput
   upsert: UserUpsertWithoutSubjectByMeInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateOneWithoutTeachersInput {
-  create: UserCreateWithoutTeachersInput
-  update: UserUpdateWithoutTeachersDataInput
-  upsert: UserUpsertWithoutTeachersInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput
@@ -13190,6 +14877,15 @@ input UserUpdateOneWithoutUnitByMeInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneWithoutVotesInput {
+  create: UserCreateWithoutVotesInput
+  update: UserUpdateWithoutVotesDataInput
+  upsert: UserUpsertWithoutVotesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutCommentsDataInput {
   firstname: String
   lastname: String
@@ -13200,12 +14896,9 @@ input UserUpdateWithoutCommentsDataInput {
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13218,6 +14911,8 @@ input UserUpdateWithoutCommentsDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutContentByMeDataInput {
@@ -13231,12 +14926,9 @@ input UserUpdateWithoutContentByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13248,6 +14940,8 @@ input UserUpdateWithoutContentByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutContentUpdateByMeDataInput {
@@ -13261,12 +14955,9 @@ input UserUpdateWithoutContentUpdateByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13278,6 +14969,8 @@ input UserUpdateWithoutContentUpdateByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutGroupmembersDataInput {
@@ -13290,12 +14983,9 @@ input UserUpdateWithoutGroupmembersDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13308,6 +14998,8 @@ input UserUpdateWithoutGroupmembersDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutMyprofilesDataInput {
@@ -13321,11 +15013,8 @@ input UserUpdateWithoutMyprofilesDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13338,36 +15027,8 @@ input UserUpdateWithoutMyprofilesDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
-}
-
-input UserUpdateWithoutMyRolesDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  myprofiles: ProfileUpdateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
-  createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
-  unitByMe: UnitUpdateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
-  topicByMe: TopicUpdateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
-  contentByMe: ContentUpdateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutOrgDataInput {
@@ -13380,12 +15041,9 @@ input UserUpdateWithoutOrgDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13398,36 +15056,8 @@ input UserUpdateWithoutOrgDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
-}
-
-input UserUpdateWithoutParentsDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
-  myprofiles: ProfileUpdateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
-  unitByMe: UnitUpdateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
-  topicByMe: TopicUpdateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
-  contentByMe: ContentUpdateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -13440,12 +15070,9 @@ input UserUpdateWithoutPostsDataInput {
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13458,6 +15085,8 @@ input UserUpdateWithoutPostsDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutQuestionCreatedByDataInput {
@@ -13471,12 +15100,9 @@ input UserUpdateWithoutQuestionCreatedByDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13488,6 +15114,8 @@ input UserUpdateWithoutQuestionCreatedByDataInput {
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutQuestionUpdateddByDataInput {
@@ -13501,12 +15129,9 @@ input UserUpdateWithoutQuestionUpdateddByDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13518,6 +15143,8 @@ input UserUpdateWithoutQuestionUpdateddByDataInput {
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutQuizCreatedByDataInput {
@@ -13531,12 +15158,9 @@ input UserUpdateWithoutQuizCreatedByDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13548,9 +15172,11 @@ input UserUpdateWithoutQuizCreatedByDataInput {
   contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
-input UserUpdateWithoutStudentsDataInput {
+input UserUpdateWithoutResultDataInput {
   firstname: String
   lastname: String
   email: String
@@ -13561,11 +15187,9 @@ input UserUpdateWithoutStudentsDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13578,6 +15202,36 @@ input UserUpdateWithoutStudentsDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutRolesDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  createdBy: String
+  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
+  unitByMe: UnitUpdateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
+  topicByMe: TopicUpdateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
+  contentByMe: ContentUpdateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutSubgroupmembersDataInput {
@@ -13590,12 +15244,9 @@ input UserUpdateWithoutSubgroupmembersDataInput {
   groupmembers: GroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13608,6 +15259,8 @@ input UserUpdateWithoutSubgroupmembersDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutSubjectByMeDataInput {
@@ -13621,12 +15274,9 @@ input UserUpdateWithoutSubjectByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
@@ -13638,6 +15288,8 @@ input UserUpdateWithoutSubjectByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutSubjectSubscriptionDataInput {
@@ -13651,11 +15303,8 @@ input UserUpdateWithoutSubjectSubscriptionDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13668,6 +15317,8 @@ input UserUpdateWithoutSubjectSubscriptionDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutSubjectUpddateByMeDataInput {
@@ -13681,12 +15332,9 @@ input UserUpdateWithoutSubjectUpddateByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
@@ -13698,6 +15346,8 @@ input UserUpdateWithoutSubjectUpddateByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutSuborgDataInput {
@@ -13710,12 +15360,9 @@ input UserUpdateWithoutSuborgDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13728,36 +15375,8 @@ input UserUpdateWithoutSuborgDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
-}
-
-input UserUpdateWithoutTeachersDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
-  myprofiles: ProfileUpdateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
-  createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
-  unitByMe: UnitUpdateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
-  topicByMe: TopicUpdateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
-  contentByMe: ContentUpdateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutTopicByMeDataInput {
@@ -13771,12 +15390,9 @@ input UserUpdateWithoutTopicByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13788,6 +15404,8 @@ input UserUpdateWithoutTopicByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutTopicUpdateByMeDataInput {
@@ -13801,12 +15419,9 @@ input UserUpdateWithoutTopicUpdateByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13818,6 +15433,8 @@ input UserUpdateWithoutTopicUpdateByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutUnitByMeDataInput {
@@ -13831,12 +15448,9 @@ input UserUpdateWithoutUnitByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13848,6 +15462,8 @@ input UserUpdateWithoutUnitByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithoutUnitUpdatedByMeDataInput {
@@ -13861,12 +15477,9 @@ input UserUpdateWithoutUnitUpdatedByMeDataInput {
   subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
   posts: PostUpdateManyWithoutAuthorInput
   comments: CommentUpdateManyWithoutAuthorInput
-  myRoles: RoleMemberUpdateManyWithoutUseridInput
+  roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  teachers: EducationRelationshipUpdateManyWithoutTeacherInput
-  students: EducationRelationshipUpdateManyWithoutStudentInput
-  parents: EducationRelationshipUpdateManyWithoutParentInput
   createdBy: String
   subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
@@ -13878,6 +15491,37 @@ input UserUpdateWithoutUnitUpdatedByMeDataInput {
   questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
   questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
   quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  votes: VoteUpdateManyWithoutUserInput
+  result: ResultUpdateManyWithoutUserIdInput
+}
+
+input UserUpdateWithoutVotesDataInput {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: OrganizationUpdateOneWithoutAuthorInput
+  suborg: SuborgUpdateManyWithoutAuthorInput
+  groupmembers: GroupMemberUpdateManyWithoutUseridInput
+  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  roles: RoleUpdateManyWithoutUsersInput
+  myprofiles: ProfileUpdateManyWithoutUserIdInput
+  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
+  createdBy: String
+  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
+  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
+  unitByMe: UnitUpdateManyWithoutCreatedByInput
+  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
+  topicByMe: TopicUpdateManyWithoutCreatedByInput
+  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
+  contentByMe: ContentUpdateManyWithoutCreatedByInput
+  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
+  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
+  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
+  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
+  result: ResultUpdateManyWithoutUserIdInput
 }
 
 input UserUpdateWithWhereUniqueWithoutContentUpdateByMeInput {
@@ -13888,6 +15532,11 @@ input UserUpdateWithWhereUniqueWithoutContentUpdateByMeInput {
 input UserUpdateWithWhereUniqueWithoutOrgInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutOrgDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutRolesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutRolesDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput {
@@ -13903,6 +15552,11 @@ input UserUpdateWithWhereUniqueWithoutSuborgInput {
 input UserUpdateWithWhereUniqueWithoutUnitUpdatedByMeInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutUnitUpdatedByMeDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutCommentsInput {
@@ -13925,16 +15579,6 @@ input UserUpsertWithoutMyprofilesInput {
   create: UserCreateWithoutMyprofilesInput!
 }
 
-input UserUpsertWithoutMyRolesInput {
-  update: UserUpdateWithoutMyRolesDataInput!
-  create: UserCreateWithoutMyRolesInput!
-}
-
-input UserUpsertWithoutParentsInput {
-  update: UserUpdateWithoutParentsDataInput!
-  create: UserCreateWithoutParentsInput!
-}
-
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
@@ -13955,9 +15599,9 @@ input UserUpsertWithoutQuizCreatedByInput {
   create: UserCreateWithoutQuizCreatedByInput!
 }
 
-input UserUpsertWithoutStudentsInput {
-  update: UserUpdateWithoutStudentsDataInput!
-  create: UserCreateWithoutStudentsInput!
+input UserUpsertWithoutResultInput {
+  update: UserUpdateWithoutResultDataInput!
+  create: UserCreateWithoutResultInput!
 }
 
 input UserUpsertWithoutSubgroupmembersInput {
@@ -13975,11 +15619,6 @@ input UserUpsertWithoutSubjectSubscriptionInput {
   create: UserCreateWithoutSubjectSubscriptionInput!
 }
 
-input UserUpsertWithoutTeachersInput {
-  update: UserUpdateWithoutTeachersDataInput!
-  create: UserCreateWithoutTeachersInput!
-}
-
 input UserUpsertWithoutTopicByMeInput {
   update: UserUpdateWithoutTopicByMeDataInput!
   create: UserCreateWithoutTopicByMeInput!
@@ -13995,6 +15634,11 @@ input UserUpsertWithoutUnitByMeInput {
   create: UserCreateWithoutUnitByMeInput!
 }
 
+input UserUpsertWithoutVotesInput {
+  update: UserUpdateWithoutVotesDataInput!
+  create: UserCreateWithoutVotesInput!
+}
+
 input UserUpsertWithWhereUniqueWithoutContentUpdateByMeInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutContentUpdateByMeDataInput!
@@ -14005,6 +15649,12 @@ input UserUpsertWithWhereUniqueWithoutOrgInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutOrgDataInput!
   create: UserCreateWithoutOrgInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutRolesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutRolesDataInput!
+  create: UserCreateWithoutRolesInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput {
@@ -14112,24 +15762,15 @@ input UserWhereInput {
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
-  myRoles_every: RoleMemberWhereInput
-  myRoles_some: RoleMemberWhereInput
-  myRoles_none: RoleMemberWhereInput
+  roles_every: RoleWhereInput
+  roles_some: RoleWhereInput
+  roles_none: RoleWhereInput
   myprofiles_every: ProfileWhereInput
   myprofiles_some: ProfileWhereInput
   myprofiles_none: ProfileWhereInput
   subjectSubscription_every: SubjectSubscriptionWhereInput
   subjectSubscription_some: SubjectSubscriptionWhereInput
   subjectSubscription_none: SubjectSubscriptionWhereInput
-  teachers_every: EducationRelationshipWhereInput
-  teachers_some: EducationRelationshipWhereInput
-  teachers_none: EducationRelationshipWhereInput
-  students_every: EducationRelationshipWhereInput
-  students_some: EducationRelationshipWhereInput
-  students_none: EducationRelationshipWhereInput
-  parents_every: EducationRelationshipWhereInput
-  parents_some: EducationRelationshipWhereInput
-  parents_none: EducationRelationshipWhereInput
   createdBy: String
   createdBy_not: String
   createdBy_in: [String!]
@@ -14177,6 +15818,9 @@ input UserWhereInput {
   quizCreatedBy_every: QuizWhereInput
   quizCreatedBy_some: QuizWhereInput
   quizCreatedBy_none: QuizWhereInput
+  votes_every: VoteWhereInput
+  votes_some: VoteWhereInput
+  votes_none: VoteWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -14193,6 +15837,9 @@ input UserWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  result_every: ResultWhereInput
+  result_some: ResultWhereInput
+  result_none: ResultWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -14201,6 +15848,219 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   email: String
+}
+
+type Vote {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  option: Option
+  user: User
+}
+
+type VoteConnection {
+  pageInfo: PageInfo!
+  edges: [VoteEdge]!
+  aggregate: AggregateVote!
+}
+
+input VoteCreateInput {
+  id: ID
+  option: OptionCreateOneWithoutVotesInput
+  user: UserCreateOneWithoutVotesInput
+}
+
+input VoteCreateManyWithoutOptionInput {
+  create: [VoteCreateWithoutOptionInput!]
+  connect: [VoteWhereUniqueInput!]
+}
+
+input VoteCreateManyWithoutUserInput {
+  create: [VoteCreateWithoutUserInput!]
+  connect: [VoteWhereUniqueInput!]
+}
+
+input VoteCreateWithoutOptionInput {
+  id: ID
+  user: UserCreateOneWithoutVotesInput
+}
+
+input VoteCreateWithoutUserInput {
+  id: ID
+  option: OptionCreateOneWithoutVotesInput
+}
+
+type VoteEdge {
+  node: Vote!
+  cursor: String!
+}
+
+enum VoteOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type VotePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input VoteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [VoteScalarWhereInput!]
+  OR: [VoteScalarWhereInput!]
+  NOT: [VoteScalarWhereInput!]
+}
+
+type VoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Vote
+  updatedFields: [String!]
+  previousValues: VotePreviousValues
+}
+
+input VoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VoteWhereInput
+  AND: [VoteSubscriptionWhereInput!]
+  OR: [VoteSubscriptionWhereInput!]
+  NOT: [VoteSubscriptionWhereInput!]
+}
+
+input VoteUpdateInput {
+  option: OptionUpdateOneWithoutVotesInput
+  user: UserUpdateOneWithoutVotesInput
+}
+
+input VoteUpdateManyWithoutOptionInput {
+  create: [VoteCreateWithoutOptionInput!]
+  delete: [VoteWhereUniqueInput!]
+  connect: [VoteWhereUniqueInput!]
+  set: [VoteWhereUniqueInput!]
+  disconnect: [VoteWhereUniqueInput!]
+  update: [VoteUpdateWithWhereUniqueWithoutOptionInput!]
+  upsert: [VoteUpsertWithWhereUniqueWithoutOptionInput!]
+  deleteMany: [VoteScalarWhereInput!]
+}
+
+input VoteUpdateManyWithoutUserInput {
+  create: [VoteCreateWithoutUserInput!]
+  delete: [VoteWhereUniqueInput!]
+  connect: [VoteWhereUniqueInput!]
+  set: [VoteWhereUniqueInput!]
+  disconnect: [VoteWhereUniqueInput!]
+  update: [VoteUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [VoteUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [VoteScalarWhereInput!]
+}
+
+input VoteUpdateWithoutOptionDataInput {
+  user: UserUpdateOneWithoutVotesInput
+}
+
+input VoteUpdateWithoutUserDataInput {
+  option: OptionUpdateOneWithoutVotesInput
+}
+
+input VoteUpdateWithWhereUniqueWithoutOptionInput {
+  where: VoteWhereUniqueInput!
+  data: VoteUpdateWithoutOptionDataInput!
+}
+
+input VoteUpdateWithWhereUniqueWithoutUserInput {
+  where: VoteWhereUniqueInput!
+  data: VoteUpdateWithoutUserDataInput!
+}
+
+input VoteUpsertWithWhereUniqueWithoutOptionInput {
+  where: VoteWhereUniqueInput!
+  update: VoteUpdateWithoutOptionDataInput!
+  create: VoteCreateWithoutOptionInput!
+}
+
+input VoteUpsertWithWhereUniqueWithoutUserInput {
+  where: VoteWhereUniqueInput!
+  update: VoteUpdateWithoutUserDataInput!
+  create: VoteCreateWithoutUserInput!
+}
+
+input VoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  option: OptionWhereInput
+  user: UserWhereInput
+  AND: [VoteWhereInput!]
+  OR: [VoteWhereInput!]
+  NOT: [VoteWhereInput!]
+}
+
+input VoteWhereUniqueInput {
+  id: ID
 }
 `
       }

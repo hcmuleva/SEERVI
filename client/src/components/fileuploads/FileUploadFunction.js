@@ -1,6 +1,5 @@
 import S3 from 'react-aws-s3'
 import {aws} from './keys'
-
 const config={
     accessKeyId:aws.accessKeyId,
     secretAccessKey:aws.secretAccessKey,
@@ -15,7 +14,7 @@ const config={
     console.log("Modified config",JSON.stringify(config))
     return ReactS3Client.uploadFile(file)
     .then((data)=>{
-        console.log(data)
+        console.log("Full Data",data)
         console.log(data.location)
         return data.location
     })

@@ -1,9 +1,0 @@
-type EducationRelationship{
-    id:ID! @id
-    description:String
-    teacher:User  @relation(name: "TeacherToUser", onDelete: SET_NULL)
-    parent:User   @relation(name: "ParentToUser", onDelete: SET_NULL)
-    student:User  @relation(name: "StudentToUser", onDelete: SET_NULL)
-    updatedAt:DateTime!         @updatedAt
-    createdAt:DateTime!         @createdAt
-}

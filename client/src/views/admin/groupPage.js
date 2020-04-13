@@ -13,7 +13,7 @@ import {
 } from "shards-react";
 import RoleViewComponent from './RoleViewComponent'
 import { useQuery ,useMutation} from '@apollo/react-hooks';
-import{CREATE_GROUP,UPDATE_GROUP,DELETE_GROUP} from '../mutations/org.js'
+import{CREATE_GROUP,UPDATE_GROUP,DELETE_GROUP} from '../../graphql/mutations/group/groupmgmt'
 import {GET_GROUPSOFSUBORG,GET_GROUPROLES} from '../queries/getAllOrgs'
 function  Groups(props) {
     console.log("Groups props.id",props.id)

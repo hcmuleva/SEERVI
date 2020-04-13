@@ -1,0 +1,35 @@
+
+
+type Role{
+  id:ID!                      @id
+  name:ROLENAME!
+  org:Organization           @relation(name: "RoleToOrg", onDelete: SET_NULL)
+  suborg:Suborg              @relation(name: "RoleToSubORG", onDelete: SET_NULL)
+  group:Group                @relation(name: "RoleToGroup", onDelete: SET_NULL)
+  subgroup:SubGroup          @relation(name: "RoleToSubGroup", onDelete: SET_NULL)
+  users:[User!]!             @relation(name: "RoleToUser", onDelete: SET_NULL)
+  description:String
+  status:String
+  state:String
+  updatedAt:DateTime!         @updatedAt
+  createdAt:DateTime!         @createdAt
+  subjectSubscriptions: [SubjectSubscription!]!    @relation(name: "SubjectSubscriptionToRole", onDelete: CASCADE)
+}
+
+enum ROLENAME {
+  SUPERADMIN,
+  ORGADMIN,
+  SUBORGADMIN,
+  GROUPADMIN,
+  SUBGROUPADMIN,
+  PARENT,
+  TEACHER,
+  TUTOR,
+  CONTRIBUTOR,
+  STUDENT,
+  PLAYER,
+  CAPTAIN,
+  OWNER,
+  SERVENT,
+  SERVICE
+}

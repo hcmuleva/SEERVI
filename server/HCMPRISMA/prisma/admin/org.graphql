@@ -1,116 +1,98 @@
-type Organization{
-  id:ID! @id
-  name:String!
-  description:String
-  author:[User!]!     @relation(name: "UserToOrg", onDelete: CASCADE )
-  suborgs:[Suborg!]!  @relation(name: "SuborgToOrg", onDelete: CASCADE)
-  orgRoles:[Role!]!    @relation(name: "RoleToOrg", onDelete: CASCADE)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-}
-type Suborg{
+type Organization {
   id: ID! @id
-  name:String!
-  description:String
-  author:[User!]!               @relation(name: "UserToSubOrg", onDelete: CASCADE)
-  org:Organization!             @relation(name: "SuborgToOrg", onDelete: SET_NULL )
-  userGroups:[Group!]!          @relation(name: "GroupToSuborg", onDelete: CASCADE )
-  suborgRoles:[Role!]!          @relation(name: "RoleToSubOrg", onDelete: CASCADE)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
+  name: String!
+  logo: String
+  color: String
+  description: String
+  author: [User!]! @relation(name: "UserToOrg", onDelete: CASCADE)
+  suborgs: [Suborg!]! @relation(name: "SuborgToOrg", onDelete: CASCADE)
+  orgRoles: [Role!]! @relation(name: "RoleToOrg", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}
+type Suborg {
+  id: ID! @id
+  name: String!
+  description: String
+  author: [User!]! @relation(name: "UserToSubOrg", onDelete: CASCADE)
+  org: Organization! @relation(name: "SuborgToOrg", onDelete: SET_NULL)
+  userGroups: [Group!]! @relation(name: "GroupToSuborg", onDelete: CASCADE)
+  suborgRoles: [Role!]! @relation(name: "RoleToSubOrg", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }
 
-
-type Group{
-  id: ID!                     @id
-  name:String!
-  description:String 
-  suborgid:Suborg!            @relation(name: "GroupToSuborg", onDelete: SET_NULL )
-  subgroups:[SubGroup!]!      @relation(name: "SubGroupToGroup", onDelete: CASCADE)
-  members:[GroupMember!]!     @relation(name: "GroupMemberToGroup", onDelete: CASCADE)
-  groupRoles:[Role!]!         @relation(name: "RoleToGroup", onDelete: CASCADE)
-  subjects:[Subject!]!        @relation(name: "SubjectToGroup", onDelete: CASCADE)
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
+type Group {
+  id: ID! @id
+  name: String!
+  description: String
+  suborgid: Suborg! @relation(name: "GroupToSuborg", onDelete: SET_NULL)
+  subgroups: [SubGroup!]! @relation(name: "SubGroupToGroup", onDelete: CASCADE)
+  members: [GroupMember!]!
+    @relation(name: "GroupMemberToGroup", onDelete: CASCADE)
+  groupRoles: [Role!]! @relation(name: "RoleToGroup", onDelete: CASCADE)
+  subjects: [Subject!]! @relation(name: "SubjectToGroup", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }
 
-type GroupMember{
-  id:ID!                      @id
-  userid:User!                @relation(name: "GroupMemberToUser", onDelete: SET_NULL)
-  member:Group!               @relation(name: "GroupMemberToGroup", onDelete: SET_NULL)
-  status:MemberStatus 
-  description:String
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
+type GroupMember {
+  id: ID! @id
+  userid: User! @relation(name: "GroupMemberToUser", onDelete: SET_NULL)
+  member: Group! @relation(name: "GroupMemberToGroup", onDelete: SET_NULL)
+  status: MemberStatus
+  description: String
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }
 
-
-
-type SubGroup{
-  id: ID!                     @id
-  name:String!
-  description:String 
-  groupid:Group!              @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
-  members:[SubGroupMember!]!  @relation(name: "SubGroupMemberToGroup", onDelete: CASCADE )
-  subgroupRoles:[Role!]!      @relation(name: "RoleToSubGroup", onDelete: CASCADE)
-  subjects:[Subject!]!        @relation(name: "SubjectToSubGroup", onDelete: CASCADE)
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
+type SubGroup {
+  id: ID! @id
+  name: String!
+  description: String
+  groupid: Group! @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
+  members: [SubGroupMember!]!
+    @relation(name: "SubGroupMemberToGroup", onDelete: CASCADE)
+  subgroupRoles: [Role!]! @relation(name: "RoleToSubGroup", onDelete: CASCADE)
+  subjects: [Subject!]! @relation(name: "SubjectToSubGroup", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }
 
-
-type SubGroupMember{
-  id:ID!                      @id
-  userid:User!                @relation(name: "SubGroupMemberToUser", onDelete: SET_NULL)
-  member:SubGroup!            @relation(name: "SubGroupMemberToGroup", onDelete: SET_NULL)
-  status:MemberStatus 
-  description:String
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
+type SubGroupMember {
+  id: ID! @id
+  userid: User! @relation(name: "SubGroupMemberToUser", onDelete: SET_NULL)
+  member: SubGroup! @relation(name: "SubGroupMemberToGroup", onDelete: SET_NULL)
+  status: MemberStatus
+  description: String
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }
 
-
-type Role{
-  id:ID!                      @id
-  name:String!
-  org:Organization           @relation(name: "RoleToOrg", onDelete: SET_NULL)
-  suborg:Suborg              @relation(name: "RoleToSubORG", onDelete: SET_NULL)
-  group:Group                @relation(name: "RoleToGroup", onDelete: SET_NULL)
-  subgroup:SubGroup          @relation(name: "RoleToSubGroup", onDelete: SET_NULL)
-  members:[RoleMember!]!     @relation(name: "RoleMemberToRole", onDelete: CASCADE)
-  description:String
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
-  subjectSubscriptions: [SubjectSubscription!]!    @relation(name: "SubjectSubscriptionToRole", onDelete: CASCADE)
+type RoleMember {
+  id: ID! @id
+  userid: User! @relation(name: "RoleMemberToUser", onDelete: SET_NULL)
+  role: Role! @relation(name: "RoleMemberToRole", onDelete: SET_NULL)
+  status: RoleStatus
+  description: String
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }
 
-
-type RoleMember{
-  id:ID!                      @id
-  userid:User!                @relation(name: "RoleMemberToUser", onDelete: SET_NULL)
-  role:Role!                  @relation(name: "RoleMemberToRole", onDelete: SET_NULL)
-  status:RoleStatus 
-  description:String
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
-}
-
-enum RoleStatus{
+enum RoleStatus {
   ACTIVE @default
   EXPIRED
   INACTIVE
   DORMANT
   RENEWED
   SPECIALGRANT
-
 }
 
-enum MemberStatus{
+enum MemberStatus {
   ACTIVE @default
   EXPIRED
   INACTIVE
   DORMANT
   RENEWED
   SPECIALGRANT
-
 }
