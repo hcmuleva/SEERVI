@@ -1,53 +1,62 @@
-type Profile{
-    id:ID! @id
-    name:String!
-    userId:User! @relation(name: "ProfilesToUser", onDelete: SET_NULL)
-    studentProfile:[StudentProfile!]! @relation(name: "StudentProfiileToProfiles", onDelete: CASCADE)
-    personalProfiile:[PersonalProfile!]! @relation(name: "PersonalProfileToProfile", onDelete: CASCADE)
+type Profile {
+  id: ID! @id
+  name: String!
+  userId: User! @relation(name: "ProfilesToUser", onDelete: SET_NULL)
+  EducationProfiles: [EducationProfile!]!
+    @relation(name: "EducationProfileToProfiles", onDelete: CASCADE)
+  personalProfiile: [PersonalProfile!]!
+    @relation(name: "PersonalProfileToProfile", onDelete: CASCADE)
 }
-type PersonalProfile{
-    id:ID! @id
-    name:String!  @default(value: "DefaultProfileName")
-    avatar:String!
-    mobile:String!
-    isMobilePublished:Boolean
-    addresses:[Address!]! @relation(name: "AddressToPersonalProfile", onDelete: CASCADE)
-    profileId:Profile! @relation(name: "PersonalProfileToProfile", onDelete: SET_NULL)
-
+type PersonalProfile {
+  id: ID! @id
+  name: String! @default(value: "DefaultProfileName")
+  avatar: String!
+  mobile: String!
+  isMobilePublished: Boolean
+  addresses: [Address!]!
+    @relation(name: "AddressToPersonalProfile", onDelete: CASCADE)
+  profileId: Profile!
+    @relation(name: "PersonalProfileToProfile", onDelete: SET_NULL)
 }
 type Address {
-  id:ID! @id
-  adressline:String!
-  tehsil:String!
-  city:String!
-  district:String!
-  state:String!
-  pincode:String!
-  personalProfile:PersonalProfile @relation(name: "AddressToPersonalProfile", onDelete: CASCADE)
+  id: ID! @id
+  adressline: String!
+  tehsil: String!
+  city: String!
+  district: String!
+  state: String!
+  pincode: String!
+  personalProfile: PersonalProfile
+    @relation(name: "AddressToPersonalProfile", onDelete: CASCADE)
 }
 
-type StudentProfile{
-    id:ID! @id
-    name:String!
-    profiileType:String
-    """
-    profiileType meaning: Scool, College, University
-    educationLevel: Primary, middle,hiighschool, highersecondary UG or PG PhD NA
-    education Type: Full Time, Part time , tution type, Training type
-    std: LKG, UKG ...11th 12th ....
-    result: Pass Fail Drop
-    status: active/inactive 
-    remark: 
-    attch certificates for this profile: This is TBD
-    """
-    educationLevel:String
-    educationType:String
-    specialization:String
-    std:String
-    startedYear:DateTime
-    completedYear:DateTime
-    result:String
-    status:String
-    remark:String
-    profileId:Profile! @relation(name: "StudentProfiileToProfiles", onDelete: SET_NULL)
+type EducationProfile {
+  id: ID! @id
+  name: String!
+  profiileType: String
+  """
+  profiileType meaning: Scool, College, University
+  educationLevel: Primary, middle,hiighschool, highersecondary UG or PG PhD NA
+  education Type: Full Time, Part time , tution type, Training type
+  std: LKG, UKG ...11th 12th ....
+  result: Pass Fail Drop
+  status: active/inactive
+  remark:
+  attch certificates for this profile: This is TBD
+  """
+  educationLevel: String
+  educationType: String
+  specialization: String
+  roles: [Role!]! @relation(name: "EducationProfileToRole", onDelete: SET_NULL)
+  subjects: [Subject!]!
+    @relation(name: "EducationProfileToSubject", onDelete: SET_NULL)
+  std: [Std!]! @relation(name: "EducationProfileToStd", onDelete: SET_NULL)
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+
+  profileId: Profile!
+    @relation(name: "EducationProfileToProfiles", onDelete: SET_NULL)
 }

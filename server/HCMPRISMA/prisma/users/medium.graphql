@@ -1,0 +1,7 @@
+type Medium {
+  id: ID! @id
+  name: String!
+  subjects: [Subject!]! @relation(name: "SubjectToMedium", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}

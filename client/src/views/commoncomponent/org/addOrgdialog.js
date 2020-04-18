@@ -17,6 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import { CREATE_ORG } from "../../../graphql/mutations/administration/org/orgmgmt";
 import { GET_ORGS } from "../../../graphql/queries/administration/org";
+import { CREATE_ORGROLE } from "../../../graphql/mutations/roles/rolemgmt";
 
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -28,6 +29,8 @@ const formObjectInit = {
 
 const CreateOrgDialog = () => {
   const [formObject, setFormObject] = useState(formObjectInit);
+  const [orgRoleCreate] = useMutation(CREATE_ORGROLE);
+
   const [open, setOpen] = React.useState(false);
   const [createOrg] = useMutation(CREATE_ORG);
   const [switchState, setSwitchState] = React.useState({
@@ -66,7 +69,19 @@ const CreateOrgDialog = () => {
       refetchQueries: [{ query: GET_ORGS }],
     })
       .then((res) => {
-        console.log("Created Org", res);
+        console.log(
+          "Created Orgres.data.createOrganization",
+          res.data.createOrganization
+        );
+        orgRoleCreate({
+          variables: {
+            name: "ORGADMIN",
+            description: "DEFAULT CREATED",
+            org: res.data.createOrganization.id,
+          },
+        }).then((roleResp) => {
+          console.log("Role ORGADMIN  CREATION DATA", roleResp);
+        });
       })
       .catch((err) => {
         throw new Error("Error in creating Org");

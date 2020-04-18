@@ -2,9 +2,12 @@ import React from "react";
 import MUIDataTable from "mui-datatables";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import Card from "@material-ui/core/Card";
+
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import CreateOrgDialog from "../org/addOrgdialog";
+import { Container, Row, Col } from "shards-react";
 export default function TBD() {
   const columns = [
     {
@@ -309,6 +312,7 @@ export default function TBD() {
     expandableRows: true,
     expandableRowsOnClick: true,
     isRowExpandable: (dataIndex, expandedRows) => {
+      console.log("DATA index", dataIndex, "   expandRows", expandedRows);
       // Prevent expand/collapse of any row if there are 4 rows expanded already (but allow those already expanded to be collapsed)
       if (
         expandedRows.data.length > 4 &&
@@ -317,19 +321,26 @@ export default function TBD() {
         return false;
       return true;
     },
-    rowsExpanded: [0, 1],
+    rowsExpanded: [],
     renderExpandableRow: (rowData, rowMeta) => {
       const colSpan = rowData.length + 1;
+      console.log("row data ", rowData);
       return (
         <TableRow>
           <TableCell colSpan={colSpan}>
-            Custom expandable row option. Data: {JSON.stringify(rowData)}
+            <Container fluid className="main-content-container px-4">
+              <Col lg="6" sm="12" className="mb-4">
+                <Card small className="card-post card-post--1">
+                  {rowData[0]}
+                </Card>
+              </Col>
+            </Container>
           </TableCell>
         </TableRow>
       );
     },
     onRowsExpand: (curExpanded, allExpanded) =>
-      console.log(curExpanded, allExpanded),
+      console.log("hhhh=>", curExpanded, allExpanded),
   };
   const theme = createMuiTheme({
     overrides: {

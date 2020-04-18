@@ -1,38 +1,48 @@
- async function createStd(parent, args, { prisma, request }, info) {
-    return await prisma.mutation.createStd({
-        stdname:args.data, branch:args.data.branch,year:args.data.year
-        }, info)
+async function createStd(parent, args, { prisma, request }, info) {
+  return await prisma.mutation.createStd(
+    {
+      gradename: args.data,
+      branch: args.data.branch,
+      year: args.data.year,
+      isPublished: args.data.isPublished
+    },
+    info
+  );
 }
- 
+
 async function deleteStd(parent, args, { prisma, request }, info) {
-    console.log("DELETE Std Request",args)
-    const stdExists = await prisma.exists.Std({
+  console.log("DELETE Std Request", args);
+  const stdExists = await prisma.exists.Std({
+    id: args.id
+  });
+  if (!stdExists) {
+    throw new Error("Unable to delete Std");
+  }
+  return prisma.mutation.deleteStd(
+    {
+      where: {
         id: args.id
-        
-    })
-    if (!stdExists) {
-        throw new Error('Unable to delete Std')
-    }    
-    return prisma.mutation.deleteStd({
-        where: {
-            id: args.id
-        }
-    }, info)
+      }
+    },
+    info
+  );
 }
 async function updateStd(parent, args, { prisma, request }, info) {
-    console.log("Update Std Request ", args)
-    const stdExists = await prisma.exists.Std({
+  console.log("Update Std Request ", args);
+  const stdExists = await prisma.exists.Std({
+    id: args.id
+  });
+  if (!stdExists) {
+    throw new Error("Unable to update std");
+  }
+  return prisma.mutation.updateStd(
+    {
+      where: {
         id: args.id
-        
-    })
-    if (!stdExists) {
-        throw new Error('Unable to update std')
-    }    
-   return prisma.mutation.updateStd({
-        where: {
-            id: args.id
-        },
-        data: args.data
-    }, info)
+      },
+      data: args.data
+    },
+    info
+  );
 }
-export {createStd,deleteStd,updateStd}
+export { createStd, deleteStd, updateStd };

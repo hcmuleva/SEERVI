@@ -1,42 +1,43 @@
 type User {
-  id: ID!                               @id
+  id: ID! @id
   firstname: String!
   lastname: String!
-  email: String!                        @unique
+  email: String! @unique
   password: String!
-  org:Organization                      @relation(name: "UserToOrg", onDelete: SET_NULL)
-  suborg:[Suborg]                       @relation(name: "UserToSubOrg", onDelete: SET_NULL)
-  groupmembers:[GroupMember!]!          @relation(name: "GroupMemberToUser", onDelete: CASCADE)
-  subgroupmembers:[SubGroupMember!]!    @relation(name: "SubGroupMemberToUser", onDelete: CASCADE)
-  posts: [Post!]!                       @relation(name: "PostToUser", onDelete: CASCADE)
-  comments: [Comment!]!                 @relation(name: "CommentToUser", onDelete: CASCADE)
-  roles:[Role!]!                        @relation(name: "RoleToUser", onDelete: SET_NULL)
-  myprofiles:[Profile!]!                @relation(name: "ProfilesToUser", onDelete: CASCADE)
-  subjectSubscription:[SubjectSubscription!]! @relation(name: "SubjectSubscriptionToUser", onDelete: CASCADE)
-  
-  createdBy:String
-  subjectByMe:[Subject!]!                     @relation(name: "SubjectToUser", onDelete: CASCADE)
-  subjectUpddateByMe:[Subject!]!              @relation(name: "SubjectToUserUpdate", onDelete: CASCADE)
-  unitByMe:[Unit!]!                           @relation(name: "UnitToUser", onDelete: CASCADE)
-  unitUpdatedByMe:[Unit!]!                    @relation(name: "UnitToUserUpdate", onDelete: CASCADE)
-  topicByMe:[Topic!]!                         @relation(name: "TopicToUser", onDelete: CASCADE)
-  topicUpdateByMe:[Topic!]!                   @relation(name: "TopicToUserUpdate", onDelete: CASCADE)
-  contentByMe:[Content!]!                     @relation(name: "ContentToUser", onDelete: CASCADE)
-  contentUpdateByMe:[Content!]!               @relation(name: "ContentToUserUpdate", onDelete: CASCADE)
-  questionCreatedBy: [Question!]!             @relation(name: "CreateQuestionToUser", onDelete: CASCADE)
-  questionUpdateddBy: [Question!]!            @relation(name: "UpdateQuestionToUser", onDelete: CASCADE)
-  quizCreatedBy:[Quiz!]!                      @relation(name: "QuizCreatedByToUser", onDelete: CASCADE)
-  votes: [Vote!]!                             @relation(name: "VoteToUser", onDelete: CASCADE)
-  updatedAt:DateTime!                         @updatedAt
-  createdAt:DateTime!                         @createdAt
-  result:[Result!]!                           @relation(name: "ResultToUser", onDelete: CASCADE)
-}
+  org: Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
+  suborg: [Suborg] @relation(name: "UserToSubOrg", onDelete: SET_NULL)
+  groupmembers: [GroupMember!]!
+    @relation(name: "GroupMemberToUser", onDelete: CASCADE)
+  subgroupmembers: [SubGroupMember!]!
+    @relation(name: "SubGroupMemberToUser", onDelete: CASCADE)
+  posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
+  comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
+  roles: [Role!]! @relation(name: "RoleToUser", onDelete: SET_NULL)
+  myprofiles: [Profile!]! @relation(name: "ProfilesToUser", onDelete: CASCADE)
+  subjectSubscription: [SubjectSubscription!]!
+    @relation(name: "SubjectSubscriptionToUser", onDelete: CASCADE)
 
-type Medium{
-  id:ID! @id
-  name: String!
-  subjects:[Subject!]!  @relation(name: "SubjectToMedium", onDelete: CASCADE)
-  updatedAt:DateTime!         @updatedAt
-  createdAt:DateTime!         @createdAt
+  createdBy: String
+  subjectByMe: [Subject!]! @relation(name: "SubjectToUser", onDelete: CASCADE)
+  subjectUpddateByMe: [Subject!]!
+    @relation(name: "SubjectToUserUpdate", onDelete: CASCADE)
+  unitByMe: [Unit!]! @relation(name: "UnitToUser", onDelete: CASCADE)
+  unitUpdatedByMe: [Unit!]!
+    @relation(name: "UnitToUserUpdate", onDelete: CASCADE)
+  topicByMe: [Topic!]! @relation(name: "TopicToUser", onDelete: CASCADE)
+  topicUpdateByMe: [Topic!]!
+    @relation(name: "TopicToUserUpdate", onDelete: CASCADE)
+  contentByMe: [Content!]! @relation(name: "ContentToUser", onDelete: CASCADE)
+  contentUpdateByMe: [Content!]!
+    @relation(name: "ContentToUserUpdate", onDelete: CASCADE)
+  questionCreatedBy: [Question!]!
+    @relation(name: "CreateQuestionToUser", onDelete: CASCADE)
+  questionUpdateddBy: [Question!]!
+    @relation(name: "UpdateQuestionToUser", onDelete: CASCADE)
+  quizCreatedBy: [Quiz!]!
+    @relation(name: "QuizCreatedByToUser", onDelete: CASCADE)
+  votes: [Vote!]! @relation(name: "VoteToUser", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  result: [Result!]! @relation(name: "ResultToUser", onDelete: CASCADE)
 }
-

@@ -5,26 +5,27 @@ import TableCell from "@material-ui/core/TableCell";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { ASSIGN_ORGADMIN_TO_USERS } from "../../../graphql/mutations/roles/rolemgmt";
+import { ASSIGN_ROLE_TO_USERS } from "../../../graphql/mutations/roles/rolemgmt";
 import { GET_ORGBYID } from "../../../graphql/queries/administration/org";
 
 import IconButton from "@material-ui/core/IconButton";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { styled } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core/styles";
+function iconStyles(type) {
+  return {
+    formObjectIcon: {
+      color: "blue",
+    },
+  };
+}
 export default function UserRoleAssignmentTabular(props) {
-  function iconStyles(type) {
-    return {
-      formObjectIcon: {
-        color: "blue",
-      },
-    };
-  }
+  console.log("PROPS of UserRoleAssignmentTabular ", props);
   const classes = makeStyles(iconStyles)(props.type);
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [usrSelected, setUsrSelected] = useState({});
   const [users, setUsers] = useState(null);
-  const [assignOrgAdminRole] = useMutation(ASSIGN_ORGADMIN_TO_USERS);
+  const [assignOrgAdminRole] = useMutation(ASSIGN_ROLE_TO_USERS);
 
   const [roleAssingData, setRoleAssingData] = useState([]);
   const {

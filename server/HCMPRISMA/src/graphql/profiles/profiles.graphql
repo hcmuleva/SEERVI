@@ -1,99 +1,112 @@
 type Query {
-  getAllProfiles:[Profile!]!
-  getStudentProfiles:[StudentProfile!]!
-  getMyProfiles(id:String!):[Profile!]!
+  getAllProfiles: [Profile!]!
+  getEducationProfiles: [EducationProfile!]!
+  getMyProfiles(id: String!): [Profile!]!
 }
 type Mutation {
-  createProfile(data:ProfilesInputData!):Profile!
-  createStudentProfile(data:StudentProfileInputData!):StudentProfile!
-  createPersonalProfile(data:PersonaProfileInputData!): PersonalProfile!
-  createAddress(data:AddressInputData!): Address!
+  createProfile(data: ProfilesInputData!): Profile!
+  createEducationProfile(data: EducationProfileInputData!): EducationProfile!
+  createPersonalProfile(data: PersonaProfileInputData!): PersonalProfile!
+  createAddress(data: AddressInputData!): Address!
+  assignProfileToRoles(id: ID!, data: RoleInput): EducationProfile!
+  assignProfileToStds(id: ID!, data: StdInput): EducationProfile!
 }
-type Profile{
-    id:ID!
-    name:String!
-    userId:User! 
-    studentProfile:[StudentProfile!]! 
-    personalProfiile:[PersonalProfile!]!
+type Profile {
+  id: ID!
+  name: String!
+  userId: User!
+  EducationProfile: [EducationProfile!]!
+  personalProfiile: [PersonalProfile!]!
 }
-type PersonalProfile{
-    id:ID!
-    name:String!
-    avatar:String!
-    mobile:String!
-    isMobilePublished:Boolean
-    addresses:[Address!]!
-    profileId:Profile!
+type PersonalProfile {
+  id: ID!
+  name: String!
+  avatar: String!
+  mobile: String!
+  isMobilePublished: Boolean
+  addresses: [Address!]!
+  profileId: Profile!
 }
 input PersonaProfileInputData {
-    name:String!
-    avatar:String!
-    mobile:String!
-    isMobilePublished:Boolean
-    profileId:String!
+  name: String!
+  avatar: String!
+  mobile: String!
+  isMobilePublished: Boolean
+  profileId: String!
 }
 type Address {
-  id:ID!
-  adressline:String!
-  tehsil:String!
-  city:String!
-  district:String!
-  state:String!
-  pincode:String!
-  personalProfile:PersonalProfile
+  id: ID!
+  adressline: String!
+  tehsil: String!
+  city: String!
+  district: String!
+  state: String!
+  pincode: String!
+  personalProfile: PersonalProfile
 }
-input AddressInputData{
-  adressline:String!
-  tehsil:String!
-  city:String!
-  district:String!
-  state:String!
-  pincode:String!
-  personalProfile:String
+input AddressInputData {
+  adressline: String!
+  tehsil: String!
+  city: String!
+  district: String!
+  state: String!
+  pincode: String!
+  personalProfile: String
 }
-type StudentProfile{
-    id:ID! 
-    name:String!
-    profiileType:String
-    """
-    profiileType meaning: Scool, College, University
-    educationLevel: Primary, middle,hiighschool, highersecondary UG or PG PhD NA
-    education Type: Full Time, Part time , tution type, Training type
-    std: LKG, UKG ...11th 12th ....
-    result: Pass Fail Drop
-    status: active/inactive 
-    remark: 
-    attch certificates for this profile: This is TBD
-    """
-    educationLevel:String
-    educationType:String
-    specialization:String
-    std:String
-    startedYear:DateTime
-    completedYear:DateTime
-    result:String
-    status:String
-    remark:String
-    profileId:Profile! 
-}
-
-input  ProfilesInputData{
-    name:String!
-    userId:String!
+type EducationProfile {
+  id: ID!
+  name: String!
+  profiileType: String
+  """
+  profiileType meaning: Scool, College, University
+  educationLevel: Primary, middle,hiighschool, highersecondary UG or PG PhD NA
+  education Type: Full Time, Part time , tution type, Training type
+  stds: LKG, UKG ...11th 12th ....
+  result: Pass Fail Drop
+  status: active/inactive
+  remark:
+  attch certificates for this profile: This is TBD
+  """
+  educationLevel: String
+  educationType: String
+  specialization: String
+  stds: [Std!]!
+  roles: [Role!]!
+  subjects: [Subject!]!
+  startedYear: DateTime
+  completedYear: DateTime
+  result: String
+  status: String
+  remark: String
+  profileId: Profile!
 }
 
-input StudentProfileInputData{
-    name:String!
-    profiileType:String
-    educationLevel:String
-    educationType:String
-    specialization:String
-    std:String
-    startedYear:String
-    completedYear:String
-    result:String
-    status:String
-    remark:String
-    profileId:String! 
-
+input ProfilesInputData {
+  name: String!
+  userId: String!
+}
+input RoleInput {
+  roles: Json
+}
+input StdInput {
+  stds: Json
+}
+input SubjecsInput {
+  subjects: Json
+}
+input EducationProfileInputData {
+  name: String!
+  profiileType: String
+  educationLevel: String
+  educationType: String
+  specialization: String
+  startedYear: String
+  roles: Json
+  stds: Json
+  subjects: Json
+  completedYear: String
+  result: String
+  status: String
+  remark: String
+  profileId: String!
 }

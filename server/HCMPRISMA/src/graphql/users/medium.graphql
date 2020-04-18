@@ -1,0 +1,19 @@
+type Query {
+  getAllMedium: [Medium!]!
+}
+type Mutation {
+  createMedium(data: MediumCreateInput!): Medium!
+  updateMedium(id: ID!, data: MediumUpdateInput!): Medium!
+  deleteMedium(id: ID!): Medium!
+}
+type Medium {
+  id: ID!
+  name: String!
+  subjects: [Subject!]!
+}
+input MediumCreateInput {
+  name: String!
+}
+input MediumUpdateInput {
+  name: String
+}

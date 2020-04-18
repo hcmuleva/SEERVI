@@ -14,6 +14,15 @@ import LoginMd from "../components/authentication/LoginMd";
 
 import SuperAdmin from "./users/superadmin";
 import OrgAdmin from "./users/orgadmin";
+import SubOrgAdmin from "./users/subOrgAdmin";
+import GroupAdmin from "./users/groupAdmin";
+import SubGroupAdmin from "./users/subgroupadmin";
+import Student from "./users/student";
+import Teacher from "./users/teacher";
+import Parent from "./users/parent";
+import Principal from "./users/principal";
+
+import TBD_EXP from "./users/TBD_EXP";
 // import OrgAdmin from "./EducationRoles/OrgAdmin";
 // import GroupAdmin from './EducationRoles/GroupAdmin';
 // import SubGroupAdmin from './EducationRoles/SubGroupAdmin';
@@ -54,6 +63,54 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: OrgAdmin,
+  },
+  {
+    path: "/subOrgAdmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: SubOrgAdmin,
+  },
+  {
+    path: "/groupAdmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: GroupAdmin,
+  },
+  {
+    path: "/subgroupAdmin",
+    exact: true,
+    layout: DefaultLayout,
+    component: SubGroupAdmin,
+  },
+  {
+    path: "/student",
+    exact: true,
+    layout: DefaultLayout,
+    component: Student,
+  },
+  {
+    path: "/teacher",
+    exact: true,
+    layout: DefaultLayout,
+    component: Teacher,
+  },
+  {
+    path: "/parent",
+    exact: true,
+    layout: DefaultLayout,
+    component: Parent,
+  },
+  {
+    path: "/principal",
+    exact: true,
+    layout: DefaultLayout,
+    component: Principal,
+  },
+  {
+    path: "/tbd",
+    exact: true,
+    layout: DefaultLayout,
+    component: TBD_EXP,
   },
   /** {
     path: "/register",

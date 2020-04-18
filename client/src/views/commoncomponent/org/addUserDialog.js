@@ -30,8 +30,7 @@ const formObjectInit = {
 };
 
 const CreateUserDataDialog = (props) => {
-  console.log("CreateUserDataDialog PROPS", props);
-
+  console.log("CREATE USER DATA DIaLOG from addUserDialog", props);
   formObjectInit["org"] = props.orgid;
   const [formObject, setFormObject] = useState(formObjectInit);
   const { createDataHandler } = props;
@@ -72,9 +71,10 @@ const CreateUserDataDialog = (props) => {
         password: formObject.password,
         org: formObject.org,
       },
+      refetchQueries: [{ query: props.query, variables: { id: props.orgid } }],
     })
       .then((res) => {
-        console.log("Created ORGADMIN", res);
+        console.log("Created User", res);
       })
       .catch((err) => {
         throw new Error("Error in creating User");
@@ -166,10 +166,6 @@ const CreateUserDataDialog = (props) => {
       </Dialog>
     </div>
   );
-};
-
-CreateUserDataDialog.propTypes = {
-  createDataHandler: PropTypes.func.isRequired,
 };
 
 export default CreateUserDataDialog;

@@ -23,8 +23,8 @@ const CREATE_ORGROLE = gql`
     }
   }
 `;
-const CREATE_SUORGROLE = gql`
-  mutation CREATE_SUORGROLE(
+const CREATE_SUBORGROLE = gql`
+  mutation CREATE_SUBORGROLE(
     $name: String!
     $suborg: String
     $description: String
@@ -43,7 +43,7 @@ const CREATE_GROUPROLE = gql`
     $group: String
     $description: String
   ) {
-    createOrgRole(
+    createRole(
       data: { name: $name, group: $group, description: $description }
     ) {
       name
@@ -57,7 +57,7 @@ const CREATE_SUBGROUPROLE = gql`
     $subgroup: String
     $description: String
   ) {
-    createOrgRole(
+    createRole(
       data: { name: $name, subgroup: $subgroup, description: $description }
     ) {
       name
@@ -84,9 +84,16 @@ const DELETE_ROLE = gql`
     }
   }
 `;
-const ASSIGN_ORGADMIN_TO_USERS = gql`
-  mutation ASSIGN_ORGADMIN_TO_USERS($id: ID!, $users: Json) {
+const ASSIGN_ROLE_TO_USERS = gql`
+  mutation ASSIGN_ROLE_TO_USERS($id: ID!, $users: Json) {
     assignRoleToUsers(id: $id, data: { users: $users }) {
+      id
+    }
+  }
+`;
+const ASSIGN_USER_TO_ROLES = gql`
+  mutation ASSIGN_USER_TO_ROLES($id: ID!, $roles: Json) {
+    assignUserToRoles(id: $id, data: { roles: $roles }) {
       id
     }
   }
@@ -94,10 +101,11 @@ const ASSIGN_ORGADMIN_TO_USERS = gql`
 export {
   CREATE_ORGROLE_ASSIGN_USER,
   CREATE_ORGROLE,
-  CREATE_SUORGROLE,
+  CREATE_SUBORGROLE,
   CREATE_GROUPROLE,
   CREATE_SUBGROUPROLE,
   UPDATE_ROLE,
   DELETE_ROLE,
-  ASSIGN_ORGADMIN_TO_USERS,
+  ASSIGN_ROLE_TO_USERS,
+  ASSIGN_USER_TO_ROLES,
 };

@@ -81,11 +81,15 @@ var models = [
     embedded: false
   },
   {
-    name: "StudentProfile",
+    name: "EducationProfile",
     embedded: false
   },
   {
     name: "Std",
+    embedded: false
+  },
+  {
+    name: "GRADENAME",
     embedded: false
   },
   {

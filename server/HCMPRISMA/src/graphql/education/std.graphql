@@ -1,0 +1,60 @@
+type Query {
+  getAllStd: [Std!]!
+}
+type Mutation {
+  createStd(data: StdInputData!): Std!
+  deleteStd(id: ID!): Std!
+  updateStd(id: ID!, data: UpdateStdInpput): Std!
+}
+type Std {
+  """
+  Std:
+  in this
+  gradename: LKG/UKG I II X BE/BTECH etc...
+  branch :ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
+  specilize: Communication/Techno Cardio etc...
+  year: I, II , III, Final, etc... e.g. BE I yr
+  category: Primary/Highersecondary college etc..
+  """
+  id: ID!
+  educationprofiles: [EducationProfile!]!
+  gradename: GRADENAME!
+  category: String!
+  branch: String
+  specilize: String
+  year: String
+  subjects: [Subject!]
+}
+input StdInputData {
+  gradename: GRADENAME!
+  category: String!
+  branch: String
+  specilize: String
+  year: String
+}
+input UpdateStdInpput {
+  gradename: GRADENAME
+  category: String
+  branch: String
+  specilize: String
+  year: String
+}
+
+enum GRADENAME {
+  LKG
+  UKG
+  I
+  II
+  III
+  IV
+  V
+  VI
+  VII
+  VIII
+  IX
+  X
+  XI
+  XII
+  UG
+  PG
+}

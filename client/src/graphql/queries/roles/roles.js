@@ -62,6 +62,15 @@ const GET_ROLES = gql`
     }
   }
 `;
+const GET_ORGROLES = gql`
+  query GET_ORGROLES($id: String!) {
+    orgRoles(id: $id) {
+      id
+      name
+      description
+    }
+  }
+`;
 
 const GET_SUBORGROLES = gql`
   query GET_SUBORGROLES($id: String!) {
@@ -69,6 +78,14 @@ const GET_SUBORGROLES = gql`
       id
       name
       description
+      suborg {
+        id
+        name
+        org {
+          id
+          name
+        }
+      }
     }
   }
 `;
@@ -79,6 +96,18 @@ const GET_GROUPROLES = gql`
       id
       name
       description
+      group {
+        id
+        name
+        suborgid {
+          id
+          name
+          org {
+            id
+            name
+          }
+        }
+      }
     }
   }
 `;
@@ -94,6 +123,7 @@ const GET_SUBGROUPROLES = gql`
 `;
 export {
   GET_ORG_ROLES,
+  GET_ORGROLES,
   GET_ALLORGS_ALLROLES,
   GET_ALLROLES,
   GET_MYROLES,

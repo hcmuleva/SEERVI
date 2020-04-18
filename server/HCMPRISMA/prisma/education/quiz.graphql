@@ -1,7 +1,7 @@
 """
 Quiz or exam
 quizName:weekly/monthly/surpries
-quizType:MOCK/PREPRATION/ANUULAEXAM/ 
+quizType:MOCK/PREPRATION/ANUULAEXAM/
 subject/unit/topic
 questions[]
 markingscheme: JSON{
@@ -32,33 +32,32 @@ threshold { basedOn: MarksObtain/correctQuestions }
 isForLevelPromotion
 totalmarks
 """
-
-type Quiz{
-id:ID! @id
-quizName:String!
-quizType:String!
-subject:Subject              @relation(name: "QuizToSubject", onDelete: SET_NULL)
-unit:Unit                    @relation(name: "QuizToUnit", onDelete: SET_NULL)
-topic:Topic                  @relation(name: "QuizToTopic", onDelete: SET_NULL)
-questions:[Question!]!       @relation(name: "QuestionToQuiz", onDelete: CASCADE)
-markingscheme:Json
-quizlevel:Int
-threshold:Json
-isForLevelPromotion:Boolean  @default(value: false)
-showExplaination:String
-showanswer:Boolean           @default(value: true)
-description:String
-allowedCorrection:Boolean    @default(value: true)
-duration:Int
-commentFromTeacher:String
-isPublished:Boolean          @default(value: true)
-isApproved:Boolean           @default(value: true)
-createdBy:User!              @relation(name: "QuizCreatedByToUser", onDelete: SET_NULL)
-weightage:Float
-totalmarks:Float
-validFrom:DateTime           @createdAt
-validTo:DateTime
-retryAllowed:Boolean         @default(value: true)
-results:[Result!]!           @relation(name: "ResultToQuiz", onDelete: SET_NULL)
-                 
+type Quiz {
+  id: ID! @id
+  quizName: String!
+  quizType: String!
+  subject: Subject @relation(name: "QuizToSubject", onDelete: SET_NULL)
+  unit: Unit @relation(name: "QuizToUnit", onDelete: SET_NULL)
+  topic: Topic @relation(name: "QuizToTopic", onDelete: SET_NULL)
+  questions: [Question!]! @relation(name: "QuestionToQuiz", onDelete: CASCADE)
+  markingscheme: Json
+  quizlevel: Int
+  threshold: Json
+  isForLevelPromotion: Boolean @default(value: false)
+  showExplaination: String
+  showanswer: Boolean @default(value: true)
+  description: String
+  allowedCorrection: Boolean @default(value: true)
+  duration: Int
+  commentFromTeacher: String
+  isPublished: Boolean @default(value: true)
+  isApproved: Boolean @default(value: true)
+  createdBy: User! @relation(name: "QuizCreatedByToUser", onDelete: SET_NULL)
+  weightage: Float
+  totalmarks: Float
+  validFrom: DateTime @createdAt
+  validTo: DateTime
+  retryAllowed: Boolean @default(value: true)
+  results: [Result!]! @relation(name: "ResultToQuiz", onDelete: SET_NULL)
+  courses: [Quiz!]! @relation(name: "QuizToCourse", onDelete: SET_NULL)
 }

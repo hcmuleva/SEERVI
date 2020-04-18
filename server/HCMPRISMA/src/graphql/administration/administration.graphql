@@ -4,12 +4,12 @@ type Query {
   orgByname(name: String!): Organization!
   allsuborgs: [Suborg!]!
   suborgsoforg(id: String!): [Suborg!]!
-  suborgById(id: ID!): Suborg!
+  suborgById(id: String!): Suborg!
   groupsOfSubOrg(id: String!): [Group!]!
 
   groupById(id: ID!): Group!
   allGroups: [Group!]!
-  subgroupById(id: ID!): SubGroup!
+  subgroupById(id: String!): SubGroup!
   allSubGroups: [SubGroup!]!
   subgroupsOfGroup(id: String!): [SubGroup!]!
   groupmember(query: String): [GroupMember]

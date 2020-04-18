@@ -1,90 +1,72 @@
-
-
 type Query {
-    users(query: String,first: Int, skip: Int, after: String): [User!]!
-    loggedInUser: User!
-    getAllMedium:[Medium!]!
-    getMyOrg:[Organization!]!
+  users(query: String, first: Int, skip: Int, after: String): [User!]!
+  loggedInUser: User!
+
+  getMyOrg: [Organization!]!
 }
 type Mutation {
-    createUser(data: CreateUserInput!): AuthPayload!
-    createUserByAdmin(data:CreateUserInput!): AuthPayload!
-    login(data: LoginUserInput!): AuthPayload!
-    deleteUser(id: ID!): User!
-    updateUser(id:ID!,data: UpdateUserInput!): User!
-    updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
-    createMedium(data:MediumCreateInput!):Medium!
-    updateMedium(id:ID!,data:MediumUpdateInput!):Medium!
-    deleteMedium(id: ID!):Medium!
-    assignUserToRoles(id:ID!, data:UserToRolesInput!):User!
+  createUser(data: CreateUserInput!): AuthPayload!
+  createUserByAdmin(data: CreateUserInput!): AuthPayload!
+  login(data: LoginUserInput!): AuthPayload!
+  deleteUser(id: ID!): User!
+  updateUser(id: ID!, data: UpdateUserInput!): User!
+  updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
 
+  assignUserToRoles(id: ID!, data: UserToRolesInput!): User!
 }
 
 type User {
-    id: ID!
-    firstname: String!
-    lastname: String!
-    email: String!
-    password: String!   
-    org:Organization!  
-    suborg:[Suborg!]! 
-    posts: [Post!]! 
-    comments: [Comment!]!
-    groupmembers:[GroupMember!]!
-    myprofiles:[Profile!]!
-    subjectSubscription:[SubjectSubscription!]! 
-    roles:[Role!]!    
-    createdBy:ID
-    createdAt:String!
-    updatedAt:String!
+  id: ID!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: Organization!
+  suborg: [Suborg!]!
+  posts: [Post!]!
+  comments: [Comment!]!
+  groupmembers: [GroupMember!]!
+  myprofiles: [Profile!]!
+  subjectSubscription: [SubjectSubscription!]!
+  roles: [Role!]!
+  createdBy: ID
+  createdAt: String!
+  updatedAt: String!
 }
 type AuthPayload {
-    token: String!
-    user: User!  
-    subs:[SubjectSubscription!]! 
+  token: String!
+  user: User!
+  subs: [SubjectSubscription!]!
 }
 input CreateUserInput {
-    firstname:String!
-    lastname: String!
-    email: String!
-    password: String!
-    org:String
-    suborg:String
-   
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  org: String
+  suborg: String
 }
 
-input UpdateUserInputByAdmin{
-    firstname:String
-    lastname: String
-    email: String
-    password: String
-    org:String
-    suborg:String
+input UpdateUserInputByAdmin {
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: String
+  suborg: String
 }
-input UserToRolesInput{
-     roles:Json
+input UserToRolesInput {
+  roles: Json
 }
 input LoginUserInput {
-    email: String!
-    password: String!
+  email: String!
+  password: String!
 }
 input UpdateUserInput {
-    firstname:String
-    lastname: String
-    email: String
-    password:String
-    org:String
-    suborg:String
-}
-
-type Medium{
-  id:ID! 
-  name: String!
-  subjects:[Subject!]!  
-}
-input MediumCreateInput{
-    name:String!
-}
-input MediumUpdateInput{
-    name:String
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  org: String
+  suborg: String
 }

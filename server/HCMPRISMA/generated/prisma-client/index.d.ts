@@ -19,6 +19,7 @@ export interface Exists {
   address: (where?: AddressWhereInput) => Promise<boolean>;
   comment: (where?: CommentWhereInput) => Promise<boolean>;
   content: (where?: ContentWhereInput) => Promise<boolean>;
+  educationProfile: (where?: EducationProfileWhereInput) => Promise<boolean>;
   group: (where?: GroupWhereInput) => Promise<boolean>;
   groupMember: (where?: GroupMemberWhereInput) => Promise<boolean>;
   medium: (where?: MediumWhereInput) => Promise<boolean>;
@@ -34,7 +35,6 @@ export interface Exists {
   role: (where?: RoleWhereInput) => Promise<boolean>;
   roleMember: (where?: RoleMemberWhereInput) => Promise<boolean>;
   std: (where?: StdWhereInput) => Promise<boolean>;
-  studentProfile: (where?: StudentProfileWhereInput) => Promise<boolean>;
   subGroup: (where?: SubGroupWhereInput) => Promise<boolean>;
   subGroupMember: (where?: SubGroupMemberWhereInput) => Promise<boolean>;
   subject: (where?: SubjectWhereInput) => Promise<boolean>;
@@ -124,6 +124,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => ContentConnectionPromise;
+  educationProfile: (
+    where: EducationProfileWhereUniqueInput
+  ) => EducationProfileNullablePromise;
+  educationProfiles: (args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<EducationProfile>;
+  educationProfilesConnection: (args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => EducationProfileConnectionPromise;
   group: (where: GroupWhereUniqueInput) => GroupNullablePromise;
   groups: (args?: {
     where?: GroupWhereInput;
@@ -415,27 +436,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => StdConnectionPromise;
-  studentProfile: (
-    where: StudentProfileWhereUniqueInput
-  ) => StudentProfileNullablePromise;
-  studentProfiles: (args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<StudentProfile>;
-  studentProfilesConnection: (args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => StudentProfileConnectionPromise;
   subGroup: (where: SubGroupWhereUniqueInput) => SubGroupNullablePromise;
   subGroups: (args?: {
     where?: SubGroupWhereInput;
@@ -665,6 +665,28 @@ export interface Prisma {
   }) => ContentPromise;
   deleteContent: (where: ContentWhereUniqueInput) => ContentPromise;
   deleteManyContents: (where?: ContentWhereInput) => BatchPayloadPromise;
+  createEducationProfile: (
+    data: EducationProfileCreateInput
+  ) => EducationProfilePromise;
+  updateEducationProfile: (args: {
+    data: EducationProfileUpdateInput;
+    where: EducationProfileWhereUniqueInput;
+  }) => EducationProfilePromise;
+  updateManyEducationProfiles: (args: {
+    data: EducationProfileUpdateManyMutationInput;
+    where?: EducationProfileWhereInput;
+  }) => BatchPayloadPromise;
+  upsertEducationProfile: (args: {
+    where: EducationProfileWhereUniqueInput;
+    create: EducationProfileCreateInput;
+    update: EducationProfileUpdateInput;
+  }) => EducationProfilePromise;
+  deleteEducationProfile: (
+    where: EducationProfileWhereUniqueInput
+  ) => EducationProfilePromise;
+  deleteManyEducationProfiles: (
+    where?: EducationProfileWhereInput
+  ) => BatchPayloadPromise;
   createGroup: (data: GroupCreateInput) => GroupPromise;
   updateGroup: (args: {
     data: GroupUpdateInput;
@@ -917,28 +939,6 @@ export interface Prisma {
   }) => StdPromise;
   deleteStd: (where: StdWhereUniqueInput) => StdPromise;
   deleteManyStds: (where?: StdWhereInput) => BatchPayloadPromise;
-  createStudentProfile: (
-    data: StudentProfileCreateInput
-  ) => StudentProfilePromise;
-  updateStudentProfile: (args: {
-    data: StudentProfileUpdateInput;
-    where: StudentProfileWhereUniqueInput;
-  }) => StudentProfilePromise;
-  updateManyStudentProfiles: (args: {
-    data: StudentProfileUpdateManyMutationInput;
-    where?: StudentProfileWhereInput;
-  }) => BatchPayloadPromise;
-  upsertStudentProfile: (args: {
-    where: StudentProfileWhereUniqueInput;
-    create: StudentProfileCreateInput;
-    update: StudentProfileUpdateInput;
-  }) => StudentProfilePromise;
-  deleteStudentProfile: (
-    where: StudentProfileWhereUniqueInput
-  ) => StudentProfilePromise;
-  deleteManyStudentProfiles: (
-    where?: StudentProfileWhereInput
-  ) => BatchPayloadPromise;
   createSubGroup: (data: SubGroupCreateInput) => SubGroupPromise;
   updateSubGroup: (args: {
     data: SubGroupUpdateInput;
@@ -1109,6 +1109,9 @@ export interface Subscription {
   content: (
     where?: ContentSubscriptionWhereInput
   ) => ContentSubscriptionPayloadSubscription;
+  educationProfile: (
+    where?: EducationProfileSubscriptionWhereInput
+  ) => EducationProfileSubscriptionPayloadSubscription;
   group: (
     where?: GroupSubscriptionWhereInput
   ) => GroupSubscriptionPayloadSubscription;
@@ -1154,9 +1157,6 @@ export interface Subscription {
   std: (
     where?: StdSubscriptionWhereInput
   ) => StdSubscriptionPayloadSubscription;
-  studentProfile: (
-    where?: StudentProfileSubscriptionWhereInput
-  ) => StudentProfileSubscriptionPayloadSubscription;
   subGroup: (
     where?: SubGroupSubscriptionWhereInput
   ) => SubGroupSubscriptionPayloadSubscription;
@@ -1210,6 +1210,7 @@ export type ROLENAME =
   | "SUBGROUPADMIN"
   | "PARENT"
   | "TEACHER"
+  | "PRINCIPAL"
   | "TUTOR"
   | "CONTRIBUTOR"
   | "STUDENT"
@@ -1217,7 +1218,29 @@ export type ROLENAME =
   | "CAPTAIN"
   | "OWNER"
   | "SERVENT"
-  | "SERVICE";
+  | "SERVICE"
+  | "LEAD"
+  | "SOCIALWORKER"
+  | "DONNER"
+  | "COLLECTOR";
+
+export type GRADENAME =
+  | "LKG"
+  | "UKG"
+  | "I"
+  | "II"
+  | "III"
+  | "IV"
+  | "V"
+  | "VI"
+  | "VII"
+  | "VIII"
+  | "IX"
+  | "X"
+  | "XI"
+  | "XII"
+  | "UG"
+  | "PG";
 
 export type Color = "RED" | "BLLUE" | "GREEN";
 
@@ -1319,15 +1342,29 @@ export type RoleOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
-export type SubjectSubscriptionOrderByInput =
+export type EducationProfileOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "subsType_ASC"
-  | "subsType_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "name_ASC"
+  | "name_DESC"
+  | "profiileType_ASC"
+  | "profiileType_DESC"
+  | "educationLevel_ASC"
+  | "educationLevel_DESC"
+  | "educationType_ASC"
+  | "educationType_DESC"
+  | "specialization_ASC"
+  | "specialization_DESC"
+  | "startedYear_ASC"
+  | "startedYear_DESC"
+  | "completedYear_ASC"
+  | "completedYear_DESC"
+  | "result_ASC"
+  | "result_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "remark_ASC"
+  | "remark_DESC";
 
 export type SubjectOrderByInput =
   | "id_ASC"
@@ -1529,6 +1566,34 @@ export type ResultOrderByInput =
   | "rank_ASC"
   | "rank_DESC";
 
+export type StdOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "gradename_ASC"
+  | "gradename_DESC"
+  | "category_ASC"
+  | "category_DESC"
+  | "branch_ASC"
+  | "branch_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "isPublished_ASC"
+  | "isPublished_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type SubjectSubscriptionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "subsType_ASC"
+  | "subsType_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
 export type GroupMemberOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -1590,32 +1655,6 @@ export type OptionOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
-
-export type StudentProfileOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "profiileType_ASC"
-  | "profiileType_DESC"
-  | "educationLevel_ASC"
-  | "educationLevel_DESC"
-  | "educationType_ASC"
-  | "educationType_DESC"
-  | "specialization_ASC"
-  | "specialization_DESC"
-  | "std_ASC"
-  | "std_DESC"
-  | "startedYear_ASC"
-  | "startedYear_DESC"
-  | "completedYear_ASC"
-  | "completedYear_DESC"
-  | "result_ASC"
-  | "result_DESC"
-  | "status_ASC"
-  | "status_DESC"
-  | "remark_ASC"
-  | "remark_DESC";
 
 export type PersonalProfileOrderByInput =
   | "id_ASC"
@@ -1680,22 +1719,6 @@ export type RoleMemberOrderByInput =
   | "status_DESC"
   | "description_ASC"
   | "description_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
-
-export type StdOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "stdname_ASC"
-  | "stdname_DESC"
-  | "category_ASC"
-  | "category_DESC"
-  | "branch_ASC"
-  | "branch_DESC"
-  | "year_ASC"
-  | "year_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
@@ -1910,9 +1933,9 @@ export interface ProfileWhereInput {
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
   userId?: Maybe<UserWhereInput>;
-  studentProfile_every?: Maybe<StudentProfileWhereInput>;
-  studentProfile_some?: Maybe<StudentProfileWhereInput>;
-  studentProfile_none?: Maybe<StudentProfileWhereInput>;
+  EducationProfiles_every?: Maybe<EducationProfileWhereInput>;
+  EducationProfiles_some?: Maybe<EducationProfileWhereInput>;
+  EducationProfiles_none?: Maybe<EducationProfileWhereInput>;
   personalProfiile_every?: Maybe<PersonalProfileWhereInput>;
   personalProfiile_some?: Maybe<PersonalProfileWhereInput>;
   personalProfiile_none?: Maybe<PersonalProfileWhereInput>;
@@ -2499,6 +2522,9 @@ export interface RoleWhereInput {
   users_every?: Maybe<UserWhereInput>;
   users_some?: Maybe<UserWhereInput>;
   users_none?: Maybe<UserWhereInput>;
+  educationprofiles_every?: Maybe<EducationProfileWhereInput>;
+  educationprofiles_some?: Maybe<EducationProfileWhereInput>;
+  educationprofiles_none?: Maybe<EducationProfileWhereInput>;
   description?: Maybe<String>;
   description_not?: Maybe<String>;
   description_in?: Maybe<String[] | String>;
@@ -2565,7 +2591,7 @@ export interface RoleWhereInput {
   NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
 }
 
-export interface SubjectSubscriptionWhereInput {
+export interface EducationProfileWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -2580,44 +2606,147 @@ export interface SubjectSubscriptionWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  subsType?: Maybe<String>;
-  subsType_not?: Maybe<String>;
-  subsType_in?: Maybe<String[] | String>;
-  subsType_not_in?: Maybe<String[] | String>;
-  subsType_lt?: Maybe<String>;
-  subsType_lte?: Maybe<String>;
-  subsType_gt?: Maybe<String>;
-  subsType_gte?: Maybe<String>;
-  subsType_contains?: Maybe<String>;
-  subsType_not_contains?: Maybe<String>;
-  subsType_starts_with?: Maybe<String>;
-  subsType_not_starts_with?: Maybe<String>;
-  subsType_ends_with?: Maybe<String>;
-  subsType_not_ends_with?: Maybe<String>;
-  mySubjects_every?: Maybe<SubjectWhereInput>;
-  mySubjects_some?: Maybe<SubjectWhereInput>;
-  mySubjects_none?: Maybe<SubjectWhereInput>;
-  userid?: Maybe<UserWhereInput>;
-  subscribedAs?: Maybe<RoleWhereInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-  OR?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
-  NOT?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  profiileType_not?: Maybe<String>;
+  profiileType_in?: Maybe<String[] | String>;
+  profiileType_not_in?: Maybe<String[] | String>;
+  profiileType_lt?: Maybe<String>;
+  profiileType_lte?: Maybe<String>;
+  profiileType_gt?: Maybe<String>;
+  profiileType_gte?: Maybe<String>;
+  profiileType_contains?: Maybe<String>;
+  profiileType_not_contains?: Maybe<String>;
+  profiileType_starts_with?: Maybe<String>;
+  profiileType_not_starts_with?: Maybe<String>;
+  profiileType_ends_with?: Maybe<String>;
+  profiileType_not_ends_with?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationLevel_not?: Maybe<String>;
+  educationLevel_in?: Maybe<String[] | String>;
+  educationLevel_not_in?: Maybe<String[] | String>;
+  educationLevel_lt?: Maybe<String>;
+  educationLevel_lte?: Maybe<String>;
+  educationLevel_gt?: Maybe<String>;
+  educationLevel_gte?: Maybe<String>;
+  educationLevel_contains?: Maybe<String>;
+  educationLevel_not_contains?: Maybe<String>;
+  educationLevel_starts_with?: Maybe<String>;
+  educationLevel_not_starts_with?: Maybe<String>;
+  educationLevel_ends_with?: Maybe<String>;
+  educationLevel_not_ends_with?: Maybe<String>;
+  educationType?: Maybe<String>;
+  educationType_not?: Maybe<String>;
+  educationType_in?: Maybe<String[] | String>;
+  educationType_not_in?: Maybe<String[] | String>;
+  educationType_lt?: Maybe<String>;
+  educationType_lte?: Maybe<String>;
+  educationType_gt?: Maybe<String>;
+  educationType_gte?: Maybe<String>;
+  educationType_contains?: Maybe<String>;
+  educationType_not_contains?: Maybe<String>;
+  educationType_starts_with?: Maybe<String>;
+  educationType_not_starts_with?: Maybe<String>;
+  educationType_ends_with?: Maybe<String>;
+  educationType_not_ends_with?: Maybe<String>;
+  specialization?: Maybe<String>;
+  specialization_not?: Maybe<String>;
+  specialization_in?: Maybe<String[] | String>;
+  specialization_not_in?: Maybe<String[] | String>;
+  specialization_lt?: Maybe<String>;
+  specialization_lte?: Maybe<String>;
+  specialization_gt?: Maybe<String>;
+  specialization_gte?: Maybe<String>;
+  specialization_contains?: Maybe<String>;
+  specialization_not_contains?: Maybe<String>;
+  specialization_starts_with?: Maybe<String>;
+  specialization_not_starts_with?: Maybe<String>;
+  specialization_ends_with?: Maybe<String>;
+  specialization_not_ends_with?: Maybe<String>;
+  roles_every?: Maybe<RoleWhereInput>;
+  roles_some?: Maybe<RoleWhereInput>;
+  roles_none?: Maybe<RoleWhereInput>;
+  subjects_every?: Maybe<SubjectWhereInput>;
+  subjects_some?: Maybe<SubjectWhereInput>;
+  subjects_none?: Maybe<SubjectWhereInput>;
+  std_every?: Maybe<StdWhereInput>;
+  std_some?: Maybe<StdWhereInput>;
+  std_none?: Maybe<StdWhereInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  startedYear_not?: Maybe<DateTimeInput>;
+  startedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startedYear_lt?: Maybe<DateTimeInput>;
+  startedYear_lte?: Maybe<DateTimeInput>;
+  startedYear_gt?: Maybe<DateTimeInput>;
+  startedYear_gte?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  completedYear_not?: Maybe<DateTimeInput>;
+  completedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  completedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  completedYear_lt?: Maybe<DateTimeInput>;
+  completedYear_lte?: Maybe<DateTimeInput>;
+  completedYear_gt?: Maybe<DateTimeInput>;
+  completedYear_gte?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  result_not?: Maybe<String>;
+  result_in?: Maybe<String[] | String>;
+  result_not_in?: Maybe<String[] | String>;
+  result_lt?: Maybe<String>;
+  result_lte?: Maybe<String>;
+  result_gt?: Maybe<String>;
+  result_gte?: Maybe<String>;
+  result_contains?: Maybe<String>;
+  result_not_contains?: Maybe<String>;
+  result_starts_with?: Maybe<String>;
+  result_not_starts_with?: Maybe<String>;
+  result_ends_with?: Maybe<String>;
+  result_not_ends_with?: Maybe<String>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  remark?: Maybe<String>;
+  remark_not?: Maybe<String>;
+  remark_in?: Maybe<String[] | String>;
+  remark_not_in?: Maybe<String[] | String>;
+  remark_lt?: Maybe<String>;
+  remark_lte?: Maybe<String>;
+  remark_gt?: Maybe<String>;
+  remark_gte?: Maybe<String>;
+  remark_contains?: Maybe<String>;
+  remark_not_contains?: Maybe<String>;
+  remark_starts_with?: Maybe<String>;
+  remark_not_starts_with?: Maybe<String>;
+  remark_ends_with?: Maybe<String>;
+  remark_not_ends_with?: Maybe<String>;
+  profileId?: Maybe<ProfileWhereInput>;
+  AND?: Maybe<EducationProfileWhereInput[] | EducationProfileWhereInput>;
+  OR?: Maybe<EducationProfileWhereInput[] | EducationProfileWhereInput>;
+  NOT?: Maybe<EducationProfileWhereInput[] | EducationProfileWhereInput>;
 }
 
 export interface SubjectWhereInput {
@@ -2711,6 +2840,9 @@ export interface SubjectWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  educationProfiles_every?: Maybe<EducationProfileWhereInput>;
+  educationProfiles_some?: Maybe<EducationProfileWhereInput>;
+  educationProfiles_none?: Maybe<EducationProfileWhereInput>;
   units_every?: Maybe<UnitWhereInput>;
   units_some?: Maybe<UnitWhereInput>;
   units_none?: Maybe<UnitWhereInput>;
@@ -2869,20 +3001,10 @@ export interface StdWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  stdname?: Maybe<String>;
-  stdname_not?: Maybe<String>;
-  stdname_in?: Maybe<String[] | String>;
-  stdname_not_in?: Maybe<String[] | String>;
-  stdname_lt?: Maybe<String>;
-  stdname_lte?: Maybe<String>;
-  stdname_gt?: Maybe<String>;
-  stdname_gte?: Maybe<String>;
-  stdname_contains?: Maybe<String>;
-  stdname_not_contains?: Maybe<String>;
-  stdname_starts_with?: Maybe<String>;
-  stdname_not_starts_with?: Maybe<String>;
-  stdname_ends_with?: Maybe<String>;
-  stdname_not_ends_with?: Maybe<String>;
+  gradename?: Maybe<GRADENAME>;
+  gradename_not?: Maybe<GRADENAME>;
+  gradename_in?: Maybe<GRADENAME[] | GRADENAME>;
+  gradename_not_in?: Maybe<GRADENAME[] | GRADENAME>;
   category?: Maybe<String>;
   category_not?: Maybe<String>;
   category_in?: Maybe<String[] | String>;
@@ -2925,9 +3047,14 @@ export interface StdWhereInput {
   year_not_starts_with?: Maybe<String>;
   year_ends_with?: Maybe<String>;
   year_not_ends_with?: Maybe<String>;
-  subject_every?: Maybe<SubjectWhereInput>;
-  subject_some?: Maybe<SubjectWhereInput>;
-  subject_none?: Maybe<SubjectWhereInput>;
+  educationprofiles_every?: Maybe<EducationProfileWhereInput>;
+  educationprofiles_some?: Maybe<EducationProfileWhereInput>;
+  educationprofiles_none?: Maybe<EducationProfileWhereInput>;
+  isPublished?: Maybe<Boolean>;
+  isPublished_not?: Maybe<Boolean>;
+  subjects_every?: Maybe<SubjectWhereInput>;
+  subjects_some?: Maybe<SubjectWhereInput>;
+  subjects_none?: Maybe<SubjectWhereInput>;
   updatedAt?: Maybe<DateTimeInput>;
   updatedAt_not?: Maybe<DateTimeInput>;
   updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -3702,6 +3829,9 @@ export interface QuizWhereInput {
   results_every?: Maybe<ResultWhereInput>;
   results_some?: Maybe<ResultWhereInput>;
   results_none?: Maybe<ResultWhereInput>;
+  courses_every?: Maybe<QuizWhereInput>;
+  courses_some?: Maybe<QuizWhereInput>;
+  courses_none?: Maybe<QuizWhereInput>;
   AND?: Maybe<QuizWhereInput[] | QuizWhereInput>;
   OR?: Maybe<QuizWhereInput[] | QuizWhereInput>;
   NOT?: Maybe<QuizWhereInput[] | QuizWhereInput>;
@@ -3852,6 +3982,61 @@ export interface ResultWhereInput {
   AND?: Maybe<ResultWhereInput[] | ResultWhereInput>;
   OR?: Maybe<ResultWhereInput[] | ResultWhereInput>;
   NOT?: Maybe<ResultWhereInput[] | ResultWhereInput>;
+}
+
+export interface SubjectSubscriptionWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  subsType?: Maybe<String>;
+  subsType_not?: Maybe<String>;
+  subsType_in?: Maybe<String[] | String>;
+  subsType_not_in?: Maybe<String[] | String>;
+  subsType_lt?: Maybe<String>;
+  subsType_lte?: Maybe<String>;
+  subsType_gt?: Maybe<String>;
+  subsType_gte?: Maybe<String>;
+  subsType_contains?: Maybe<String>;
+  subsType_not_contains?: Maybe<String>;
+  subsType_starts_with?: Maybe<String>;
+  subsType_not_starts_with?: Maybe<String>;
+  subsType_ends_with?: Maybe<String>;
+  subsType_not_ends_with?: Maybe<String>;
+  mySubjects_every?: Maybe<SubjectWhereInput>;
+  mySubjects_some?: Maybe<SubjectWhereInput>;
+  mySubjects_none?: Maybe<SubjectWhereInput>;
+  userid?: Maybe<UserWhereInput>;
+  subscribedAs?: Maybe<RoleWhereInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
+  OR?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
+  NOT?: Maybe<SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput>;
 }
 
 export interface GroupMemberWhereInput {
@@ -4181,174 +4366,15 @@ export interface PollWhereInput {
   NOT?: Maybe<PollWhereInput[] | PollWhereInput>;
 }
 
-export interface StudentProfileWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  profiileType?: Maybe<String>;
-  profiileType_not?: Maybe<String>;
-  profiileType_in?: Maybe<String[] | String>;
-  profiileType_not_in?: Maybe<String[] | String>;
-  profiileType_lt?: Maybe<String>;
-  profiileType_lte?: Maybe<String>;
-  profiileType_gt?: Maybe<String>;
-  profiileType_gte?: Maybe<String>;
-  profiileType_contains?: Maybe<String>;
-  profiileType_not_contains?: Maybe<String>;
-  profiileType_starts_with?: Maybe<String>;
-  profiileType_not_starts_with?: Maybe<String>;
-  profiileType_ends_with?: Maybe<String>;
-  profiileType_not_ends_with?: Maybe<String>;
-  educationLevel?: Maybe<String>;
-  educationLevel_not?: Maybe<String>;
-  educationLevel_in?: Maybe<String[] | String>;
-  educationLevel_not_in?: Maybe<String[] | String>;
-  educationLevel_lt?: Maybe<String>;
-  educationLevel_lte?: Maybe<String>;
-  educationLevel_gt?: Maybe<String>;
-  educationLevel_gte?: Maybe<String>;
-  educationLevel_contains?: Maybe<String>;
-  educationLevel_not_contains?: Maybe<String>;
-  educationLevel_starts_with?: Maybe<String>;
-  educationLevel_not_starts_with?: Maybe<String>;
-  educationLevel_ends_with?: Maybe<String>;
-  educationLevel_not_ends_with?: Maybe<String>;
-  educationType?: Maybe<String>;
-  educationType_not?: Maybe<String>;
-  educationType_in?: Maybe<String[] | String>;
-  educationType_not_in?: Maybe<String[] | String>;
-  educationType_lt?: Maybe<String>;
-  educationType_lte?: Maybe<String>;
-  educationType_gt?: Maybe<String>;
-  educationType_gte?: Maybe<String>;
-  educationType_contains?: Maybe<String>;
-  educationType_not_contains?: Maybe<String>;
-  educationType_starts_with?: Maybe<String>;
-  educationType_not_starts_with?: Maybe<String>;
-  educationType_ends_with?: Maybe<String>;
-  educationType_not_ends_with?: Maybe<String>;
-  specialization?: Maybe<String>;
-  specialization_not?: Maybe<String>;
-  specialization_in?: Maybe<String[] | String>;
-  specialization_not_in?: Maybe<String[] | String>;
-  specialization_lt?: Maybe<String>;
-  specialization_lte?: Maybe<String>;
-  specialization_gt?: Maybe<String>;
-  specialization_gte?: Maybe<String>;
-  specialization_contains?: Maybe<String>;
-  specialization_not_contains?: Maybe<String>;
-  specialization_starts_with?: Maybe<String>;
-  specialization_not_starts_with?: Maybe<String>;
-  specialization_ends_with?: Maybe<String>;
-  specialization_not_ends_with?: Maybe<String>;
-  std?: Maybe<String>;
-  std_not?: Maybe<String>;
-  std_in?: Maybe<String[] | String>;
-  std_not_in?: Maybe<String[] | String>;
-  std_lt?: Maybe<String>;
-  std_lte?: Maybe<String>;
-  std_gt?: Maybe<String>;
-  std_gte?: Maybe<String>;
-  std_contains?: Maybe<String>;
-  std_not_contains?: Maybe<String>;
-  std_starts_with?: Maybe<String>;
-  std_not_starts_with?: Maybe<String>;
-  std_ends_with?: Maybe<String>;
-  std_not_ends_with?: Maybe<String>;
-  startedYear?: Maybe<DateTimeInput>;
-  startedYear_not?: Maybe<DateTimeInput>;
-  startedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startedYear_lt?: Maybe<DateTimeInput>;
-  startedYear_lte?: Maybe<DateTimeInput>;
-  startedYear_gt?: Maybe<DateTimeInput>;
-  startedYear_gte?: Maybe<DateTimeInput>;
-  completedYear?: Maybe<DateTimeInput>;
-  completedYear_not?: Maybe<DateTimeInput>;
-  completedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  completedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  completedYear_lt?: Maybe<DateTimeInput>;
-  completedYear_lte?: Maybe<DateTimeInput>;
-  completedYear_gt?: Maybe<DateTimeInput>;
-  completedYear_gte?: Maybe<DateTimeInput>;
-  result?: Maybe<String>;
-  result_not?: Maybe<String>;
-  result_in?: Maybe<String[] | String>;
-  result_not_in?: Maybe<String[] | String>;
-  result_lt?: Maybe<String>;
-  result_lte?: Maybe<String>;
-  result_gt?: Maybe<String>;
-  result_gte?: Maybe<String>;
-  result_contains?: Maybe<String>;
-  result_not_contains?: Maybe<String>;
-  result_starts_with?: Maybe<String>;
-  result_not_starts_with?: Maybe<String>;
-  result_ends_with?: Maybe<String>;
-  result_not_ends_with?: Maybe<String>;
-  status?: Maybe<String>;
-  status_not?: Maybe<String>;
-  status_in?: Maybe<String[] | String>;
-  status_not_in?: Maybe<String[] | String>;
-  status_lt?: Maybe<String>;
-  status_lte?: Maybe<String>;
-  status_gt?: Maybe<String>;
-  status_gte?: Maybe<String>;
-  status_contains?: Maybe<String>;
-  status_not_contains?: Maybe<String>;
-  status_starts_with?: Maybe<String>;
-  status_not_starts_with?: Maybe<String>;
-  status_ends_with?: Maybe<String>;
-  status_not_ends_with?: Maybe<String>;
-  remark?: Maybe<String>;
-  remark_not?: Maybe<String>;
-  remark_in?: Maybe<String[] | String>;
-  remark_not_in?: Maybe<String[] | String>;
-  remark_lt?: Maybe<String>;
-  remark_lte?: Maybe<String>;
-  remark_gt?: Maybe<String>;
-  remark_gte?: Maybe<String>;
-  remark_contains?: Maybe<String>;
-  remark_not_contains?: Maybe<String>;
-  remark_starts_with?: Maybe<String>;
-  remark_not_starts_with?: Maybe<String>;
-  remark_ends_with?: Maybe<String>;
-  remark_not_ends_with?: Maybe<String>;
-  profileId?: Maybe<ProfileWhereInput>;
-  AND?: Maybe<StudentProfileWhereInput[] | StudentProfileWhereInput>;
-  OR?: Maybe<StudentProfileWhereInput[] | StudentProfileWhereInput>;
-  NOT?: Maybe<StudentProfileWhereInput[] | StudentProfileWhereInput>;
-}
-
 export type CommentWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
 export type ContentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type EducationProfileWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -4468,10 +4494,6 @@ export type StdWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type StudentProfileWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
 export type SubGroupWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -4543,7 +4565,7 @@ export interface ProfileCreateWithoutPersonalProfiileInput {
   id?: Maybe<ID_Input>;
   name: String;
   userId: UserCreateOneWithoutMyprofilesInput;
-  studentProfile?: Maybe<StudentProfileCreateManyWithoutProfileIdInput>;
+  EducationProfiles?: Maybe<EducationProfileCreateManyWithoutProfileIdInput>;
 }
 
 export interface UserCreateOneWithoutMyprofilesInput {
@@ -5068,6 +5090,7 @@ export interface RoleCreateWithoutUsersInput {
   suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
   group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -5132,10 +5155,11 @@ export interface SubjectCreateWithoutGroupInput {
   name: String;
   picture?: Maybe<String>;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   units?: Maybe<UnitCreateManyWithoutSubjectInput>;
   topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
   contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
@@ -5161,47 +5185,146 @@ export interface MediumCreateWithoutSubjectsInput {
   name: String;
 }
 
-export interface StdCreateOneWithoutSubjectInput {
-  create?: Maybe<StdCreateWithoutSubjectInput>;
+export interface StdCreateOneWithoutSubjectsInput {
+  create?: Maybe<StdCreateWithoutSubjectsInput>;
   connect?: Maybe<StdWhereUniqueInput>;
 }
 
-export interface StdCreateWithoutSubjectInput {
+export interface StdCreateWithoutSubjectsInput {
   id?: Maybe<ID_Input>;
-  stdname: String;
+  gradename: GRADENAME;
   category: String;
   branch?: Maybe<String>;
   year?: Maybe<String>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutStdInput>;
+  isPublished?: Maybe<Boolean>;
 }
 
-export interface SubGroupCreateOneWithoutSubjectsInput {
-  create?: Maybe<SubGroupCreateWithoutSubjectsInput>;
-  connect?: Maybe<SubGroupWhereUniqueInput>;
+export interface EducationProfileCreateManyWithoutStdInput {
+  create?: Maybe<
+    | EducationProfileCreateWithoutStdInput[]
+    | EducationProfileCreateWithoutStdInput
+  >;
+  connect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
 }
 
-export interface SubGroupCreateWithoutSubjectsInput {
+export interface EducationProfileCreateWithoutStdInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description?: Maybe<String>;
-  groupid: GroupCreateOneWithoutSubgroupsInput;
-  members?: Maybe<SubGroupMemberCreateManyWithoutMemberInput>;
-  subgroupRoles?: Maybe<RoleCreateManyWithoutSubgroupInput>;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  roles?: Maybe<RoleCreateManyWithoutEducationprofilesInput>;
+  subjects?: Maybe<SubjectCreateManyWithoutEducationProfilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId: ProfileCreateOneWithoutEducationProfilesInput;
 }
 
-export interface RoleCreateManyWithoutSubgroupInput {
+export interface RoleCreateManyWithoutEducationprofilesInput {
   create?: Maybe<
-    RoleCreateWithoutSubgroupInput[] | RoleCreateWithoutSubgroupInput
+    | RoleCreateWithoutEducationprofilesInput[]
+    | RoleCreateWithoutEducationprofilesInput
   >;
   connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
 }
 
-export interface RoleCreateWithoutSubgroupInput {
+export interface RoleCreateWithoutEducationprofilesInput {
   id?: Maybe<ID_Input>;
   name: ROLENAME;
   org?: Maybe<OrganizationCreateOneWithoutOrgRolesInput>;
   suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
   group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserCreateManyWithoutRolesInput>;
+  description?: Maybe<String>;
+  status?: Maybe<String>;
+  state?: Maybe<String>;
+  subjectSubscriptions?: Maybe<
+    SubjectSubscriptionCreateManyWithoutSubscribedAsInput
+  >;
+}
+
+export interface SubGroupCreateOneWithoutSubgroupRolesInput {
+  create?: Maybe<SubGroupCreateWithoutSubgroupRolesInput>;
+  connect?: Maybe<SubGroupWhereUniqueInput>;
+}
+
+export interface SubGroupCreateWithoutSubgroupRolesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  groupid: GroupCreateOneWithoutSubgroupsInput;
+  members?: Maybe<SubGroupMemberCreateManyWithoutMemberInput>;
+  subjects?: Maybe<SubjectCreateManyWithoutSubgroupInput>;
+}
+
+export interface SubjectCreateManyWithoutSubgroupInput {
+  create?: Maybe<
+    SubjectCreateWithoutSubgroupInput[] | SubjectCreateWithoutSubgroupInput
+  >;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+}
+
+export interface SubjectCreateWithoutSubgroupInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  std: StdCreateOneWithoutSubjectsInput;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
+}
+
+export interface GroupCreateOneWithoutSubjectsInput {
+  create?: Maybe<GroupCreateWithoutSubjectsInput>;
+  connect?: Maybe<GroupWhereUniqueInput>;
+}
+
+export interface GroupCreateWithoutSubjectsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  suborgid: SuborgCreateOneWithoutUserGroupsInput;
+  subgroups?: Maybe<SubGroupCreateManyWithoutGroupidInput>;
+  members?: Maybe<GroupMemberCreateManyWithoutMemberInput>;
+  groupRoles?: Maybe<RoleCreateManyWithoutGroupInput>;
+}
+
+export interface RoleCreateManyWithoutGroupInput {
+  create?: Maybe<RoleCreateWithoutGroupInput[] | RoleCreateWithoutGroupInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+}
+
+export interface RoleCreateWithoutGroupInput {
+  id?: Maybe<ID_Input>;
+  name: ROLENAME;
+  org?: Maybe<OrganizationCreateOneWithoutOrgRolesInput>;
+  suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
+  users?: Maybe<UserCreateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -5255,33 +5378,219 @@ export interface ProfileCreateManyWithoutUserIdInput {
 export interface ProfileCreateWithoutUserIdInput {
   id?: Maybe<ID_Input>;
   name: String;
-  studentProfile?: Maybe<StudentProfileCreateManyWithoutProfileIdInput>;
+  EducationProfiles?: Maybe<EducationProfileCreateManyWithoutProfileIdInput>;
   personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
 }
 
-export interface StudentProfileCreateManyWithoutProfileIdInput {
+export interface EducationProfileCreateManyWithoutProfileIdInput {
   create?: Maybe<
-    | StudentProfileCreateWithoutProfileIdInput[]
-    | StudentProfileCreateWithoutProfileIdInput
+    | EducationProfileCreateWithoutProfileIdInput[]
+    | EducationProfileCreateWithoutProfileIdInput
   >;
   connect?: Maybe<
-    StudentProfileWhereUniqueInput[] | StudentProfileWhereUniqueInput
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
   >;
 }
 
-export interface StudentProfileCreateWithoutProfileIdInput {
+export interface EducationProfileCreateWithoutProfileIdInput {
   id?: Maybe<ID_Input>;
   name: String;
   profiileType?: Maybe<String>;
   educationLevel?: Maybe<String>;
   educationType?: Maybe<String>;
   specialization?: Maybe<String>;
-  std?: Maybe<String>;
+  roles?: Maybe<RoleCreateManyWithoutEducationprofilesInput>;
+  subjects?: Maybe<SubjectCreateManyWithoutEducationProfilesInput>;
+  std?: Maybe<StdCreateManyWithoutEducationprofilesInput>;
   startedYear?: Maybe<DateTimeInput>;
   completedYear?: Maybe<DateTimeInput>;
   result?: Maybe<String>;
   status?: Maybe<String>;
   remark?: Maybe<String>;
+}
+
+export interface SubjectCreateManyWithoutEducationProfilesInput {
+  create?: Maybe<
+    | SubjectCreateWithoutEducationProfilesInput[]
+    | SubjectCreateWithoutEducationProfilesInput
+  >;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+}
+
+export interface SubjectCreateWithoutEducationProfilesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  std: StdCreateOneWithoutSubjectsInput;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
+}
+
+export interface SubGroupCreateOneWithoutSubjectsInput {
+  create?: Maybe<SubGroupCreateWithoutSubjectsInput>;
+  connect?: Maybe<SubGroupWhereUniqueInput>;
+}
+
+export interface SubGroupCreateWithoutSubjectsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  groupid: GroupCreateOneWithoutSubgroupsInput;
+  members?: Maybe<SubGroupMemberCreateManyWithoutMemberInput>;
+  subgroupRoles?: Maybe<RoleCreateManyWithoutSubgroupInput>;
+}
+
+export interface RoleCreateManyWithoutSubgroupInput {
+  create?: Maybe<
+    RoleCreateWithoutSubgroupInput[] | RoleCreateWithoutSubgroupInput
+  >;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+}
+
+export interface RoleCreateWithoutSubgroupInput {
+  id?: Maybe<ID_Input>;
+  name: ROLENAME;
+  org?: Maybe<OrganizationCreateOneWithoutOrgRolesInput>;
+  suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
+  group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
+  users?: Maybe<UserCreateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
+  description?: Maybe<String>;
+  status?: Maybe<String>;
+  state?: Maybe<String>;
+  subjectSubscriptions?: Maybe<
+    SubjectSubscriptionCreateManyWithoutSubscribedAsInput
+  >;
+}
+
+export interface EducationProfileCreateManyWithoutRolesInput {
+  create?: Maybe<
+    | EducationProfileCreateWithoutRolesInput[]
+    | EducationProfileCreateWithoutRolesInput
+  >;
+  connect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+}
+
+export interface EducationProfileCreateWithoutRolesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  subjects?: Maybe<SubjectCreateManyWithoutEducationProfilesInput>;
+  std?: Maybe<StdCreateManyWithoutEducationprofilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId: ProfileCreateOneWithoutEducationProfilesInput;
+}
+
+export interface StdCreateManyWithoutEducationprofilesInput {
+  create?: Maybe<
+    | StdCreateWithoutEducationprofilesInput[]
+    | StdCreateWithoutEducationprofilesInput
+  >;
+  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
+}
+
+export interface StdCreateWithoutEducationprofilesInput {
+  id?: Maybe<ID_Input>;
+  gradename: GRADENAME;
+  category: String;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
+}
+
+export interface SubjectCreateManyWithoutStdInput {
+  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+}
+
+export interface SubjectCreateWithoutStdInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
+}
+
+export interface EducationProfileCreateManyWithoutSubjectsInput {
+  create?: Maybe<
+    | EducationProfileCreateWithoutSubjectsInput[]
+    | EducationProfileCreateWithoutSubjectsInput
+  >;
+  connect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+}
+
+export interface EducationProfileCreateWithoutSubjectsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  roles?: Maybe<RoleCreateManyWithoutEducationprofilesInput>;
+  std?: Maybe<StdCreateManyWithoutEducationprofilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId: ProfileCreateOneWithoutEducationProfilesInput;
+}
+
+export interface ProfileCreateOneWithoutEducationProfilesInput {
+  create?: Maybe<ProfileCreateWithoutEducationProfilesInput>;
+  connect?: Maybe<ProfileWhereUniqueInput>;
+}
+
+export interface ProfileCreateWithoutEducationProfilesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  userId: UserCreateOneWithoutMyprofilesInput;
+  personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
 }
 
 export interface PersonalProfileCreateManyWithoutProfileIdInput {
@@ -5319,133 +5628,6 @@ export interface AddressCreateWithoutPersonalProfileInput {
   district: String;
   state: String;
   pincode: String;
-}
-
-export interface SubjectSubscriptionCreateManyWithoutUseridInput {
-  create?: Maybe<
-    | SubjectSubscriptionCreateWithoutUseridInput[]
-    | SubjectSubscriptionCreateWithoutUseridInput
-  >;
-  connect?: Maybe<
-    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
-  >;
-}
-
-export interface SubjectSubscriptionCreateWithoutUseridInput {
-  id?: Maybe<ID_Input>;
-  subsType?: Maybe<String>;
-  mySubjects?: Maybe<SubjectCreateManyInput>;
-  subscribedAs: RoleCreateOneWithoutSubjectSubscriptionsInput;
-}
-
-export interface SubjectCreateManyInput {
-  create?: Maybe<SubjectCreateInput[] | SubjectCreateInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
-  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
-}
-
-export interface GroupCreateOneWithoutSubjectsInput {
-  create?: Maybe<GroupCreateWithoutSubjectsInput>;
-  connect?: Maybe<GroupWhereUniqueInput>;
-}
-
-export interface GroupCreateWithoutSubjectsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  suborgid: SuborgCreateOneWithoutUserGroupsInput;
-  subgroups?: Maybe<SubGroupCreateManyWithoutGroupidInput>;
-  members?: Maybe<GroupMemberCreateManyWithoutMemberInput>;
-  groupRoles?: Maybe<RoleCreateManyWithoutGroupInput>;
-}
-
-export interface RoleCreateManyWithoutGroupInput {
-  create?: Maybe<RoleCreateWithoutGroupInput[] | RoleCreateWithoutGroupInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-}
-
-export interface RoleCreateWithoutGroupInput {
-  id?: Maybe<ID_Input>;
-  name: ROLENAME;
-  org?: Maybe<OrganizationCreateOneWithoutOrgRolesInput>;
-  suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
-  subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
-  users?: Maybe<UserCreateManyWithoutRolesInput>;
-  description?: Maybe<String>;
-  status?: Maybe<String>;
-  state?: Maybe<String>;
-  subjectSubscriptions?: Maybe<
-    SubjectSubscriptionCreateManyWithoutSubscribedAsInput
-  >;
-}
-
-export interface SubGroupCreateOneWithoutSubgroupRolesInput {
-  create?: Maybe<SubGroupCreateWithoutSubgroupRolesInput>;
-  connect?: Maybe<SubGroupWhereUniqueInput>;
-}
-
-export interface SubGroupCreateWithoutSubgroupRolesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  groupid: GroupCreateOneWithoutSubgroupsInput;
-  members?: Maybe<SubGroupMemberCreateManyWithoutMemberInput>;
-  subjects?: Maybe<SubjectCreateManyWithoutSubgroupInput>;
-}
-
-export interface SubjectCreateManyWithoutSubgroupInput {
-  create?: Maybe<
-    SubjectCreateWithoutSubgroupInput[] | SubjectCreateWithoutSubgroupInput
-  >;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutSubgroupInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
-  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
 }
 
 export interface UnitCreateManyWithoutSubjectInput {
@@ -5502,11 +5684,12 @@ export interface SubjectCreateWithoutTopicInput {
   name: String;
   picture?: Maybe<String>;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   units?: Maybe<UnitCreateManyWithoutSubjectInput>;
   contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
@@ -5577,11 +5760,12 @@ export interface SubjectCreateWithoutUnitsInput {
   name: String;
   picture?: Maybe<String>;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
   contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
@@ -5675,11 +5859,12 @@ export interface SubjectCreateWithoutContentsInput {
   name: String;
   picture?: Maybe<String>;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   units?: Maybe<UnitCreateManyWithoutSubjectInput>;
   topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
@@ -5729,27 +5914,114 @@ export interface UserCreateWithoutSubjectByMeInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
-export interface SubjectCreateManyWithoutUpdateByInput {
+export interface SubjectSubscriptionCreateManyWithoutUseridInput {
   create?: Maybe<
-    SubjectCreateWithoutUpdateByInput[] | SubjectCreateWithoutUpdateByInput
+    | SubjectSubscriptionCreateWithoutUseridInput[]
+    | SubjectSubscriptionCreateWithoutUseridInput
   >;
+  connect?: Maybe<
+    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
+  >;
+}
+
+export interface SubjectSubscriptionCreateWithoutUseridInput {
+  id?: Maybe<ID_Input>;
+  subsType?: Maybe<String>;
+  mySubjects?: Maybe<SubjectCreateManyInput>;
+  subscribedAs: RoleCreateOneWithoutSubjectSubscriptionsInput;
+}
+
+export interface SubjectCreateManyInput {
+  create?: Maybe<SubjectCreateInput[] | SubjectCreateInput>;
   connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
 }
 
-export interface SubjectCreateWithoutUpdateByInput {
+export interface SubjectCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   picture?: Maybe<String>;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   units?: Maybe<UnitCreateManyWithoutSubjectInput>;
   topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
   contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
+}
+
+export interface UserCreateManyWithoutSubjectUpddateByMeInput {
+  create?: Maybe<
+    | UserCreateWithoutSubjectUpddateByMeInput[]
+    | UserCreateWithoutSubjectUpddateByMeInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutSubjectUpddateByMeInput {
+  id?: Maybe<ID_Input>;
+  firstname: String;
+  lastname: String;
+  email: String;
+  password: String;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
+  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
+  roles?: Maybe<RoleCreateManyWithoutUsersInput>;
+  myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+  subjectByMe?: Maybe<SubjectCreateManyWithoutCreatedByInput>;
+  unitByMe?: Maybe<UnitCreateManyWithoutCreatedByInput>;
+  unitUpdatedByMe?: Maybe<UnitCreateManyWithoutUpdateByInput>;
+  topicByMe?: Maybe<TopicCreateManyWithoutCreatedByInput>;
+  topicUpdateByMe?: Maybe<TopicCreateManyWithoutUpdateByInput>;
+  contentByMe?: Maybe<ContentCreateManyWithoutCreatedByInput>;
+  contentUpdateByMe?: Maybe<ContentCreateManyWithoutUpdateByInput>;
+  questionCreatedBy?: Maybe<QuestionCreateManyWithoutCreatedByInput>;
+  questionUpdateddBy?: Maybe<QuestionCreateManyWithoutUpdatedByInput>;
+  quizCreatedBy?: Maybe<QuizCreateManyWithoutCreatedByInput>;
+  votes?: Maybe<VoteCreateManyWithoutUserInput>;
+  result?: Maybe<ResultCreateManyWithoutUserIdInput>;
+}
+
+export interface SubjectCreateManyWithoutCreatedByInput {
+  create?: Maybe<
+    SubjectCreateWithoutCreatedByInput[] | SubjectCreateWithoutCreatedByInput
+  >;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+}
+
+export interface SubjectCreateWithoutCreatedByInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  std: StdCreateOneWithoutSubjectsInput;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
   state?: Maybe<String>;
@@ -5852,27 +6124,28 @@ export interface UserCreateWithoutUnitByMeInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
-export interface SubjectCreateManyWithoutCreatedByInput {
+export interface SubjectCreateManyWithoutUpdateByInput {
   create?: Maybe<
-    SubjectCreateWithoutCreatedByInput[] | SubjectCreateWithoutCreatedByInput
+    SubjectCreateWithoutUpdateByInput[] | SubjectCreateWithoutUpdateByInput
   >;
   connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
 }
 
-export interface SubjectCreateWithoutCreatedByInput {
+export interface SubjectCreateWithoutUpdateByInput {
   id?: Maybe<ID_Input>;
   name: String;
   picture?: Maybe<String>;
   medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   units?: Maybe<UnitCreateManyWithoutSubjectInput>;
   topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
   contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
-  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
+  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
   state?: Maybe<String>;
@@ -5883,57 +6156,53 @@ export interface SubjectCreateWithoutCreatedByInput {
   quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
 }
 
-export interface UserCreateManyWithoutSubjectUpddateByMeInput {
+export interface QuizCreateManyWithoutSubjectInput {
   create?: Maybe<
-    | UserCreateWithoutSubjectUpddateByMeInput[]
-    | UserCreateWithoutSubjectUpddateByMeInput
+    QuizCreateWithoutSubjectInput[] | QuizCreateWithoutSubjectInput
   >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutSubjectUpddateByMeInput {
+export interface QuizCreateWithoutSubjectInput {
   id?: Maybe<ID_Input>;
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
-  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  roles?: Maybe<RoleCreateManyWithoutUsersInput>;
-  myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
-  subjectByMe?: Maybe<SubjectCreateManyWithoutCreatedByInput>;
-  unitByMe?: Maybe<UnitCreateManyWithoutCreatedByInput>;
-  unitUpdatedByMe?: Maybe<UnitCreateManyWithoutUpdateByInput>;
-  topicByMe?: Maybe<TopicCreateManyWithoutCreatedByInput>;
-  topicUpdateByMe?: Maybe<TopicCreateManyWithoutUpdateByInput>;
-  contentByMe?: Maybe<ContentCreateManyWithoutCreatedByInput>;
-  contentUpdateByMe?: Maybe<ContentCreateManyWithoutUpdateByInput>;
-  questionCreatedBy?: Maybe<QuestionCreateManyWithoutCreatedByInput>;
-  questionUpdateddBy?: Maybe<QuestionCreateManyWithoutUpdatedByInput>;
-  quizCreatedBy?: Maybe<QuizCreateManyWithoutCreatedByInput>;
-  votes?: Maybe<VoteCreateManyWithoutUserInput>;
-  result?: Maybe<ResultCreateManyWithoutUserIdInput>;
+  quizName: String;
+  quizType: String;
+  unit?: Maybe<UnitCreateOneWithoutQuizsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionCreateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  createdBy: UserCreateOneWithoutQuizCreatedByInput;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
 }
 
-export interface UnitCreateManyWithoutCreatedByInput {
-  create?: Maybe<
-    UnitCreateWithoutCreatedByInput[] | UnitCreateWithoutCreatedByInput
-  >;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
+export interface UnitCreateOneWithoutQuizsInput {
+  create?: Maybe<UnitCreateWithoutQuizsInput>;
+  connect?: Maybe<UnitWhereUniqueInput>;
 }
 
-export interface UnitCreateWithoutCreatedByInput {
+export interface UnitCreateWithoutQuizsInput {
   id?: Maybe<ID_Input>;
   name: String;
   subject: SubjectCreateOneWithoutUnitsInput;
   topics?: Maybe<TopicCreateManyWithoutUnitInput>;
   contents?: Maybe<ContentCreateManyWithoutUnitInput>;
+  createdBy?: Maybe<UserCreateOneWithoutUnitByMeInput>;
   updateBy?: Maybe<UserCreateManyWithoutUnitUpdatedByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished: Boolean;
@@ -5941,7 +6210,6 @@ export interface UnitCreateWithoutCreatedByInput {
   status: String;
   available?: Maybe<String>;
   questions?: Maybe<QuestionCreateManyWithoutUnitInput>;
-  quizs?: Maybe<QuizCreateManyWithoutUnitInput>;
 }
 
 export interface UserCreateManyWithoutUnitUpdatedByMeInput {
@@ -5982,26 +6250,113 @@ export interface UserCreateWithoutUnitUpdatedByMeInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
-export interface TopicCreateManyWithoutCreatedByInput {
+export interface UnitCreateManyWithoutCreatedByInput {
   create?: Maybe<
-    TopicCreateWithoutCreatedByInput[] | TopicCreateWithoutCreatedByInput
+    UnitCreateWithoutCreatedByInput[] | UnitCreateWithoutCreatedByInput
   >;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
 }
 
-export interface TopicCreateWithoutCreatedByInput {
+export interface UnitCreateWithoutCreatedByInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  subject: SubjectCreateOneWithoutUnitsInput;
+  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
+  contents?: Maybe<ContentCreateManyWithoutUnitInput>;
+  updateBy?: Maybe<UserCreateManyWithoutUnitUpdatedByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished: Boolean;
+  state: String;
+  status: String;
+  available?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutUnitInput>;
+  quizs?: Maybe<QuizCreateManyWithoutUnitInput>;
+}
+
+export interface QuestionCreateManyWithoutUnitInput {
+  create?: Maybe<
+    QuestionCreateWithoutUnitInput[] | QuestionCreateWithoutUnitInput
+  >;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+}
+
+export interface QuestionCreateWithoutUnitInput {
+  id?: Maybe<ID_Input>;
+  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
+  quetype: String;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType: String;
+  descriptionurl?: Maybe<String>;
+  options: Json;
+  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
+  level: Int;
+  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
+}
+
+export interface SubjectCreateOneWithoutQuestionsInput {
+  create?: Maybe<SubjectCreateWithoutQuestionsInput>;
+  connect?: Maybe<SubjectWhereUniqueInput>;
+}
+
+export interface SubjectCreateWithoutQuestionsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  std: StdCreateOneWithoutSubjectsInput;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
+}
+
+export interface TopicCreateOneWithoutQuestionsInput {
+  create?: Maybe<TopicCreateWithoutQuestionsInput>;
+  connect?: Maybe<TopicWhereUniqueInput>;
+}
+
+export interface TopicCreateWithoutQuestionsInput {
   id?: Maybe<ID_Input>;
   name: String;
   subject?: Maybe<SubjectCreateOneWithoutTopicInput>;
   unit?: Maybe<UnitCreateOneWithoutTopicsInput>;
   contents?: Maybe<ContentCreateManyWithoutTopicInput>;
+  createdBy?: Maybe<UserCreateOneWithoutTopicByMeInput>;
   updateBy?: Maybe<UserCreateOneWithoutTopicUpdateByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished: Boolean;
   state: String;
   status: String;
   available?: Maybe<String>;
-  questions?: Maybe<QuestionCreateManyWithoutTopicInput>;
   quizs?: Maybe<QuizCreateManyWithoutTopicInput>;
 }
 
@@ -6088,83 +6443,16 @@ export interface UnitCreateWithoutUpdateByInput {
   quizs?: Maybe<QuizCreateManyWithoutUnitInput>;
 }
 
-export interface QuestionCreateManyWithoutUnitInput {
-  create?: Maybe<
-    QuestionCreateWithoutUnitInput[] | QuestionCreateWithoutUnitInput
-  >;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-}
-
-export interface QuestionCreateWithoutUnitInput {
-  id?: Maybe<ID_Input>;
-  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
-  quetype: String;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType: String;
-  descriptionurl?: Maybe<String>;
-  options: Json;
-  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
-  level: Int;
-  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
-}
-
-export interface SubjectCreateOneWithoutQuestionsInput {
-  create?: Maybe<SubjectCreateWithoutQuestionsInput>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutQuestionsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
-}
-
-export interface QuizCreateManyWithoutSubjectInput {
-  create?: Maybe<
-    QuizCreateWithoutSubjectInput[] | QuizCreateWithoutSubjectInput
-  >;
+export interface QuizCreateManyWithoutUnitInput {
+  create?: Maybe<QuizCreateWithoutUnitInput[] | QuizCreateWithoutUnitInput>;
   connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
 }
 
-export interface QuizCreateWithoutSubjectInput {
+export interface QuizCreateWithoutUnitInput {
   id?: Maybe<ID_Input>;
   quizName: String;
   quizType: String;
-  unit?: Maybe<UnitCreateOneWithoutQuizsInput>;
+  subject?: Maybe<SubjectCreateOneWithoutQuizesInput>;
   topic?: Maybe<TopicCreateOneWithoutQuizsInput>;
   questions?: Maybe<QuestionCreateManyWithoutQuizInput>;
   markingscheme?: Maybe<Json>;
@@ -6185,27 +6473,37 @@ export interface QuizCreateWithoutSubjectInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
 }
 
-export interface UnitCreateOneWithoutQuizsInput {
-  create?: Maybe<UnitCreateWithoutQuizsInput>;
-  connect?: Maybe<UnitWhereUniqueInput>;
+export interface SubjectCreateOneWithoutQuizesInput {
+  create?: Maybe<SubjectCreateWithoutQuizesInput>;
+  connect?: Maybe<SubjectWhereUniqueInput>;
 }
 
-export interface UnitCreateWithoutQuizsInput {
+export interface SubjectCreateWithoutQuizesInput {
   id?: Maybe<ID_Input>;
   name: String;
-  subject: SubjectCreateOneWithoutUnitsInput;
-  topics?: Maybe<TopicCreateManyWithoutUnitInput>;
-  contents?: Maybe<ContentCreateManyWithoutUnitInput>;
-  createdBy?: Maybe<UserCreateOneWithoutUnitByMeInput>;
-  updateBy?: Maybe<UserCreateManyWithoutUnitUpdatedByMeInput>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
+  std: StdCreateOneWithoutSubjectsInput;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
-  isPublished: Boolean;
-  state: String;
-  status: String;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
   available?: Maybe<String>;
-  questions?: Maybe<QuestionCreateManyWithoutUnitInput>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
 }
 
 export interface TopicCreateOneWithoutQuizsInput {
@@ -6358,6 +6656,64 @@ export interface UserCreateWithoutQuestionCreatedByInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
+export interface TopicCreateManyWithoutCreatedByInput {
+  create?: Maybe<
+    TopicCreateWithoutCreatedByInput[] | TopicCreateWithoutCreatedByInput
+  >;
+  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+}
+
+export interface TopicCreateWithoutCreatedByInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  subject?: Maybe<SubjectCreateOneWithoutTopicInput>;
+  unit?: Maybe<UnitCreateOneWithoutTopicsInput>;
+  contents?: Maybe<ContentCreateManyWithoutTopicInput>;
+  updateBy?: Maybe<UserCreateOneWithoutTopicUpdateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished: Boolean;
+  state: String;
+  status: String;
+  available?: Maybe<String>;
+  questions?: Maybe<QuestionCreateManyWithoutTopicInput>;
+  quizs?: Maybe<QuizCreateManyWithoutTopicInput>;
+}
+
+export interface UserCreateOneWithoutTopicUpdateByMeInput {
+  create?: Maybe<UserCreateWithoutTopicUpdateByMeInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutTopicUpdateByMeInput {
+  id?: Maybe<ID_Input>;
+  firstname: String;
+  lastname: String;
+  email: String;
+  password: String;
+  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
+  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
+  roles?: Maybe<RoleCreateManyWithoutUsersInput>;
+  myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+  subjectByMe?: Maybe<SubjectCreateManyWithoutCreatedByInput>;
+  subjectUpddateByMe?: Maybe<SubjectCreateManyWithoutUpdateByInput>;
+  unitByMe?: Maybe<UnitCreateManyWithoutCreatedByInput>;
+  unitUpdatedByMe?: Maybe<UnitCreateManyWithoutUpdateByInput>;
+  topicByMe?: Maybe<TopicCreateManyWithoutCreatedByInput>;
+  contentByMe?: Maybe<ContentCreateManyWithoutCreatedByInput>;
+  contentUpdateByMe?: Maybe<ContentCreateManyWithoutUpdateByInput>;
+  questionCreatedBy?: Maybe<QuestionCreateManyWithoutCreatedByInput>;
+  questionUpdateddBy?: Maybe<QuestionCreateManyWithoutUpdatedByInput>;
+  quizCreatedBy?: Maybe<QuizCreateManyWithoutCreatedByInput>;
+  votes?: Maybe<VoteCreateManyWithoutUserInput>;
+  result?: Maybe<ResultCreateManyWithoutUserIdInput>;
+}
+
 export interface ContentCreateManyWithoutCreatedByInput {
   create?: Maybe<
     ContentCreateWithoutCreatedByInput[] | ContentCreateWithoutCreatedByInput
@@ -6404,123 +6760,6 @@ export interface TopicCreateWithoutContentsInput {
   quizs?: Maybe<QuizCreateManyWithoutTopicInput>;
 }
 
-export interface UserCreateOneWithoutTopicUpdateByMeInput {
-  create?: Maybe<UserCreateWithoutTopicUpdateByMeInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutTopicUpdateByMeInput {
-  id?: Maybe<ID_Input>;
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  org?: Maybe<OrganizationCreateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgCreateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberCreateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberCreateManyWithoutUseridInput>;
-  posts?: Maybe<PostCreateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
-  roles?: Maybe<RoleCreateManyWithoutUsersInput>;
-  myprofiles?: Maybe<ProfileCreateManyWithoutUserIdInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionCreateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
-  subjectByMe?: Maybe<SubjectCreateManyWithoutCreatedByInput>;
-  subjectUpddateByMe?: Maybe<SubjectCreateManyWithoutUpdateByInput>;
-  unitByMe?: Maybe<UnitCreateManyWithoutCreatedByInput>;
-  unitUpdatedByMe?: Maybe<UnitCreateManyWithoutUpdateByInput>;
-  topicByMe?: Maybe<TopicCreateManyWithoutCreatedByInput>;
-  contentByMe?: Maybe<ContentCreateManyWithoutCreatedByInput>;
-  contentUpdateByMe?: Maybe<ContentCreateManyWithoutUpdateByInput>;
-  questionCreatedBy?: Maybe<QuestionCreateManyWithoutCreatedByInput>;
-  questionUpdateddBy?: Maybe<QuestionCreateManyWithoutUpdatedByInput>;
-  quizCreatedBy?: Maybe<QuizCreateManyWithoutCreatedByInput>;
-  votes?: Maybe<VoteCreateManyWithoutUserInput>;
-  result?: Maybe<ResultCreateManyWithoutUserIdInput>;
-}
-
-export interface ContentCreateManyWithoutUpdateByInput {
-  create?: Maybe<
-    ContentCreateWithoutUpdateByInput[] | ContentCreateWithoutUpdateByInput
-  >;
-  connect?: Maybe<ContentWhereUniqueInput[] | ContentWhereUniqueInput>;
-}
-
-export interface ContentCreateWithoutUpdateByInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  number?: Maybe<Int>;
-  fileInfo?: Maybe<Json>;
-  type: String;
-  url?: Maybe<String>;
-  subject: SubjectCreateOneWithoutContentsInput;
-  unit?: Maybe<UnitCreateOneWithoutContentsInput>;
-  topic?: Maybe<TopicCreateOneWithoutContentsInput>;
-  createdBy?: Maybe<UserCreateOneWithoutContentByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished: Boolean;
-  state: String;
-  status: String;
-  available?: Maybe<String>;
-}
-
-export interface QuestionCreateManyWithoutCreatedByInput {
-  create?: Maybe<
-    QuestionCreateWithoutCreatedByInput[] | QuestionCreateWithoutCreatedByInput
-  >;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-}
-
-export interface QuestionCreateWithoutCreatedByInput {
-  id?: Maybe<ID_Input>;
-  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
-  quetype: String;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType: String;
-  descriptionurl?: Maybe<String>;
-  options: Json;
-  level: Int;
-  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
-}
-
-export interface TopicCreateOneWithoutQuestionsInput {
-  create?: Maybe<TopicCreateWithoutQuestionsInput>;
-  connect?: Maybe<TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateWithoutQuestionsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  subject?: Maybe<SubjectCreateOneWithoutTopicInput>;
-  unit?: Maybe<UnitCreateOneWithoutTopicsInput>;
-  contents?: Maybe<ContentCreateManyWithoutTopicInput>;
-  createdBy?: Maybe<UserCreateOneWithoutTopicByMeInput>;
-  updateBy?: Maybe<UserCreateOneWithoutTopicUpdateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished: Boolean;
-  state: String;
-  status: String;
-  available?: Maybe<String>;
-  quizs?: Maybe<QuizCreateManyWithoutTopicInput>;
-}
-
 export interface QuizCreateManyWithoutTopicInput {
   create?: Maybe<QuizCreateWithoutTopicInput[] | QuizCreateWithoutTopicInput>;
   connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
@@ -6551,35 +6790,7 @@ export interface QuizCreateWithoutTopicInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultCreateManyWithoutQuizInput>;
-}
-
-export interface SubjectCreateOneWithoutQuizesInput {
-  create?: Maybe<SubjectCreateWithoutQuizesInput>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutQuizesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  std: StdCreateOneWithoutSubjectInput;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
 }
 
 export interface QuestionCreateManyWithoutQuizInput {
@@ -6653,73 +6864,39 @@ export interface UserCreateWithoutQuestionUpdateddByInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
-export interface QuizCreateManyWithoutCreatedByInput {
+export interface ContentCreateManyWithoutUpdateByInput {
   create?: Maybe<
-    QuizCreateWithoutCreatedByInput[] | QuizCreateWithoutCreatedByInput
+    ContentCreateWithoutUpdateByInput[] | ContentCreateWithoutUpdateByInput
   >;
-  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  connect?: Maybe<ContentWhereUniqueInput[] | ContentWhereUniqueInput>;
 }
 
-export interface QuizCreateWithoutCreatedByInput {
+export interface ContentCreateWithoutUpdateByInput {
   id?: Maybe<ID_Input>;
-  quizName: String;
-  quizType: String;
-  subject?: Maybe<SubjectCreateOneWithoutQuizesInput>;
-  unit?: Maybe<UnitCreateOneWithoutQuizsInput>;
-  topic?: Maybe<TopicCreateOneWithoutQuizsInput>;
-  questions?: Maybe<QuestionCreateManyWithoutQuizInput>;
-  markingscheme?: Maybe<Json>;
-  quizlevel?: Maybe<Int>;
-  threshold?: Maybe<Json>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
-  description?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  weightage?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  validTo?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-  results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  name: String;
+  number?: Maybe<Int>;
+  fileInfo?: Maybe<Json>;
+  type: String;
+  url?: Maybe<String>;
+  subject: SubjectCreateOneWithoutContentsInput;
+  unit?: Maybe<UnitCreateOneWithoutContentsInput>;
+  topic?: Maybe<TopicCreateOneWithoutContentsInput>;
+  createdBy?: Maybe<UserCreateOneWithoutContentByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished: Boolean;
+  state: String;
+  status: String;
+  available?: Maybe<String>;
 }
 
-export interface ResultCreateManyWithoutQuizInput {
-  create?: Maybe<ResultCreateWithoutQuizInput[] | ResultCreateWithoutQuizInput>;
-  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-}
-
-export interface ResultCreateWithoutQuizInput {
-  id?: Maybe<ID_Input>;
-  quizName: String;
-  quizType: String;
-  questions?: Maybe<QuestionCreateManyWithoutResultsInput>;
-  result: String;
-  quizlevel: Int;
-  score?: Maybe<Float>;
-  attempted?: Maybe<QuestionCreateManyWithoutAtemptedResultInput>;
-  notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
-  correct?: Maybe<QuestionCreateManyWithoutCorrectInput>;
-  wrong?: Maybe<QuestionCreateManyWithoutWrongInput>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate: DateTimeInput;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-  userId: UserCreateOneWithoutResultInput;
-}
-
-export interface QuestionCreateManyWithoutResultsInput {
+export interface QuestionCreateManyWithoutCreatedByInput {
   create?: Maybe<
-    QuestionCreateWithoutResultsInput[] | QuestionCreateWithoutResultsInput
+    QuestionCreateWithoutCreatedByInput[] | QuestionCreateWithoutCreatedByInput
   >;
   connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
 }
 
-export interface QuestionCreateWithoutResultsInput {
+export interface QuestionCreateWithoutCreatedByInput {
   id?: Maybe<ID_Input>;
   subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
   unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
@@ -6730,7 +6907,6 @@ export interface QuestionCreateWithoutResultsInput {
   descriptionType: String;
   descriptionurl?: Maybe<String>;
   options: Json;
-  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
   level: Int;
   updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
   plandate?: Maybe<DateTimeInput>;
@@ -6742,6 +6918,7 @@ export interface QuestionCreateWithoutResultsInput {
   explainationType?: Maybe<String>;
   quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
   explaination?: Maybe<String>;
+  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
   atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
   notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
   correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
@@ -6780,6 +6957,7 @@ export interface QuizCreateWithoutQuestionsInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
 }
 
 export interface UserCreateOneWithoutQuizCreatedByInput {
@@ -6910,6 +7088,194 @@ export interface QuizCreateWithoutResultsInput {
   totalmarks?: Maybe<Float>;
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
+}
+
+export interface QuizCreateManyWithoutCoursesInput {
+  create?: Maybe<
+    QuizCreateWithoutCoursesInput[] | QuizCreateWithoutCoursesInput
+  >;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+}
+
+export interface QuizCreateWithoutCoursesInput {
+  id?: Maybe<ID_Input>;
+  quizName: String;
+  quizType: String;
+  subject?: Maybe<SubjectCreateOneWithoutQuizesInput>;
+  unit?: Maybe<UnitCreateOneWithoutQuizsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionCreateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  createdBy: UserCreateOneWithoutQuizCreatedByInput;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultCreateManyWithoutQuizInput>;
+}
+
+export interface ResultCreateManyWithoutQuizInput {
+  create?: Maybe<ResultCreateWithoutQuizInput[] | ResultCreateWithoutQuizInput>;
+  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+}
+
+export interface ResultCreateWithoutQuizInput {
+  id?: Maybe<ID_Input>;
+  quizName: String;
+  quizType: String;
+  questions?: Maybe<QuestionCreateManyWithoutResultsInput>;
+  result: String;
+  quizlevel: Int;
+  score?: Maybe<Float>;
+  attempted?: Maybe<QuestionCreateManyWithoutAtemptedResultInput>;
+  notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
+  correct?: Maybe<QuestionCreateManyWithoutCorrectInput>;
+  wrong?: Maybe<QuestionCreateManyWithoutWrongInput>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate: DateTimeInput;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+  userId: UserCreateOneWithoutResultInput;
+}
+
+export interface QuestionCreateManyWithoutResultsInput {
+  create?: Maybe<
+    QuestionCreateWithoutResultsInput[] | QuestionCreateWithoutResultsInput
+  >;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+}
+
+export interface QuestionCreateWithoutResultsInput {
+  id?: Maybe<ID_Input>;
+  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
+  quetype: String;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType: String;
+  descriptionurl?: Maybe<String>;
+  options: Json;
+  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
+  level: Int;
+  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
+}
+
+export interface ResultCreateManyWithoutAttemptedInput {
+  create?: Maybe<
+    ResultCreateWithoutAttemptedInput[] | ResultCreateWithoutAttemptedInput
+  >;
+  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+}
+
+export interface ResultCreateWithoutAttemptedInput {
+  id?: Maybe<ID_Input>;
+  quiz: QuizCreateOneWithoutResultsInput;
+  quizName: String;
+  quizType: String;
+  questions?: Maybe<QuestionCreateManyWithoutResultsInput>;
+  result: String;
+  quizlevel: Int;
+  score?: Maybe<Float>;
+  notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
+  correct?: Maybe<QuestionCreateManyWithoutCorrectInput>;
+  wrong?: Maybe<QuestionCreateManyWithoutWrongInput>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate: DateTimeInput;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+  userId: UserCreateOneWithoutResultInput;
+}
+
+export interface QuestionCreateManyWithoutNotattemptedInput {
+  create?: Maybe<
+    | QuestionCreateWithoutNotattemptedInput[]
+    | QuestionCreateWithoutNotattemptedInput
+  >;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+}
+
+export interface QuestionCreateWithoutNotattemptedInput {
+  id?: Maybe<ID_Input>;
+  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
+  quetype: String;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType: String;
+  descriptionurl?: Maybe<String>;
+  options: Json;
+  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
+  level: Int;
+  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
+  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
+}
+
+export interface ResultCreateManyWithoutCorrectInput {
+  create?: Maybe<
+    ResultCreateWithoutCorrectInput[] | ResultCreateWithoutCorrectInput
+  >;
+  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+}
+
+export interface ResultCreateWithoutCorrectInput {
+  id?: Maybe<ID_Input>;
+  quiz: QuizCreateOneWithoutResultsInput;
+  quizName: String;
+  quizType: String;
+  questions?: Maybe<QuestionCreateManyWithoutResultsInput>;
+  result: String;
+  quizlevel: Int;
+  score?: Maybe<Float>;
+  attempted?: Maybe<QuestionCreateManyWithoutAtemptedResultInput>;
+  notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
+  wrong?: Maybe<QuestionCreateManyWithoutWrongInput>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate: DateTimeInput;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+  userId: UserCreateOneWithoutResultInput;
 }
 
 export interface QuestionCreateManyWithoutAtemptedResultInput {
@@ -7013,78 +7379,14 @@ export interface QuestionCreateWithoutCorrectInput {
   wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
 }
 
-export interface ResultCreateManyWithoutAttemptedInput {
+export interface ResultCreateManyWithoutWrongInput {
   create?: Maybe<
-    ResultCreateWithoutAttemptedInput[] | ResultCreateWithoutAttemptedInput
+    ResultCreateWithoutWrongInput[] | ResultCreateWithoutWrongInput
   >;
   connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
 }
 
-export interface ResultCreateWithoutAttemptedInput {
-  id?: Maybe<ID_Input>;
-  quiz: QuizCreateOneWithoutResultsInput;
-  quizName: String;
-  quizType: String;
-  questions?: Maybe<QuestionCreateManyWithoutResultsInput>;
-  result: String;
-  quizlevel: Int;
-  score?: Maybe<Float>;
-  notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
-  correct?: Maybe<QuestionCreateManyWithoutCorrectInput>;
-  wrong?: Maybe<QuestionCreateManyWithoutWrongInput>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate: DateTimeInput;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-  userId: UserCreateOneWithoutResultInput;
-}
-
-export interface QuestionCreateManyWithoutNotattemptedInput {
-  create?: Maybe<
-    | QuestionCreateWithoutNotattemptedInput[]
-    | QuestionCreateWithoutNotattemptedInput
-  >;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-}
-
-export interface QuestionCreateWithoutNotattemptedInput {
-  id?: Maybe<ID_Input>;
-  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
-  quetype: String;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType: String;
-  descriptionurl?: Maybe<String>;
-  options: Json;
-  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
-  level: Int;
-  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
-  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultCreateManyWithoutWrongInput>;
-}
-
-export interface ResultCreateManyWithoutCorrectInput {
-  create?: Maybe<
-    ResultCreateWithoutCorrectInput[] | ResultCreateWithoutCorrectInput
-  >;
-  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-}
-
-export interface ResultCreateWithoutCorrectInput {
+export interface ResultCreateWithoutWrongInput {
   id?: Maybe<ID_Input>;
   quiz: QuizCreateOneWithoutResultsInput;
   quizName: String;
@@ -7095,49 +7397,13 @@ export interface ResultCreateWithoutCorrectInput {
   score?: Maybe<Float>;
   attempted?: Maybe<QuestionCreateManyWithoutAtemptedResultInput>;
   notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
-  wrong?: Maybe<QuestionCreateManyWithoutWrongInput>;
+  correct?: Maybe<QuestionCreateManyWithoutCorrectInput>;
   achievement?: Maybe<String>;
   duration?: Maybe<Int>;
   attemptedDate: DateTimeInput;
   commentFromTeacher?: Maybe<String>;
   rank?: Maybe<Int>;
   userId: UserCreateOneWithoutResultInput;
-}
-
-export interface QuestionCreateManyWithoutWrongInput {
-  create?: Maybe<
-    QuestionCreateWithoutWrongInput[] | QuestionCreateWithoutWrongInput
-  >;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-}
-
-export interface QuestionCreateWithoutWrongInput {
-  id?: Maybe<ID_Input>;
-  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
-  quetype: String;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType: String;
-  descriptionurl?: Maybe<String>;
-  options: Json;
-  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
-  level: Int;
-  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
 }
 
 export interface UserCreateOneWithoutResultInput {
@@ -7175,6 +7441,41 @@ export interface UserCreateWithoutResultInput {
   votes?: Maybe<VoteCreateManyWithoutUserInput>;
 }
 
+export interface QuizCreateManyWithoutCreatedByInput {
+  create?: Maybe<
+    QuizCreateWithoutCreatedByInput[] | QuizCreateWithoutCreatedByInput
+  >;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+}
+
+export interface QuizCreateWithoutCreatedByInput {
+  id?: Maybe<ID_Input>;
+  quizName: String;
+  quizType: String;
+  subject?: Maybe<SubjectCreateOneWithoutQuizesInput>;
+  unit?: Maybe<UnitCreateOneWithoutQuizsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionCreateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
+}
+
 export interface VoteCreateManyWithoutUserInput {
   create?: Maybe<VoteCreateWithoutUserInput[] | VoteCreateWithoutUserInput>;
   connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
@@ -7207,31 +7508,40 @@ export interface PollCreateWithoutOptionsInput {
   title: String;
 }
 
-export interface ResultCreateManyWithoutWrongInput {
+export interface QuestionCreateManyWithoutWrongInput {
   create?: Maybe<
-    ResultCreateWithoutWrongInput[] | ResultCreateWithoutWrongInput
+    QuestionCreateWithoutWrongInput[] | QuestionCreateWithoutWrongInput
   >;
-  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
 }
 
-export interface ResultCreateWithoutWrongInput {
+export interface QuestionCreateWithoutWrongInput {
   id?: Maybe<ID_Input>;
-  quiz: QuizCreateOneWithoutResultsInput;
-  quizName: String;
-  quizType: String;
-  questions?: Maybe<QuestionCreateManyWithoutResultsInput>;
-  result: String;
-  quizlevel: Int;
-  score?: Maybe<Float>;
-  attempted?: Maybe<QuestionCreateManyWithoutAtemptedResultInput>;
-  notattempted?: Maybe<QuestionCreateManyWithoutNotattemptedInput>;
-  correct?: Maybe<QuestionCreateManyWithoutCorrectInput>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate: DateTimeInput;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-  userId: UserCreateOneWithoutResultInput;
+  subject?: Maybe<SubjectCreateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitCreateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicCreateOneWithoutQuestionsInput>;
+  quetype: String;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType: String;
+  descriptionurl?: Maybe<String>;
+  options: Json;
+  createdBy?: Maybe<UserCreateOneWithoutQuestionCreatedByInput>;
+  level: Int;
+  updatedBy?: Maybe<UserCreateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizCreateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultCreateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultCreateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultCreateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultCreateManyWithoutCorrectInput>;
 }
 
 export interface ResultCreateManyWithoutUserIdInput {
@@ -7299,36 +7609,23 @@ export interface UserCreateWithoutContentUpdateByMeInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
-export interface QuizCreateManyWithoutUnitInput {
-  create?: Maybe<QuizCreateWithoutUnitInput[] | QuizCreateWithoutUnitInput>;
-  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+export interface RoleCreateOneWithoutSubjectSubscriptionsInput {
+  create?: Maybe<RoleCreateWithoutSubjectSubscriptionsInput>;
+  connect?: Maybe<RoleWhereUniqueInput>;
 }
 
-export interface QuizCreateWithoutUnitInput {
+export interface RoleCreateWithoutSubjectSubscriptionsInput {
   id?: Maybe<ID_Input>;
-  quizName: String;
-  quizType: String;
-  subject?: Maybe<SubjectCreateOneWithoutQuizesInput>;
-  topic?: Maybe<TopicCreateOneWithoutQuizsInput>;
-  questions?: Maybe<QuestionCreateManyWithoutQuizInput>;
-  markingscheme?: Maybe<Json>;
-  quizlevel?: Maybe<Int>;
-  threshold?: Maybe<Json>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
+  name: ROLENAME;
+  org?: Maybe<OrganizationCreateOneWithoutOrgRolesInput>;
+  suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
+  group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
+  subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
+  users?: Maybe<UserCreateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
   description?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  createdBy: UserCreateOneWithoutQuizCreatedByInput;
-  weightage?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  validTo?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-  results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  status?: Maybe<String>;
+  state?: Maybe<String>;
 }
 
 export interface SubjectSubscriptionCreateManyWithoutSubscribedAsInput {
@@ -7383,24 +7680,6 @@ export interface UserCreateWithoutSubjectSubscriptionInput {
   result?: Maybe<ResultCreateManyWithoutUserIdInput>;
 }
 
-export interface RoleCreateOneWithoutSubjectSubscriptionsInput {
-  create?: Maybe<RoleCreateWithoutSubjectSubscriptionsInput>;
-  connect?: Maybe<RoleWhereUniqueInput>;
-}
-
-export interface RoleCreateWithoutSubjectSubscriptionsInput {
-  id?: Maybe<ID_Input>;
-  name: ROLENAME;
-  org?: Maybe<OrganizationCreateOneWithoutOrgRolesInput>;
-  suborg?: Maybe<SuborgCreateOneWithoutSuborgRolesInput>;
-  group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
-  subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
-  users?: Maybe<UserCreateManyWithoutRolesInput>;
-  description?: Maybe<String>;
-  status?: Maybe<String>;
-  state?: Maybe<String>;
-}
-
 export interface RoleCreateManyWithoutSuborgInput {
   create?: Maybe<RoleCreateWithoutSuborgInput[] | RoleCreateWithoutSuborgInput>;
   connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
@@ -7413,6 +7692,7 @@ export interface RoleCreateWithoutSuborgInput {
   group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserCreateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -7433,6 +7713,7 @@ export interface RoleCreateWithoutOrgInput {
   group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserCreateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -7478,7 +7759,7 @@ export interface ProfileUpdateOneRequiredWithoutPersonalProfiileInput {
 export interface ProfileUpdateWithoutPersonalProfiileDataInput {
   name?: Maybe<String>;
   userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
-  studentProfile?: Maybe<StudentProfileUpdateManyWithoutProfileIdInput>;
+  EducationProfiles?: Maybe<EducationProfileUpdateManyWithoutProfileIdInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutMyprofilesInput {
@@ -8316,6 +8597,7 @@ export interface RoleUpdateWithoutUsersDataInput {
   suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
   group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -8419,10 +8701,11 @@ export interface SubjectUpdateWithoutGroupDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
@@ -8456,57 +8739,93 @@ export interface MediumUpsertWithoutSubjectsInput {
   create: MediumCreateWithoutSubjectsInput;
 }
 
-export interface StdUpdateOneRequiredWithoutSubjectInput {
-  create?: Maybe<StdCreateWithoutSubjectInput>;
-  update?: Maybe<StdUpdateWithoutSubjectDataInput>;
-  upsert?: Maybe<StdUpsertWithoutSubjectInput>;
+export interface StdUpdateOneRequiredWithoutSubjectsInput {
+  create?: Maybe<StdCreateWithoutSubjectsInput>;
+  update?: Maybe<StdUpdateWithoutSubjectsDataInput>;
+  upsert?: Maybe<StdUpsertWithoutSubjectsInput>;
   connect?: Maybe<StdWhereUniqueInput>;
 }
 
-export interface StdUpdateWithoutSubjectDataInput {
-  stdname?: Maybe<String>;
+export interface StdUpdateWithoutSubjectsDataInput {
+  gradename?: Maybe<GRADENAME>;
   category?: Maybe<String>;
   branch?: Maybe<String>;
   year?: Maybe<String>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutStdInput>;
+  isPublished?: Maybe<Boolean>;
 }
 
-export interface StdUpsertWithoutSubjectInput {
-  update: StdUpdateWithoutSubjectDataInput;
-  create: StdCreateWithoutSubjectInput;
-}
-
-export interface SubGroupUpdateOneWithoutSubjectsInput {
-  create?: Maybe<SubGroupCreateWithoutSubjectsInput>;
-  update?: Maybe<SubGroupUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<SubGroupUpsertWithoutSubjectsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<SubGroupWhereUniqueInput>;
-}
-
-export interface SubGroupUpdateWithoutSubjectsDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  groupid?: Maybe<GroupUpdateOneRequiredWithoutSubgroupsInput>;
-  members?: Maybe<SubGroupMemberUpdateManyWithoutMemberInput>;
-  subgroupRoles?: Maybe<RoleUpdateManyWithoutSubgroupInput>;
-}
-
-export interface RoleUpdateManyWithoutSubgroupInput {
+export interface EducationProfileUpdateManyWithoutStdInput {
   create?: Maybe<
-    RoleCreateWithoutSubgroupInput[] | RoleCreateWithoutSubgroupInput
+    | EducationProfileCreateWithoutStdInput[]
+    | EducationProfileCreateWithoutStdInput
+  >;
+  delete?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  connect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  set?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  update?: Maybe<
+    | EducationProfileUpdateWithWhereUniqueWithoutStdInput[]
+    | EducationProfileUpdateWithWhereUniqueWithoutStdInput
+  >;
+  upsert?: Maybe<
+    | EducationProfileUpsertWithWhereUniqueWithoutStdInput[]
+    | EducationProfileUpsertWithWhereUniqueWithoutStdInput
+  >;
+  deleteMany?: Maybe<
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | EducationProfileUpdateManyWithWhereNestedInput[]
+    | EducationProfileUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface EducationProfileUpdateWithWhereUniqueWithoutStdInput {
+  where: EducationProfileWhereUniqueInput;
+  data: EducationProfileUpdateWithoutStdDataInput;
+}
+
+export interface EducationProfileUpdateWithoutStdDataInput {
+  name?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  roles?: Maybe<RoleUpdateManyWithoutEducationprofilesInput>;
+  subjects?: Maybe<SubjectUpdateManyWithoutEducationProfilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId?: Maybe<ProfileUpdateOneRequiredWithoutEducationProfilesInput>;
+}
+
+export interface RoleUpdateManyWithoutEducationprofilesInput {
+  create?: Maybe<
+    | RoleCreateWithoutEducationprofilesInput[]
+    | RoleCreateWithoutEducationprofilesInput
   >;
   delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
   connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
   set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
   disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
   update?: Maybe<
-    | RoleUpdateWithWhereUniqueWithoutSubgroupInput[]
-    | RoleUpdateWithWhereUniqueWithoutSubgroupInput
+    | RoleUpdateWithWhereUniqueWithoutEducationprofilesInput[]
+    | RoleUpdateWithWhereUniqueWithoutEducationprofilesInput
   >;
   upsert?: Maybe<
-    | RoleUpsertWithWhereUniqueWithoutSubgroupInput[]
-    | RoleUpsertWithWhereUniqueWithoutSubgroupInput
+    | RoleUpsertWithWhereUniqueWithoutEducationprofilesInput[]
+    | RoleUpsertWithWhereUniqueWithoutEducationprofilesInput
   >;
   deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
   updateMany?: Maybe<
@@ -8514,17 +8833,145 @@ export interface RoleUpdateManyWithoutSubgroupInput {
   >;
 }
 
-export interface RoleUpdateWithWhereUniqueWithoutSubgroupInput {
+export interface RoleUpdateWithWhereUniqueWithoutEducationprofilesInput {
   where: RoleWhereUniqueInput;
-  data: RoleUpdateWithoutSubgroupDataInput;
+  data: RoleUpdateWithoutEducationprofilesDataInput;
 }
 
-export interface RoleUpdateWithoutSubgroupDataInput {
+export interface RoleUpdateWithoutEducationprofilesDataInput {
   name?: Maybe<ROLENAME>;
   org?: Maybe<OrganizationUpdateOneWithoutOrgRolesInput>;
   suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
   group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  description?: Maybe<String>;
+  status?: Maybe<String>;
+  state?: Maybe<String>;
+  subjectSubscriptions?: Maybe<
+    SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
+  >;
+}
+
+export interface SubGroupUpdateOneWithoutSubgroupRolesInput {
+  create?: Maybe<SubGroupCreateWithoutSubgroupRolesInput>;
+  update?: Maybe<SubGroupUpdateWithoutSubgroupRolesDataInput>;
+  upsert?: Maybe<SubGroupUpsertWithoutSubgroupRolesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<SubGroupWhereUniqueInput>;
+}
+
+export interface SubGroupUpdateWithoutSubgroupRolesDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  groupid?: Maybe<GroupUpdateOneRequiredWithoutSubgroupsInput>;
+  members?: Maybe<SubGroupMemberUpdateManyWithoutMemberInput>;
+  subjects?: Maybe<SubjectUpdateManyWithoutSubgroupInput>;
+}
+
+export interface SubjectUpdateManyWithoutSubgroupInput {
+  create?: Maybe<
+    SubjectCreateWithoutSubgroupInput[] | SubjectCreateWithoutSubgroupInput
+  >;
+  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  update?: Maybe<
+    | SubjectUpdateWithWhereUniqueWithoutSubgroupInput[]
+    | SubjectUpdateWithWhereUniqueWithoutSubgroupInput
+  >;
+  upsert?: Maybe<
+    | SubjectUpsertWithWhereUniqueWithoutSubgroupInput[]
+    | SubjectUpsertWithWhereUniqueWithoutSubgroupInput
+  >;
+  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | SubjectUpdateManyWithWhereNestedInput[]
+    | SubjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SubjectUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: SubjectWhereUniqueInput;
+  data: SubjectUpdateWithoutSubgroupDataInput;
+}
+
+export interface SubjectUpdateWithoutSubgroupDataInput {
+  name?: Maybe<String>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+}
+
+export interface GroupUpdateOneWithoutSubjectsInput {
+  create?: Maybe<GroupCreateWithoutSubjectsInput>;
+  update?: Maybe<GroupUpdateWithoutSubjectsDataInput>;
+  upsert?: Maybe<GroupUpsertWithoutSubjectsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<GroupWhereUniqueInput>;
+}
+
+export interface GroupUpdateWithoutSubjectsDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  suborgid?: Maybe<SuborgUpdateOneRequiredWithoutUserGroupsInput>;
+  subgroups?: Maybe<SubGroupUpdateManyWithoutGroupidInput>;
+  members?: Maybe<GroupMemberUpdateManyWithoutMemberInput>;
+  groupRoles?: Maybe<RoleUpdateManyWithoutGroupInput>;
+}
+
+export interface RoleUpdateManyWithoutGroupInput {
+  create?: Maybe<RoleCreateWithoutGroupInput[] | RoleCreateWithoutGroupInput>;
+  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  update?: Maybe<
+    | RoleUpdateWithWhereUniqueWithoutGroupInput[]
+    | RoleUpdateWithWhereUniqueWithoutGroupInput
+  >;
+  upsert?: Maybe<
+    | RoleUpsertWithWhereUniqueWithoutGroupInput[]
+    | RoleUpsertWithWhereUniqueWithoutGroupInput
+  >;
+  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  updateMany?: Maybe<
+    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RoleUpdateWithWhereUniqueWithoutGroupInput {
+  where: RoleWhereUniqueInput;
+  data: RoleUpdateWithoutGroupDataInput;
+}
+
+export interface RoleUpdateWithoutGroupDataInput {
+  name?: Maybe<ROLENAME>;
+  org?: Maybe<OrganizationUpdateOneWithoutOrgRolesInput>;
+  suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
+  users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -8617,56 +9064,58 @@ export interface ProfileUpdateWithWhereUniqueWithoutUserIdInput {
 
 export interface ProfileUpdateWithoutUserIdDataInput {
   name?: Maybe<String>;
-  studentProfile?: Maybe<StudentProfileUpdateManyWithoutProfileIdInput>;
+  EducationProfiles?: Maybe<EducationProfileUpdateManyWithoutProfileIdInput>;
   personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
 }
 
-export interface StudentProfileUpdateManyWithoutProfileIdInput {
+export interface EducationProfileUpdateManyWithoutProfileIdInput {
   create?: Maybe<
-    | StudentProfileCreateWithoutProfileIdInput[]
-    | StudentProfileCreateWithoutProfileIdInput
+    | EducationProfileCreateWithoutProfileIdInput[]
+    | EducationProfileCreateWithoutProfileIdInput
   >;
   delete?: Maybe<
-    StudentProfileWhereUniqueInput[] | StudentProfileWhereUniqueInput
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
   >;
   connect?: Maybe<
-    StudentProfileWhereUniqueInput[] | StudentProfileWhereUniqueInput
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
   >;
   set?: Maybe<
-    StudentProfileWhereUniqueInput[] | StudentProfileWhereUniqueInput
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
   >;
   disconnect?: Maybe<
-    StudentProfileWhereUniqueInput[] | StudentProfileWhereUniqueInput
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
   >;
   update?: Maybe<
-    | StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput[]
-    | StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput
+    | EducationProfileUpdateWithWhereUniqueWithoutProfileIdInput[]
+    | EducationProfileUpdateWithWhereUniqueWithoutProfileIdInput
   >;
   upsert?: Maybe<
-    | StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput[]
-    | StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput
+    | EducationProfileUpsertWithWhereUniqueWithoutProfileIdInput[]
+    | EducationProfileUpsertWithWhereUniqueWithoutProfileIdInput
   >;
   deleteMany?: Maybe<
-    StudentProfileScalarWhereInput[] | StudentProfileScalarWhereInput
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
   >;
   updateMany?: Maybe<
-    | StudentProfileUpdateManyWithWhereNestedInput[]
-    | StudentProfileUpdateManyWithWhereNestedInput
+    | EducationProfileUpdateManyWithWhereNestedInput[]
+    | EducationProfileUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface StudentProfileUpdateWithWhereUniqueWithoutProfileIdInput {
-  where: StudentProfileWhereUniqueInput;
-  data: StudentProfileUpdateWithoutProfileIdDataInput;
+export interface EducationProfileUpdateWithWhereUniqueWithoutProfileIdInput {
+  where: EducationProfileWhereUniqueInput;
+  data: EducationProfileUpdateWithoutProfileIdDataInput;
 }
 
-export interface StudentProfileUpdateWithoutProfileIdDataInput {
+export interface EducationProfileUpdateWithoutProfileIdDataInput {
   name?: Maybe<String>;
   profiileType?: Maybe<String>;
   educationLevel?: Maybe<String>;
   educationType?: Maybe<String>;
   specialization?: Maybe<String>;
-  std?: Maybe<String>;
+  roles?: Maybe<RoleUpdateManyWithoutEducationprofilesInput>;
+  subjects?: Maybe<SubjectUpdateManyWithoutEducationProfilesInput>;
+  std?: Maybe<StdUpdateManyWithoutEducationprofilesInput>;
   startedYear?: Maybe<DateTimeInput>;
   completedYear?: Maybe<DateTimeInput>;
   result?: Maybe<String>;
@@ -8674,195 +9123,326 @@ export interface StudentProfileUpdateWithoutProfileIdDataInput {
   remark?: Maybe<String>;
 }
 
-export interface StudentProfileUpsertWithWhereUniqueWithoutProfileIdInput {
-  where: StudentProfileWhereUniqueInput;
-  update: StudentProfileUpdateWithoutProfileIdDataInput;
-  create: StudentProfileCreateWithoutProfileIdInput;
+export interface SubjectUpdateManyWithoutEducationProfilesInput {
+  create?: Maybe<
+    | SubjectCreateWithoutEducationProfilesInput[]
+    | SubjectCreateWithoutEducationProfilesInput
+  >;
+  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  update?: Maybe<
+    | SubjectUpdateWithWhereUniqueWithoutEducationProfilesInput[]
+    | SubjectUpdateWithWhereUniqueWithoutEducationProfilesInput
+  >;
+  upsert?: Maybe<
+    | SubjectUpsertWithWhereUniqueWithoutEducationProfilesInput[]
+    | SubjectUpsertWithWhereUniqueWithoutEducationProfilesInput
+  >;
+  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | SubjectUpdateManyWithWhereNestedInput[]
+    | SubjectUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface StudentProfileScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
+export interface SubjectUpdateWithWhereUniqueWithoutEducationProfilesInput {
+  where: SubjectWhereUniqueInput;
+  data: SubjectUpdateWithoutEducationProfilesDataInput;
+}
+
+export interface SubjectUpdateWithoutEducationProfilesDataInput {
   name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  profiileType?: Maybe<String>;
-  profiileType_not?: Maybe<String>;
-  profiileType_in?: Maybe<String[] | String>;
-  profiileType_not_in?: Maybe<String[] | String>;
-  profiileType_lt?: Maybe<String>;
-  profiileType_lte?: Maybe<String>;
-  profiileType_gt?: Maybe<String>;
-  profiileType_gte?: Maybe<String>;
-  profiileType_contains?: Maybe<String>;
-  profiileType_not_contains?: Maybe<String>;
-  profiileType_starts_with?: Maybe<String>;
-  profiileType_not_starts_with?: Maybe<String>;
-  profiileType_ends_with?: Maybe<String>;
-  profiileType_not_ends_with?: Maybe<String>;
-  educationLevel?: Maybe<String>;
-  educationLevel_not?: Maybe<String>;
-  educationLevel_in?: Maybe<String[] | String>;
-  educationLevel_not_in?: Maybe<String[] | String>;
-  educationLevel_lt?: Maybe<String>;
-  educationLevel_lte?: Maybe<String>;
-  educationLevel_gt?: Maybe<String>;
-  educationLevel_gte?: Maybe<String>;
-  educationLevel_contains?: Maybe<String>;
-  educationLevel_not_contains?: Maybe<String>;
-  educationLevel_starts_with?: Maybe<String>;
-  educationLevel_not_starts_with?: Maybe<String>;
-  educationLevel_ends_with?: Maybe<String>;
-  educationLevel_not_ends_with?: Maybe<String>;
-  educationType?: Maybe<String>;
-  educationType_not?: Maybe<String>;
-  educationType_in?: Maybe<String[] | String>;
-  educationType_not_in?: Maybe<String[] | String>;
-  educationType_lt?: Maybe<String>;
-  educationType_lte?: Maybe<String>;
-  educationType_gt?: Maybe<String>;
-  educationType_gte?: Maybe<String>;
-  educationType_contains?: Maybe<String>;
-  educationType_not_contains?: Maybe<String>;
-  educationType_starts_with?: Maybe<String>;
-  educationType_not_starts_with?: Maybe<String>;
-  educationType_ends_with?: Maybe<String>;
-  educationType_not_ends_with?: Maybe<String>;
-  specialization?: Maybe<String>;
-  specialization_not?: Maybe<String>;
-  specialization_in?: Maybe<String[] | String>;
-  specialization_not_in?: Maybe<String[] | String>;
-  specialization_lt?: Maybe<String>;
-  specialization_lte?: Maybe<String>;
-  specialization_gt?: Maybe<String>;
-  specialization_gte?: Maybe<String>;
-  specialization_contains?: Maybe<String>;
-  specialization_not_contains?: Maybe<String>;
-  specialization_starts_with?: Maybe<String>;
-  specialization_not_starts_with?: Maybe<String>;
-  specialization_ends_with?: Maybe<String>;
-  specialization_not_ends_with?: Maybe<String>;
-  std?: Maybe<String>;
-  std_not?: Maybe<String>;
-  std_in?: Maybe<String[] | String>;
-  std_not_in?: Maybe<String[] | String>;
-  std_lt?: Maybe<String>;
-  std_lte?: Maybe<String>;
-  std_gt?: Maybe<String>;
-  std_gte?: Maybe<String>;
-  std_contains?: Maybe<String>;
-  std_not_contains?: Maybe<String>;
-  std_starts_with?: Maybe<String>;
-  std_not_starts_with?: Maybe<String>;
-  std_ends_with?: Maybe<String>;
-  std_not_ends_with?: Maybe<String>;
-  startedYear?: Maybe<DateTimeInput>;
-  startedYear_not?: Maybe<DateTimeInput>;
-  startedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startedYear_lt?: Maybe<DateTimeInput>;
-  startedYear_lte?: Maybe<DateTimeInput>;
-  startedYear_gt?: Maybe<DateTimeInput>;
-  startedYear_gte?: Maybe<DateTimeInput>;
-  completedYear?: Maybe<DateTimeInput>;
-  completedYear_not?: Maybe<DateTimeInput>;
-  completedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  completedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  completedYear_lt?: Maybe<DateTimeInput>;
-  completedYear_lte?: Maybe<DateTimeInput>;
-  completedYear_gt?: Maybe<DateTimeInput>;
-  completedYear_gte?: Maybe<DateTimeInput>;
-  result?: Maybe<String>;
-  result_not?: Maybe<String>;
-  result_in?: Maybe<String[] | String>;
-  result_not_in?: Maybe<String[] | String>;
-  result_lt?: Maybe<String>;
-  result_lte?: Maybe<String>;
-  result_gt?: Maybe<String>;
-  result_gte?: Maybe<String>;
-  result_contains?: Maybe<String>;
-  result_not_contains?: Maybe<String>;
-  result_starts_with?: Maybe<String>;
-  result_not_starts_with?: Maybe<String>;
-  result_ends_with?: Maybe<String>;
-  result_not_ends_with?: Maybe<String>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
   status?: Maybe<String>;
-  status_not?: Maybe<String>;
-  status_in?: Maybe<String[] | String>;
-  status_not_in?: Maybe<String[] | String>;
-  status_lt?: Maybe<String>;
-  status_lte?: Maybe<String>;
-  status_gt?: Maybe<String>;
-  status_gte?: Maybe<String>;
-  status_contains?: Maybe<String>;
-  status_not_contains?: Maybe<String>;
-  status_starts_with?: Maybe<String>;
-  status_not_starts_with?: Maybe<String>;
-  status_ends_with?: Maybe<String>;
-  status_not_ends_with?: Maybe<String>;
-  remark?: Maybe<String>;
-  remark_not?: Maybe<String>;
-  remark_in?: Maybe<String[] | String>;
-  remark_not_in?: Maybe<String[] | String>;
-  remark_lt?: Maybe<String>;
-  remark_lte?: Maybe<String>;
-  remark_gt?: Maybe<String>;
-  remark_gte?: Maybe<String>;
-  remark_contains?: Maybe<String>;
-  remark_not_contains?: Maybe<String>;
-  remark_starts_with?: Maybe<String>;
-  remark_not_starts_with?: Maybe<String>;
-  remark_ends_with?: Maybe<String>;
-  remark_not_ends_with?: Maybe<String>;
-  AND?: Maybe<
-    StudentProfileScalarWhereInput[] | StudentProfileScalarWhereInput
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+}
+
+export interface SubGroupUpdateOneWithoutSubjectsInput {
+  create?: Maybe<SubGroupCreateWithoutSubjectsInput>;
+  update?: Maybe<SubGroupUpdateWithoutSubjectsDataInput>;
+  upsert?: Maybe<SubGroupUpsertWithoutSubjectsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<SubGroupWhereUniqueInput>;
+}
+
+export interface SubGroupUpdateWithoutSubjectsDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  groupid?: Maybe<GroupUpdateOneRequiredWithoutSubgroupsInput>;
+  members?: Maybe<SubGroupMemberUpdateManyWithoutMemberInput>;
+  subgroupRoles?: Maybe<RoleUpdateManyWithoutSubgroupInput>;
+}
+
+export interface RoleUpdateManyWithoutSubgroupInput {
+  create?: Maybe<
+    RoleCreateWithoutSubgroupInput[] | RoleCreateWithoutSubgroupInput
   >;
-  OR?: Maybe<StudentProfileScalarWhereInput[] | StudentProfileScalarWhereInput>;
-  NOT?: Maybe<
-    StudentProfileScalarWhereInput[] | StudentProfileScalarWhereInput
+  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  update?: Maybe<
+    | RoleUpdateWithWhereUniqueWithoutSubgroupInput[]
+    | RoleUpdateWithWhereUniqueWithoutSubgroupInput
+  >;
+  upsert?: Maybe<
+    | RoleUpsertWithWhereUniqueWithoutSubgroupInput[]
+    | RoleUpsertWithWhereUniqueWithoutSubgroupInput
+  >;
+  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  updateMany?: Maybe<
+    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface StudentProfileUpdateManyWithWhereNestedInput {
-  where: StudentProfileScalarWhereInput;
-  data: StudentProfileUpdateManyDataInput;
+export interface RoleUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: RoleWhereUniqueInput;
+  data: RoleUpdateWithoutSubgroupDataInput;
 }
 
-export interface StudentProfileUpdateManyDataInput {
+export interface RoleUpdateWithoutSubgroupDataInput {
+  name?: Maybe<ROLENAME>;
+  org?: Maybe<OrganizationUpdateOneWithoutOrgRolesInput>;
+  suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
+  group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
+  users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
+  description?: Maybe<String>;
+  status?: Maybe<String>;
+  state?: Maybe<String>;
+  subjectSubscriptions?: Maybe<
+    SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
+  >;
+}
+
+export interface EducationProfileUpdateManyWithoutRolesInput {
+  create?: Maybe<
+    | EducationProfileCreateWithoutRolesInput[]
+    | EducationProfileCreateWithoutRolesInput
+  >;
+  delete?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  connect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  set?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  update?: Maybe<
+    | EducationProfileUpdateWithWhereUniqueWithoutRolesInput[]
+    | EducationProfileUpdateWithWhereUniqueWithoutRolesInput
+  >;
+  upsert?: Maybe<
+    | EducationProfileUpsertWithWhereUniqueWithoutRolesInput[]
+    | EducationProfileUpsertWithWhereUniqueWithoutRolesInput
+  >;
+  deleteMany?: Maybe<
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | EducationProfileUpdateManyWithWhereNestedInput[]
+    | EducationProfileUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface EducationProfileUpdateWithWhereUniqueWithoutRolesInput {
+  where: EducationProfileWhereUniqueInput;
+  data: EducationProfileUpdateWithoutRolesDataInput;
+}
+
+export interface EducationProfileUpdateWithoutRolesDataInput {
   name?: Maybe<String>;
   profiileType?: Maybe<String>;
   educationLevel?: Maybe<String>;
   educationType?: Maybe<String>;
   specialization?: Maybe<String>;
-  std?: Maybe<String>;
+  subjects?: Maybe<SubjectUpdateManyWithoutEducationProfilesInput>;
+  std?: Maybe<StdUpdateManyWithoutEducationprofilesInput>;
   startedYear?: Maybe<DateTimeInput>;
   completedYear?: Maybe<DateTimeInput>;
   result?: Maybe<String>;
   status?: Maybe<String>;
   remark?: Maybe<String>;
+  profileId?: Maybe<ProfileUpdateOneRequiredWithoutEducationProfilesInput>;
+}
+
+export interface StdUpdateManyWithoutEducationprofilesInput {
+  create?: Maybe<
+    | StdCreateWithoutEducationprofilesInput[]
+    | StdCreateWithoutEducationprofilesInput
+  >;
+  delete?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
+  connect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
+  set?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
+  disconnect?: Maybe<StdWhereUniqueInput[] | StdWhereUniqueInput>;
+  update?: Maybe<
+    | StdUpdateWithWhereUniqueWithoutEducationprofilesInput[]
+    | StdUpdateWithWhereUniqueWithoutEducationprofilesInput
+  >;
+  upsert?: Maybe<
+    | StdUpsertWithWhereUniqueWithoutEducationprofilesInput[]
+    | StdUpsertWithWhereUniqueWithoutEducationprofilesInput
+  >;
+  deleteMany?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
+  updateMany?: Maybe<
+    StdUpdateManyWithWhereNestedInput[] | StdUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface StdUpdateWithWhereUniqueWithoutEducationprofilesInput {
+  where: StdWhereUniqueInput;
+  data: StdUpdateWithoutEducationprofilesDataInput;
+}
+
+export interface StdUpdateWithoutEducationprofilesDataInput {
+  gradename?: Maybe<GRADENAME>;
+  category?: Maybe<String>;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
+}
+
+export interface SubjectUpdateManyWithoutStdInput {
+  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
+  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  update?: Maybe<
+    | SubjectUpdateWithWhereUniqueWithoutStdInput[]
+    | SubjectUpdateWithWhereUniqueWithoutStdInput
+  >;
+  upsert?: Maybe<
+    | SubjectUpsertWithWhereUniqueWithoutStdInput[]
+    | SubjectUpsertWithWhereUniqueWithoutStdInput
+  >;
+  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | SubjectUpdateManyWithWhereNestedInput[]
+    | SubjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SubjectUpdateWithWhereUniqueWithoutStdInput {
+  where: SubjectWhereUniqueInput;
+  data: SubjectUpdateWithoutStdDataInput;
+}
+
+export interface SubjectUpdateWithoutStdDataInput {
+  name?: Maybe<String>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+}
+
+export interface EducationProfileUpdateManyWithoutSubjectsInput {
+  create?: Maybe<
+    | EducationProfileCreateWithoutSubjectsInput[]
+    | EducationProfileCreateWithoutSubjectsInput
+  >;
+  delete?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  connect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  set?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    EducationProfileWhereUniqueInput[] | EducationProfileWhereUniqueInput
+  >;
+  update?: Maybe<
+    | EducationProfileUpdateWithWhereUniqueWithoutSubjectsInput[]
+    | EducationProfileUpdateWithWhereUniqueWithoutSubjectsInput
+  >;
+  upsert?: Maybe<
+    | EducationProfileUpsertWithWhereUniqueWithoutSubjectsInput[]
+    | EducationProfileUpsertWithWhereUniqueWithoutSubjectsInput
+  >;
+  deleteMany?: Maybe<
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | EducationProfileUpdateManyWithWhereNestedInput[]
+    | EducationProfileUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface EducationProfileUpdateWithWhereUniqueWithoutSubjectsInput {
+  where: EducationProfileWhereUniqueInput;
+  data: EducationProfileUpdateWithoutSubjectsDataInput;
+}
+
+export interface EducationProfileUpdateWithoutSubjectsDataInput {
+  name?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  roles?: Maybe<RoleUpdateManyWithoutEducationprofilesInput>;
+  std?: Maybe<StdUpdateManyWithoutEducationprofilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId?: Maybe<ProfileUpdateOneRequiredWithoutEducationProfilesInput>;
+}
+
+export interface ProfileUpdateOneRequiredWithoutEducationProfilesInput {
+  create?: Maybe<ProfileCreateWithoutEducationProfilesInput>;
+  update?: Maybe<ProfileUpdateWithoutEducationProfilesDataInput>;
+  upsert?: Maybe<ProfileUpsertWithoutEducationProfilesInput>;
+  connect?: Maybe<ProfileWhereUniqueInput>;
+}
+
+export interface ProfileUpdateWithoutEducationProfilesDataInput {
+  name?: Maybe<String>;
+  userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
+  personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
 }
 
 export interface PersonalProfileUpdateManyWithoutProfileIdInput {
@@ -9162,13 +9742,18 @@ export interface PersonalProfileUpdateManyDataInput {
   isMobilePublished?: Maybe<Boolean>;
 }
 
-export interface ProfileUpsertWithWhereUniqueWithoutUserIdInput {
-  where: ProfileWhereUniqueInput;
-  update: ProfileUpdateWithoutUserIdDataInput;
-  create: ProfileCreateWithoutUserIdInput;
+export interface ProfileUpsertWithoutEducationProfilesInput {
+  update: ProfileUpdateWithoutEducationProfilesDataInput;
+  create: ProfileCreateWithoutEducationProfilesInput;
 }
 
-export interface ProfileScalarWhereInput {
+export interface EducationProfileUpsertWithWhereUniqueWithoutSubjectsInput {
+  where: EducationProfileWhereUniqueInput;
+  update: EducationProfileUpdateWithoutSubjectsDataInput;
+  create: EducationProfileCreateWithoutSubjectsInput;
+}
+
+export interface EducationProfileScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -9197,238 +9782,147 @@ export interface ProfileScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ProfileScalarWhereInput[] | ProfileScalarWhereInput>;
-  OR?: Maybe<ProfileScalarWhereInput[] | ProfileScalarWhereInput>;
-  NOT?: Maybe<ProfileScalarWhereInput[] | ProfileScalarWhereInput>;
-}
-
-export interface ProfileUpdateManyWithWhereNestedInput {
-  where: ProfileScalarWhereInput;
-  data: ProfileUpdateManyDataInput;
-}
-
-export interface ProfileUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface SubjectSubscriptionUpdateManyWithoutUseridInput {
-  create?: Maybe<
-    | SubjectSubscriptionCreateWithoutUseridInput[]
-    | SubjectSubscriptionCreateWithoutUseridInput
-  >;
-  delete?: Maybe<
-    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
-  >;
-  connect?: Maybe<
-    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
-  >;
-  set?: Maybe<
-    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
-  >;
-  update?: Maybe<
-    | SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput[]
-    | SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput
-  >;
-  upsert?: Maybe<
-    | SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput[]
-    | SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput
-  >;
-  deleteMany?: Maybe<
-    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | SubjectSubscriptionUpdateManyWithWhereNestedInput[]
-    | SubjectSubscriptionUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput {
-  where: SubjectSubscriptionWhereUniqueInput;
-  data: SubjectSubscriptionUpdateWithoutUseridDataInput;
-}
-
-export interface SubjectSubscriptionUpdateWithoutUseridDataInput {
-  subsType?: Maybe<String>;
-  mySubjects?: Maybe<SubjectUpdateManyInput>;
-  subscribedAs?: Maybe<RoleUpdateOneRequiredWithoutSubjectSubscriptionsInput>;
-}
-
-export interface SubjectUpdateManyInput {
-  create?: Maybe<SubjectCreateInput[] | SubjectCreateInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueNestedInput[]
-    | SubjectUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueNestedInput[]
-    | SubjectUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueNestedInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateDataInput;
-}
-
-export interface SubjectUpdateDataInput {
-  name?: Maybe<String>;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  profiileType_not?: Maybe<String>;
+  profiileType_in?: Maybe<String[] | String>;
+  profiileType_not_in?: Maybe<String[] | String>;
+  profiileType_lt?: Maybe<String>;
+  profiileType_lte?: Maybe<String>;
+  profiileType_gt?: Maybe<String>;
+  profiileType_gte?: Maybe<String>;
+  profiileType_contains?: Maybe<String>;
+  profiileType_not_contains?: Maybe<String>;
+  profiileType_starts_with?: Maybe<String>;
+  profiileType_not_starts_with?: Maybe<String>;
+  profiileType_ends_with?: Maybe<String>;
+  profiileType_not_ends_with?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationLevel_not?: Maybe<String>;
+  educationLevel_in?: Maybe<String[] | String>;
+  educationLevel_not_in?: Maybe<String[] | String>;
+  educationLevel_lt?: Maybe<String>;
+  educationLevel_lte?: Maybe<String>;
+  educationLevel_gt?: Maybe<String>;
+  educationLevel_gte?: Maybe<String>;
+  educationLevel_contains?: Maybe<String>;
+  educationLevel_not_contains?: Maybe<String>;
+  educationLevel_starts_with?: Maybe<String>;
+  educationLevel_not_starts_with?: Maybe<String>;
+  educationLevel_ends_with?: Maybe<String>;
+  educationLevel_not_ends_with?: Maybe<String>;
+  educationType?: Maybe<String>;
+  educationType_not?: Maybe<String>;
+  educationType_in?: Maybe<String[] | String>;
+  educationType_not_in?: Maybe<String[] | String>;
+  educationType_lt?: Maybe<String>;
+  educationType_lte?: Maybe<String>;
+  educationType_gt?: Maybe<String>;
+  educationType_gte?: Maybe<String>;
+  educationType_contains?: Maybe<String>;
+  educationType_not_contains?: Maybe<String>;
+  educationType_starts_with?: Maybe<String>;
+  educationType_not_starts_with?: Maybe<String>;
+  educationType_ends_with?: Maybe<String>;
+  educationType_not_ends_with?: Maybe<String>;
+  specialization?: Maybe<String>;
+  specialization_not?: Maybe<String>;
+  specialization_in?: Maybe<String[] | String>;
+  specialization_not_in?: Maybe<String[] | String>;
+  specialization_lt?: Maybe<String>;
+  specialization_lte?: Maybe<String>;
+  specialization_gt?: Maybe<String>;
+  specialization_gte?: Maybe<String>;
+  specialization_contains?: Maybe<String>;
+  specialization_not_contains?: Maybe<String>;
+  specialization_starts_with?: Maybe<String>;
+  specialization_not_starts_with?: Maybe<String>;
+  specialization_ends_with?: Maybe<String>;
+  specialization_not_ends_with?: Maybe<String>;
+  startedYear?: Maybe<DateTimeInput>;
+  startedYear_not?: Maybe<DateTimeInput>;
+  startedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startedYear_lt?: Maybe<DateTimeInput>;
+  startedYear_lte?: Maybe<DateTimeInput>;
+  startedYear_gt?: Maybe<DateTimeInput>;
+  startedYear_gte?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  completedYear_not?: Maybe<DateTimeInput>;
+  completedYear_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  completedYear_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  completedYear_lt?: Maybe<DateTimeInput>;
+  completedYear_lte?: Maybe<DateTimeInput>;
+  completedYear_gt?: Maybe<DateTimeInput>;
+  completedYear_gte?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  result_not?: Maybe<String>;
+  result_in?: Maybe<String[] | String>;
+  result_not_in?: Maybe<String[] | String>;
+  result_lt?: Maybe<String>;
+  result_lte?: Maybe<String>;
+  result_gt?: Maybe<String>;
+  result_gte?: Maybe<String>;
+  result_contains?: Maybe<String>;
+  result_not_contains?: Maybe<String>;
+  result_starts_with?: Maybe<String>;
+  result_not_starts_with?: Maybe<String>;
+  result_ends_with?: Maybe<String>;
+  result_not_ends_with?: Maybe<String>;
   status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
-  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  remark?: Maybe<String>;
+  remark_not?: Maybe<String>;
+  remark_in?: Maybe<String[] | String>;
+  remark_not_in?: Maybe<String[] | String>;
+  remark_lt?: Maybe<String>;
+  remark_lte?: Maybe<String>;
+  remark_gt?: Maybe<String>;
+  remark_gte?: Maybe<String>;
+  remark_contains?: Maybe<String>;
+  remark_not_contains?: Maybe<String>;
+  remark_starts_with?: Maybe<String>;
+  remark_not_starts_with?: Maybe<String>;
+  remark_ends_with?: Maybe<String>;
+  remark_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
+  >;
+  OR?: Maybe<
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
+  >;
+  NOT?: Maybe<
+    EducationProfileScalarWhereInput[] | EducationProfileScalarWhereInput
+  >;
 }
 
-export interface GroupUpdateOneWithoutSubjectsInput {
-  create?: Maybe<GroupCreateWithoutSubjectsInput>;
-  update?: Maybe<GroupUpdateWithoutSubjectsDataInput>;
-  upsert?: Maybe<GroupUpsertWithoutSubjectsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<GroupWhereUniqueInput>;
+export interface EducationProfileUpdateManyWithWhereNestedInput {
+  where: EducationProfileScalarWhereInput;
+  data: EducationProfileUpdateManyDataInput;
 }
 
-export interface GroupUpdateWithoutSubjectsDataInput {
+export interface EducationProfileUpdateManyDataInput {
   name?: Maybe<String>;
-  description?: Maybe<String>;
-  suborgid?: Maybe<SuborgUpdateOneRequiredWithoutUserGroupsInput>;
-  subgroups?: Maybe<SubGroupUpdateManyWithoutGroupidInput>;
-  members?: Maybe<GroupMemberUpdateManyWithoutMemberInput>;
-  groupRoles?: Maybe<RoleUpdateManyWithoutGroupInput>;
-}
-
-export interface RoleUpdateManyWithoutGroupInput {
-  create?: Maybe<RoleCreateWithoutGroupInput[] | RoleCreateWithoutGroupInput>;
-  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  update?: Maybe<
-    | RoleUpdateWithWhereUniqueWithoutGroupInput[]
-    | RoleUpdateWithWhereUniqueWithoutGroupInput
-  >;
-  upsert?: Maybe<
-    | RoleUpsertWithWhereUniqueWithoutGroupInput[]
-    | RoleUpsertWithWhereUniqueWithoutGroupInput
-  >;
-  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  updateMany?: Maybe<
-    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface RoleUpdateWithWhereUniqueWithoutGroupInput {
-  where: RoleWhereUniqueInput;
-  data: RoleUpdateWithoutGroupDataInput;
-}
-
-export interface RoleUpdateWithoutGroupDataInput {
-  name?: Maybe<ROLENAME>;
-  org?: Maybe<OrganizationUpdateOneWithoutOrgRolesInput>;
-  suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
-  subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
-  users?: Maybe<UserUpdateManyWithoutRolesInput>;
-  description?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
   status?: Maybe<String>;
-  state?: Maybe<String>;
-  subjectSubscriptions?: Maybe<
-    SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
-  >;
-}
-
-export interface SubGroupUpdateOneWithoutSubgroupRolesInput {
-  create?: Maybe<SubGroupCreateWithoutSubgroupRolesInput>;
-  update?: Maybe<SubGroupUpdateWithoutSubgroupRolesDataInput>;
-  upsert?: Maybe<SubGroupUpsertWithoutSubgroupRolesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<SubGroupWhereUniqueInput>;
-}
-
-export interface SubGroupUpdateWithoutSubgroupRolesDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  groupid?: Maybe<GroupUpdateOneRequiredWithoutSubgroupsInput>;
-  members?: Maybe<SubGroupMemberUpdateManyWithoutMemberInput>;
-  subjects?: Maybe<SubjectUpdateManyWithoutSubgroupInput>;
-}
-
-export interface SubjectUpdateManyWithoutSubgroupInput {
-  create?: Maybe<
-    SubjectCreateWithoutSubgroupInput[] | SubjectCreateWithoutSubgroupInput
-  >;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutSubgroupInput[]
-    | SubjectUpdateWithWhereUniqueWithoutSubgroupInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutSubgroupInput[]
-    | SubjectUpsertWithWhereUniqueWithoutSubgroupInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutSubgroupInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutSubgroupDataInput;
-}
-
-export interface SubjectUpdateWithoutSubgroupDataInput {
-  name?: Maybe<String>;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
-  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+  remark?: Maybe<String>;
 }
 
 export interface UnitUpdateManyWithoutSubjectInput {
@@ -9526,11 +10020,12 @@ export interface SubjectUpdateWithoutTopicDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
@@ -9625,11 +10120,12 @@ export interface SubjectUpdateWithoutUnitsDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
@@ -9766,11 +10262,12 @@ export interface SubjectUpdateWithoutContentsDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
@@ -9823,21 +10320,174 @@ export interface UserUpdateWithoutSubjectByMeDataInput {
   result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
 }
 
-export interface SubjectUpdateManyWithoutUpdateByInput {
+export interface SubjectSubscriptionUpdateManyWithoutUseridInput {
   create?: Maybe<
-    SubjectCreateWithoutUpdateByInput[] | SubjectCreateWithoutUpdateByInput
+    | SubjectSubscriptionCreateWithoutUseridInput[]
+    | SubjectSubscriptionCreateWithoutUseridInput
+  >;
+  delete?: Maybe<
+    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
+  >;
+  connect?: Maybe<
+    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
+  >;
+  set?: Maybe<
+    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    SubjectSubscriptionWhereUniqueInput[] | SubjectSubscriptionWhereUniqueInput
+  >;
+  update?: Maybe<
+    | SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput[]
+    | SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput
+  >;
+  upsert?: Maybe<
+    | SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput[]
+    | SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput
+  >;
+  deleteMany?: Maybe<
+    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | SubjectSubscriptionUpdateManyWithWhereNestedInput[]
+    | SubjectSubscriptionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SubjectSubscriptionUpdateWithWhereUniqueWithoutUseridInput {
+  where: SubjectSubscriptionWhereUniqueInput;
+  data: SubjectSubscriptionUpdateWithoutUseridDataInput;
+}
+
+export interface SubjectSubscriptionUpdateWithoutUseridDataInput {
+  subsType?: Maybe<String>;
+  mySubjects?: Maybe<SubjectUpdateManyInput>;
+  subscribedAs?: Maybe<RoleUpdateOneRequiredWithoutSubjectSubscriptionsInput>;
+}
+
+export interface SubjectUpdateManyInput {
+  create?: Maybe<SubjectCreateInput[] | SubjectCreateInput>;
+  update?: Maybe<
+    | SubjectUpdateWithWhereUniqueNestedInput[]
+    | SubjectUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | SubjectUpsertWithWhereUniqueNestedInput[]
+    | SubjectUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
+  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | SubjectUpdateManyWithWhereNestedInput[]
+    | SubjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SubjectUpdateWithWhereUniqueNestedInput {
+  where: SubjectWhereUniqueInput;
+  data: SubjectUpdateDataInput;
+}
+
+export interface SubjectUpdateDataInput {
+  name?: Maybe<String>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
+  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+}
+
+export interface UserUpdateManyWithoutSubjectUpddateByMeInput {
+  create?: Maybe<
+    | UserCreateWithoutSubjectUpddateByMeInput[]
+    | UserCreateWithoutSubjectUpddateByMeInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput[]
+    | UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput[]
+    | UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutSubjectUpddateByMeDataInput;
+}
+
+export interface UserUpdateWithoutSubjectUpddateByMeDataInput {
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
+  roles?: Maybe<RoleUpdateManyWithoutUsersInput>;
+  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+  subjectByMe?: Maybe<SubjectUpdateManyWithoutCreatedByInput>;
+  unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
+  unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
+  topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
+  topicUpdateByMe?: Maybe<TopicUpdateManyWithoutUpdateByInput>;
+  contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
+  contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
+  questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
+  questionUpdateddBy?: Maybe<QuestionUpdateManyWithoutUpdatedByInput>;
+  quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
+  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
+  result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
+}
+
+export interface SubjectUpdateManyWithoutCreatedByInput {
+  create?: Maybe<
+    SubjectCreateWithoutCreatedByInput[] | SubjectCreateWithoutCreatedByInput
   >;
   delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutUpdateByInput[]
-    | SubjectUpdateWithWhereUniqueWithoutUpdateByInput
+    | SubjectUpdateWithWhereUniqueWithoutCreatedByInput[]
+    | SubjectUpdateWithWhereUniqueWithoutCreatedByInput
   >;
   upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutUpdateByInput[]
-    | SubjectUpsertWithWhereUniqueWithoutUpdateByInput
+    | SubjectUpsertWithWhereUniqueWithoutCreatedByInput[]
+    | SubjectUpsertWithWhereUniqueWithoutCreatedByInput
   >;
   deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
   updateMany?: Maybe<
@@ -9846,24 +10496,25 @@ export interface SubjectUpdateManyWithoutUpdateByInput {
   >;
 }
 
-export interface SubjectUpdateWithWhereUniqueWithoutUpdateByInput {
+export interface SubjectUpdateWithWhereUniqueWithoutCreatedByInput {
   where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutUpdateByDataInput;
+  data: SubjectUpdateWithoutCreatedByDataInput;
 }
 
-export interface SubjectUpdateWithoutUpdateByDataInput {
+export interface SubjectUpdateWithoutCreatedByDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
   state?: Maybe<String>;
@@ -9992,21 +10643,21 @@ export interface UserUpdateWithoutUnitByMeDataInput {
   result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
 }
 
-export interface SubjectUpdateManyWithoutCreatedByInput {
+export interface SubjectUpdateManyWithoutUpdateByInput {
   create?: Maybe<
-    SubjectCreateWithoutCreatedByInput[] | SubjectCreateWithoutCreatedByInput
+    SubjectCreateWithoutUpdateByInput[] | SubjectCreateWithoutUpdateByInput
   >;
   delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
   update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutCreatedByInput[]
-    | SubjectUpdateWithWhereUniqueWithoutCreatedByInput
+    | SubjectUpdateWithWhereUniqueWithoutUpdateByInput[]
+    | SubjectUpdateWithWhereUniqueWithoutUpdateByInput
   >;
   upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutCreatedByInput[]
-    | SubjectUpsertWithWhereUniqueWithoutCreatedByInput
+    | SubjectUpsertWithWhereUniqueWithoutUpdateByInput[]
+    | SubjectUpsertWithWhereUniqueWithoutUpdateByInput
   >;
   deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
   updateMany?: Maybe<
@@ -10015,24 +10666,25 @@ export interface SubjectUpdateManyWithoutCreatedByInput {
   >;
 }
 
-export interface SubjectUpdateWithWhereUniqueWithoutCreatedByInput {
+export interface SubjectUpdateWithWhereUniqueWithoutUpdateByInput {
   where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutCreatedByDataInput;
+  data: SubjectUpdateWithoutUpdateByDataInput;
 }
 
-export interface SubjectUpdateWithoutCreatedByDataInput {
+export interface SubjectUpdateWithoutUpdateByDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
   state?: Maybe<String>;
@@ -10043,95 +10695,75 @@ export interface SubjectUpdateWithoutCreatedByDataInput {
   quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
 }
 
-export interface UserUpdateManyWithoutSubjectUpddateByMeInput {
+export interface QuizUpdateManyWithoutSubjectInput {
   create?: Maybe<
-    | UserCreateWithoutSubjectUpddateByMeInput[]
-    | UserCreateWithoutSubjectUpddateByMeInput
+    QuizCreateWithoutSubjectInput[] | QuizCreateWithoutSubjectInput
   >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
   update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput[]
-    | UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput
+    | QuizUpdateWithWhereUniqueWithoutSubjectInput[]
+    | QuizUpdateWithWhereUniqueWithoutSubjectInput
   >;
   upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput[]
-    | UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput
+    | QuizUpsertWithWhereUniqueWithoutSubjectInput[]
+    | QuizUpsertWithWhereUniqueWithoutSubjectInput
   >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
   updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutSubjectUpddateByMeDataInput;
+export interface QuizUpdateWithWhereUniqueWithoutSubjectInput {
+  where: QuizWhereUniqueInput;
+  data: QuizUpdateWithoutSubjectDataInput;
 }
 
-export interface UserUpdateWithoutSubjectUpddateByMeDataInput {
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  roles?: Maybe<RoleUpdateManyWithoutUsersInput>;
-  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
-  subjectByMe?: Maybe<SubjectUpdateManyWithoutCreatedByInput>;
-  unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
-  unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
-  topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
-  topicUpdateByMe?: Maybe<TopicUpdateManyWithoutUpdateByInput>;
-  contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
-  contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
-  questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
-  questionUpdateddBy?: Maybe<QuestionUpdateManyWithoutUpdatedByInput>;
-  quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
-  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
-  result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
+export interface QuizUpdateWithoutSubjectDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutQuizCreatedByInput>;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
 }
 
-export interface UnitUpdateManyWithoutCreatedByInput {
-  create?: Maybe<
-    UnitCreateWithoutCreatedByInput[] | UnitCreateWithoutCreatedByInput
-  >;
-  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
-  update?: Maybe<
-    | UnitUpdateWithWhereUniqueWithoutCreatedByInput[]
-    | UnitUpdateWithWhereUniqueWithoutCreatedByInput
-  >;
-  upsert?: Maybe<
-    | UnitUpsertWithWhereUniqueWithoutCreatedByInput[]
-    | UnitUpsertWithWhereUniqueWithoutCreatedByInput
-  >;
-  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
-  updateMany?: Maybe<
-    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
-  >;
+export interface UnitUpdateOneWithoutQuizsInput {
+  create?: Maybe<UnitCreateWithoutQuizsInput>;
+  update?: Maybe<UnitUpdateWithoutQuizsDataInput>;
+  upsert?: Maybe<UnitUpsertWithoutQuizsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UnitWhereUniqueInput>;
 }
 
-export interface UnitUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: UnitWhereUniqueInput;
-  data: UnitUpdateWithoutCreatedByDataInput;
-}
-
-export interface UnitUpdateWithoutCreatedByDataInput {
+export interface UnitUpdateWithoutQuizsDataInput {
   name?: Maybe<String>;
   subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
   topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
   contents?: Maybe<ContentUpdateManyWithoutUnitInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutUnitByMeInput>;
   updateBy?: Maybe<UserUpdateManyWithoutUnitUpdatedByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
@@ -10139,7 +10771,6 @@ export interface UnitUpdateWithoutCreatedByDataInput {
   status?: Maybe<String>;
   available?: Maybe<String>;
   questions?: Maybe<QuestionUpdateManyWithoutUnitInput>;
-  quizs?: Maybe<QuizUpdateManyWithoutUnitInput>;
 }
 
 export interface UserUpdateManyWithoutUnitUpdatedByMeInput {
@@ -10199,45 +10830,163 @@ export interface UserUpdateWithoutUnitUpdatedByMeDataInput {
   result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
 }
 
-export interface TopicUpdateManyWithoutCreatedByInput {
+export interface UnitUpdateManyWithoutCreatedByInput {
   create?: Maybe<
-    TopicCreateWithoutCreatedByInput[] | TopicCreateWithoutCreatedByInput
+    UnitCreateWithoutCreatedByInput[] | UnitCreateWithoutCreatedByInput
   >;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  delete?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
+  connect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
+  set?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
+  disconnect?: Maybe<UnitWhereUniqueInput[] | UnitWhereUniqueInput>;
   update?: Maybe<
-    | TopicUpdateWithWhereUniqueWithoutCreatedByInput[]
-    | TopicUpdateWithWhereUniqueWithoutCreatedByInput
+    | UnitUpdateWithWhereUniqueWithoutCreatedByInput[]
+    | UnitUpdateWithWhereUniqueWithoutCreatedByInput
   >;
   upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueWithoutCreatedByInput[]
-    | TopicUpsertWithWhereUniqueWithoutCreatedByInput
+    | UnitUpsertWithWhereUniqueWithoutCreatedByInput[]
+    | UnitUpsertWithWhereUniqueWithoutCreatedByInput
   >;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
+  deleteMany?: Maybe<UnitScalarWhereInput[] | UnitScalarWhereInput>;
   updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
+    UnitUpdateManyWithWhereNestedInput[] | UnitUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface TopicUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutCreatedByDataInput;
+export interface UnitUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: UnitWhereUniqueInput;
+  data: UnitUpdateWithoutCreatedByDataInput;
 }
 
-export interface TopicUpdateWithoutCreatedByDataInput {
+export interface UnitUpdateWithoutCreatedByDataInput {
+  name?: Maybe<String>;
+  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
+  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
+  contents?: Maybe<ContentUpdateManyWithoutUnitInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutUnitUpdatedByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutUnitInput>;
+  quizs?: Maybe<QuizUpdateManyWithoutUnitInput>;
+}
+
+export interface QuestionUpdateManyWithoutUnitInput {
+  create?: Maybe<
+    QuestionCreateWithoutUnitInput[] | QuestionCreateWithoutUnitInput
+  >;
+  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  update?: Maybe<
+    | QuestionUpdateWithWhereUniqueWithoutUnitInput[]
+    | QuestionUpdateWithWhereUniqueWithoutUnitInput
+  >;
+  upsert?: Maybe<
+    | QuestionUpsertWithWhereUniqueWithoutUnitInput[]
+    | QuestionUpsertWithWhereUniqueWithoutUnitInput
+  >;
+  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  updateMany?: Maybe<
+    | QuestionUpdateManyWithWhereNestedInput[]
+    | QuestionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuestionUpdateWithWhereUniqueWithoutUnitInput {
+  where: QuestionWhereUniqueInput;
+  data: QuestionUpdateWithoutUnitDataInput;
+}
+
+export interface QuestionUpdateWithoutUnitDataInput {
+  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
+  quetype?: Maybe<String>;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType?: Maybe<String>;
+  descriptionurl?: Maybe<String>;
+  options?: Maybe<Json>;
+  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
+  level?: Maybe<Int>;
+  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
+}
+
+export interface SubjectUpdateOneWithoutQuestionsInput {
+  create?: Maybe<SubjectCreateWithoutQuestionsInput>;
+  update?: Maybe<SubjectUpdateWithoutQuestionsDataInput>;
+  upsert?: Maybe<SubjectUpsertWithoutQuestionsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<SubjectWhereUniqueInput>;
+}
+
+export interface SubjectUpdateWithoutQuestionsDataInput {
+  name?: Maybe<String>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  description?: Maybe<String>;
+  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
+}
+
+export interface SubjectUpsertWithoutQuestionsInput {
+  update: SubjectUpdateWithoutQuestionsDataInput;
+  create: SubjectCreateWithoutQuestionsInput;
+}
+
+export interface TopicUpdateOneWithoutQuestionsInput {
+  create?: Maybe<TopicCreateWithoutQuestionsInput>;
+  update?: Maybe<TopicUpdateWithoutQuestionsDataInput>;
+  upsert?: Maybe<TopicUpsertWithoutQuestionsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TopicWhereUniqueInput>;
+}
+
+export interface TopicUpdateWithoutQuestionsDataInput {
   name?: Maybe<String>;
   subject?: Maybe<SubjectUpdateOneWithoutTopicInput>;
   unit?: Maybe<UnitUpdateOneWithoutTopicsInput>;
   contents?: Maybe<ContentUpdateManyWithoutTopicInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutTopicByMeInput>;
   updateBy?: Maybe<UserUpdateOneWithoutTopicUpdateByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
   state?: Maybe<String>;
   status?: Maybe<String>;
   available?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutTopicInput>;
   quizs?: Maybe<QuizUpdateManyWithoutTopicInput>;
 }
 
@@ -10366,109 +11115,19 @@ export interface UnitUpdateWithoutUpdateByDataInput {
   quizs?: Maybe<QuizUpdateManyWithoutUnitInput>;
 }
 
-export interface QuestionUpdateManyWithoutUnitInput {
-  create?: Maybe<
-    QuestionCreateWithoutUnitInput[] | QuestionCreateWithoutUnitInput
-  >;
-  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  update?: Maybe<
-    | QuestionUpdateWithWhereUniqueWithoutUnitInput[]
-    | QuestionUpdateWithWhereUniqueWithoutUnitInput
-  >;
-  upsert?: Maybe<
-    | QuestionUpsertWithWhereUniqueWithoutUnitInput[]
-    | QuestionUpsertWithWhereUniqueWithoutUnitInput
-  >;
-  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
-  updateMany?: Maybe<
-    | QuestionUpdateManyWithWhereNestedInput[]
-    | QuestionUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuestionUpdateWithWhereUniqueWithoutUnitInput {
-  where: QuestionWhereUniqueInput;
-  data: QuestionUpdateWithoutUnitDataInput;
-}
-
-export interface QuestionUpdateWithoutUnitDataInput {
-  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
-  quetype?: Maybe<String>;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType?: Maybe<String>;
-  descriptionurl?: Maybe<String>;
-  options?: Maybe<Json>;
-  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
-  level?: Maybe<Int>;
-  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
-}
-
-export interface SubjectUpdateOneWithoutQuestionsInput {
-  create?: Maybe<SubjectCreateWithoutQuestionsInput>;
-  update?: Maybe<SubjectUpdateWithoutQuestionsDataInput>;
-  upsert?: Maybe<SubjectUpsertWithoutQuestionsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectUpdateWithoutQuestionsDataInput {
-  name?: Maybe<String>;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
-}
-
-export interface QuizUpdateManyWithoutSubjectInput {
-  create?: Maybe<
-    QuizCreateWithoutSubjectInput[] | QuizCreateWithoutSubjectInput
-  >;
+export interface QuizUpdateManyWithoutUnitInput {
+  create?: Maybe<QuizCreateWithoutUnitInput[] | QuizCreateWithoutUnitInput>;
   delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
   connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
   set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
   disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
   update?: Maybe<
-    | QuizUpdateWithWhereUniqueWithoutSubjectInput[]
-    | QuizUpdateWithWhereUniqueWithoutSubjectInput
+    | QuizUpdateWithWhereUniqueWithoutUnitInput[]
+    | QuizUpdateWithWhereUniqueWithoutUnitInput
   >;
   upsert?: Maybe<
-    | QuizUpsertWithWhereUniqueWithoutSubjectInput[]
-    | QuizUpsertWithWhereUniqueWithoutSubjectInput
+    | QuizUpsertWithWhereUniqueWithoutUnitInput[]
+    | QuizUpsertWithWhereUniqueWithoutUnitInput
   >;
   deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
   updateMany?: Maybe<
@@ -10476,15 +11135,15 @@ export interface QuizUpdateManyWithoutSubjectInput {
   >;
 }
 
-export interface QuizUpdateWithWhereUniqueWithoutSubjectInput {
+export interface QuizUpdateWithWhereUniqueWithoutUnitInput {
   where: QuizWhereUniqueInput;
-  data: QuizUpdateWithoutSubjectDataInput;
+  data: QuizUpdateWithoutUnitDataInput;
 }
 
-export interface QuizUpdateWithoutSubjectDataInput {
+export interface QuizUpdateWithoutUnitDataInput {
   quizName?: Maybe<String>;
   quizType?: Maybe<String>;
-  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
+  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
   topic?: Maybe<TopicUpdateOneWithoutQuizsInput>;
   questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
   markingscheme?: Maybe<Json>;
@@ -10505,35 +11164,45 @@ export interface QuizUpdateWithoutSubjectDataInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
 }
 
-export interface UnitUpdateOneWithoutQuizsInput {
-  create?: Maybe<UnitCreateWithoutQuizsInput>;
-  update?: Maybe<UnitUpdateWithoutQuizsDataInput>;
-  upsert?: Maybe<UnitUpsertWithoutQuizsInput>;
+export interface SubjectUpdateOneWithoutQuizesInput {
+  create?: Maybe<SubjectCreateWithoutQuizesInput>;
+  update?: Maybe<SubjectUpdateWithoutQuizesDataInput>;
+  upsert?: Maybe<SubjectUpsertWithoutQuizesInput>;
   delete?: Maybe<Boolean>;
   disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UnitWhereUniqueInput>;
+  connect?: Maybe<SubjectWhereUniqueInput>;
 }
 
-export interface UnitUpdateWithoutQuizsDataInput {
+export interface SubjectUpdateWithoutQuizesDataInput {
   name?: Maybe<String>;
-  subject?: Maybe<SubjectUpdateOneRequiredWithoutUnitsInput>;
-  topics?: Maybe<TopicUpdateManyWithoutUnitInput>;
-  contents?: Maybe<ContentUpdateManyWithoutUnitInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutUnitByMeInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutUnitUpdatedByMeInput>;
+  picture?: Maybe<String>;
+  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
+  board?: Maybe<String>;
+  category?: Maybe<String>;
+  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
+  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
+  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
+  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
+  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
   plantDate?: Maybe<DateTimeInput>;
   isPublished?: Maybe<Boolean>;
   state?: Maybe<String>;
   status?: Maybe<String>;
   available?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutUnitInput>;
+  description?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
 }
 
-export interface UnitUpsertWithoutQuizsInput {
-  update: UnitUpdateWithoutQuizsDataInput;
-  create: UnitCreateWithoutQuizsInput;
+export interface SubjectUpsertWithoutQuizesInput {
+  update: SubjectUpdateWithoutQuizesDataInput;
+  create: SubjectCreateWithoutQuizesInput;
 }
 
 export interface TopicUpdateOneWithoutQuizsInput {
@@ -10734,6 +11403,86 @@ export interface UserUpdateWithoutQuestionCreatedByDataInput {
   result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
 }
 
+export interface TopicUpdateManyWithoutCreatedByInput {
+  create?: Maybe<
+    TopicCreateWithoutCreatedByInput[] | TopicCreateWithoutCreatedByInput
+  >;
+  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  update?: Maybe<
+    | TopicUpdateWithWhereUniqueWithoutCreatedByInput[]
+    | TopicUpdateWithWhereUniqueWithoutCreatedByInput
+  >;
+  upsert?: Maybe<
+    | TopicUpsertWithWhereUniqueWithoutCreatedByInput[]
+    | TopicUpsertWithWhereUniqueWithoutCreatedByInput
+  >;
+  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
+  updateMany?: Maybe<
+    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TopicUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: TopicWhereUniqueInput;
+  data: TopicUpdateWithoutCreatedByDataInput;
+}
+
+export interface TopicUpdateWithoutCreatedByDataInput {
+  name?: Maybe<String>;
+  subject?: Maybe<SubjectUpdateOneWithoutTopicInput>;
+  unit?: Maybe<UnitUpdateOneWithoutTopicsInput>;
+  contents?: Maybe<ContentUpdateManyWithoutTopicInput>;
+  updateBy?: Maybe<UserUpdateOneWithoutTopicUpdateByMeInput>;
+  plantDate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutTopicInput>;
+  quizs?: Maybe<QuizUpdateManyWithoutTopicInput>;
+}
+
+export interface UserUpdateOneWithoutTopicUpdateByMeInput {
+  create?: Maybe<UserCreateWithoutTopicUpdateByMeInput>;
+  update?: Maybe<UserUpdateWithoutTopicUpdateByMeDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTopicUpdateByMeInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutTopicUpdateByMeDataInput {
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
+  roles?: Maybe<RoleUpdateManyWithoutUsersInput>;
+  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+  subjectByMe?: Maybe<SubjectUpdateManyWithoutCreatedByInput>;
+  subjectUpddateByMe?: Maybe<SubjectUpdateManyWithoutUpdateByInput>;
+  unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
+  unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
+  topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
+  contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
+  contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
+  questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
+  questionUpdateddBy?: Maybe<QuestionUpdateManyWithoutUpdatedByInput>;
+  quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
+  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
+  result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
+}
+
 export interface ContentUpdateManyWithoutCreatedByInput {
   create?: Maybe<
     ContentCreateWithoutCreatedByInput[] | ContentCreateWithoutCreatedByInput
@@ -10803,16 +11552,124 @@ export interface TopicUpdateWithoutContentsDataInput {
   quizs?: Maybe<QuizUpdateManyWithoutTopicInput>;
 }
 
-export interface UserUpdateOneWithoutTopicUpdateByMeInput {
-  create?: Maybe<UserCreateWithoutTopicUpdateByMeInput>;
-  update?: Maybe<UserUpdateWithoutTopicUpdateByMeDataInput>;
-  upsert?: Maybe<UserUpsertWithoutTopicUpdateByMeInput>;
+export interface QuizUpdateManyWithoutTopicInput {
+  create?: Maybe<QuizCreateWithoutTopicInput[] | QuizCreateWithoutTopicInput>;
+  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  update?: Maybe<
+    | QuizUpdateWithWhereUniqueWithoutTopicInput[]
+    | QuizUpdateWithWhereUniqueWithoutTopicInput
+  >;
+  upsert?: Maybe<
+    | QuizUpsertWithWhereUniqueWithoutTopicInput[]
+    | QuizUpsertWithWhereUniqueWithoutTopicInput
+  >;
+  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
+  updateMany?: Maybe<
+    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuizUpdateWithWhereUniqueWithoutTopicInput {
+  where: QuizWhereUniqueInput;
+  data: QuizUpdateWithoutTopicDataInput;
+}
+
+export interface QuizUpdateWithoutTopicDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutQuizCreatedByInput>;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
+}
+
+export interface QuestionUpdateManyWithoutQuizInput {
+  create?: Maybe<
+    QuestionCreateWithoutQuizInput[] | QuestionCreateWithoutQuizInput
+  >;
+  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  update?: Maybe<
+    | QuestionUpdateWithWhereUniqueWithoutQuizInput[]
+    | QuestionUpdateWithWhereUniqueWithoutQuizInput
+  >;
+  upsert?: Maybe<
+    | QuestionUpsertWithWhereUniqueWithoutQuizInput[]
+    | QuestionUpsertWithWhereUniqueWithoutQuizInput
+  >;
+  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  updateMany?: Maybe<
+    | QuestionUpdateManyWithWhereNestedInput[]
+    | QuestionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuestionUpdateWithWhereUniqueWithoutQuizInput {
+  where: QuestionWhereUniqueInput;
+  data: QuestionUpdateWithoutQuizDataInput;
+}
+
+export interface QuestionUpdateWithoutQuizDataInput {
+  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
+  quetype?: Maybe<String>;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType?: Maybe<String>;
+  descriptionurl?: Maybe<String>;
+  options?: Maybe<Json>;
+  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
+  level?: Maybe<Int>;
+  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
+}
+
+export interface UserUpdateOneWithoutQuestionUpdateddByInput {
+  create?: Maybe<UserCreateWithoutQuestionUpdateddByInput>;
+  update?: Maybe<UserUpdateWithoutQuestionUpdateddByDataInput>;
+  upsert?: Maybe<UserUpsertWithoutQuestionUpdateddByInput>;
   delete?: Maybe<Boolean>;
   disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutTopicUpdateByMeDataInput {
+export interface UserUpdateWithoutQuestionUpdateddByDataInput {
   firstname?: Maybe<String>;
   lastname?: Maybe<String>;
   email?: Maybe<String>;
@@ -10832,10 +11689,10 @@ export interface UserUpdateWithoutTopicUpdateByMeDataInput {
   unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
   unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
   topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
+  topicUpdateByMe?: Maybe<TopicUpdateManyWithoutUpdateByInput>;
   contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
   contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
   questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
-  questionUpdateddBy?: Maybe<QuestionUpdateManyWithoutUpdatedByInput>;
   quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
   votes?: Maybe<VoteUpdateManyWithoutUserInput>;
   result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
@@ -11104,366 +11961,6 @@ export interface QuestionUpdateWithoutCreatedByDataInput {
   wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
 }
 
-export interface TopicUpdateOneWithoutQuestionsInput {
-  create?: Maybe<TopicCreateWithoutQuestionsInput>;
-  update?: Maybe<TopicUpdateWithoutQuestionsDataInput>;
-  upsert?: Maybe<TopicUpsertWithoutQuestionsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<TopicWhereUniqueInput>;
-}
-
-export interface TopicUpdateWithoutQuestionsDataInput {
-  name?: Maybe<String>;
-  subject?: Maybe<SubjectUpdateOneWithoutTopicInput>;
-  unit?: Maybe<UnitUpdateOneWithoutTopicsInput>;
-  contents?: Maybe<ContentUpdateManyWithoutTopicInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutTopicByMeInput>;
-  updateBy?: Maybe<UserUpdateOneWithoutTopicUpdateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  quizs?: Maybe<QuizUpdateManyWithoutTopicInput>;
-}
-
-export interface QuizUpdateManyWithoutTopicInput {
-  create?: Maybe<QuizCreateWithoutTopicInput[] | QuizCreateWithoutTopicInput>;
-  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  update?: Maybe<
-    | QuizUpdateWithWhereUniqueWithoutTopicInput[]
-    | QuizUpdateWithWhereUniqueWithoutTopicInput
-  >;
-  upsert?: Maybe<
-    | QuizUpsertWithWhereUniqueWithoutTopicInput[]
-    | QuizUpsertWithWhereUniqueWithoutTopicInput
-  >;
-  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
-  updateMany?: Maybe<
-    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuizUpdateWithWhereUniqueWithoutTopicInput {
-  where: QuizWhereUniqueInput;
-  data: QuizUpdateWithoutTopicDataInput;
-}
-
-export interface QuizUpdateWithoutTopicDataInput {
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
-  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
-  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
-  markingscheme?: Maybe<Json>;
-  quizlevel?: Maybe<Int>;
-  threshold?: Maybe<Json>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
-  description?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  createdBy?: Maybe<UserUpdateOneRequiredWithoutQuizCreatedByInput>;
-  weightage?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  validTo?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
-}
-
-export interface SubjectUpdateOneWithoutQuizesInput {
-  create?: Maybe<SubjectCreateWithoutQuizesInput>;
-  update?: Maybe<SubjectUpdateWithoutQuizesDataInput>;
-  upsert?: Maybe<SubjectUpsertWithoutQuizesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<SubjectWhereUniqueInput>;
-}
-
-export interface SubjectUpdateWithoutQuizesDataInput {
-  name?: Maybe<String>;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
-}
-
-export interface SubjectUpsertWithoutQuizesInput {
-  update: SubjectUpdateWithoutQuizesDataInput;
-  create: SubjectCreateWithoutQuizesInput;
-}
-
-export interface QuestionUpdateManyWithoutQuizInput {
-  create?: Maybe<
-    QuestionCreateWithoutQuizInput[] | QuestionCreateWithoutQuizInput
-  >;
-  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  update?: Maybe<
-    | QuestionUpdateWithWhereUniqueWithoutQuizInput[]
-    | QuestionUpdateWithWhereUniqueWithoutQuizInput
-  >;
-  upsert?: Maybe<
-    | QuestionUpsertWithWhereUniqueWithoutQuizInput[]
-    | QuestionUpsertWithWhereUniqueWithoutQuizInput
-  >;
-  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
-  updateMany?: Maybe<
-    | QuestionUpdateManyWithWhereNestedInput[]
-    | QuestionUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuestionUpdateWithWhereUniqueWithoutQuizInput {
-  where: QuestionWhereUniqueInput;
-  data: QuestionUpdateWithoutQuizDataInput;
-}
-
-export interface QuestionUpdateWithoutQuizDataInput {
-  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
-  quetype?: Maybe<String>;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType?: Maybe<String>;
-  descriptionurl?: Maybe<String>;
-  options?: Maybe<Json>;
-  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
-  level?: Maybe<Int>;
-  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
-}
-
-export interface UserUpdateOneWithoutQuestionUpdateddByInput {
-  create?: Maybe<UserCreateWithoutQuestionUpdateddByInput>;
-  update?: Maybe<UserUpdateWithoutQuestionUpdateddByDataInput>;
-  upsert?: Maybe<UserUpsertWithoutQuestionUpdateddByInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutQuestionUpdateddByDataInput {
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  roles?: Maybe<RoleUpdateManyWithoutUsersInput>;
-  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
-  subjectByMe?: Maybe<SubjectUpdateManyWithoutCreatedByInput>;
-  subjectUpddateByMe?: Maybe<SubjectUpdateManyWithoutUpdateByInput>;
-  unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
-  unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
-  topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
-  topicUpdateByMe?: Maybe<TopicUpdateManyWithoutUpdateByInput>;
-  contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
-  contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
-  questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
-  quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
-  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
-  result?: Maybe<ResultUpdateManyWithoutUserIdInput>;
-}
-
-export interface QuizUpdateManyWithoutCreatedByInput {
-  create?: Maybe<
-    QuizCreateWithoutCreatedByInput[] | QuizCreateWithoutCreatedByInput
-  >;
-  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  update?: Maybe<
-    | QuizUpdateWithWhereUniqueWithoutCreatedByInput[]
-    | QuizUpdateWithWhereUniqueWithoutCreatedByInput
-  >;
-  upsert?: Maybe<
-    | QuizUpsertWithWhereUniqueWithoutCreatedByInput[]
-    | QuizUpsertWithWhereUniqueWithoutCreatedByInput
-  >;
-  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
-  updateMany?: Maybe<
-    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuizUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: QuizWhereUniqueInput;
-  data: QuizUpdateWithoutCreatedByDataInput;
-}
-
-export interface QuizUpdateWithoutCreatedByDataInput {
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
-  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuizsInput>;
-  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
-  markingscheme?: Maybe<Json>;
-  quizlevel?: Maybe<Int>;
-  threshold?: Maybe<Json>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
-  description?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  weightage?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  validTo?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
-}
-
-export interface ResultUpdateManyWithoutQuizInput {
-  create?: Maybe<ResultCreateWithoutQuizInput[] | ResultCreateWithoutQuizInput>;
-  delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  update?: Maybe<
-    | ResultUpdateWithWhereUniqueWithoutQuizInput[]
-    | ResultUpdateWithWhereUniqueWithoutQuizInput
-  >;
-  upsert?: Maybe<
-    | ResultUpsertWithWhereUniqueWithoutQuizInput[]
-    | ResultUpsertWithWhereUniqueWithoutQuizInput
-  >;
-  deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
-  updateMany?: Maybe<
-    | ResultUpdateManyWithWhereNestedInput[]
-    | ResultUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ResultUpdateWithWhereUniqueWithoutQuizInput {
-  where: ResultWhereUniqueInput;
-  data: ResultUpdateWithoutQuizDataInput;
-}
-
-export interface ResultUpdateWithoutQuizDataInput {
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutResultsInput>;
-  result?: Maybe<String>;
-  quizlevel?: Maybe<Int>;
-  score?: Maybe<Float>;
-  attempted?: Maybe<QuestionUpdateManyWithoutAtemptedResultInput>;
-  notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<QuestionUpdateManyWithoutCorrectInput>;
-  wrong?: Maybe<QuestionUpdateManyWithoutWrongInput>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate?: Maybe<DateTimeInput>;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-  userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
-}
-
-export interface QuestionUpdateManyWithoutResultsInput {
-  create?: Maybe<
-    QuestionCreateWithoutResultsInput[] | QuestionCreateWithoutResultsInput
-  >;
-  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  update?: Maybe<
-    | QuestionUpdateWithWhereUniqueWithoutResultsInput[]
-    | QuestionUpdateWithWhereUniqueWithoutResultsInput
-  >;
-  upsert?: Maybe<
-    | QuestionUpsertWithWhereUniqueWithoutResultsInput[]
-    | QuestionUpsertWithWhereUniqueWithoutResultsInput
-  >;
-  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
-  updateMany?: Maybe<
-    | QuestionUpdateManyWithWhereNestedInput[]
-    | QuestionUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuestionUpdateWithWhereUniqueWithoutResultsInput {
-  where: QuestionWhereUniqueInput;
-  data: QuestionUpdateWithoutResultsDataInput;
-}
-
-export interface QuestionUpdateWithoutResultsDataInput {
-  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
-  quetype?: Maybe<String>;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType?: Maybe<String>;
-  descriptionurl?: Maybe<String>;
-  options?: Maybe<Json>;
-  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
-  level?: Maybe<Int>;
-  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
-}
-
 export interface QuizUpdateManyWithoutQuestionsInput {
   create?: Maybe<
     QuizCreateWithoutQuestionsInput[] | QuizCreateWithoutQuestionsInput
@@ -11515,6 +12012,7 @@ export interface QuizUpdateWithoutQuestionsDataInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutQuizCreatedByInput {
@@ -11687,11 +12185,313 @@ export interface QuizUpdateWithoutResultsDataInput {
   totalmarks?: Maybe<Float>;
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
 }
 
-export interface QuizUpsertWithoutResultsInput {
-  update: QuizUpdateWithoutResultsDataInput;
-  create: QuizCreateWithoutResultsInput;
+export interface QuizUpdateManyWithoutCoursesInput {
+  create?: Maybe<
+    QuizCreateWithoutCoursesInput[] | QuizCreateWithoutCoursesInput
+  >;
+  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  update?: Maybe<
+    | QuizUpdateWithWhereUniqueWithoutCoursesInput[]
+    | QuizUpdateWithWhereUniqueWithoutCoursesInput
+  >;
+  upsert?: Maybe<
+    | QuizUpsertWithWhereUniqueWithoutCoursesInput[]
+    | QuizUpsertWithWhereUniqueWithoutCoursesInput
+  >;
+  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
+  updateMany?: Maybe<
+    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuizUpdateWithWhereUniqueWithoutCoursesInput {
+  where: QuizWhereUniqueInput;
+  data: QuizUpdateWithoutCoursesDataInput;
+}
+
+export interface QuizUpdateWithoutCoursesDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutQuizCreatedByInput>;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+}
+
+export interface ResultUpdateManyWithoutQuizInput {
+  create?: Maybe<ResultCreateWithoutQuizInput[] | ResultCreateWithoutQuizInput>;
+  delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  update?: Maybe<
+    | ResultUpdateWithWhereUniqueWithoutQuizInput[]
+    | ResultUpdateWithWhereUniqueWithoutQuizInput
+  >;
+  upsert?: Maybe<
+    | ResultUpsertWithWhereUniqueWithoutQuizInput[]
+    | ResultUpsertWithWhereUniqueWithoutQuizInput
+  >;
+  deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
+  updateMany?: Maybe<
+    | ResultUpdateManyWithWhereNestedInput[]
+    | ResultUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResultUpdateWithWhereUniqueWithoutQuizInput {
+  where: ResultWhereUniqueInput;
+  data: ResultUpdateWithoutQuizDataInput;
+}
+
+export interface ResultUpdateWithoutQuizDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutResultsInput>;
+  result?: Maybe<String>;
+  quizlevel?: Maybe<Int>;
+  score?: Maybe<Float>;
+  attempted?: Maybe<QuestionUpdateManyWithoutAtemptedResultInput>;
+  notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
+  correct?: Maybe<QuestionUpdateManyWithoutCorrectInput>;
+  wrong?: Maybe<QuestionUpdateManyWithoutWrongInput>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate?: Maybe<DateTimeInput>;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+  userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
+}
+
+export interface QuestionUpdateManyWithoutResultsInput {
+  create?: Maybe<
+    QuestionCreateWithoutResultsInput[] | QuestionCreateWithoutResultsInput
+  >;
+  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  update?: Maybe<
+    | QuestionUpdateWithWhereUniqueWithoutResultsInput[]
+    | QuestionUpdateWithWhereUniqueWithoutResultsInput
+  >;
+  upsert?: Maybe<
+    | QuestionUpsertWithWhereUniqueWithoutResultsInput[]
+    | QuestionUpsertWithWhereUniqueWithoutResultsInput
+  >;
+  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  updateMany?: Maybe<
+    | QuestionUpdateManyWithWhereNestedInput[]
+    | QuestionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuestionUpdateWithWhereUniqueWithoutResultsInput {
+  where: QuestionWhereUniqueInput;
+  data: QuestionUpdateWithoutResultsDataInput;
+}
+
+export interface QuestionUpdateWithoutResultsDataInput {
+  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
+  quetype?: Maybe<String>;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType?: Maybe<String>;
+  descriptionurl?: Maybe<String>;
+  options?: Maybe<Json>;
+  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
+  level?: Maybe<Int>;
+  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
+}
+
+export interface ResultUpdateManyWithoutAttemptedInput {
+  create?: Maybe<
+    ResultCreateWithoutAttemptedInput[] | ResultCreateWithoutAttemptedInput
+  >;
+  delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  update?: Maybe<
+    | ResultUpdateWithWhereUniqueWithoutAttemptedInput[]
+    | ResultUpdateWithWhereUniqueWithoutAttemptedInput
+  >;
+  upsert?: Maybe<
+    | ResultUpsertWithWhereUniqueWithoutAttemptedInput[]
+    | ResultUpsertWithWhereUniqueWithoutAttemptedInput
+  >;
+  deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
+  updateMany?: Maybe<
+    | ResultUpdateManyWithWhereNestedInput[]
+    | ResultUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResultUpdateWithWhereUniqueWithoutAttemptedInput {
+  where: ResultWhereUniqueInput;
+  data: ResultUpdateWithoutAttemptedDataInput;
+}
+
+export interface ResultUpdateWithoutAttemptedDataInput {
+  quiz?: Maybe<QuizUpdateOneRequiredWithoutResultsInput>;
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutResultsInput>;
+  result?: Maybe<String>;
+  quizlevel?: Maybe<Int>;
+  score?: Maybe<Float>;
+  notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
+  correct?: Maybe<QuestionUpdateManyWithoutCorrectInput>;
+  wrong?: Maybe<QuestionUpdateManyWithoutWrongInput>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate?: Maybe<DateTimeInput>;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+  userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
+}
+
+export interface QuestionUpdateManyWithoutNotattemptedInput {
+  create?: Maybe<
+    | QuestionCreateWithoutNotattemptedInput[]
+    | QuestionCreateWithoutNotattemptedInput
+  >;
+  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  update?: Maybe<
+    | QuestionUpdateWithWhereUniqueWithoutNotattemptedInput[]
+    | QuestionUpdateWithWhereUniqueWithoutNotattemptedInput
+  >;
+  upsert?: Maybe<
+    | QuestionUpsertWithWhereUniqueWithoutNotattemptedInput[]
+    | QuestionUpsertWithWhereUniqueWithoutNotattemptedInput
+  >;
+  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  updateMany?: Maybe<
+    | QuestionUpdateManyWithWhereNestedInput[]
+    | QuestionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuestionUpdateWithWhereUniqueWithoutNotattemptedInput {
+  where: QuestionWhereUniqueInput;
+  data: QuestionUpdateWithoutNotattemptedDataInput;
+}
+
+export interface QuestionUpdateWithoutNotattemptedDataInput {
+  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
+  quetype?: Maybe<String>;
+  categories?: Maybe<String>;
+  title?: Maybe<String>;
+  descriptionType?: Maybe<String>;
+  descriptionurl?: Maybe<String>;
+  options?: Maybe<Json>;
+  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
+  level?: Maybe<Int>;
+  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
+  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
+  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
+}
+
+export interface ResultUpdateManyWithoutCorrectInput {
+  create?: Maybe<
+    ResultCreateWithoutCorrectInput[] | ResultCreateWithoutCorrectInput
+  >;
+  delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
+  update?: Maybe<
+    | ResultUpdateWithWhereUniqueWithoutCorrectInput[]
+    | ResultUpdateWithWhereUniqueWithoutCorrectInput
+  >;
+  upsert?: Maybe<
+    | ResultUpsertWithWhereUniqueWithoutCorrectInput[]
+    | ResultUpsertWithWhereUniqueWithoutCorrectInput
+  >;
+  deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
+  updateMany?: Maybe<
+    | ResultUpdateManyWithWhereNestedInput[]
+    | ResultUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResultUpdateWithWhereUniqueWithoutCorrectInput {
+  where: ResultWhereUniqueInput;
+  data: ResultUpdateWithoutCorrectDataInput;
+}
+
+export interface ResultUpdateWithoutCorrectDataInput {
+  quiz?: Maybe<QuizUpdateOneRequiredWithoutResultsInput>;
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  questions?: Maybe<QuestionUpdateManyWithoutResultsInput>;
+  result?: Maybe<String>;
+  quizlevel?: Maybe<Int>;
+  score?: Maybe<Float>;
+  attempted?: Maybe<QuestionUpdateManyWithoutAtemptedResultInput>;
+  notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
+  wrong?: Maybe<QuestionUpdateManyWithoutWrongInput>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate?: Maybe<DateTimeInput>;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+  userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
 }
 
 export interface QuestionUpdateManyWithoutAtemptedResultInput {
@@ -11855,21 +12655,21 @@ export interface QuestionUpdateWithoutCorrectDataInput {
   wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
 }
 
-export interface ResultUpdateManyWithoutAttemptedInput {
+export interface ResultUpdateManyWithoutWrongInput {
   create?: Maybe<
-    ResultCreateWithoutAttemptedInput[] | ResultCreateWithoutAttemptedInput
+    ResultCreateWithoutWrongInput[] | ResultCreateWithoutWrongInput
   >;
   delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
   connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
   set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
   disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
   update?: Maybe<
-    | ResultUpdateWithWhereUniqueWithoutAttemptedInput[]
-    | ResultUpdateWithWhereUniqueWithoutAttemptedInput
+    | ResultUpdateWithWhereUniqueWithoutWrongInput[]
+    | ResultUpdateWithWhereUniqueWithoutWrongInput
   >;
   upsert?: Maybe<
-    | ResultUpsertWithWhereUniqueWithoutAttemptedInput[]
-    | ResultUpsertWithWhereUniqueWithoutAttemptedInput
+    | ResultUpsertWithWhereUniqueWithoutWrongInput[]
+    | ResultUpsertWithWhereUniqueWithoutWrongInput
   >;
   deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
   updateMany?: Maybe<
@@ -11878,116 +12678,12 @@ export interface ResultUpdateManyWithoutAttemptedInput {
   >;
 }
 
-export interface ResultUpdateWithWhereUniqueWithoutAttemptedInput {
+export interface ResultUpdateWithWhereUniqueWithoutWrongInput {
   where: ResultWhereUniqueInput;
-  data: ResultUpdateWithoutAttemptedDataInput;
+  data: ResultUpdateWithoutWrongDataInput;
 }
 
-export interface ResultUpdateWithoutAttemptedDataInput {
-  quiz?: Maybe<QuizUpdateOneRequiredWithoutResultsInput>;
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutResultsInput>;
-  result?: Maybe<String>;
-  quizlevel?: Maybe<Int>;
-  score?: Maybe<Float>;
-  notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<QuestionUpdateManyWithoutCorrectInput>;
-  wrong?: Maybe<QuestionUpdateManyWithoutWrongInput>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate?: Maybe<DateTimeInput>;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-  userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
-}
-
-export interface QuestionUpdateManyWithoutNotattemptedInput {
-  create?: Maybe<
-    | QuestionCreateWithoutNotattemptedInput[]
-    | QuestionCreateWithoutNotattemptedInput
-  >;
-  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  update?: Maybe<
-    | QuestionUpdateWithWhereUniqueWithoutNotattemptedInput[]
-    | QuestionUpdateWithWhereUniqueWithoutNotattemptedInput
-  >;
-  upsert?: Maybe<
-    | QuestionUpsertWithWhereUniqueWithoutNotattemptedInput[]
-    | QuestionUpsertWithWhereUniqueWithoutNotattemptedInput
-  >;
-  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
-  updateMany?: Maybe<
-    | QuestionUpdateManyWithWhereNestedInput[]
-    | QuestionUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuestionUpdateWithWhereUniqueWithoutNotattemptedInput {
-  where: QuestionWhereUniqueInput;
-  data: QuestionUpdateWithoutNotattemptedDataInput;
-}
-
-export interface QuestionUpdateWithoutNotattemptedDataInput {
-  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
-  quetype?: Maybe<String>;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType?: Maybe<String>;
-  descriptionurl?: Maybe<String>;
-  options?: Maybe<Json>;
-  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
-  level?: Maybe<Int>;
-  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
-  isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
-  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
-  wrong?: Maybe<ResultUpdateManyWithoutWrongInput>;
-}
-
-export interface ResultUpdateManyWithoutCorrectInput {
-  create?: Maybe<
-    ResultCreateWithoutCorrectInput[] | ResultCreateWithoutCorrectInput
-  >;
-  delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  update?: Maybe<
-    | ResultUpdateWithWhereUniqueWithoutCorrectInput[]
-    | ResultUpdateWithWhereUniqueWithoutCorrectInput
-  >;
-  upsert?: Maybe<
-    | ResultUpsertWithWhereUniqueWithoutCorrectInput[]
-    | ResultUpsertWithWhereUniqueWithoutCorrectInput
-  >;
-  deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
-  updateMany?: Maybe<
-    | ResultUpdateManyWithWhereNestedInput[]
-    | ResultUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ResultUpdateWithWhereUniqueWithoutCorrectInput {
-  where: ResultWhereUniqueInput;
-  data: ResultUpdateWithoutCorrectDataInput;
-}
-
-export interface ResultUpdateWithoutCorrectDataInput {
+export interface ResultUpdateWithoutWrongDataInput {
   quiz?: Maybe<QuizUpdateOneRequiredWithoutResultsInput>;
   quizName?: Maybe<String>;
   quizType?: Maybe<String>;
@@ -11997,7 +12693,7 @@ export interface ResultUpdateWithoutCorrectDataInput {
   score?: Maybe<Float>;
   attempted?: Maybe<QuestionUpdateManyWithoutAtemptedResultInput>;
   notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
-  wrong?: Maybe<QuestionUpdateManyWithoutWrongInput>;
+  correct?: Maybe<QuestionUpdateManyWithoutCorrectInput>;
   achievement?: Maybe<String>;
   duration?: Maybe<Int>;
   attemptedDate?: Maybe<DateTimeInput>;
@@ -12006,66 +12702,547 @@ export interface ResultUpdateWithoutCorrectDataInput {
   userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
 }
 
-export interface QuestionUpdateManyWithoutWrongInput {
+export interface UserUpdateOneRequiredWithoutResultInput {
+  create?: Maybe<UserCreateWithoutResultInput>;
+  update?: Maybe<UserUpdateWithoutResultDataInput>;
+  upsert?: Maybe<UserUpsertWithoutResultInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutResultDataInput {
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
+  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
+  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
+  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
+  roles?: Maybe<RoleUpdateManyWithoutUsersInput>;
+  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
+  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
+  createdBy?: Maybe<String>;
+  subjectByMe?: Maybe<SubjectUpdateManyWithoutCreatedByInput>;
+  subjectUpddateByMe?: Maybe<SubjectUpdateManyWithoutUpdateByInput>;
+  unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
+  unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
+  topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
+  topicUpdateByMe?: Maybe<TopicUpdateManyWithoutUpdateByInput>;
+  contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
+  contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
+  questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
+  questionUpdateddBy?: Maybe<QuestionUpdateManyWithoutUpdatedByInput>;
+  quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
+  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
+}
+
+export interface QuizUpdateManyWithoutCreatedByInput {
   create?: Maybe<
-    QuestionCreateWithoutWrongInput[] | QuestionCreateWithoutWrongInput
+    QuizCreateWithoutCreatedByInput[] | QuizCreateWithoutCreatedByInput
   >;
-  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
+  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
   update?: Maybe<
-    | QuestionUpdateWithWhereUniqueWithoutWrongInput[]
-    | QuestionUpdateWithWhereUniqueWithoutWrongInput
+    | QuizUpdateWithWhereUniqueWithoutCreatedByInput[]
+    | QuizUpdateWithWhereUniqueWithoutCreatedByInput
   >;
   upsert?: Maybe<
-    | QuestionUpsertWithWhereUniqueWithoutWrongInput[]
-    | QuestionUpsertWithWhereUniqueWithoutWrongInput
+    | QuizUpsertWithWhereUniqueWithoutCreatedByInput[]
+    | QuizUpsertWithWhereUniqueWithoutCreatedByInput
   >;
-  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
   updateMany?: Maybe<
-    | QuestionUpdateManyWithWhereNestedInput[]
-    | QuestionUpdateManyWithWhereNestedInput
+    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface QuestionUpdateWithWhereUniqueWithoutWrongInput {
-  where: QuestionWhereUniqueInput;
-  data: QuestionUpdateWithoutWrongDataInput;
+export interface QuizUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: QuizWhereUniqueInput;
+  data: QuizUpdateWithoutCreatedByDataInput;
 }
 
-export interface QuestionUpdateWithoutWrongDataInput {
-  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
-  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
-  quetype?: Maybe<String>;
-  categories?: Maybe<String>;
-  title?: Maybe<String>;
-  descriptionType?: Maybe<String>;
-  descriptionurl?: Maybe<String>;
-  options?: Maybe<Json>;
-  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
-  level?: Maybe<Int>;
-  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
-  plandate?: Maybe<DateTimeInput>;
+export interface QuizUpdateWithoutCreatedByDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuizsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuizsInput>;
+  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  isReviewed?: Maybe<Boolean>;
-  explainationType?: Maybe<String>;
-  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
-  explaination?: Maybe<String>;
-  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
-  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
-  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
+  isApproved?: Maybe<Boolean>;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
 }
 
-export interface QuestionUpsertWithWhereUniqueWithoutWrongInput {
+export interface QuizUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: QuizWhereUniqueInput;
+  update: QuizUpdateWithoutCreatedByDataInput;
+  create: QuizCreateWithoutCreatedByInput;
+}
+
+export interface QuizScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  quizName?: Maybe<String>;
+  quizName_not?: Maybe<String>;
+  quizName_in?: Maybe<String[] | String>;
+  quizName_not_in?: Maybe<String[] | String>;
+  quizName_lt?: Maybe<String>;
+  quizName_lte?: Maybe<String>;
+  quizName_gt?: Maybe<String>;
+  quizName_gte?: Maybe<String>;
+  quizName_contains?: Maybe<String>;
+  quizName_not_contains?: Maybe<String>;
+  quizName_starts_with?: Maybe<String>;
+  quizName_not_starts_with?: Maybe<String>;
+  quizName_ends_with?: Maybe<String>;
+  quizName_not_ends_with?: Maybe<String>;
+  quizType?: Maybe<String>;
+  quizType_not?: Maybe<String>;
+  quizType_in?: Maybe<String[] | String>;
+  quizType_not_in?: Maybe<String[] | String>;
+  quizType_lt?: Maybe<String>;
+  quizType_lte?: Maybe<String>;
+  quizType_gt?: Maybe<String>;
+  quizType_gte?: Maybe<String>;
+  quizType_contains?: Maybe<String>;
+  quizType_not_contains?: Maybe<String>;
+  quizType_starts_with?: Maybe<String>;
+  quizType_not_starts_with?: Maybe<String>;
+  quizType_ends_with?: Maybe<String>;
+  quizType_not_ends_with?: Maybe<String>;
+  quizlevel?: Maybe<Int>;
+  quizlevel_not?: Maybe<Int>;
+  quizlevel_in?: Maybe<Int[] | Int>;
+  quizlevel_not_in?: Maybe<Int[] | Int>;
+  quizlevel_lt?: Maybe<Int>;
+  quizlevel_lte?: Maybe<Int>;
+  quizlevel_gt?: Maybe<Int>;
+  quizlevel_gte?: Maybe<Int>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  isForLevelPromotion_not?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showExplaination_not?: Maybe<String>;
+  showExplaination_in?: Maybe<String[] | String>;
+  showExplaination_not_in?: Maybe<String[] | String>;
+  showExplaination_lt?: Maybe<String>;
+  showExplaination_lte?: Maybe<String>;
+  showExplaination_gt?: Maybe<String>;
+  showExplaination_gte?: Maybe<String>;
+  showExplaination_contains?: Maybe<String>;
+  showExplaination_not_contains?: Maybe<String>;
+  showExplaination_starts_with?: Maybe<String>;
+  showExplaination_not_starts_with?: Maybe<String>;
+  showExplaination_ends_with?: Maybe<String>;
+  showExplaination_not_ends_with?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  showanswer_not?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  allowedCorrection_not?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  duration_not?: Maybe<Int>;
+  duration_in?: Maybe<Int[] | Int>;
+  duration_not_in?: Maybe<Int[] | Int>;
+  duration_lt?: Maybe<Int>;
+  duration_lte?: Maybe<Int>;
+  duration_gt?: Maybe<Int>;
+  duration_gte?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  commentFromTeacher_not?: Maybe<String>;
+  commentFromTeacher_in?: Maybe<String[] | String>;
+  commentFromTeacher_not_in?: Maybe<String[] | String>;
+  commentFromTeacher_lt?: Maybe<String>;
+  commentFromTeacher_lte?: Maybe<String>;
+  commentFromTeacher_gt?: Maybe<String>;
+  commentFromTeacher_gte?: Maybe<String>;
+  commentFromTeacher_contains?: Maybe<String>;
+  commentFromTeacher_not_contains?: Maybe<String>;
+  commentFromTeacher_starts_with?: Maybe<String>;
+  commentFromTeacher_not_starts_with?: Maybe<String>;
+  commentFromTeacher_ends_with?: Maybe<String>;
+  commentFromTeacher_not_ends_with?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isPublished_not?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  isApproved_not?: Maybe<Boolean>;
+  weightage?: Maybe<Float>;
+  weightage_not?: Maybe<Float>;
+  weightage_in?: Maybe<Float[] | Float>;
+  weightage_not_in?: Maybe<Float[] | Float>;
+  weightage_lt?: Maybe<Float>;
+  weightage_lte?: Maybe<Float>;
+  weightage_gt?: Maybe<Float>;
+  weightage_gte?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  totalmarks_not?: Maybe<Float>;
+  totalmarks_in?: Maybe<Float[] | Float>;
+  totalmarks_not_in?: Maybe<Float[] | Float>;
+  totalmarks_lt?: Maybe<Float>;
+  totalmarks_lte?: Maybe<Float>;
+  totalmarks_gt?: Maybe<Float>;
+  totalmarks_gte?: Maybe<Float>;
+  validFrom?: Maybe<DateTimeInput>;
+  validFrom_not?: Maybe<DateTimeInput>;
+  validFrom_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  validFrom_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  validFrom_lt?: Maybe<DateTimeInput>;
+  validFrom_lte?: Maybe<DateTimeInput>;
+  validFrom_gt?: Maybe<DateTimeInput>;
+  validFrom_gte?: Maybe<DateTimeInput>;
+  validTo?: Maybe<DateTimeInput>;
+  validTo_not?: Maybe<DateTimeInput>;
+  validTo_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  validTo_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  validTo_lt?: Maybe<DateTimeInput>;
+  validTo_lte?: Maybe<DateTimeInput>;
+  validTo_gt?: Maybe<DateTimeInput>;
+  validTo_gte?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+  retryAllowed_not?: Maybe<Boolean>;
+  AND?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
+  OR?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
+  NOT?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
+}
+
+export interface QuizUpdateManyWithWhereNestedInput {
+  where: QuizScalarWhereInput;
+  data: QuizUpdateManyDataInput;
+}
+
+export interface QuizUpdateManyDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  markingscheme?: Maybe<Json>;
+  quizlevel?: Maybe<Int>;
+  threshold?: Maybe<Json>;
+  isForLevelPromotion?: Maybe<Boolean>;
+  showExplaination?: Maybe<String>;
+  showanswer?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  allowedCorrection?: Maybe<Boolean>;
+  duration?: Maybe<Int>;
+  commentFromTeacher?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isApproved?: Maybe<Boolean>;
+  weightage?: Maybe<Float>;
+  totalmarks?: Maybe<Float>;
+  validTo?: Maybe<DateTimeInput>;
+  retryAllowed?: Maybe<Boolean>;
+}
+
+export interface VoteUpdateManyWithoutUserInput {
+  create?: Maybe<VoteCreateWithoutUserInput[] | VoteCreateWithoutUserInput>;
+  delete?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+  connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+  set?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+  disconnect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+  update?: Maybe<
+    | VoteUpdateWithWhereUniqueWithoutUserInput[]
+    | VoteUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | VoteUpsertWithWhereUniqueWithoutUserInput[]
+    | VoteUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
+}
+
+export interface VoteUpdateWithWhereUniqueWithoutUserInput {
+  where: VoteWhereUniqueInput;
+  data: VoteUpdateWithoutUserDataInput;
+}
+
+export interface VoteUpdateWithoutUserDataInput {
+  option?: Maybe<OptionUpdateOneWithoutVotesInput>;
+}
+
+export interface OptionUpdateOneWithoutVotesInput {
+  create?: Maybe<OptionCreateWithoutVotesInput>;
+  update?: Maybe<OptionUpdateWithoutVotesDataInput>;
+  upsert?: Maybe<OptionUpsertWithoutVotesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<OptionWhereUniqueInput>;
+}
+
+export interface OptionUpdateWithoutVotesDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<Color>;
+  poll?: Maybe<PollUpdateOneWithoutOptionsInput>;
+}
+
+export interface PollUpdateOneWithoutOptionsInput {
+  create?: Maybe<PollCreateWithoutOptionsInput>;
+  update?: Maybe<PollUpdateWithoutOptionsDataInput>;
+  upsert?: Maybe<PollUpsertWithoutOptionsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PollWhereUniqueInput>;
+}
+
+export interface PollUpdateWithoutOptionsDataInput {
+  title?: Maybe<String>;
+}
+
+export interface PollUpsertWithoutOptionsInput {
+  update: PollUpdateWithoutOptionsDataInput;
+  create: PollCreateWithoutOptionsInput;
+}
+
+export interface OptionUpsertWithoutVotesInput {
+  update: OptionUpdateWithoutVotesDataInput;
+  create: OptionCreateWithoutVotesInput;
+}
+
+export interface VoteUpsertWithWhereUniqueWithoutUserInput {
+  where: VoteWhereUniqueInput;
+  update: VoteUpdateWithoutUserDataInput;
+  create: VoteCreateWithoutUserInput;
+}
+
+export interface VoteScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
+  OR?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
+  NOT?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
+}
+
+export interface UserUpsertWithoutResultInput {
+  update: UserUpdateWithoutResultDataInput;
+  create: UserCreateWithoutResultInput;
+}
+
+export interface ResultUpsertWithWhereUniqueWithoutWrongInput {
+  where: ResultWhereUniqueInput;
+  update: ResultUpdateWithoutWrongDataInput;
+  create: ResultCreateWithoutWrongInput;
+}
+
+export interface ResultScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  quizName?: Maybe<String>;
+  quizName_not?: Maybe<String>;
+  quizName_in?: Maybe<String[] | String>;
+  quizName_not_in?: Maybe<String[] | String>;
+  quizName_lt?: Maybe<String>;
+  quizName_lte?: Maybe<String>;
+  quizName_gt?: Maybe<String>;
+  quizName_gte?: Maybe<String>;
+  quizName_contains?: Maybe<String>;
+  quizName_not_contains?: Maybe<String>;
+  quizName_starts_with?: Maybe<String>;
+  quizName_not_starts_with?: Maybe<String>;
+  quizName_ends_with?: Maybe<String>;
+  quizName_not_ends_with?: Maybe<String>;
+  quizType?: Maybe<String>;
+  quizType_not?: Maybe<String>;
+  quizType_in?: Maybe<String[] | String>;
+  quizType_not_in?: Maybe<String[] | String>;
+  quizType_lt?: Maybe<String>;
+  quizType_lte?: Maybe<String>;
+  quizType_gt?: Maybe<String>;
+  quizType_gte?: Maybe<String>;
+  quizType_contains?: Maybe<String>;
+  quizType_not_contains?: Maybe<String>;
+  quizType_starts_with?: Maybe<String>;
+  quizType_not_starts_with?: Maybe<String>;
+  quizType_ends_with?: Maybe<String>;
+  quizType_not_ends_with?: Maybe<String>;
+  result?: Maybe<String>;
+  result_not?: Maybe<String>;
+  result_in?: Maybe<String[] | String>;
+  result_not_in?: Maybe<String[] | String>;
+  result_lt?: Maybe<String>;
+  result_lte?: Maybe<String>;
+  result_gt?: Maybe<String>;
+  result_gte?: Maybe<String>;
+  result_contains?: Maybe<String>;
+  result_not_contains?: Maybe<String>;
+  result_starts_with?: Maybe<String>;
+  result_not_starts_with?: Maybe<String>;
+  result_ends_with?: Maybe<String>;
+  result_not_ends_with?: Maybe<String>;
+  quizlevel?: Maybe<Int>;
+  quizlevel_not?: Maybe<Int>;
+  quizlevel_in?: Maybe<Int[] | Int>;
+  quizlevel_not_in?: Maybe<Int[] | Int>;
+  quizlevel_lt?: Maybe<Int>;
+  quizlevel_lte?: Maybe<Int>;
+  quizlevel_gt?: Maybe<Int>;
+  quizlevel_gte?: Maybe<Int>;
+  score?: Maybe<Float>;
+  score_not?: Maybe<Float>;
+  score_in?: Maybe<Float[] | Float>;
+  score_not_in?: Maybe<Float[] | Float>;
+  score_lt?: Maybe<Float>;
+  score_lte?: Maybe<Float>;
+  score_gt?: Maybe<Float>;
+  score_gte?: Maybe<Float>;
+  achievement?: Maybe<String>;
+  achievement_not?: Maybe<String>;
+  achievement_in?: Maybe<String[] | String>;
+  achievement_not_in?: Maybe<String[] | String>;
+  achievement_lt?: Maybe<String>;
+  achievement_lte?: Maybe<String>;
+  achievement_gt?: Maybe<String>;
+  achievement_gte?: Maybe<String>;
+  achievement_contains?: Maybe<String>;
+  achievement_not_contains?: Maybe<String>;
+  achievement_starts_with?: Maybe<String>;
+  achievement_not_starts_with?: Maybe<String>;
+  achievement_ends_with?: Maybe<String>;
+  achievement_not_ends_with?: Maybe<String>;
+  duration?: Maybe<Int>;
+  duration_not?: Maybe<Int>;
+  duration_in?: Maybe<Int[] | Int>;
+  duration_not_in?: Maybe<Int[] | Int>;
+  duration_lt?: Maybe<Int>;
+  duration_lte?: Maybe<Int>;
+  duration_gt?: Maybe<Int>;
+  duration_gte?: Maybe<Int>;
+  attemptedDate?: Maybe<DateTimeInput>;
+  attemptedDate_not?: Maybe<DateTimeInput>;
+  attemptedDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  attemptedDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  attemptedDate_lt?: Maybe<DateTimeInput>;
+  attemptedDate_lte?: Maybe<DateTimeInput>;
+  attemptedDate_gt?: Maybe<DateTimeInput>;
+  attemptedDate_gte?: Maybe<DateTimeInput>;
+  commentFromTeacher?: Maybe<String>;
+  commentFromTeacher_not?: Maybe<String>;
+  commentFromTeacher_in?: Maybe<String[] | String>;
+  commentFromTeacher_not_in?: Maybe<String[] | String>;
+  commentFromTeacher_lt?: Maybe<String>;
+  commentFromTeacher_lte?: Maybe<String>;
+  commentFromTeacher_gt?: Maybe<String>;
+  commentFromTeacher_gte?: Maybe<String>;
+  commentFromTeacher_contains?: Maybe<String>;
+  commentFromTeacher_not_contains?: Maybe<String>;
+  commentFromTeacher_starts_with?: Maybe<String>;
+  commentFromTeacher_not_starts_with?: Maybe<String>;
+  commentFromTeacher_ends_with?: Maybe<String>;
+  commentFromTeacher_not_ends_with?: Maybe<String>;
+  rank?: Maybe<Int>;
+  rank_not?: Maybe<Int>;
+  rank_in?: Maybe<Int[] | Int>;
+  rank_not_in?: Maybe<Int[] | Int>;
+  rank_lt?: Maybe<Int>;
+  rank_lte?: Maybe<Int>;
+  rank_gt?: Maybe<Int>;
+  rank_gte?: Maybe<Int>;
+  AND?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
+  OR?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
+  NOT?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
+}
+
+export interface ResultUpdateManyWithWhereNestedInput {
+  where: ResultScalarWhereInput;
+  data: ResultUpdateManyDataInput;
+}
+
+export interface ResultUpdateManyDataInput {
+  quizName?: Maybe<String>;
+  quizType?: Maybe<String>;
+  result?: Maybe<String>;
+  quizlevel?: Maybe<Int>;
+  score?: Maybe<Float>;
+  achievement?: Maybe<String>;
+  duration?: Maybe<Int>;
+  attemptedDate?: Maybe<DateTimeInput>;
+  commentFromTeacher?: Maybe<String>;
+  rank?: Maybe<Int>;
+}
+
+export interface QuestionUpsertWithWhereUniqueWithoutCorrectInput {
   where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutWrongDataInput;
-  create: QuestionCreateWithoutWrongInput;
+  update: QuestionUpdateWithoutCorrectDataInput;
+  create: QuestionCreateWithoutCorrectInput;
 }
 
 export interface QuestionScalarWhereInput {
@@ -12287,358 +13464,84 @@ export interface QuestionUpdateManyDataInput {
   explaination?: Maybe<String>;
 }
 
-export interface UserUpdateOneRequiredWithoutResultInput {
-  create?: Maybe<UserCreateWithoutResultInput>;
-  update?: Maybe<UserUpdateWithoutResultDataInput>;
-  upsert?: Maybe<UserUpsertWithoutResultInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutResultDataInput {
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  org?: Maybe<OrganizationUpdateOneWithoutAuthorInput>;
-  suborg?: Maybe<SuborgUpdateManyWithoutAuthorInput>;
-  groupmembers?: Maybe<GroupMemberUpdateManyWithoutUseridInput>;
-  subgroupmembers?: Maybe<SubGroupMemberUpdateManyWithoutUseridInput>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
-  comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
-  roles?: Maybe<RoleUpdateManyWithoutUsersInput>;
-  myprofiles?: Maybe<ProfileUpdateManyWithoutUserIdInput>;
-  subjectSubscription?: Maybe<SubjectSubscriptionUpdateManyWithoutUseridInput>;
-  createdBy?: Maybe<String>;
-  subjectByMe?: Maybe<SubjectUpdateManyWithoutCreatedByInput>;
-  subjectUpddateByMe?: Maybe<SubjectUpdateManyWithoutUpdateByInput>;
-  unitByMe?: Maybe<UnitUpdateManyWithoutCreatedByInput>;
-  unitUpdatedByMe?: Maybe<UnitUpdateManyWithoutUpdateByInput>;
-  topicByMe?: Maybe<TopicUpdateManyWithoutCreatedByInput>;
-  topicUpdateByMe?: Maybe<TopicUpdateManyWithoutUpdateByInput>;
-  contentByMe?: Maybe<ContentUpdateManyWithoutCreatedByInput>;
-  contentUpdateByMe?: Maybe<ContentUpdateManyWithoutUpdateByInput>;
-  questionCreatedBy?: Maybe<QuestionUpdateManyWithoutCreatedByInput>;
-  questionUpdateddBy?: Maybe<QuestionUpdateManyWithoutUpdatedByInput>;
-  quizCreatedBy?: Maybe<QuizUpdateManyWithoutCreatedByInput>;
-  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
-}
-
-export interface VoteUpdateManyWithoutUserInput {
-  create?: Maybe<VoteCreateWithoutUserInput[] | VoteCreateWithoutUserInput>;
-  delete?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  set?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  disconnect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+export interface QuestionUpdateManyWithoutWrongInput {
+  create?: Maybe<
+    QuestionCreateWithoutWrongInput[] | QuestionCreateWithoutWrongInput
+  >;
+  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
   update?: Maybe<
-    | VoteUpdateWithWhereUniqueWithoutUserInput[]
-    | VoteUpdateWithWhereUniqueWithoutUserInput
+    | QuestionUpdateWithWhereUniqueWithoutWrongInput[]
+    | QuestionUpdateWithWhereUniqueWithoutWrongInput
   >;
   upsert?: Maybe<
-    | VoteUpsertWithWhereUniqueWithoutUserInput[]
-    | VoteUpsertWithWhereUniqueWithoutUserInput
+    | QuestionUpsertWithWhereUniqueWithoutWrongInput[]
+    | QuestionUpsertWithWhereUniqueWithoutWrongInput
   >;
-  deleteMany?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
+  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  updateMany?: Maybe<
+    | QuestionUpdateManyWithWhereNestedInput[]
+    | QuestionUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface VoteUpdateWithWhereUniqueWithoutUserInput {
-  where: VoteWhereUniqueInput;
-  data: VoteUpdateWithoutUserDataInput;
+export interface QuestionUpdateWithWhereUniqueWithoutWrongInput {
+  where: QuestionWhereUniqueInput;
+  data: QuestionUpdateWithoutWrongDataInput;
 }
 
-export interface VoteUpdateWithoutUserDataInput {
-  option?: Maybe<OptionUpdateOneWithoutVotesInput>;
-}
-
-export interface OptionUpdateOneWithoutVotesInput {
-  create?: Maybe<OptionCreateWithoutVotesInput>;
-  update?: Maybe<OptionUpdateWithoutVotesDataInput>;
-  upsert?: Maybe<OptionUpsertWithoutVotesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<OptionWhereUniqueInput>;
-}
-
-export interface OptionUpdateWithoutVotesDataInput {
-  name?: Maybe<String>;
-  color?: Maybe<Color>;
-  poll?: Maybe<PollUpdateOneWithoutOptionsInput>;
-}
-
-export interface PollUpdateOneWithoutOptionsInput {
-  create?: Maybe<PollCreateWithoutOptionsInput>;
-  update?: Maybe<PollUpdateWithoutOptionsDataInput>;
-  upsert?: Maybe<PollUpsertWithoutOptionsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<PollWhereUniqueInput>;
-}
-
-export interface PollUpdateWithoutOptionsDataInput {
+export interface QuestionUpdateWithoutWrongDataInput {
+  subject?: Maybe<SubjectUpdateOneWithoutQuestionsInput>;
+  unit?: Maybe<UnitUpdateOneWithoutQuestionsInput>;
+  topic?: Maybe<TopicUpdateOneWithoutQuestionsInput>;
+  quetype?: Maybe<String>;
+  categories?: Maybe<String>;
   title?: Maybe<String>;
+  descriptionType?: Maybe<String>;
+  descriptionurl?: Maybe<String>;
+  options?: Maybe<Json>;
+  createdBy?: Maybe<UserUpdateOneWithoutQuestionCreatedByInput>;
+  level?: Maybe<Int>;
+  updatedBy?: Maybe<UserUpdateOneWithoutQuestionUpdateddByInput>;
+  plandate?: Maybe<DateTimeInput>;
+  isPublished?: Maybe<Boolean>;
+  state?: Maybe<String>;
+  status?: Maybe<String>;
+  available?: Maybe<String>;
+  isReviewed?: Maybe<Boolean>;
+  explainationType?: Maybe<String>;
+  quiz?: Maybe<QuizUpdateManyWithoutQuestionsInput>;
+  explaination?: Maybe<String>;
+  results?: Maybe<ResultUpdateManyWithoutQuestionsInput>;
+  atemptedResult?: Maybe<ResultUpdateManyWithoutAttemptedInput>;
+  notattempted?: Maybe<ResultUpdateManyWithoutNotattemptedInput>;
+  correct?: Maybe<ResultUpdateManyWithoutCorrectInput>;
 }
 
-export interface PollUpsertWithoutOptionsInput {
-  update: PollUpdateWithoutOptionsDataInput;
-  create: PollCreateWithoutOptionsInput;
+export interface QuestionUpsertWithWhereUniqueWithoutWrongInput {
+  where: QuestionWhereUniqueInput;
+  update: QuestionUpdateWithoutWrongDataInput;
+  create: QuestionCreateWithoutWrongInput;
 }
 
-export interface OptionUpsertWithoutVotesInput {
-  update: OptionUpdateWithoutVotesDataInput;
-  create: OptionCreateWithoutVotesInput;
+export interface ResultUpsertWithWhereUniqueWithoutNotattemptedInput {
+  where: ResultWhereUniqueInput;
+  update: ResultUpdateWithoutNotattemptedDataInput;
+  create: ResultCreateWithoutNotattemptedInput;
 }
 
-export interface VoteUpsertWithWhereUniqueWithoutUserInput {
-  where: VoteWhereUniqueInput;
-  update: VoteUpdateWithoutUserDataInput;
-  create: VoteCreateWithoutUserInput;
-}
-
-export interface VoteScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-  OR?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-  NOT?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-}
-
-export interface UserUpsertWithoutResultInput {
-  update: UserUpdateWithoutResultDataInput;
-  create: UserCreateWithoutResultInput;
+export interface QuestionUpsertWithWhereUniqueWithoutAtemptedResultInput {
+  where: QuestionWhereUniqueInput;
+  update: QuestionUpdateWithoutAtemptedResultDataInput;
+  create: QuestionCreateWithoutAtemptedResultInput;
 }
 
 export interface ResultUpsertWithWhereUniqueWithoutCorrectInput {
   where: ResultWhereUniqueInput;
   update: ResultUpdateWithoutCorrectDataInput;
   create: ResultCreateWithoutCorrectInput;
-}
-
-export interface ResultScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  quizName?: Maybe<String>;
-  quizName_not?: Maybe<String>;
-  quizName_in?: Maybe<String[] | String>;
-  quizName_not_in?: Maybe<String[] | String>;
-  quizName_lt?: Maybe<String>;
-  quizName_lte?: Maybe<String>;
-  quizName_gt?: Maybe<String>;
-  quizName_gte?: Maybe<String>;
-  quizName_contains?: Maybe<String>;
-  quizName_not_contains?: Maybe<String>;
-  quizName_starts_with?: Maybe<String>;
-  quizName_not_starts_with?: Maybe<String>;
-  quizName_ends_with?: Maybe<String>;
-  quizName_not_ends_with?: Maybe<String>;
-  quizType?: Maybe<String>;
-  quizType_not?: Maybe<String>;
-  quizType_in?: Maybe<String[] | String>;
-  quizType_not_in?: Maybe<String[] | String>;
-  quizType_lt?: Maybe<String>;
-  quizType_lte?: Maybe<String>;
-  quizType_gt?: Maybe<String>;
-  quizType_gte?: Maybe<String>;
-  quizType_contains?: Maybe<String>;
-  quizType_not_contains?: Maybe<String>;
-  quizType_starts_with?: Maybe<String>;
-  quizType_not_starts_with?: Maybe<String>;
-  quizType_ends_with?: Maybe<String>;
-  quizType_not_ends_with?: Maybe<String>;
-  result?: Maybe<String>;
-  result_not?: Maybe<String>;
-  result_in?: Maybe<String[] | String>;
-  result_not_in?: Maybe<String[] | String>;
-  result_lt?: Maybe<String>;
-  result_lte?: Maybe<String>;
-  result_gt?: Maybe<String>;
-  result_gte?: Maybe<String>;
-  result_contains?: Maybe<String>;
-  result_not_contains?: Maybe<String>;
-  result_starts_with?: Maybe<String>;
-  result_not_starts_with?: Maybe<String>;
-  result_ends_with?: Maybe<String>;
-  result_not_ends_with?: Maybe<String>;
-  quizlevel?: Maybe<Int>;
-  quizlevel_not?: Maybe<Int>;
-  quizlevel_in?: Maybe<Int[] | Int>;
-  quizlevel_not_in?: Maybe<Int[] | Int>;
-  quizlevel_lt?: Maybe<Int>;
-  quizlevel_lte?: Maybe<Int>;
-  quizlevel_gt?: Maybe<Int>;
-  quizlevel_gte?: Maybe<Int>;
-  score?: Maybe<Float>;
-  score_not?: Maybe<Float>;
-  score_in?: Maybe<Float[] | Float>;
-  score_not_in?: Maybe<Float[] | Float>;
-  score_lt?: Maybe<Float>;
-  score_lte?: Maybe<Float>;
-  score_gt?: Maybe<Float>;
-  score_gte?: Maybe<Float>;
-  achievement?: Maybe<String>;
-  achievement_not?: Maybe<String>;
-  achievement_in?: Maybe<String[] | String>;
-  achievement_not_in?: Maybe<String[] | String>;
-  achievement_lt?: Maybe<String>;
-  achievement_lte?: Maybe<String>;
-  achievement_gt?: Maybe<String>;
-  achievement_gte?: Maybe<String>;
-  achievement_contains?: Maybe<String>;
-  achievement_not_contains?: Maybe<String>;
-  achievement_starts_with?: Maybe<String>;
-  achievement_not_starts_with?: Maybe<String>;
-  achievement_ends_with?: Maybe<String>;
-  achievement_not_ends_with?: Maybe<String>;
-  duration?: Maybe<Int>;
-  duration_not?: Maybe<Int>;
-  duration_in?: Maybe<Int[] | Int>;
-  duration_not_in?: Maybe<Int[] | Int>;
-  duration_lt?: Maybe<Int>;
-  duration_lte?: Maybe<Int>;
-  duration_gt?: Maybe<Int>;
-  duration_gte?: Maybe<Int>;
-  attemptedDate?: Maybe<DateTimeInput>;
-  attemptedDate_not?: Maybe<DateTimeInput>;
-  attemptedDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  attemptedDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  attemptedDate_lt?: Maybe<DateTimeInput>;
-  attemptedDate_lte?: Maybe<DateTimeInput>;
-  attemptedDate_gt?: Maybe<DateTimeInput>;
-  attemptedDate_gte?: Maybe<DateTimeInput>;
-  commentFromTeacher?: Maybe<String>;
-  commentFromTeacher_not?: Maybe<String>;
-  commentFromTeacher_in?: Maybe<String[] | String>;
-  commentFromTeacher_not_in?: Maybe<String[] | String>;
-  commentFromTeacher_lt?: Maybe<String>;
-  commentFromTeacher_lte?: Maybe<String>;
-  commentFromTeacher_gt?: Maybe<String>;
-  commentFromTeacher_gte?: Maybe<String>;
-  commentFromTeacher_contains?: Maybe<String>;
-  commentFromTeacher_not_contains?: Maybe<String>;
-  commentFromTeacher_starts_with?: Maybe<String>;
-  commentFromTeacher_not_starts_with?: Maybe<String>;
-  commentFromTeacher_ends_with?: Maybe<String>;
-  commentFromTeacher_not_ends_with?: Maybe<String>;
-  rank?: Maybe<Int>;
-  rank_not?: Maybe<Int>;
-  rank_in?: Maybe<Int[] | Int>;
-  rank_not_in?: Maybe<Int[] | Int>;
-  rank_lt?: Maybe<Int>;
-  rank_lte?: Maybe<Int>;
-  rank_gt?: Maybe<Int>;
-  rank_gte?: Maybe<Int>;
-  AND?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
-  OR?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
-  NOT?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
-}
-
-export interface ResultUpdateManyWithWhereNestedInput {
-  where: ResultScalarWhereInput;
-  data: ResultUpdateManyDataInput;
-}
-
-export interface ResultUpdateManyDataInput {
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  result?: Maybe<String>;
-  quizlevel?: Maybe<Int>;
-  score?: Maybe<Float>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate?: Maybe<DateTimeInput>;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-}
-
-export interface ResultUpdateManyWithoutWrongInput {
-  create?: Maybe<
-    ResultCreateWithoutWrongInput[] | ResultCreateWithoutWrongInput
-  >;
-  delete?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  connect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  set?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  disconnect?: Maybe<ResultWhereUniqueInput[] | ResultWhereUniqueInput>;
-  update?: Maybe<
-    | ResultUpdateWithWhereUniqueWithoutWrongInput[]
-    | ResultUpdateWithWhereUniqueWithoutWrongInput
-  >;
-  upsert?: Maybe<
-    | ResultUpsertWithWhereUniqueWithoutWrongInput[]
-    | ResultUpsertWithWhereUniqueWithoutWrongInput
-  >;
-  deleteMany?: Maybe<ResultScalarWhereInput[] | ResultScalarWhereInput>;
-  updateMany?: Maybe<
-    | ResultUpdateManyWithWhereNestedInput[]
-    | ResultUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ResultUpdateWithWhereUniqueWithoutWrongInput {
-  where: ResultWhereUniqueInput;
-  data: ResultUpdateWithoutWrongDataInput;
-}
-
-export interface ResultUpdateWithoutWrongDataInput {
-  quiz?: Maybe<QuizUpdateOneRequiredWithoutResultsInput>;
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutResultsInput>;
-  result?: Maybe<String>;
-  quizlevel?: Maybe<Int>;
-  score?: Maybe<Float>;
-  attempted?: Maybe<QuestionUpdateManyWithoutAtemptedResultInput>;
-  notattempted?: Maybe<QuestionUpdateManyWithoutNotattemptedInput>;
-  correct?: Maybe<QuestionUpdateManyWithoutCorrectInput>;
-  achievement?: Maybe<String>;
-  duration?: Maybe<Int>;
-  attemptedDate?: Maybe<DateTimeInput>;
-  commentFromTeacher?: Maybe<String>;
-  rank?: Maybe<Int>;
-  userId?: Maybe<UserUpdateOneRequiredWithoutResultInput>;
-}
-
-export interface ResultUpsertWithWhereUniqueWithoutWrongInput {
-  where: ResultWhereUniqueInput;
-  update: ResultUpdateWithoutWrongDataInput;
-  create: ResultCreateWithoutWrongInput;
 }
 
 export interface QuestionUpsertWithWhereUniqueWithoutNotattemptedInput {
@@ -12653,22 +13556,27 @@ export interface ResultUpsertWithWhereUniqueWithoutAttemptedInput {
   create: ResultCreateWithoutAttemptedInput;
 }
 
-export interface QuestionUpsertWithWhereUniqueWithoutCorrectInput {
+export interface QuestionUpsertWithWhereUniqueWithoutResultsInput {
   where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutCorrectDataInput;
-  create: QuestionCreateWithoutCorrectInput;
+  update: QuestionUpdateWithoutResultsDataInput;
+  create: QuestionCreateWithoutResultsInput;
 }
 
-export interface ResultUpsertWithWhereUniqueWithoutNotattemptedInput {
+export interface ResultUpsertWithWhereUniqueWithoutQuizInput {
   where: ResultWhereUniqueInput;
-  update: ResultUpdateWithoutNotattemptedDataInput;
-  create: ResultCreateWithoutNotattemptedInput;
+  update: ResultUpdateWithoutQuizDataInput;
+  create: ResultCreateWithoutQuizInput;
 }
 
-export interface QuestionUpsertWithWhereUniqueWithoutAtemptedResultInput {
-  where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutAtemptedResultDataInput;
-  create: QuestionCreateWithoutAtemptedResultInput;
+export interface QuizUpsertWithWhereUniqueWithoutCoursesInput {
+  where: QuizWhereUniqueInput;
+  update: QuizUpdateWithoutCoursesDataInput;
+  create: QuizCreateWithoutCoursesInput;
+}
+
+export interface QuizUpsertWithoutResultsInput {
+  update: QuizUpdateWithoutResultsDataInput;
+  create: QuizCreateWithoutResultsInput;
 }
 
 export interface ResultUpsertWithWhereUniqueWithoutQuestionsInput {
@@ -12747,198 +13655,10 @@ export interface QuizUpsertWithWhereUniqueWithoutQuestionsInput {
   create: QuizCreateWithoutQuestionsInput;
 }
 
-export interface QuizScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  quizName?: Maybe<String>;
-  quizName_not?: Maybe<String>;
-  quizName_in?: Maybe<String[] | String>;
-  quizName_not_in?: Maybe<String[] | String>;
-  quizName_lt?: Maybe<String>;
-  quizName_lte?: Maybe<String>;
-  quizName_gt?: Maybe<String>;
-  quizName_gte?: Maybe<String>;
-  quizName_contains?: Maybe<String>;
-  quizName_not_contains?: Maybe<String>;
-  quizName_starts_with?: Maybe<String>;
-  quizName_not_starts_with?: Maybe<String>;
-  quizName_ends_with?: Maybe<String>;
-  quizName_not_ends_with?: Maybe<String>;
-  quizType?: Maybe<String>;
-  quizType_not?: Maybe<String>;
-  quizType_in?: Maybe<String[] | String>;
-  quizType_not_in?: Maybe<String[] | String>;
-  quizType_lt?: Maybe<String>;
-  quizType_lte?: Maybe<String>;
-  quizType_gt?: Maybe<String>;
-  quizType_gte?: Maybe<String>;
-  quizType_contains?: Maybe<String>;
-  quizType_not_contains?: Maybe<String>;
-  quizType_starts_with?: Maybe<String>;
-  quizType_not_starts_with?: Maybe<String>;
-  quizType_ends_with?: Maybe<String>;
-  quizType_not_ends_with?: Maybe<String>;
-  quizlevel?: Maybe<Int>;
-  quizlevel_not?: Maybe<Int>;
-  quizlevel_in?: Maybe<Int[] | Int>;
-  quizlevel_not_in?: Maybe<Int[] | Int>;
-  quizlevel_lt?: Maybe<Int>;
-  quizlevel_lte?: Maybe<Int>;
-  quizlevel_gt?: Maybe<Int>;
-  quizlevel_gte?: Maybe<Int>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  isForLevelPromotion_not?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showExplaination_not?: Maybe<String>;
-  showExplaination_in?: Maybe<String[] | String>;
-  showExplaination_not_in?: Maybe<String[] | String>;
-  showExplaination_lt?: Maybe<String>;
-  showExplaination_lte?: Maybe<String>;
-  showExplaination_gt?: Maybe<String>;
-  showExplaination_gte?: Maybe<String>;
-  showExplaination_contains?: Maybe<String>;
-  showExplaination_not_contains?: Maybe<String>;
-  showExplaination_starts_with?: Maybe<String>;
-  showExplaination_not_starts_with?: Maybe<String>;
-  showExplaination_ends_with?: Maybe<String>;
-  showExplaination_not_ends_with?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
-  showanswer_not?: Maybe<Boolean>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  allowedCorrection_not?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  duration_not?: Maybe<Int>;
-  duration_in?: Maybe<Int[] | Int>;
-  duration_not_in?: Maybe<Int[] | Int>;
-  duration_lt?: Maybe<Int>;
-  duration_lte?: Maybe<Int>;
-  duration_gt?: Maybe<Int>;
-  duration_gte?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  commentFromTeacher_not?: Maybe<String>;
-  commentFromTeacher_in?: Maybe<String[] | String>;
-  commentFromTeacher_not_in?: Maybe<String[] | String>;
-  commentFromTeacher_lt?: Maybe<String>;
-  commentFromTeacher_lte?: Maybe<String>;
-  commentFromTeacher_gt?: Maybe<String>;
-  commentFromTeacher_gte?: Maybe<String>;
-  commentFromTeacher_contains?: Maybe<String>;
-  commentFromTeacher_not_contains?: Maybe<String>;
-  commentFromTeacher_starts_with?: Maybe<String>;
-  commentFromTeacher_not_starts_with?: Maybe<String>;
-  commentFromTeacher_ends_with?: Maybe<String>;
-  commentFromTeacher_not_ends_with?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isPublished_not?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  isApproved_not?: Maybe<Boolean>;
-  weightage?: Maybe<Float>;
-  weightage_not?: Maybe<Float>;
-  weightage_in?: Maybe<Float[] | Float>;
-  weightage_not_in?: Maybe<Float[] | Float>;
-  weightage_lt?: Maybe<Float>;
-  weightage_lte?: Maybe<Float>;
-  weightage_gt?: Maybe<Float>;
-  weightage_gte?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  totalmarks_not?: Maybe<Float>;
-  totalmarks_in?: Maybe<Float[] | Float>;
-  totalmarks_not_in?: Maybe<Float[] | Float>;
-  totalmarks_lt?: Maybe<Float>;
-  totalmarks_lte?: Maybe<Float>;
-  totalmarks_gt?: Maybe<Float>;
-  totalmarks_gte?: Maybe<Float>;
-  validFrom?: Maybe<DateTimeInput>;
-  validFrom_not?: Maybe<DateTimeInput>;
-  validFrom_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  validFrom_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  validFrom_lt?: Maybe<DateTimeInput>;
-  validFrom_lte?: Maybe<DateTimeInput>;
-  validFrom_gt?: Maybe<DateTimeInput>;
-  validFrom_gte?: Maybe<DateTimeInput>;
-  validTo?: Maybe<DateTimeInput>;
-  validTo_not?: Maybe<DateTimeInput>;
-  validTo_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  validTo_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  validTo_lt?: Maybe<DateTimeInput>;
-  validTo_lte?: Maybe<DateTimeInput>;
-  validTo_gt?: Maybe<DateTimeInput>;
-  validTo_gte?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-  retryAllowed_not?: Maybe<Boolean>;
-  AND?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
-  OR?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
-  NOT?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
-}
-
-export interface QuizUpdateManyWithWhereNestedInput {
-  where: QuizScalarWhereInput;
-  data: QuizUpdateManyDataInput;
-}
-
-export interface QuizUpdateManyDataInput {
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  markingscheme?: Maybe<Json>;
-  quizlevel?: Maybe<Int>;
-  threshold?: Maybe<Json>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
-  description?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  weightage?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  validTo?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-}
-
-export interface QuestionUpsertWithWhereUniqueWithoutResultsInput {
+export interface QuestionUpsertWithWhereUniqueWithoutCreatedByInput {
   where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutResultsDataInput;
-  create: QuestionCreateWithoutResultsInput;
-}
-
-export interface ResultUpsertWithWhereUniqueWithoutQuizInput {
-  where: ResultWhereUniqueInput;
-  update: ResultUpdateWithoutQuizDataInput;
-  create: ResultCreateWithoutQuizInput;
-}
-
-export interface QuizUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: QuizWhereUniqueInput;
-  update: QuizUpdateWithoutCreatedByDataInput;
-  create: QuizCreateWithoutCreatedByInput;
+  update: QuestionUpdateWithoutCreatedByDataInput;
+  create: QuestionCreateWithoutCreatedByInput;
 }
 
 export interface UserUpsertWithoutQuestionUpdateddByInput {
@@ -12956,22 +13676,6 @@ export interface QuizUpsertWithWhereUniqueWithoutTopicInput {
   where: QuizWhereUniqueInput;
   update: QuizUpdateWithoutTopicDataInput;
   create: QuizCreateWithoutTopicInput;
-}
-
-export interface TopicUpsertWithoutQuestionsInput {
-  update: TopicUpdateWithoutQuestionsDataInput;
-  create: TopicCreateWithoutQuestionsInput;
-}
-
-export interface QuestionUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutCreatedByDataInput;
-  create: QuestionCreateWithoutCreatedByInput;
-}
-
-export interface UserUpsertWithoutTopicUpdateByMeInput {
-  update: UserUpdateWithoutTopicUpdateByMeDataInput;
-  create: UserCreateWithoutTopicUpdateByMeInput;
 }
 
 export interface TopicUpsertWithoutContentsInput {
@@ -13167,21 +13871,15 @@ export interface ContentUpsertWithWhereUniqueWithoutCreatedByInput {
   create: ContentCreateWithoutCreatedByInput;
 }
 
-export interface UserUpsertWithoutQuestionCreatedByInput {
-  update: UserUpdateWithoutQuestionCreatedByDataInput;
-  create: UserCreateWithoutQuestionCreatedByInput;
+export interface UserUpsertWithoutTopicUpdateByMeInput {
+  update: UserUpdateWithoutTopicUpdateByMeDataInput;
+  create: UserCreateWithoutTopicUpdateByMeInput;
 }
 
-export interface QuestionUpsertWithWhereUniqueWithoutTopicInput {
-  where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutTopicDataInput;
-  create: QuestionCreateWithoutTopicInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutUpdateByInput {
+export interface TopicUpsertWithWhereUniqueWithoutCreatedByInput {
   where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutUpdateByDataInput;
-  create: TopicCreateWithoutUpdateByInput;
+  update: TopicUpdateWithoutCreatedByDataInput;
+  create: TopicCreateWithoutCreatedByInput;
 }
 
 export interface TopicScalarWhereInput {
@@ -13300,6 +13998,23 @@ export interface TopicUpdateManyDataInput {
   available?: Maybe<String>;
 }
 
+export interface UserUpsertWithoutQuestionCreatedByInput {
+  update: UserUpdateWithoutQuestionCreatedByDataInput;
+  create: UserCreateWithoutQuestionCreatedByInput;
+}
+
+export interface QuestionUpsertWithWhereUniqueWithoutTopicInput {
+  where: QuestionWhereUniqueInput;
+  update: QuestionUpdateWithoutTopicDataInput;
+  create: QuestionCreateWithoutTopicInput;
+}
+
+export interface TopicUpsertWithWhereUniqueWithoutUpdateByInput {
+  where: TopicWhereUniqueInput;
+  update: TopicUpdateWithoutUpdateByDataInput;
+  create: TopicCreateWithoutUpdateByInput;
+}
+
 export interface UserUpsertWithoutTopicByMeInput {
   update: UserUpdateWithoutTopicByMeDataInput;
   create: UserCreateWithoutTopicByMeInput;
@@ -13308,74 +14023,6 @@ export interface UserUpsertWithoutTopicByMeInput {
 export interface TopicUpsertWithoutQuizsInput {
   update: TopicUpdateWithoutQuizsDataInput;
   create: TopicCreateWithoutQuizsInput;
-}
-
-export interface QuizUpsertWithWhereUniqueWithoutSubjectInput {
-  where: QuizWhereUniqueInput;
-  update: QuizUpdateWithoutSubjectDataInput;
-  create: QuizCreateWithoutSubjectInput;
-}
-
-export interface SubjectUpsertWithoutQuestionsInput {
-  update: SubjectUpdateWithoutQuestionsDataInput;
-  create: SubjectCreateWithoutQuestionsInput;
-}
-
-export interface QuestionUpsertWithWhereUniqueWithoutUnitInput {
-  where: QuestionWhereUniqueInput;
-  update: QuestionUpdateWithoutUnitDataInput;
-  create: QuestionCreateWithoutUnitInput;
-}
-
-export interface QuizUpdateManyWithoutUnitInput {
-  create?: Maybe<QuizCreateWithoutUnitInput[] | QuizCreateWithoutUnitInput>;
-  delete?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  connect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  set?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  disconnect?: Maybe<QuizWhereUniqueInput[] | QuizWhereUniqueInput>;
-  update?: Maybe<
-    | QuizUpdateWithWhereUniqueWithoutUnitInput[]
-    | QuizUpdateWithWhereUniqueWithoutUnitInput
-  >;
-  upsert?: Maybe<
-    | QuizUpsertWithWhereUniqueWithoutUnitInput[]
-    | QuizUpsertWithWhereUniqueWithoutUnitInput
-  >;
-  deleteMany?: Maybe<QuizScalarWhereInput[] | QuizScalarWhereInput>;
-  updateMany?: Maybe<
-    QuizUpdateManyWithWhereNestedInput[] | QuizUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuizUpdateWithWhereUniqueWithoutUnitInput {
-  where: QuizWhereUniqueInput;
-  data: QuizUpdateWithoutUnitDataInput;
-}
-
-export interface QuizUpdateWithoutUnitDataInput {
-  quizName?: Maybe<String>;
-  quizType?: Maybe<String>;
-  subject?: Maybe<SubjectUpdateOneWithoutQuizesInput>;
-  topic?: Maybe<TopicUpdateOneWithoutQuizsInput>;
-  questions?: Maybe<QuestionUpdateManyWithoutQuizInput>;
-  markingscheme?: Maybe<Json>;
-  quizlevel?: Maybe<Int>;
-  threshold?: Maybe<Json>;
-  isForLevelPromotion?: Maybe<Boolean>;
-  showExplaination?: Maybe<String>;
-  showanswer?: Maybe<Boolean>;
-  description?: Maybe<String>;
-  allowedCorrection?: Maybe<Boolean>;
-  duration?: Maybe<Int>;
-  commentFromTeacher?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isApproved?: Maybe<Boolean>;
-  createdBy?: Maybe<UserUpdateOneRequiredWithoutQuizCreatedByInput>;
-  weightage?: Maybe<Float>;
-  totalmarks?: Maybe<Float>;
-  validTo?: Maybe<DateTimeInput>;
-  retryAllowed?: Maybe<Boolean>;
-  results?: Maybe<ResultUpdateManyWithoutQuizInput>;
 }
 
 export interface QuizUpsertWithWhereUniqueWithoutUnitInput {
@@ -13517,16 +14164,15 @@ export interface ContentUpsertWithWhereUniqueWithoutTopicInput {
   create: ContentCreateWithoutTopicInput;
 }
 
-export interface TopicUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutCreatedByDataInput;
-  create: TopicCreateWithoutCreatedByInput;
+export interface TopicUpsertWithoutQuestionsInput {
+  update: TopicUpdateWithoutQuestionsDataInput;
+  create: TopicCreateWithoutQuestionsInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutUnitUpdatedByMeInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutUnitUpdatedByMeDataInput;
-  create: UserCreateWithoutUnitUpdatedByMeInput;
+export interface QuestionUpsertWithWhereUniqueWithoutUnitInput {
+  where: QuestionWhereUniqueInput;
+  update: QuestionUpdateWithoutUnitDataInput;
+  create: QuestionCreateWithoutUnitInput;
 }
 
 export interface UnitUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -13535,16 +14181,27 @@ export interface UnitUpsertWithWhereUniqueWithoutCreatedByInput {
   create: UnitCreateWithoutCreatedByInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput {
+export interface UserUpsertWithWhereUniqueWithoutUnitUpdatedByMeInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutSubjectUpddateByMeDataInput;
-  create: UserCreateWithoutSubjectUpddateByMeInput;
+  update: UserUpdateWithoutUnitUpdatedByMeDataInput;
+  create: UserCreateWithoutUnitUpdatedByMeInput;
 }
 
-export interface SubjectUpsertWithWhereUniqueWithoutCreatedByInput {
+export interface UnitUpsertWithoutQuizsInput {
+  update: UnitUpdateWithoutQuizsDataInput;
+  create: UnitCreateWithoutQuizsInput;
+}
+
+export interface QuizUpsertWithWhereUniqueWithoutSubjectInput {
+  where: QuizWhereUniqueInput;
+  update: QuizUpdateWithoutSubjectDataInput;
+  create: QuizCreateWithoutSubjectInput;
+}
+
+export interface SubjectUpsertWithWhereUniqueWithoutUpdateByInput {
   where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutCreatedByDataInput;
-  create: SubjectCreateWithoutCreatedByInput;
+  update: SubjectUpdateWithoutUpdateByDataInput;
+  create: SubjectCreateWithoutUpdateByInput;
 }
 
 export interface SubjectScalarWhereInput {
@@ -13739,10 +14396,118 @@ export interface QuestionUpsertWithWhereUniqueWithoutSubjectInput {
   create: QuestionCreateWithoutSubjectInput;
 }
 
-export interface SubjectUpsertWithWhereUniqueWithoutUpdateByInput {
+export interface SubjectUpsertWithWhereUniqueWithoutCreatedByInput {
   where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutUpdateByDataInput;
-  create: SubjectCreateWithoutUpdateByInput;
+  update: SubjectUpdateWithoutCreatedByDataInput;
+  create: SubjectCreateWithoutCreatedByInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutSubjectUpddateByMeDataInput;
+  create: UserCreateWithoutSubjectUpddateByMeInput;
+}
+
+export interface SubjectUpsertWithWhereUniqueNestedInput {
+  where: SubjectWhereUniqueInput;
+  update: SubjectUpdateDataInput;
+  create: SubjectCreateInput;
+}
+
+export interface RoleUpdateOneRequiredWithoutSubjectSubscriptionsInput {
+  create?: Maybe<RoleCreateWithoutSubjectSubscriptionsInput>;
+  update?: Maybe<RoleUpdateWithoutSubjectSubscriptionsDataInput>;
+  upsert?: Maybe<RoleUpsertWithoutSubjectSubscriptionsInput>;
+  connect?: Maybe<RoleWhereUniqueInput>;
+}
+
+export interface RoleUpdateWithoutSubjectSubscriptionsDataInput {
+  name?: Maybe<ROLENAME>;
+  org?: Maybe<OrganizationUpdateOneWithoutOrgRolesInput>;
+  suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
+  group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
+  subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
+  users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
+  description?: Maybe<String>;
+  status?: Maybe<String>;
+  state?: Maybe<String>;
+}
+
+export interface RoleUpsertWithoutSubjectSubscriptionsInput {
+  update: RoleUpdateWithoutSubjectSubscriptionsDataInput;
+  create: RoleCreateWithoutSubjectSubscriptionsInput;
+}
+
+export interface SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput {
+  where: SubjectSubscriptionWhereUniqueInput;
+  update: SubjectSubscriptionUpdateWithoutUseridDataInput;
+  create: SubjectSubscriptionCreateWithoutUseridInput;
+}
+
+export interface SubjectSubscriptionScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  subsType?: Maybe<String>;
+  subsType_not?: Maybe<String>;
+  subsType_in?: Maybe<String[] | String>;
+  subsType_not_in?: Maybe<String[] | String>;
+  subsType_lt?: Maybe<String>;
+  subsType_lte?: Maybe<String>;
+  subsType_gt?: Maybe<String>;
+  subsType_gte?: Maybe<String>;
+  subsType_contains?: Maybe<String>;
+  subsType_not_contains?: Maybe<String>;
+  subsType_starts_with?: Maybe<String>;
+  subsType_not_starts_with?: Maybe<String>;
+  subsType_ends_with?: Maybe<String>;
+  subsType_not_ends_with?: Maybe<String>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<
+    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
+  >;
+  OR?: Maybe<
+    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
+  >;
+  NOT?: Maybe<
+    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
+  >;
+}
+
+export interface SubjectSubscriptionUpdateManyWithWhereNestedInput {
+  where: SubjectSubscriptionScalarWhereInput;
+  data: SubjectSubscriptionUpdateManyDataInput;
+}
+
+export interface SubjectSubscriptionUpdateManyDataInput {
+  subsType?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutSubjectByMeInput {
@@ -13805,15 +14570,119 @@ export interface UnitUpsertWithWhereUniqueWithoutSubjectInput {
   create: UnitCreateWithoutSubjectInput;
 }
 
-export interface SubjectUpsertWithWhereUniqueWithoutSubgroupInput {
+export interface SubjectUpsertWithWhereUniqueWithoutStdInput {
   where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutSubgroupDataInput;
-  create: SubjectCreateWithoutSubgroupInput;
+  update: SubjectUpdateWithoutStdDataInput;
+  create: SubjectCreateWithoutStdInput;
 }
 
-export interface SubGroupUpsertWithoutSubgroupRolesInput {
-  update: SubGroupUpdateWithoutSubgroupRolesDataInput;
-  create: SubGroupCreateWithoutSubgroupRolesInput;
+export interface StdUpsertWithWhereUniqueWithoutEducationprofilesInput {
+  where: StdWhereUniqueInput;
+  update: StdUpdateWithoutEducationprofilesDataInput;
+  create: StdCreateWithoutEducationprofilesInput;
+}
+
+export interface StdScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  gradename?: Maybe<GRADENAME>;
+  gradename_not?: Maybe<GRADENAME>;
+  gradename_in?: Maybe<GRADENAME[] | GRADENAME>;
+  gradename_not_in?: Maybe<GRADENAME[] | GRADENAME>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
+  branch?: Maybe<String>;
+  branch_not?: Maybe<String>;
+  branch_in?: Maybe<String[] | String>;
+  branch_not_in?: Maybe<String[] | String>;
+  branch_lt?: Maybe<String>;
+  branch_lte?: Maybe<String>;
+  branch_gt?: Maybe<String>;
+  branch_gte?: Maybe<String>;
+  branch_contains?: Maybe<String>;
+  branch_not_contains?: Maybe<String>;
+  branch_starts_with?: Maybe<String>;
+  branch_not_starts_with?: Maybe<String>;
+  branch_ends_with?: Maybe<String>;
+  branch_not_ends_with?: Maybe<String>;
+  year?: Maybe<String>;
+  year_not?: Maybe<String>;
+  year_in?: Maybe<String[] | String>;
+  year_not_in?: Maybe<String[] | String>;
+  year_lt?: Maybe<String>;
+  year_lte?: Maybe<String>;
+  year_gt?: Maybe<String>;
+  year_gte?: Maybe<String>;
+  year_contains?: Maybe<String>;
+  year_not_contains?: Maybe<String>;
+  year_starts_with?: Maybe<String>;
+  year_not_starts_with?: Maybe<String>;
+  year_ends_with?: Maybe<String>;
+  year_not_ends_with?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isPublished_not?: Maybe<Boolean>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
+  OR?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
+  NOT?: Maybe<StdScalarWhereInput[] | StdScalarWhereInput>;
+}
+
+export interface StdUpdateManyWithWhereNestedInput {
+  where: StdScalarWhereInput;
+  data: StdUpdateManyDataInput;
+}
+
+export interface StdUpdateManyDataInput {
+  gradename?: Maybe<GRADENAME>;
+  category?: Maybe<String>;
+  branch?: Maybe<String>;
+  year?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+}
+
+export interface EducationProfileUpsertWithWhereUniqueWithoutRolesInput {
+  where: EducationProfileWhereUniqueInput;
+  update: EducationProfileUpdateWithoutRolesDataInput;
+  create: EducationProfileCreateWithoutRolesInput;
 }
 
 export interface SubjectSubscriptionUpdateManyWithoutSubscribedAsInput {
@@ -13908,75 +14777,10 @@ export interface SubjectSubscriptionUpsertWithWhereUniqueWithoutSubscribedAsInpu
   create: SubjectSubscriptionCreateWithoutSubscribedAsInput;
 }
 
-export interface SubjectSubscriptionScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  subsType?: Maybe<String>;
-  subsType_not?: Maybe<String>;
-  subsType_in?: Maybe<String[] | String>;
-  subsType_not_in?: Maybe<String[] | String>;
-  subsType_lt?: Maybe<String>;
-  subsType_lte?: Maybe<String>;
-  subsType_gt?: Maybe<String>;
-  subsType_gte?: Maybe<String>;
-  subsType_contains?: Maybe<String>;
-  subsType_not_contains?: Maybe<String>;
-  subsType_starts_with?: Maybe<String>;
-  subsType_not_starts_with?: Maybe<String>;
-  subsType_ends_with?: Maybe<String>;
-  subsType_not_ends_with?: Maybe<String>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<
-    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
-  >;
-  OR?: Maybe<
-    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
-  >;
-  NOT?: Maybe<
-    SubjectSubscriptionScalarWhereInput[] | SubjectSubscriptionScalarWhereInput
-  >;
-}
-
-export interface SubjectSubscriptionUpdateManyWithWhereNestedInput {
-  where: SubjectSubscriptionScalarWhereInput;
-  data: SubjectSubscriptionUpdateManyDataInput;
-}
-
-export interface SubjectSubscriptionUpdateManyDataInput {
-  subsType?: Maybe<String>;
-}
-
-export interface RoleUpsertWithWhereUniqueWithoutGroupInput {
+export interface RoleUpsertWithWhereUniqueWithoutSubgroupInput {
   where: RoleWhereUniqueInput;
-  update: RoleUpdateWithoutGroupDataInput;
-  create: RoleCreateWithoutGroupInput;
+  update: RoleUpdateWithoutSubgroupDataInput;
+  create: RoleCreateWithoutSubgroupInput;
 }
 
 export interface RoleScalarWhereInput {
@@ -14073,45 +14877,70 @@ export interface RoleUpdateManyDataInput {
   state?: Maybe<String>;
 }
 
-export interface GroupUpsertWithoutSubjectsInput {
-  update: GroupUpdateWithoutSubjectsDataInput;
-  create: GroupCreateWithoutSubjectsInput;
+export interface SubGroupUpsertWithoutSubjectsInput {
+  update: SubGroupUpdateWithoutSubjectsDataInput;
+  create: SubGroupCreateWithoutSubjectsInput;
 }
 
-export interface SubjectUpsertWithWhereUniqueNestedInput {
+export interface SubjectUpsertWithWhereUniqueWithoutEducationProfilesInput {
   where: SubjectWhereUniqueInput;
-  update: SubjectUpdateDataInput;
-  create: SubjectCreateInput;
+  update: SubjectUpdateWithoutEducationProfilesDataInput;
+  create: SubjectCreateWithoutEducationProfilesInput;
 }
 
-export interface RoleUpdateOneRequiredWithoutSubjectSubscriptionsInput {
-  create?: Maybe<RoleCreateWithoutSubjectSubscriptionsInput>;
-  update?: Maybe<RoleUpdateWithoutSubjectSubscriptionsDataInput>;
-  upsert?: Maybe<RoleUpsertWithoutSubjectSubscriptionsInput>;
-  connect?: Maybe<RoleWhereUniqueInput>;
+export interface EducationProfileUpsertWithWhereUniqueWithoutProfileIdInput {
+  where: EducationProfileWhereUniqueInput;
+  update: EducationProfileUpdateWithoutProfileIdDataInput;
+  create: EducationProfileCreateWithoutProfileIdInput;
 }
 
-export interface RoleUpdateWithoutSubjectSubscriptionsDataInput {
-  name?: Maybe<ROLENAME>;
-  org?: Maybe<OrganizationUpdateOneWithoutOrgRolesInput>;
-  suborg?: Maybe<SuborgUpdateOneWithoutSuborgRolesInput>;
-  group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
-  subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
-  users?: Maybe<UserUpdateManyWithoutRolesInput>;
-  description?: Maybe<String>;
-  status?: Maybe<String>;
-  state?: Maybe<String>;
+export interface ProfileUpsertWithWhereUniqueWithoutUserIdInput {
+  where: ProfileWhereUniqueInput;
+  update: ProfileUpdateWithoutUserIdDataInput;
+  create: ProfileCreateWithoutUserIdInput;
 }
 
-export interface RoleUpsertWithoutSubjectSubscriptionsInput {
-  update: RoleUpdateWithoutSubjectSubscriptionsDataInput;
-  create: RoleCreateWithoutSubjectSubscriptionsInput;
+export interface ProfileScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ProfileScalarWhereInput[] | ProfileScalarWhereInput>;
+  OR?: Maybe<ProfileScalarWhereInput[] | ProfileScalarWhereInput>;
+  NOT?: Maybe<ProfileScalarWhereInput[] | ProfileScalarWhereInput>;
 }
 
-export interface SubjectSubscriptionUpsertWithWhereUniqueWithoutUseridInput {
-  where: SubjectSubscriptionWhereUniqueInput;
-  update: SubjectSubscriptionUpdateWithoutUseridDataInput;
-  create: SubjectSubscriptionCreateWithoutUseridInput;
+export interface ProfileUpdateManyWithWhereNestedInput {
+  where: ProfileScalarWhereInput;
+  data: ProfileUpdateManyDataInput;
+}
+
+export interface ProfileUpdateManyDataInput {
+  name?: Maybe<String>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutRolesInput {
@@ -14120,15 +14949,43 @@ export interface UserUpsertWithWhereUniqueWithoutRolesInput {
   create: UserCreateWithoutRolesInput;
 }
 
-export interface RoleUpsertWithWhereUniqueWithoutSubgroupInput {
+export interface RoleUpsertWithWhereUniqueWithoutGroupInput {
   where: RoleWhereUniqueInput;
-  update: RoleUpdateWithoutSubgroupDataInput;
-  create: RoleCreateWithoutSubgroupInput;
+  update: RoleUpdateWithoutGroupDataInput;
+  create: RoleCreateWithoutGroupInput;
 }
 
-export interface SubGroupUpsertWithoutSubjectsInput {
-  update: SubGroupUpdateWithoutSubjectsDataInput;
-  create: SubGroupCreateWithoutSubjectsInput;
+export interface GroupUpsertWithoutSubjectsInput {
+  update: GroupUpdateWithoutSubjectsDataInput;
+  create: GroupCreateWithoutSubjectsInput;
+}
+
+export interface SubjectUpsertWithWhereUniqueWithoutSubgroupInput {
+  where: SubjectWhereUniqueInput;
+  update: SubjectUpdateWithoutSubgroupDataInput;
+  create: SubjectCreateWithoutSubgroupInput;
+}
+
+export interface SubGroupUpsertWithoutSubgroupRolesInput {
+  update: SubGroupUpdateWithoutSubgroupRolesDataInput;
+  create: SubGroupCreateWithoutSubgroupRolesInput;
+}
+
+export interface RoleUpsertWithWhereUniqueWithoutEducationprofilesInput {
+  where: RoleWhereUniqueInput;
+  update: RoleUpdateWithoutEducationprofilesDataInput;
+  create: RoleCreateWithoutEducationprofilesInput;
+}
+
+export interface EducationProfileUpsertWithWhereUniqueWithoutStdInput {
+  where: EducationProfileWhereUniqueInput;
+  update: EducationProfileUpdateWithoutStdDataInput;
+  create: EducationProfileCreateWithoutStdInput;
+}
+
+export interface StdUpsertWithoutSubjectsInput {
+  update: StdUpdateWithoutSubjectsDataInput;
+  create: StdCreateWithoutSubjectsInput;
 }
 
 export interface SubjectUpsertWithWhereUniqueWithoutGroupInput {
@@ -14678,6 +15535,7 @@ export interface RoleUpdateWithoutSuborgDataInput {
   group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -14809,6 +15667,7 @@ export interface RoleUpdateWithoutOrgDataInput {
   group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -14952,6 +15811,54 @@ export interface ContentUpdateManyMutationInput {
   available?: Maybe<String>;
 }
 
+export interface EducationProfileCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  roles?: Maybe<RoleCreateManyWithoutEducationprofilesInput>;
+  subjects?: Maybe<SubjectCreateManyWithoutEducationProfilesInput>;
+  std?: Maybe<StdCreateManyWithoutEducationprofilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId: ProfileCreateOneWithoutEducationProfilesInput;
+}
+
+export interface EducationProfileUpdateInput {
+  name?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  roles?: Maybe<RoleUpdateManyWithoutEducationprofilesInput>;
+  subjects?: Maybe<SubjectUpdateManyWithoutEducationProfilesInput>;
+  std?: Maybe<StdUpdateManyWithoutEducationprofilesInput>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+  profileId?: Maybe<ProfileUpdateOneRequiredWithoutEducationProfilesInput>;
+}
+
+export interface EducationProfileUpdateManyMutationInput {
+  name?: Maybe<String>;
+  profiileType?: Maybe<String>;
+  educationLevel?: Maybe<String>;
+  educationType?: Maybe<String>;
+  specialization?: Maybe<String>;
+  startedYear?: Maybe<DateTimeInput>;
+  completedYear?: Maybe<DateTimeInput>;
+  result?: Maybe<String>;
+  status?: Maybe<String>;
+  remark?: Maybe<String>;
+}
+
 export interface GroupCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
@@ -15015,11 +15922,12 @@ export interface SubjectCreateWithoutMediumInput {
   id?: Maybe<ID_Input>;
   name: String;
   picture?: Maybe<String>;
-  std: StdCreateOneWithoutSubjectInput;
+  std: StdCreateOneWithoutSubjectsInput;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileCreateManyWithoutSubjectsInput>;
   units?: Maybe<UnitCreateManyWithoutSubjectInput>;
   topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
   contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
@@ -15071,11 +15979,12 @@ export interface SubjectUpdateWithWhereUniqueWithoutMediumInput {
 export interface SubjectUpdateWithoutMediumDataInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
@@ -15451,14 +16360,14 @@ export interface ProfileCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   userId: UserCreateOneWithoutMyprofilesInput;
-  studentProfile?: Maybe<StudentProfileCreateManyWithoutProfileIdInput>;
+  EducationProfiles?: Maybe<EducationProfileCreateManyWithoutProfileIdInput>;
   personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
 }
 
 export interface ProfileUpdateInput {
   name?: Maybe<String>;
   userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
-  studentProfile?: Maybe<StudentProfileUpdateManyWithoutProfileIdInput>;
+  EducationProfiles?: Maybe<EducationProfileUpdateManyWithoutProfileIdInput>;
   personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
 }
 
@@ -15569,6 +16478,7 @@ export interface QuizCreateInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultCreateManyWithoutQuizInput>;
+  courses?: Maybe<QuizCreateManyWithoutCoursesInput>;
 }
 
 export interface QuizUpdateInput {
@@ -15596,6 +16506,7 @@ export interface QuizUpdateInput {
   validTo?: Maybe<DateTimeInput>;
   retryAllowed?: Maybe<Boolean>;
   results?: Maybe<ResultUpdateManyWithoutQuizInput>;
+  courses?: Maybe<QuizUpdateManyWithoutCoursesInput>;
 }
 
 export interface QuizUpdateManyMutationInput {
@@ -15681,6 +16592,7 @@ export interface RoleCreateInput {
   group?: Maybe<GroupCreateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupCreateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserCreateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -15696,6 +16608,7 @@ export interface RoleUpdateInput {
   group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -15823,6 +16736,7 @@ export interface RoleUpdateDataInput {
   group?: Maybe<GroupUpdateOneWithoutGroupRolesInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubgroupRolesInput>;
   users?: Maybe<UserUpdateManyWithoutRolesInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutRolesInput>;
   description?: Maybe<String>;
   status?: Maybe<String>;
   state?: Maybe<String>;
@@ -15843,185 +16757,31 @@ export interface RoleMemberUpdateManyMutationInput {
 
 export interface StdCreateInput {
   id?: Maybe<ID_Input>;
-  stdname: String;
+  gradename: GRADENAME;
   category: String;
   branch?: Maybe<String>;
   year?: Maybe<String>;
-  subject?: Maybe<SubjectCreateManyWithoutStdInput>;
-}
-
-export interface SubjectCreateManyWithoutStdInput {
-  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-}
-
-export interface SubjectCreateWithoutStdInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumCreateOneWithoutSubjectsInput>;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupCreateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupCreateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitCreateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicCreateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentCreateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserCreateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserCreateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
+  educationprofiles?: Maybe<EducationProfileCreateManyWithoutStdInput>;
   isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionCreateManyWithoutSubjectInput>;
-  quizes?: Maybe<QuizCreateManyWithoutSubjectInput>;
+  subjects?: Maybe<SubjectCreateManyWithoutStdInput>;
 }
 
 export interface StdUpdateInput {
-  stdname?: Maybe<String>;
+  gradename?: Maybe<GRADENAME>;
   category?: Maybe<String>;
   branch?: Maybe<String>;
   year?: Maybe<String>;
-  subject?: Maybe<SubjectUpdateManyWithoutStdInput>;
-}
-
-export interface SubjectUpdateManyWithoutStdInput {
-  create?: Maybe<SubjectCreateWithoutStdInput[] | SubjectCreateWithoutStdInput>;
-  delete?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  connect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  set?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  disconnect?: Maybe<SubjectWhereUniqueInput[] | SubjectWhereUniqueInput>;
-  update?: Maybe<
-    | SubjectUpdateWithWhereUniqueWithoutStdInput[]
-    | SubjectUpdateWithWhereUniqueWithoutStdInput
-  >;
-  upsert?: Maybe<
-    | SubjectUpsertWithWhereUniqueWithoutStdInput[]
-    | SubjectUpsertWithWhereUniqueWithoutStdInput
-  >;
-  deleteMany?: Maybe<SubjectScalarWhereInput[] | SubjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubjectUpdateManyWithWhereNestedInput[]
-    | SubjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubjectUpdateWithWhereUniqueWithoutStdInput {
-  where: SubjectWhereUniqueInput;
-  data: SubjectUpdateWithoutStdDataInput;
-}
-
-export interface SubjectUpdateWithoutStdDataInput {
-  name?: Maybe<String>;
-  picture?: Maybe<String>;
-  medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  board?: Maybe<String>;
-  category?: Maybe<String>;
-  group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
-  subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
-  units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
-  topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
-  contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
-  createdBy?: Maybe<UserUpdateOneWithoutSubjectByMeInput>;
-  updateBy?: Maybe<UserUpdateManyWithoutSubjectUpddateByMeInput>;
-  plantDate?: Maybe<DateTimeInput>;
+  educationprofiles?: Maybe<EducationProfileUpdateManyWithoutStdInput>;
   isPublished?: Maybe<Boolean>;
-  state?: Maybe<String>;
-  status?: Maybe<String>;
-  available?: Maybe<String>;
-  description?: Maybe<String>;
-  questions?: Maybe<QuestionUpdateManyWithoutSubjectInput>;
-  quizes?: Maybe<QuizUpdateManyWithoutSubjectInput>;
-}
-
-export interface SubjectUpsertWithWhereUniqueWithoutStdInput {
-  where: SubjectWhereUniqueInput;
-  update: SubjectUpdateWithoutStdDataInput;
-  create: SubjectCreateWithoutStdInput;
+  subjects?: Maybe<SubjectUpdateManyWithoutStdInput>;
 }
 
 export interface StdUpdateManyMutationInput {
-  stdname?: Maybe<String>;
+  gradename?: Maybe<GRADENAME>;
   category?: Maybe<String>;
   branch?: Maybe<String>;
   year?: Maybe<String>;
-}
-
-export interface StudentProfileCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  profiileType?: Maybe<String>;
-  educationLevel?: Maybe<String>;
-  educationType?: Maybe<String>;
-  specialization?: Maybe<String>;
-  std?: Maybe<String>;
-  startedYear?: Maybe<DateTimeInput>;
-  completedYear?: Maybe<DateTimeInput>;
-  result?: Maybe<String>;
-  status?: Maybe<String>;
-  remark?: Maybe<String>;
-  profileId: ProfileCreateOneWithoutStudentProfileInput;
-}
-
-export interface ProfileCreateOneWithoutStudentProfileInput {
-  create?: Maybe<ProfileCreateWithoutStudentProfileInput>;
-  connect?: Maybe<ProfileWhereUniqueInput>;
-}
-
-export interface ProfileCreateWithoutStudentProfileInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  userId: UserCreateOneWithoutMyprofilesInput;
-  personalProfiile?: Maybe<PersonalProfileCreateManyWithoutProfileIdInput>;
-}
-
-export interface StudentProfileUpdateInput {
-  name?: Maybe<String>;
-  profiileType?: Maybe<String>;
-  educationLevel?: Maybe<String>;
-  educationType?: Maybe<String>;
-  specialization?: Maybe<String>;
-  std?: Maybe<String>;
-  startedYear?: Maybe<DateTimeInput>;
-  completedYear?: Maybe<DateTimeInput>;
-  result?: Maybe<String>;
-  status?: Maybe<String>;
-  remark?: Maybe<String>;
-  profileId?: Maybe<ProfileUpdateOneRequiredWithoutStudentProfileInput>;
-}
-
-export interface ProfileUpdateOneRequiredWithoutStudentProfileInput {
-  create?: Maybe<ProfileCreateWithoutStudentProfileInput>;
-  update?: Maybe<ProfileUpdateWithoutStudentProfileDataInput>;
-  upsert?: Maybe<ProfileUpsertWithoutStudentProfileInput>;
-  connect?: Maybe<ProfileWhereUniqueInput>;
-}
-
-export interface ProfileUpdateWithoutStudentProfileDataInput {
-  name?: Maybe<String>;
-  userId?: Maybe<UserUpdateOneRequiredWithoutMyprofilesInput>;
-  personalProfiile?: Maybe<PersonalProfileUpdateManyWithoutProfileIdInput>;
-}
-
-export interface ProfileUpsertWithoutStudentProfileInput {
-  update: ProfileUpdateWithoutStudentProfileDataInput;
-  create: ProfileCreateWithoutStudentProfileInput;
-}
-
-export interface StudentProfileUpdateManyMutationInput {
-  name?: Maybe<String>;
-  profiileType?: Maybe<String>;
-  educationLevel?: Maybe<String>;
-  educationType?: Maybe<String>;
-  specialization?: Maybe<String>;
-  std?: Maybe<String>;
-  startedYear?: Maybe<DateTimeInput>;
-  completedYear?: Maybe<DateTimeInput>;
-  result?: Maybe<String>;
-  status?: Maybe<String>;
-  remark?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
 }
 
 export interface SubGroupCreateInput {
@@ -16072,11 +16832,12 @@ export interface SubjectUpdateInput {
   name?: Maybe<String>;
   picture?: Maybe<String>;
   medium?: Maybe<MediumUpdateOneWithoutSubjectsInput>;
-  std?: Maybe<StdUpdateOneRequiredWithoutSubjectInput>;
+  std?: Maybe<StdUpdateOneRequiredWithoutSubjectsInput>;
   board?: Maybe<String>;
   category?: Maybe<String>;
   group?: Maybe<GroupUpdateOneWithoutSubjectsInput>;
   subgroup?: Maybe<SubGroupUpdateOneWithoutSubjectsInput>;
+  educationProfiles?: Maybe<EducationProfileUpdateManyWithoutSubjectsInput>;
   units?: Maybe<UnitUpdateManyWithoutSubjectInput>;
   topic?: Maybe<TopicUpdateManyWithoutSubjectInput>;
   contents?: Maybe<ContentUpdateManyWithoutSubjectInput>;
@@ -16314,6 +17075,26 @@ export interface ContentSubscriptionWhereInput {
   NOT?: Maybe<ContentSubscriptionWhereInput[] | ContentSubscriptionWhereInput>;
 }
 
+export interface EducationProfileSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<EducationProfileWhereInput>;
+  AND?: Maybe<
+    | EducationProfileSubscriptionWhereInput[]
+    | EducationProfileSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | EducationProfileSubscriptionWhereInput[]
+    | EducationProfileSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | EducationProfileSubscriptionWhereInput[]
+    | EducationProfileSubscriptionWhereInput
+  >;
+}
+
 export interface GroupSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -16508,26 +17289,6 @@ export interface StdSubscriptionWhereInput {
   AND?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
   OR?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
   NOT?: Maybe<StdSubscriptionWhereInput[] | StdSubscriptionWhereInput>;
-}
-
-export interface StudentProfileSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StudentProfileWhereInput>;
-  AND?: Maybe<
-    | StudentProfileSubscriptionWhereInput[]
-    | StudentProfileSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    | StudentProfileSubscriptionWhereInput[]
-    | StudentProfileSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    | StudentProfileSubscriptionWhereInput[]
-    | StudentProfileSubscriptionWhereInput
-  >;
 }
 
 export interface SubGroupSubscriptionWhereInput {
@@ -16768,9 +17529,9 @@ export interface ProfilePromise extends Promise<Profile>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   userId: <T = UserPromise>() => T;
-  studentProfile: <T = FragmentableArray<StudentProfile>>(args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
+  EducationProfiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -16794,11 +17555,11 @@ export interface ProfileSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   userId: <T = UserSubscription>() => T;
-  studentProfile: <
-    T = Promise<AsyncIterator<StudentProfileSubscription>>
+  EducationProfiles: <
+    T = Promise<AsyncIterator<EducationProfileSubscription>>
   >(args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -16824,9 +17585,9 @@ export interface ProfileNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   userId: <T = UserPromise>() => T;
-  studentProfile: <T = FragmentableArray<StudentProfile>>(args?: {
-    where?: StudentProfileWhereInput;
-    orderBy?: StudentProfileOrderByInput;
+  EducationProfiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -18052,6 +18813,15 @@ export interface RolePromise extends Promise<Role>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  educationprofiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   description: () => Promise<String>;
   status: () => Promise<String>;
   state: () => Promise<String>;
@@ -18080,6 +18850,17 @@ export interface RoleSubscription
   users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  educationprofiles: <
+    T = Promise<AsyncIterator<EducationProfileSubscription>>
+  >(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -18122,6 +18903,15 @@ export interface RoleNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  educationprofiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   description: () => Promise<String>;
   status: () => Promise<String>;
   state: () => Promise<String>;
@@ -18138,19 +18928,39 @@ export interface RoleNullablePromise
   }) => T;
 }
 
-export interface SubjectSubscription {
+export interface EducationProfile {
   id: ID_Output;
-  subsType?: String;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
+  name: String;
+  profiileType?: String;
+  educationLevel?: String;
+  educationType?: String;
+  specialization?: String;
+  startedYear?: DateTimeOutput;
+  completedYear?: DateTimeOutput;
+  result?: String;
+  status?: String;
+  remark?: String;
 }
 
-export interface SubjectSubscriptionPromise
-  extends Promise<SubjectSubscription>,
+export interface EducationProfilePromise
+  extends Promise<EducationProfile>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  subsType: () => Promise<String>;
-  mySubjects: <T = FragmentableArray<Subject>>(args?: {
+  name: () => Promise<String>;
+  profiileType: () => Promise<String>;
+  educationLevel: () => Promise<String>;
+  educationType: () => Promise<String>;
+  specialization: () => Promise<String>;
+  roles: <T = FragmentableArray<Role>>(args?: {
+    where?: RoleWhereInput;
+    orderBy?: RoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  subjects: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -18159,18 +18969,42 @@ export interface SubjectSubscriptionPromise
     first?: Int;
     last?: Int;
   }) => T;
-  userid: <T = UserPromise>() => T;
-  subscribedAs: <T = RolePromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
+  std: <T = FragmentableArray<Std>>(args?: {
+    where?: StdWhereInput;
+    orderBy?: StdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  startedYear: () => Promise<DateTimeOutput>;
+  completedYear: () => Promise<DateTimeOutput>;
+  result: () => Promise<String>;
+  status: () => Promise<String>;
+  remark: () => Promise<String>;
+  profileId: <T = ProfilePromise>() => T;
 }
 
-export interface SubjectSubscriptionSubscription
-  extends Promise<AsyncIterator<SubjectSubscription>>,
+export interface EducationProfileSubscription
+  extends Promise<AsyncIterator<EducationProfile>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  subsType: () => Promise<AsyncIterator<String>>;
-  mySubjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
+  name: () => Promise<AsyncIterator<String>>;
+  profiileType: () => Promise<AsyncIterator<String>>;
+  educationLevel: () => Promise<AsyncIterator<String>>;
+  educationType: () => Promise<AsyncIterator<String>>;
+  specialization: () => Promise<AsyncIterator<String>>;
+  roles: <T = Promise<AsyncIterator<RoleSubscription>>>(args?: {
+    where?: RoleWhereInput;
+    orderBy?: RoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -18179,18 +19013,42 @@ export interface SubjectSubscriptionSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  userid: <T = UserSubscription>() => T;
-  subscribedAs: <T = RoleSubscription>() => T;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  std: <T = Promise<AsyncIterator<StdSubscription>>>(args?: {
+    where?: StdWhereInput;
+    orderBy?: StdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  startedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
+  completedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
+  result: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<String>>;
+  remark: () => Promise<AsyncIterator<String>>;
+  profileId: <T = ProfileSubscription>() => T;
 }
 
-export interface SubjectSubscriptionNullablePromise
-  extends Promise<SubjectSubscription | null>,
+export interface EducationProfileNullablePromise
+  extends Promise<EducationProfile | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  subsType: () => Promise<String>;
-  mySubjects: <T = FragmentableArray<Subject>>(args?: {
+  name: () => Promise<String>;
+  profiileType: () => Promise<String>;
+  educationLevel: () => Promise<String>;
+  educationType: () => Promise<String>;
+  specialization: () => Promise<String>;
+  roles: <T = FragmentableArray<Role>>(args?: {
+    where?: RoleWhereInput;
+    orderBy?: RoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  subjects: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -18199,10 +19057,21 @@ export interface SubjectSubscriptionNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  userid: <T = UserPromise>() => T;
-  subscribedAs: <T = RolePromise>() => T;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
+  std: <T = FragmentableArray<Std>>(args?: {
+    where?: StdWhereInput;
+    orderBy?: StdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  startedYear: () => Promise<DateTimeOutput>;
+  completedYear: () => Promise<DateTimeOutput>;
+  result: () => Promise<String>;
+  status: () => Promise<String>;
+  remark: () => Promise<String>;
+  profileId: <T = ProfilePromise>() => T;
 }
 
 export interface Subject {
@@ -18233,6 +19102,15 @@ export interface SubjectPromise extends Promise<Subject>, Fragmentable {
   subgroup: <T = SubGroupPromise>() => T;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  educationProfiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   units: <T = FragmentableArray<Unit>>(args?: {
     where?: UnitWhereInput;
     orderBy?: UnitOrderByInput;
@@ -18310,6 +19188,17 @@ export interface SubjectSubscription
   subgroup: <T = SubGroupSubscription>() => T;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  educationProfiles: <
+    T = Promise<AsyncIterator<EducationProfileSubscription>>
+  >(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   units: <T = Promise<AsyncIterator<UnitSubscription>>>(args?: {
     where?: UnitWhereInput;
     orderBy?: UnitOrderByInput;
@@ -18387,6 +19276,15 @@ export interface SubjectNullablePromise
   subgroup: <T = SubGroupPromise>() => T;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  educationProfiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   units: <T = FragmentableArray<Unit>>(args?: {
     where?: UnitWhereInput;
     orderBy?: UnitOrderByInput;
@@ -18511,21 +19409,32 @@ export interface MediumNullablePromise
 
 export interface Std {
   id: ID_Output;
-  stdname: String;
+  gradename: GRADENAME;
   category: String;
   branch?: String;
   year?: String;
+  isPublished: Boolean;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
 
 export interface StdPromise extends Promise<Std>, Fragmentable {
   id: () => Promise<ID_Output>;
-  stdname: () => Promise<String>;
+  gradename: () => Promise<GRADENAME>;
   category: () => Promise<String>;
   branch: () => Promise<String>;
   year: () => Promise<String>;
-  subject: <T = FragmentableArray<Subject>>(args?: {
+  educationprofiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isPublished: () => Promise<Boolean>;
+  subjects: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -18542,11 +19451,23 @@ export interface StdSubscription
   extends Promise<AsyncIterator<Std>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  stdname: () => Promise<AsyncIterator<String>>;
+  gradename: () => Promise<AsyncIterator<GRADENAME>>;
   category: () => Promise<AsyncIterator<String>>;
   branch: () => Promise<AsyncIterator<String>>;
   year: () => Promise<AsyncIterator<String>>;
-  subject: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
+  educationprofiles: <
+    T = Promise<AsyncIterator<EducationProfileSubscription>>
+  >(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isPublished: () => Promise<AsyncIterator<Boolean>>;
+  subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -18561,11 +19482,21 @@ export interface StdSubscription
 
 export interface StdNullablePromise extends Promise<Std | null>, Fragmentable {
   id: () => Promise<ID_Output>;
-  stdname: () => Promise<String>;
+  gradename: () => Promise<GRADENAME>;
   category: () => Promise<String>;
   branch: () => Promise<String>;
   year: () => Promise<String>;
-  subject: <T = FragmentableArray<Subject>>(args?: {
+  educationprofiles: <T = FragmentableArray<EducationProfile>>(args?: {
+    where?: EducationProfileWhereInput;
+    orderBy?: EducationProfileOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isPublished: () => Promise<Boolean>;
+  subjects: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
     skip?: Int;
@@ -19354,6 +20285,15 @@ export interface QuizPromise extends Promise<Quiz>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  courses: <T = FragmentableArray<Quiz>>(args?: {
+    where?: QuizWhereInput;
+    orderBy?: QuizOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface QuizSubscription
@@ -19401,6 +20341,15 @@ export interface QuizSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  courses: <T = Promise<AsyncIterator<QuizSubscription>>>(args?: {
+    where?: QuizWhereInput;
+    orderBy?: QuizOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface QuizNullablePromise
@@ -19442,6 +20391,15 @@ export interface QuizNullablePromise
   results: <T = FragmentableArray<Result>>(args?: {
     where?: ResultWhereInput;
     orderBy?: ResultOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  courses: <T = FragmentableArray<Quiz>>(args?: {
+    where?: QuizWhereInput;
+    orderBy?: QuizOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -19649,6 +20607,73 @@ export interface ResultNullablePromise
   commentFromTeacher: () => Promise<String>;
   rank: () => Promise<Int>;
   userId: <T = UserPromise>() => T;
+}
+
+export interface SubjectSubscription {
+  id: ID_Output;
+  subsType?: String;
+  updatedAt: DateTimeOutput;
+  createdAt: DateTimeOutput;
+}
+
+export interface SubjectSubscriptionPromise
+  extends Promise<SubjectSubscription>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  subsType: () => Promise<String>;
+  mySubjects: <T = FragmentableArray<Subject>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  userid: <T = UserPromise>() => T;
+  subscribedAs: <T = RolePromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface SubjectSubscriptionSubscription
+  extends Promise<AsyncIterator<SubjectSubscription>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  subsType: () => Promise<AsyncIterator<String>>;
+  mySubjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  userid: <T = UserSubscription>() => T;
+  subscribedAs: <T = RoleSubscription>() => T;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface SubjectSubscriptionNullablePromise
+  extends Promise<SubjectSubscription | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  subsType: () => Promise<String>;
+  mySubjects: <T = FragmentableArray<Subject>>(args?: {
+    where?: SubjectWhereInput;
+    orderBy?: SubjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  userid: <T = UserPromise>() => T;
+  subscribedAs: <T = RolePromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface GroupMember {
@@ -19960,75 +20985,6 @@ export interface PollNullablePromise
   }) => T;
 }
 
-export interface StudentProfile {
-  id: ID_Output;
-  name: String;
-  profiileType?: String;
-  educationLevel?: String;
-  educationType?: String;
-  specialization?: String;
-  std?: String;
-  startedYear?: DateTimeOutput;
-  completedYear?: DateTimeOutput;
-  result?: String;
-  status?: String;
-  remark?: String;
-}
-
-export interface StudentProfilePromise
-  extends Promise<StudentProfile>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  profiileType: () => Promise<String>;
-  educationLevel: () => Promise<String>;
-  educationType: () => Promise<String>;
-  specialization: () => Promise<String>;
-  std: () => Promise<String>;
-  startedYear: () => Promise<DateTimeOutput>;
-  completedYear: () => Promise<DateTimeOutput>;
-  result: () => Promise<String>;
-  status: () => Promise<String>;
-  remark: () => Promise<String>;
-  profileId: <T = ProfilePromise>() => T;
-}
-
-export interface StudentProfileSubscription
-  extends Promise<AsyncIterator<StudentProfile>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  profiileType: () => Promise<AsyncIterator<String>>;
-  educationLevel: () => Promise<AsyncIterator<String>>;
-  educationType: () => Promise<AsyncIterator<String>>;
-  specialization: () => Promise<AsyncIterator<String>>;
-  std: () => Promise<AsyncIterator<String>>;
-  startedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
-  completedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
-  result: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<String>>;
-  remark: () => Promise<AsyncIterator<String>>;
-  profileId: <T = ProfileSubscription>() => T;
-}
-
-export interface StudentProfileNullablePromise
-  extends Promise<StudentProfile | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  profiileType: () => Promise<String>;
-  educationLevel: () => Promise<String>;
-  educationType: () => Promise<String>;
-  specialization: () => Promise<String>;
-  std: () => Promise<String>;
-  startedYear: () => Promise<DateTimeOutput>;
-  completedYear: () => Promise<DateTimeOutput>;
-  result: () => Promise<String>;
-  status: () => Promise<String>;
-  remark: () => Promise<String>;
-  profileId: <T = ProfilePromise>() => T;
-}
-
 export interface AddressConnection {
   pageInfo: PageInfo;
   edges: AddressEdge[];
@@ -20210,6 +21166,62 @@ export interface AggregateContentPromise
 
 export interface AggregateContentSubscription
   extends Promise<AsyncIterator<AggregateContent>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface EducationProfileConnection {
+  pageInfo: PageInfo;
+  edges: EducationProfileEdge[];
+}
+
+export interface EducationProfileConnectionPromise
+  extends Promise<EducationProfileConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<EducationProfileEdge>>() => T;
+  aggregate: <T = AggregateEducationProfilePromise>() => T;
+}
+
+export interface EducationProfileConnectionSubscription
+  extends Promise<AsyncIterator<EducationProfileConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<EducationProfileEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateEducationProfileSubscription>() => T;
+}
+
+export interface EducationProfileEdge {
+  node: EducationProfile;
+  cursor: String;
+}
+
+export interface EducationProfileEdgePromise
+  extends Promise<EducationProfileEdge>,
+    Fragmentable {
+  node: <T = EducationProfilePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface EducationProfileEdgeSubscription
+  extends Promise<AsyncIterator<EducationProfileEdge>>,
+    Fragmentable {
+  node: <T = EducationProfileSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateEducationProfile {
+  count: Int;
+}
+
+export interface AggregateEducationProfilePromise
+  extends Promise<AggregateEducationProfile>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateEducationProfileSubscription
+  extends Promise<AsyncIterator<AggregateEducationProfile>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -21076,62 +22088,6 @@ export interface AggregateStdSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface StudentProfileConnection {
-  pageInfo: PageInfo;
-  edges: StudentProfileEdge[];
-}
-
-export interface StudentProfileConnectionPromise
-  extends Promise<StudentProfileConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<StudentProfileEdge>>() => T;
-  aggregate: <T = AggregateStudentProfilePromise>() => T;
-}
-
-export interface StudentProfileConnectionSubscription
-  extends Promise<AsyncIterator<StudentProfileConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StudentProfileEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStudentProfileSubscription>() => T;
-}
-
-export interface StudentProfileEdge {
-  node: StudentProfile;
-  cursor: String;
-}
-
-export interface StudentProfileEdgePromise
-  extends Promise<StudentProfileEdge>,
-    Fragmentable {
-  node: <T = StudentProfilePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface StudentProfileEdgeSubscription
-  extends Promise<AsyncIterator<StudentProfileEdge>>,
-    Fragmentable {
-  node: <T = StudentProfileSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateStudentProfile {
-  count: Int;
-}
-
-export interface AggregateStudentProfilePromise
-  extends Promise<AggregateStudentProfile>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStudentProfileSubscription
-  extends Promise<AsyncIterator<AggregateStudentProfile>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface SubGroupConnection {
   pageInfo: PageInfo;
   edges: SubGroupEdge[];
@@ -21826,6 +22782,77 @@ export interface ContentPreviousValuesSubscription
   available: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface EducationProfileSubscriptionPayload {
+  mutation: MutationType;
+  node: EducationProfile;
+  updatedFields: String[];
+  previousValues: EducationProfilePreviousValues;
+}
+
+export interface EducationProfileSubscriptionPayloadPromise
+  extends Promise<EducationProfileSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = EducationProfilePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = EducationProfilePreviousValuesPromise>() => T;
+}
+
+export interface EducationProfileSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<EducationProfileSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = EducationProfileSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = EducationProfilePreviousValuesSubscription>() => T;
+}
+
+export interface EducationProfilePreviousValues {
+  id: ID_Output;
+  name: String;
+  profiileType?: String;
+  educationLevel?: String;
+  educationType?: String;
+  specialization?: String;
+  startedYear?: DateTimeOutput;
+  completedYear?: DateTimeOutput;
+  result?: String;
+  status?: String;
+  remark?: String;
+}
+
+export interface EducationProfilePreviousValuesPromise
+  extends Promise<EducationProfilePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  profiileType: () => Promise<String>;
+  educationLevel: () => Promise<String>;
+  educationType: () => Promise<String>;
+  specialization: () => Promise<String>;
+  startedYear: () => Promise<DateTimeOutput>;
+  completedYear: () => Promise<DateTimeOutput>;
+  result: () => Promise<String>;
+  status: () => Promise<String>;
+  remark: () => Promise<String>;
+}
+
+export interface EducationProfilePreviousValuesSubscription
+  extends Promise<AsyncIterator<EducationProfilePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  profiileType: () => Promise<AsyncIterator<String>>;
+  educationLevel: () => Promise<AsyncIterator<String>>;
+  educationType: () => Promise<AsyncIterator<String>>;
+  specialization: () => Promise<AsyncIterator<String>>;
+  startedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
+  completedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
+  result: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<String>>;
+  remark: () => Promise<AsyncIterator<String>>;
 }
 
 export interface GroupSubscriptionPayload {
@@ -22699,10 +23726,11 @@ export interface StdSubscriptionPayloadSubscription
 
 export interface StdPreviousValues {
   id: ID_Output;
-  stdname: String;
+  gradename: GRADENAME;
   category: String;
   branch?: String;
   year?: String;
+  isPublished: Boolean;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
@@ -22711,10 +23739,11 @@ export interface StdPreviousValuesPromise
   extends Promise<StdPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  stdname: () => Promise<String>;
+  gradename: () => Promise<GRADENAME>;
   category: () => Promise<String>;
   branch: () => Promise<String>;
   year: () => Promise<String>;
+  isPublished: () => Promise<Boolean>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -22723,86 +23752,13 @@ export interface StdPreviousValuesSubscription
   extends Promise<AsyncIterator<StdPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  stdname: () => Promise<AsyncIterator<String>>;
+  gradename: () => Promise<AsyncIterator<GRADENAME>>;
   category: () => Promise<AsyncIterator<String>>;
   branch: () => Promise<AsyncIterator<String>>;
   year: () => Promise<AsyncIterator<String>>;
+  isPublished: () => Promise<AsyncIterator<Boolean>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface StudentProfileSubscriptionPayload {
-  mutation: MutationType;
-  node: StudentProfile;
-  updatedFields: String[];
-  previousValues: StudentProfilePreviousValues;
-}
-
-export interface StudentProfileSubscriptionPayloadPromise
-  extends Promise<StudentProfileSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StudentProfilePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StudentProfilePreviousValuesPromise>() => T;
-}
-
-export interface StudentProfileSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StudentProfileSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StudentProfileSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StudentProfilePreviousValuesSubscription>() => T;
-}
-
-export interface StudentProfilePreviousValues {
-  id: ID_Output;
-  name: String;
-  profiileType?: String;
-  educationLevel?: String;
-  educationType?: String;
-  specialization?: String;
-  std?: String;
-  startedYear?: DateTimeOutput;
-  completedYear?: DateTimeOutput;
-  result?: String;
-  status?: String;
-  remark?: String;
-}
-
-export interface StudentProfilePreviousValuesPromise
-  extends Promise<StudentProfilePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  profiileType: () => Promise<String>;
-  educationLevel: () => Promise<String>;
-  educationType: () => Promise<String>;
-  specialization: () => Promise<String>;
-  std: () => Promise<String>;
-  startedYear: () => Promise<DateTimeOutput>;
-  completedYear: () => Promise<DateTimeOutput>;
-  result: () => Promise<String>;
-  status: () => Promise<String>;
-  remark: () => Promise<String>;
-}
-
-export interface StudentProfilePreviousValuesSubscription
-  extends Promise<AsyncIterator<StudentProfilePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  profiileType: () => Promise<AsyncIterator<String>>;
-  educationLevel: () => Promise<AsyncIterator<String>>;
-  educationType: () => Promise<AsyncIterator<String>>;
-  specialization: () => Promise<AsyncIterator<String>>;
-  std: () => Promise<AsyncIterator<String>>;
-  startedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
-  completedYear: () => Promise<AsyncIterator<DateTimeOutput>>;
-  result: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<String>>;
-  remark: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SubGroupSubscriptionPayload {
@@ -23452,11 +24408,15 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "StudentProfile",
+    name: "EducationProfile",
     embedded: false
   },
   {
     name: "Std",
+    embedded: false
+  },
+  {
+    name: "GRADENAME",
     embedded: false
   },
   {

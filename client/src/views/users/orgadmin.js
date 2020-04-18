@@ -12,9 +12,8 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Suborgmgmt from "../commoncomponent/org/suborgmgmt";
-import SuperadminUser from "../commoncomponent/users/user";
-import RoleMgmt from "../commoncomponent/roles/rolemgmt";
+import Suborgmgmt from "../commoncomponent/suborg/suborgmgmt";
+import OrgroleAssignmentController from "../commoncomponent/suborg/orgroleAssignmentController";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -54,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function OrgAdmin() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,15 +60,17 @@ export default function OrgAdmin() {
   };
 
   const myData = [
-    { tabicon: "SubORG", comp: <Suborgmgmt /> },
-    { tabicon: "ROLE", comp: <RoleMgmt /> },
-    { tabicon: "USER", comp: <SuperadminUser /> },
-
+    {
+      tabicon: "SubORG",
+      comp: <Suborgmgmt orgid="ck76apz000kq60784vbnya43c" orgname="SEERVI" />,
+    },
+    {
+      tabicon: "ORGADMIN ASSIGN",
+      comp: <OrgroleAssignmentController orgid="ck76apz000kq60784vbnya43c" />,
+    },
     { tabicon: <HelpIcon /> },
-    { tabicon: <ShoppingBasket /> },
-    { tabicon: <ThumbDown /> },
-    { tabicon: <ThumbUp /> },
   ];
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <AppBar position="static">
