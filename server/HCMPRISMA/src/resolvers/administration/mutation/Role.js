@@ -80,6 +80,7 @@ async function assignRoleToUser(parent, args, { prisma, request }, info) {
     info
   );
 }
+
 async function assignRoleToUsers(parent, args, { prisma, request }, info) {
   console.log("RECIEVED REQUEST for assignrole ", args);
   const data = args.data;
@@ -132,10 +133,36 @@ async function deleteRole(parent, args, { prisma, request }, info) {
     info
   );
 }
+async function deleteRoleOfUser(parent, args, { prisma, request }, info) {
+  console.log("REquest for delete role of a user ",args)
+  const roleExists = await prisma.exists.Role({ id: args.id });
+  if (!roleExists) {
+    throw new Error("Unable to Delete Role");
+  }
+   const userExists = await prisma.exists.User({ id: args.userId });
+     if (!userExists) {
+    throw new Error("Unable to Delete UserRole ");
+  }
+  return await prisma.mutation.deleteRole(
+    {
+       where: {
+            id: args.id,
+            AND: [ {
+                users: {
+                    id: args.userId
+                }
+            }]
+        }
+    },
+    info
+  );
+}
+
 export {
   createRole,
   updateRole,
   deleteRole,
   assignRoleToUser,
-  assignRoleToUsers
+  assignRoleToUsers,
+  deleteRoleOfUser
 };

@@ -1,5 +1,8 @@
 type Query {
   getAllSubjects: [Subject!]!
+  getSubjectById(id:String!):Subject!
+  getSubgroupSubjects(id:ID!):[Subject!]!
+  getSubjectByStd(id:ID!):[Subject!]!
 }
 type Mutation {
   createSubject(data: SubjectInputData!): Subject!
@@ -12,7 +15,6 @@ type Subject {
   picture: String
   medium: Medium
   std: Std!
-  educationProfiles: [EducationProfile!]!
   category: String
   board: String
   group: Group
@@ -21,8 +23,6 @@ type Subject {
   units: [Unit!]!
   topic: [Topic!]!
   contents: [Content!]!
-  createdBy: User
-  updateBy: [User!]!
   plantDate: DateTime
   isPublished: Boolean
   state: String

@@ -33,6 +33,7 @@
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.3",
     "lodash.find": "^4.6.0",
+    "material-table": "^1.57.2",
     "mui-datatables": "^2.14.0",
     "namor": "^2.0.2",
     "node-fetch": "^2.6.0",

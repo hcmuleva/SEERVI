@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Roleassignment from "../commoncomponent/subgroupadmin/roleassignment";
 import Usermanagement from "../commoncomponent/subgroupadmin/usermanagement";
+import CourseOnBoard from "../education/onboard/course";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -53,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SubGroupAdmin() {
+  const subgroupid = localStorage.getItem("subgroupid");
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,14 +65,17 @@ export default function SubGroupAdmin() {
   const myData = [
     {
       tabicon: "ROLEASIGNMENT",
-      comp: <Roleassignment id="ck928sfp3030i08845scc1hug" />,
+      comp: <Roleassignment id={subgroupid} />,
     },
     {
       tabicon: "USER MANGEMENT",
-      comp: <Usermanagement id="ck928sfp3030i08845scc1hug" />,
+      comp: <Usermanagement id={subgroupid} />,
     },
-    { tabicon: "Relationship" },
-    { tabicon: <HelpIcon /> },
+    { tabicon: "RELATIONSHIP" },
+
+    { tabicon: "COURSE", comp: <CourseOnBoard /> },
+
+    { tabicon: "REPORTS" },
   ];
   const classes = useStyles();
   return (

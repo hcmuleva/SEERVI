@@ -7,8 +7,11 @@ const GET_ALLSUBJECTS = gql `
        group{ id name}
        subgroup{id name }
        medium{id name }
-       std{ id stdname}
+       std{ id gradename}
   }
 }
 `;
+
+
+
 export {GET_ALLSUBJECTS}

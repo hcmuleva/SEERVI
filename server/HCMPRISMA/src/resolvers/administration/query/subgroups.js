@@ -9,6 +9,7 @@ async function subgroupsOfGroup(parent, args, { prisma }, info) {
     }, info)
 }
 function subgroupById(parent, args, { prisma }, info) {
+    console.log("ARGS fpr subgroup by id ", args)
    return prisma.query.subGroup({
          where :{
             id:args.id

@@ -16,7 +16,6 @@ import Suborgmgmt from "../commoncomponent/suborg/suborgmgmt";
 import OrgroleAssignmentController from "../commoncomponent/suborg/orgroleAssignmentController";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <Typography
       component="div"
@@ -53,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function OrgAdmin() {
+  const orgid = localStorage.getItem("orgid");
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,11 +63,11 @@ export default function OrgAdmin() {
   const myData = [
     {
       tabicon: "SubORG",
-      comp: <Suborgmgmt orgid="ck76apz000kq60784vbnya43c" orgname="SEERVI" />,
+      comp: <Suborgmgmt orgid={orgid} orgname="SEERVI" />,
     },
     {
       tabicon: "ORGADMIN ASSIGN",
-      comp: <OrgroleAssignmentController orgid="ck76apz000kq60784vbnya43c" />,
+      comp: <OrgroleAssignmentController orgid={orgid} />,
     },
     { tabicon: <HelpIcon /> },
   ];

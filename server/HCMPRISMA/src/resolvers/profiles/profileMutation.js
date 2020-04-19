@@ -3,14 +3,12 @@ import {
   createProfile,
   createEducationProfile,
   createPersonalProfile,
-  createAddress,
-  assignProfileToRoles
+  createAddress
 } from "./mutation/educationProfile";
 export const subjectSubs = {
   createSubjectSubscription,
   createProfile,
   createEducationProfile,
   createPersonalProfile,
-  createAddress,
-  assignProfileToRoles
+  createAddress
 };

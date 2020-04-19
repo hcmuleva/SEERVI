@@ -2,24 +2,27 @@
 import gql from "graphql-tag";
 
 const CREATE_SUBJECT = gql`
-  mutation CREATE_SUBJECT($name: String!, $board: String,$category: String,$group: String,$subgroup: String,$medium: String,$std:String!) {
-    createSubject(data: { name:$name,board:$board,category:$category, group:$group ,subgroup:$subgroup,medium:$medium,std:$std}) {
-      id name board category 
+  mutation CREATE_SUBJECT($name: String!, $picture:String,$medium:String, $std:String!,$category: String, $board: String,
+              $group: String,$subgroup: String,$isPublished: Boolean,$state:String,$status:String,$available:String,$description:String) {
+    createSubject(data: { name:$name,picture:$picture,medium:$medium,std:$std,category:$category,board:$board, 
+    group:$group ,subgroup:$subgroup,isPublished:$isPublished,state:$state,status:$status,available:$available,description:$description}) {
+      id name picture category board   isPublished state status  available description
+       medium{id name }
+       std{ id gradename}
        group{ id name}
        subgroup{id name }
-       medium{id name }
-       std{ id stdname}
+      
     }
   }
 `;
 const UPDATE_SUBJECT = gql`
-  mutation UPDATE_SUBJECT($id: ID!,$name: String!, $board: String,$category: String,$group: String,$subgroup: String,$medium: String,$std:String!) {
+  mutation UPDATE_SUBJECT($id: ID!,$name: String!, $board: String,$category: String,$group: String,$subgroup: String,$medium: String,$std:String) {
     updateSubject(id: $id,data: { name:$name,board:$board,category:$category, group:$group ,subgroup:$subgroup,medium:$medium,std:$std}) {
       id name board category 
        group{ id name}
        subgroup{id name }
        medium{id name }
-       std{ id stdname}
+       std{ id gradename}
     }
   }
 `;
@@ -33,7 +36,7 @@ const DELETE_SUBJECT = gql`
        group{ id name}
        subgroup{id name }
        medium{id name }
-       std{ id stdname}
+       std{ id gradename}
     }
   }
 `;

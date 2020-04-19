@@ -13,7 +13,7 @@ type Mutation {
   deleteRole(id: ID!): Role!
   assignRoleToUser(id: ID!): Role!
   assignRoleToUsers(id: ID!, data: UserListInput): Role!
-  assignRoleToProfiles(id: ID!, data: EducationProfilesInput): Role!
+  deleteRoleOfUser(id:ID!, userId:String!):Role!
 }
 type Role {
   id: ID!
@@ -22,7 +22,6 @@ type Role {
   suborg: Suborg
   group: Group
   subgroup: SubGroup
-  educationprofiles: [EducationProfile!]!
   users: [User!]!
   description: String
   status: String
@@ -35,7 +34,6 @@ input CreateRoleInput {
   suborg: String
   group: String
   subgroup: String
-  educationprofiles: Json
   users: Json
   description: String
   status: String
@@ -54,10 +52,10 @@ input UpdateRoleInput {
 input UserListInput {
   users: Json
 }
-input EducationProfilesInput {
-  educationprofiles: Json
-}
 
+input UserDeleteInput {
+  users:String!
+}
 input BulkRoleInput {
   roles: Json
   org: String

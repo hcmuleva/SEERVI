@@ -14,33 +14,39 @@ type Std {
   branch :ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
   specilize: Communication/Techno Cardio etc...
   year: I, II , III, Final, etc... e.g. BE I yr
-  category: Primary/Highersecondary college etc..
+  category: Primary/Highersecondary PG UG etc..
   """
   id: ID!
   educationprofiles: [EducationProfile!]!
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   specilize: String
   year: String
+  semester: String
   subjects: [Subject!]
+  isPublished: Boolean
 }
 input StdInputData {
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
+  semester: String
   specilize: String
   year: String
+  isPublished: Boolean
 }
 input UpdateStdInpput {
-  gradename: GRADENAME
+  gradename: String
   category: String
   branch: String
+  semester: String
   specilize: String
   year: String
+  isPublished: Boolean
 }
 
-enum GRADENAME {
+enum GRADENAMEENUM {
   LKG
   UKG
   I

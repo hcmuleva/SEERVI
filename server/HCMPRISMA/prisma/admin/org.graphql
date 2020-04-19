@@ -55,6 +55,7 @@ type SubGroup {
     @relation(name: "SubGroupMemberToGroup", onDelete: CASCADE)
   subgroupRoles: [Role!]! @relation(name: "RoleToSubGroup", onDelete: CASCADE)
   subjects: [Subject!]! @relation(name: "SubjectToSubGroup", onDelete: CASCADE)
+  medium:[Medium!]!     @relation(name: "MediumToSubGroup", onDelete: CASCADE)
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
 }

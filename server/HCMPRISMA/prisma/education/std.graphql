@@ -8,10 +8,12 @@ type Std {
   year: I, II , III, Final, etc... e.g. BE I yr
   """
   id: ID! @id
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   year: String
+  semester: String
+  specilize: String
   educationprofiles: [EducationProfile!]!
     @relation(name: "EducationProfileToStd", onDelete: SET_NULL)
   isPublished: Boolean! @default(value: false)
@@ -19,7 +21,8 @@ type Std {
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
 }
-enum GRADENAME {
+
+enum GRADENAMEENUM {
   LKG
   UKG
   I

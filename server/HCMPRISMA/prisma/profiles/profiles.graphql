@@ -47,9 +47,7 @@ type EducationProfile {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: [Role!]! @relation(name: "EducationProfileToRole", onDelete: SET_NULL)
-  subjects: [Subject!]!
-    @relation(name: "EducationProfileToSubject", onDelete: SET_NULL)
+
   std: [Std!]! @relation(name: "EducationProfileToStd", onDelete: SET_NULL)
   startedYear: DateTime
   completedYear: DateTime

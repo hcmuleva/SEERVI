@@ -8,7 +8,6 @@ type Mutation {
   createEducationProfile(data: EducationProfileInputData!): EducationProfile!
   createPersonalProfile(data: PersonaProfileInputData!): PersonalProfile!
   createAddress(data: AddressInputData!): Address!
-  assignProfileToRoles(id: ID!, data: RoleInput): EducationProfile!
   assignProfileToStds(id: ID!, data: StdInput): EducationProfile!
 }
 type Profile {
@@ -71,8 +70,6 @@ type EducationProfile {
   educationType: String
   specialization: String
   stds: [Std!]!
-  roles: [Role!]!
-  subjects: [Subject!]!
   startedYear: DateTime
   completedYear: DateTime
   result: String
@@ -101,7 +98,6 @@ input EducationProfileInputData {
   educationType: String
   specialization: String
   startedYear: String
-  roles: Json
   stds: Json
   subjects: Json
   completedYear: String

@@ -18,9 +18,6 @@ type User {
     @relation(name: "SubjectSubscriptionToUser", onDelete: CASCADE)
 
   createdBy: String
-  subjectByMe: [Subject!]! @relation(name: "SubjectToUser", onDelete: CASCADE)
-  subjectUpddateByMe: [Subject!]!
-    @relation(name: "SubjectToUserUpdate", onDelete: CASCADE)
   unitByMe: [Unit!]! @relation(name: "UnitToUser", onDelete: CASCADE)
   unitUpdatedByMe: [Unit!]!
     @relation(name: "UnitToUserUpdate", onDelete: CASCADE)

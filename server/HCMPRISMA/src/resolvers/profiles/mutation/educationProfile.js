@@ -64,35 +64,9 @@ async function createAddress(parent, args, { prisma, request }, info) {
   );
 }
 
-async function assignProfileToRoles(parent, args, { prisma, request }, info) {
-  const data = args.data;
-  let rolelist = [];
-  data.roles.map(elm => {
-    rolelist.push(elm);
-  });
-
-  const educationProfileExists = await prisma.exists.EducationProfile({
-    id: args.id
-  });
-  if (!educationProfileExists) {
-    throw new Error("Unable to update educationProfileExists");
-  }
-
-  data["roles"] = { connect: rolelist };
-  return await prisma.mutation.updateEducationProfile(
-    {
-      where: {
-        id: args.id
-      },
-      data: args.data
-    },
-    info
-  );
-}
 export {
   createProfile,
   createEducationProfile,
   createPersonalProfile,
-  createAddress,
-  assignProfileToRoles
+  createAddress
 };

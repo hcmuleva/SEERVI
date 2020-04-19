@@ -54,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SubOrgAdmin() {
+  const suborgid = localStorage.getItem("suborgid");
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -63,13 +65,11 @@ export default function SubOrgAdmin() {
   const myData = [
     {
       tabicon: "Group",
-      comp: (
-        <Groupmgmt suborgid="ck76apz1k0kqk078421x4oggj" suborgname="KARI" />
-      ),
+      comp: <Groupmgmt suborgid={suborgid} suborgname="KARI" />,
     },
     {
       tabicon: "SUBORGADMIN ASSIGN",
-      comp: <SubOrgroleAssignmentController id="ck76apz1k0kqk078421x4oggj" />,
+      comp: <SubOrgroleAssignmentController id={suborgid} />,
     },
     { tabicon: <HelpIcon /> },
   ];

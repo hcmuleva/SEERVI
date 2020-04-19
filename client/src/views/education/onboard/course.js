@@ -12,11 +12,14 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Suborgmgmt from "../commoncomponent/suborg/suborgmgmt";
-import GrouproleAssignmentController from "../commoncomponent/groupadmin/grouproleAssignmentController";
-import SubGroupmgmt from "../commoncomponent/groupadmin/subgroupmgmt";
+import Grade from "./grade";
+import Medium from "./medium";
+import Subject from "./subject/subject";
+import TeacherAssign from "./teacherAssign";
+import StudentAssign from "./studentAssign";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
   return (
     <Typography
       component="div"
@@ -52,9 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GroupAdmin() {
-  const groupid = localStorage.getItem("groupid");
-
+export default function CourseOnBoard() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,20 +63,16 @@ export default function GroupAdmin() {
   };
 
   const myData = [
-    {
-      tabicon: "SUBGroup",
-      comp: <SubGroupmgmt groupid={groupid} groupname="KARI" />,
-    },
-    {
-      tabicon: "GROUP ADMIN ASSIGN",
-      comp: <GrouproleAssignmentController id={groupid} />,
-    },
-    { tabicon: <HelpIcon /> },
+    { tabicon: "GRADE", comp: <Grade /> },
+    { tabicon: "MEDIUM ", comp: <Medium /> },
+    { tabicon: "SUBJECT", comp: <Subject /> },
+    { tabicon: "TEACHER ASSIGN", comp: <TeacherAssign /> },
+    { tabicon: "STUDENT ASSIGNMENT", comp: <StudentAssign /> },
   ];
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" color="transparent">
         <Tabs
           value={value}
           onChange={handleChange}

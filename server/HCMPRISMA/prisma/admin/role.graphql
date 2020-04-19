@@ -6,8 +6,7 @@ type Role {
   group: Group @relation(name: "RoleToGroup", onDelete: SET_NULL)
   subgroup: SubGroup @relation(name: "RoleToSubGroup", onDelete: SET_NULL)
   users: [User!]! @relation(name: "RoleToUser", onDelete: SET_NULL)
-  educationprofiles: [EducationProfile!]!
-    @relation(name: "EducationProfileToRole", onDelete: SET_NULL)
+
   description: String
   status: String
   state: String

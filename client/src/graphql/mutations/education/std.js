@@ -1,14 +1,34 @@
 import gql from "graphql-tag";
 
-
 const CREATE_STD = gql`
-  mutation CREATE_STD($stdname: String!, $branch: String!,$year: String!,$category: String!) {
-    createStd(data: { stdname:$stdname,branch:$branch,year:$year, category:$category }) {
-      stdname
+  mutation CREATE_STD(
+    $gradename: String!
+    $category: String!
+    $branch: String
+    $year: String
+    $semester: String
+    $specilize: String
+    $isPublished: Boolean
+  ) {
+    createStd(
+      data: {
+        gradename: $gradename
+        category: $category
+        branch: $branch
+        year: $year
+        semester: $semester
+        specilize: $specilize
+        isPublished: $isPublished
+      }
+    ) {
+      gradename
+      category
       branch
       year
-      category
+      semester
+      specilize
+      isPublished
     }
   }
 `;
-export {CREATE_STD}
+export { CREATE_STD };

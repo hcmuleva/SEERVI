@@ -1536,8 +1536,6 @@ type EducationProfile {
   educationLevel: String
   educationType: String
   specialization: String
-  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
   std(where: StdWhereInput, orderBy: StdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Std!]
   startedYear: DateTime
   completedYear: DateTime
@@ -1560,8 +1558,6 @@ input EducationProfileCreateInput {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: RoleCreateManyWithoutEducationprofilesInput
-  subjects: SubjectCreateManyWithoutEducationProfilesInput
   std: StdCreateManyWithoutEducationprofilesInput
   startedYear: DateTime
   completedYear: DateTime
@@ -1576,18 +1572,8 @@ input EducationProfileCreateManyWithoutProfileIdInput {
   connect: [EducationProfileWhereUniqueInput!]
 }
 
-input EducationProfileCreateManyWithoutRolesInput {
-  create: [EducationProfileCreateWithoutRolesInput!]
-  connect: [EducationProfileWhereUniqueInput!]
-}
-
 input EducationProfileCreateManyWithoutStdInput {
   create: [EducationProfileCreateWithoutStdInput!]
-  connect: [EducationProfileWhereUniqueInput!]
-}
-
-input EducationProfileCreateManyWithoutSubjectsInput {
-  create: [EducationProfileCreateWithoutSubjectsInput!]
   connect: [EducationProfileWhereUniqueInput!]
 }
 
@@ -1598,31 +1584,12 @@ input EducationProfileCreateWithoutProfileIdInput {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: RoleCreateManyWithoutEducationprofilesInput
-  subjects: SubjectCreateManyWithoutEducationProfilesInput
   std: StdCreateManyWithoutEducationprofilesInput
   startedYear: DateTime
   completedYear: DateTime
   result: String
   status: String
   remark: String
-}
-
-input EducationProfileCreateWithoutRolesInput {
-  id: ID
-  name: String!
-  profiileType: String
-  educationLevel: String
-  educationType: String
-  specialization: String
-  subjects: SubjectCreateManyWithoutEducationProfilesInput
-  std: StdCreateManyWithoutEducationprofilesInput
-  startedYear: DateTime
-  completedYear: DateTime
-  result: String
-  status: String
-  remark: String
-  profileId: ProfileCreateOneWithoutEducationProfilesInput!
 }
 
 input EducationProfileCreateWithoutStdInput {
@@ -1632,25 +1599,6 @@ input EducationProfileCreateWithoutStdInput {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: RoleCreateManyWithoutEducationprofilesInput
-  subjects: SubjectCreateManyWithoutEducationProfilesInput
-  startedYear: DateTime
-  completedYear: DateTime
-  result: String
-  status: String
-  remark: String
-  profileId: ProfileCreateOneWithoutEducationProfilesInput!
-}
-
-input EducationProfileCreateWithoutSubjectsInput {
-  id: ID
-  name: String!
-  profiileType: String
-  educationLevel: String
-  educationType: String
-  specialization: String
-  roles: RoleCreateManyWithoutEducationprofilesInput
-  std: StdCreateManyWithoutEducationprofilesInput
   startedYear: DateTime
   completedYear: DateTime
   result: String
@@ -1875,8 +1823,6 @@ input EducationProfileUpdateInput {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: RoleUpdateManyWithoutEducationprofilesInput
-  subjects: SubjectUpdateManyWithoutEducationProfilesInput
   std: StdUpdateManyWithoutEducationprofilesInput
   startedYear: DateTime
   completedYear: DateTime
@@ -1924,18 +1870,6 @@ input EducationProfileUpdateManyWithoutProfileIdInput {
   updateMany: [EducationProfileUpdateManyWithWhereNestedInput!]
 }
 
-input EducationProfileUpdateManyWithoutRolesInput {
-  create: [EducationProfileCreateWithoutRolesInput!]
-  delete: [EducationProfileWhereUniqueInput!]
-  connect: [EducationProfileWhereUniqueInput!]
-  set: [EducationProfileWhereUniqueInput!]
-  disconnect: [EducationProfileWhereUniqueInput!]
-  update: [EducationProfileUpdateWithWhereUniqueWithoutRolesInput!]
-  upsert: [EducationProfileUpsertWithWhereUniqueWithoutRolesInput!]
-  deleteMany: [EducationProfileScalarWhereInput!]
-  updateMany: [EducationProfileUpdateManyWithWhereNestedInput!]
-}
-
 input EducationProfileUpdateManyWithoutStdInput {
   create: [EducationProfileCreateWithoutStdInput!]
   delete: [EducationProfileWhereUniqueInput!]
@@ -1944,18 +1878,6 @@ input EducationProfileUpdateManyWithoutStdInput {
   disconnect: [EducationProfileWhereUniqueInput!]
   update: [EducationProfileUpdateWithWhereUniqueWithoutStdInput!]
   upsert: [EducationProfileUpsertWithWhereUniqueWithoutStdInput!]
-  deleteMany: [EducationProfileScalarWhereInput!]
-  updateMany: [EducationProfileUpdateManyWithWhereNestedInput!]
-}
-
-input EducationProfileUpdateManyWithoutSubjectsInput {
-  create: [EducationProfileCreateWithoutSubjectsInput!]
-  delete: [EducationProfileWhereUniqueInput!]
-  connect: [EducationProfileWhereUniqueInput!]
-  set: [EducationProfileWhereUniqueInput!]
-  disconnect: [EducationProfileWhereUniqueInput!]
-  update: [EducationProfileUpdateWithWhereUniqueWithoutSubjectsInput!]
-  upsert: [EducationProfileUpsertWithWhereUniqueWithoutSubjectsInput!]
   deleteMany: [EducationProfileScalarWhereInput!]
   updateMany: [EducationProfileUpdateManyWithWhereNestedInput!]
 }
@@ -1971,30 +1893,12 @@ input EducationProfileUpdateWithoutProfileIdDataInput {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: RoleUpdateManyWithoutEducationprofilesInput
-  subjects: SubjectUpdateManyWithoutEducationProfilesInput
   std: StdUpdateManyWithoutEducationprofilesInput
   startedYear: DateTime
   completedYear: DateTime
   result: String
   status: String
   remark: String
-}
-
-input EducationProfileUpdateWithoutRolesDataInput {
-  name: String
-  profiileType: String
-  educationLevel: String
-  educationType: String
-  specialization: String
-  subjects: SubjectUpdateManyWithoutEducationProfilesInput
-  std: StdUpdateManyWithoutEducationprofilesInput
-  startedYear: DateTime
-  completedYear: DateTime
-  result: String
-  status: String
-  remark: String
-  profileId: ProfileUpdateOneRequiredWithoutEducationProfilesInput
 }
 
 input EducationProfileUpdateWithoutStdDataInput {
@@ -2003,24 +1907,6 @@ input EducationProfileUpdateWithoutStdDataInput {
   educationLevel: String
   educationType: String
   specialization: String
-  roles: RoleUpdateManyWithoutEducationprofilesInput
-  subjects: SubjectUpdateManyWithoutEducationProfilesInput
-  startedYear: DateTime
-  completedYear: DateTime
-  result: String
-  status: String
-  remark: String
-  profileId: ProfileUpdateOneRequiredWithoutEducationProfilesInput
-}
-
-input EducationProfileUpdateWithoutSubjectsDataInput {
-  name: String
-  profiileType: String
-  educationLevel: String
-  educationType: String
-  specialization: String
-  roles: RoleUpdateManyWithoutEducationprofilesInput
-  std: StdUpdateManyWithoutEducationprofilesInput
   startedYear: DateTime
   completedYear: DateTime
   result: String
@@ -2034,19 +1920,9 @@ input EducationProfileUpdateWithWhereUniqueWithoutProfileIdInput {
   data: EducationProfileUpdateWithoutProfileIdDataInput!
 }
 
-input EducationProfileUpdateWithWhereUniqueWithoutRolesInput {
-  where: EducationProfileWhereUniqueInput!
-  data: EducationProfileUpdateWithoutRolesDataInput!
-}
-
 input EducationProfileUpdateWithWhereUniqueWithoutStdInput {
   where: EducationProfileWhereUniqueInput!
   data: EducationProfileUpdateWithoutStdDataInput!
-}
-
-input EducationProfileUpdateWithWhereUniqueWithoutSubjectsInput {
-  where: EducationProfileWhereUniqueInput!
-  data: EducationProfileUpdateWithoutSubjectsDataInput!
 }
 
 input EducationProfileUpsertWithWhereUniqueWithoutProfileIdInput {
@@ -2055,22 +1931,10 @@ input EducationProfileUpsertWithWhereUniqueWithoutProfileIdInput {
   create: EducationProfileCreateWithoutProfileIdInput!
 }
 
-input EducationProfileUpsertWithWhereUniqueWithoutRolesInput {
-  where: EducationProfileWhereUniqueInput!
-  update: EducationProfileUpdateWithoutRolesDataInput!
-  create: EducationProfileCreateWithoutRolesInput!
-}
-
 input EducationProfileUpsertWithWhereUniqueWithoutStdInput {
   where: EducationProfileWhereUniqueInput!
   update: EducationProfileUpdateWithoutStdDataInput!
   create: EducationProfileCreateWithoutStdInput!
-}
-
-input EducationProfileUpsertWithWhereUniqueWithoutSubjectsInput {
-  where: EducationProfileWhereUniqueInput!
-  update: EducationProfileUpdateWithoutSubjectsDataInput!
-  create: EducationProfileCreateWithoutSubjectsInput!
 }
 
 input EducationProfileWhereInput {
@@ -2158,12 +2022,6 @@ input EducationProfileWhereInput {
   specialization_not_starts_with: String
   specialization_ends_with: String
   specialization_not_ends_with: String
-  roles_every: RoleWhereInput
-  roles_some: RoleWhereInput
-  roles_none: RoleWhereInput
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
   std_every: StdWhereInput
   std_some: StdWhereInput
   std_none: StdWhereInput
@@ -2233,25 +2091,6 @@ input EducationProfileWhereInput {
 
 input EducationProfileWhereUniqueInput {
   id: ID
-}
-
-enum GRADENAME {
-  LKG
-  UKG
-  I
-  II
-  III
-  IV
-  V
-  VI
-  VII
-  VIII
-  IX
-  X
-  XI
-  XII
-  UG
-  PG
 }
 
 type Group {
@@ -2986,6 +2825,8 @@ scalar Long
 type Medium {
   id: ID!
   name: String!
+  localname: String
+  subgroup: SubGroup
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -3000,7 +2841,14 @@ type MediumConnection {
 input MediumCreateInput {
   id: ID
   name: String!
+  localname: String
+  subgroup: SubGroupCreateOneWithoutMediumInput
   subjects: SubjectCreateManyWithoutMediumInput
+}
+
+input MediumCreateManyWithoutSubgroupInput {
+  create: [MediumCreateWithoutSubgroupInput!]
+  connect: [MediumWhereUniqueInput!]
 }
 
 input MediumCreateOneWithoutSubjectsInput {
@@ -3008,9 +2856,18 @@ input MediumCreateOneWithoutSubjectsInput {
   connect: MediumWhereUniqueInput
 }
 
+input MediumCreateWithoutSubgroupInput {
+  id: ID
+  name: String!
+  localname: String
+  subjects: SubjectCreateManyWithoutMediumInput
+}
+
 input MediumCreateWithoutSubjectsInput {
   id: ID
   name: String!
+  localname: String
+  subgroup: SubGroupCreateOneWithoutMediumInput
 }
 
 type MediumEdge {
@@ -3023,6 +2880,8 @@ enum MediumOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  localname_ASC
+  localname_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -3032,8 +2891,73 @@ enum MediumOrderByInput {
 type MediumPreviousValues {
   id: ID!
   name: String!
+  localname: String
   updatedAt: DateTime!
   createdAt: DateTime!
+}
+
+input MediumScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  localname: String
+  localname_not: String
+  localname_in: [String!]
+  localname_not_in: [String!]
+  localname_lt: String
+  localname_lte: String
+  localname_gt: String
+  localname_gte: String
+  localname_contains: String
+  localname_not_contains: String
+  localname_starts_with: String
+  localname_not_starts_with: String
+  localname_ends_with: String
+  localname_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [MediumScalarWhereInput!]
+  OR: [MediumScalarWhereInput!]
+  NOT: [MediumScalarWhereInput!]
 }
 
 type MediumSubscriptionPayload {
@@ -3056,11 +2980,36 @@ input MediumSubscriptionWhereInput {
 
 input MediumUpdateInput {
   name: String
+  localname: String
+  subgroup: SubGroupUpdateOneWithoutMediumInput
   subjects: SubjectUpdateManyWithoutMediumInput
+}
+
+input MediumUpdateManyDataInput {
+  name: String
+  localname: String
 }
 
 input MediumUpdateManyMutationInput {
   name: String
+  localname: String
+}
+
+input MediumUpdateManyWithoutSubgroupInput {
+  create: [MediumCreateWithoutSubgroupInput!]
+  delete: [MediumWhereUniqueInput!]
+  connect: [MediumWhereUniqueInput!]
+  set: [MediumWhereUniqueInput!]
+  disconnect: [MediumWhereUniqueInput!]
+  update: [MediumUpdateWithWhereUniqueWithoutSubgroupInput!]
+  upsert: [MediumUpsertWithWhereUniqueWithoutSubgroupInput!]
+  deleteMany: [MediumScalarWhereInput!]
+  updateMany: [MediumUpdateManyWithWhereNestedInput!]
+}
+
+input MediumUpdateManyWithWhereNestedInput {
+  where: MediumScalarWhereInput!
+  data: MediumUpdateManyDataInput!
 }
 
 input MediumUpdateOneWithoutSubjectsInput {
@@ -3072,13 +3021,32 @@ input MediumUpdateOneWithoutSubjectsInput {
   connect: MediumWhereUniqueInput
 }
 
+input MediumUpdateWithoutSubgroupDataInput {
+  name: String
+  localname: String
+  subjects: SubjectUpdateManyWithoutMediumInput
+}
+
 input MediumUpdateWithoutSubjectsDataInput {
   name: String
+  localname: String
+  subgroup: SubGroupUpdateOneWithoutMediumInput
+}
+
+input MediumUpdateWithWhereUniqueWithoutSubgroupInput {
+  where: MediumWhereUniqueInput!
+  data: MediumUpdateWithoutSubgroupDataInput!
 }
 
 input MediumUpsertWithoutSubjectsInput {
   update: MediumUpdateWithoutSubjectsDataInput!
   create: MediumCreateWithoutSubjectsInput!
+}
+
+input MediumUpsertWithWhereUniqueWithoutSubgroupInput {
+  where: MediumWhereUniqueInput!
+  update: MediumUpdateWithoutSubgroupDataInput!
+  create: MediumCreateWithoutSubgroupInput!
 }
 
 input MediumWhereInput {
@@ -3110,6 +3078,21 @@ input MediumWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  localname: String
+  localname_not: String
+  localname_in: [String!]
+  localname_not_in: [String!]
+  localname_lt: String
+  localname_lte: String
+  localname_gt: String
+  localname_gte: String
+  localname_contains: String
+  localname_not_contains: String
+  localname_starts_with: String
+  localname_not_starts_with: String
+  localname_ends_with: String
+  localname_not_ends_with: String
+  subgroup: SubGroupWhereInput
   subjects_every: SubjectWhereInput
   subjects_some: SubjectWhereInput
   subjects_none: SubjectWhereInput
@@ -8665,7 +8648,6 @@ type Role {
   group: Group
   subgroup: SubGroup
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  educationprofiles(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationProfile!]
   description: String
   status: String
   state: String
@@ -8688,16 +8670,10 @@ input RoleCreateInput {
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
   users: UserCreateManyWithoutRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
   subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
-}
-
-input RoleCreateManyWithoutEducationprofilesInput {
-  create: [RoleCreateWithoutEducationprofilesInput!]
-  connect: [RoleWhereUniqueInput!]
 }
 
 input RoleCreateManyWithoutGroupInput {
@@ -8735,20 +8711,6 @@ input RoleCreateOneWithoutSubjectSubscriptionsInput {
   connect: RoleWhereUniqueInput
 }
 
-input RoleCreateWithoutEducationprofilesInput {
-  id: ID
-  name: ROLENAME!
-  org: OrganizationCreateOneWithoutOrgRolesInput
-  suborg: SuborgCreateOneWithoutSuborgRolesInput
-  group: GroupCreateOneWithoutGroupRolesInput
-  subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  users: UserCreateManyWithoutRolesInput
-  description: String
-  status: String
-  state: String
-  subjectSubscriptions: SubjectSubscriptionCreateManyWithoutSubscribedAsInput
-}
-
 input RoleCreateWithoutGroupInput {
   id: ID
   name: ROLENAME!
@@ -8756,7 +8718,6 @@ input RoleCreateWithoutGroupInput {
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
   users: UserCreateManyWithoutRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -8770,7 +8731,6 @@ input RoleCreateWithoutOrgInput {
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
   users: UserCreateManyWithoutRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -8784,7 +8744,6 @@ input RoleCreateWithoutSubgroupInput {
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
   users: UserCreateManyWithoutRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -8799,7 +8758,6 @@ input RoleCreateWithoutSubjectSubscriptionsInput {
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
   users: UserCreateManyWithoutRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -8812,7 +8770,6 @@ input RoleCreateWithoutSuborgInput {
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
   users: UserCreateManyWithoutRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -8826,7 +8783,6 @@ input RoleCreateWithoutUsersInput {
   suborg: SuborgCreateOneWithoutSuborgRolesInput
   group: GroupCreateOneWithoutGroupRolesInput
   subgroup: SubGroupCreateOneWithoutSubgroupRolesInput
-  educationprofiles: EducationProfileCreateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9144,7 +9100,6 @@ input RoleUpdateDataInput {
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9158,7 +9113,6 @@ input RoleUpdateInput {
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9177,18 +9131,6 @@ input RoleUpdateManyMutationInput {
   description: String
   status: String
   state: String
-}
-
-input RoleUpdateManyWithoutEducationprofilesInput {
-  create: [RoleCreateWithoutEducationprofilesInput!]
-  delete: [RoleWhereUniqueInput!]
-  connect: [RoleWhereUniqueInput!]
-  set: [RoleWhereUniqueInput!]
-  disconnect: [RoleWhereUniqueInput!]
-  update: [RoleUpdateWithWhereUniqueWithoutEducationprofilesInput!]
-  upsert: [RoleUpsertWithWhereUniqueWithoutEducationprofilesInput!]
-  deleteMany: [RoleScalarWhereInput!]
-  updateMany: [RoleUpdateManyWithWhereNestedInput!]
 }
 
 input RoleUpdateManyWithoutGroupInput {
@@ -9270,26 +9212,12 @@ input RoleUpdateOneRequiredWithoutSubjectSubscriptionsInput {
   connect: RoleWhereUniqueInput
 }
 
-input RoleUpdateWithoutEducationprofilesDataInput {
-  name: ROLENAME
-  org: OrganizationUpdateOneWithoutOrgRolesInput
-  suborg: SuborgUpdateOneWithoutSuborgRolesInput
-  group: GroupUpdateOneWithoutGroupRolesInput
-  subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  users: UserUpdateManyWithoutRolesInput
-  description: String
-  status: String
-  state: String
-  subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
-}
-
 input RoleUpdateWithoutGroupDataInput {
   name: ROLENAME
   org: OrganizationUpdateOneWithoutOrgRolesInput
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9302,7 +9230,6 @@ input RoleUpdateWithoutOrgDataInput {
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9315,7 +9242,6 @@ input RoleUpdateWithoutSubgroupDataInput {
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9329,7 +9255,6 @@ input RoleUpdateWithoutSubjectSubscriptionsDataInput {
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9341,7 +9266,6 @@ input RoleUpdateWithoutSuborgDataInput {
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
   users: UserUpdateManyWithoutRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
@@ -9354,16 +9278,10 @@ input RoleUpdateWithoutUsersDataInput {
   suborg: SuborgUpdateOneWithoutSuborgRolesInput
   group: GroupUpdateOneWithoutGroupRolesInput
   subgroup: SubGroupUpdateOneWithoutSubgroupRolesInput
-  educationprofiles: EducationProfileUpdateManyWithoutRolesInput
   description: String
   status: String
   state: String
   subjectSubscriptions: SubjectSubscriptionUpdateManyWithoutSubscribedAsInput
-}
-
-input RoleUpdateWithWhereUniqueWithoutEducationprofilesInput {
-  where: RoleWhereUniqueInput!
-  data: RoleUpdateWithoutEducationprofilesDataInput!
 }
 
 input RoleUpdateWithWhereUniqueWithoutGroupInput {
@@ -9399,12 +9317,6 @@ input RoleUpsertNestedInput {
 input RoleUpsertWithoutSubjectSubscriptionsInput {
   update: RoleUpdateWithoutSubjectSubscriptionsDataInput!
   create: RoleCreateWithoutSubjectSubscriptionsInput!
-}
-
-input RoleUpsertWithWhereUniqueWithoutEducationprofilesInput {
-  where: RoleWhereUniqueInput!
-  update: RoleUpdateWithoutEducationprofilesDataInput!
-  create: RoleCreateWithoutEducationprofilesInput!
 }
 
 input RoleUpsertWithWhereUniqueWithoutGroupInput {
@@ -9463,9 +9375,6 @@ input RoleWhereInput {
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
-  educationprofiles_every: EducationProfileWhereInput
-  educationprofiles_some: EducationProfileWhereInput
-  educationprofiles_none: EducationProfileWhereInput
   description: String
   description_not: String
   description_in: [String!]
@@ -9534,14 +9443,17 @@ input RoleWhereInput {
 
 input RoleWhereUniqueInput {
   id: ID
+  users_some:UserWhereInput
 }
 
 type Std {
   id: ID!
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   year: String
+  semester: String
+  specilize: String
   educationprofiles(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationProfile!]
   isPublished: Boolean!
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
@@ -9557,10 +9469,12 @@ type StdConnection {
 
 input StdCreateInput {
   id: ID
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   year: String
+  semester: String
+  specilize: String
   educationprofiles: EducationProfileCreateManyWithoutStdInput
   isPublished: Boolean
   subjects: SubjectCreateManyWithoutStdInput
@@ -9578,20 +9492,24 @@ input StdCreateOneWithoutSubjectsInput {
 
 input StdCreateWithoutEducationprofilesInput {
   id: ID
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   year: String
+  semester: String
+  specilize: String
   isPublished: Boolean
   subjects: SubjectCreateManyWithoutStdInput
 }
 
 input StdCreateWithoutSubjectsInput {
   id: ID
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   year: String
+  semester: String
+  specilize: String
   educationprofiles: EducationProfileCreateManyWithoutStdInput
   isPublished: Boolean
 }
@@ -9612,6 +9530,10 @@ enum StdOrderByInput {
   branch_DESC
   year_ASC
   year_DESC
+  semester_ASC
+  semester_DESC
+  specilize_ASC
+  specilize_DESC
   isPublished_ASC
   isPublished_DESC
   updatedAt_ASC
@@ -9622,10 +9544,12 @@ enum StdOrderByInput {
 
 type StdPreviousValues {
   id: ID!
-  gradename: GRADENAME!
+  gradename: String!
   category: String!
   branch: String
   year: String
+  semester: String
+  specilize: String
   isPublished: Boolean!
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -9646,10 +9570,20 @@ input StdScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  gradename: GRADENAME
-  gradename_not: GRADENAME
-  gradename_in: [GRADENAME!]
-  gradename_not_in: [GRADENAME!]
+  gradename: String
+  gradename_not: String
+  gradename_in: [String!]
+  gradename_not_in: [String!]
+  gradename_lt: String
+  gradename_lte: String
+  gradename_gt: String
+  gradename_gte: String
+  gradename_contains: String
+  gradename_not_contains: String
+  gradename_starts_with: String
+  gradename_not_starts_with: String
+  gradename_ends_with: String
+  gradename_not_ends_with: String
   category: String
   category_not: String
   category_in: [String!]
@@ -9692,6 +9626,34 @@ input StdScalarWhereInput {
   year_not_starts_with: String
   year_ends_with: String
   year_not_ends_with: String
+  semester: String
+  semester_not: String
+  semester_in: [String!]
+  semester_not_in: [String!]
+  semester_lt: String
+  semester_lte: String
+  semester_gt: String
+  semester_gte: String
+  semester_contains: String
+  semester_not_contains: String
+  semester_starts_with: String
+  semester_not_starts_with: String
+  semester_ends_with: String
+  semester_not_ends_with: String
+  specilize: String
+  specilize_not: String
+  specilize_in: [String!]
+  specilize_not_in: [String!]
+  specilize_lt: String
+  specilize_lte: String
+  specilize_gt: String
+  specilize_gte: String
+  specilize_contains: String
+  specilize_not_contains: String
+  specilize_starts_with: String
+  specilize_not_starts_with: String
+  specilize_ends_with: String
+  specilize_not_ends_with: String
   isPublished: Boolean
   isPublished_not: Boolean
   updatedAt: DateTime
@@ -9734,28 +9696,34 @@ input StdSubscriptionWhereInput {
 }
 
 input StdUpdateInput {
-  gradename: GRADENAME
+  gradename: String
   category: String
   branch: String
   year: String
+  semester: String
+  specilize: String
   educationprofiles: EducationProfileUpdateManyWithoutStdInput
   isPublished: Boolean
   subjects: SubjectUpdateManyWithoutStdInput
 }
 
 input StdUpdateManyDataInput {
-  gradename: GRADENAME
+  gradename: String
   category: String
   branch: String
   year: String
+  semester: String
+  specilize: String
   isPublished: Boolean
 }
 
 input StdUpdateManyMutationInput {
-  gradename: GRADENAME
+  gradename: String
   category: String
   branch: String
   year: String
+  semester: String
+  specilize: String
   isPublished: Boolean
 }
 
@@ -9784,19 +9752,23 @@ input StdUpdateOneRequiredWithoutSubjectsInput {
 }
 
 input StdUpdateWithoutEducationprofilesDataInput {
-  gradename: GRADENAME
+  gradename: String
   category: String
   branch: String
   year: String
+  semester: String
+  specilize: String
   isPublished: Boolean
   subjects: SubjectUpdateManyWithoutStdInput
 }
 
 input StdUpdateWithoutSubjectsDataInput {
-  gradename: GRADENAME
+  gradename: String
   category: String
   branch: String
   year: String
+  semester: String
+  specilize: String
   educationprofiles: EducationProfileUpdateManyWithoutStdInput
   isPublished: Boolean
 }
@@ -9832,10 +9804,20 @@ input StdWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  gradename: GRADENAME
-  gradename_not: GRADENAME
-  gradename_in: [GRADENAME!]
-  gradename_not_in: [GRADENAME!]
+  gradename: String
+  gradename_not: String
+  gradename_in: [String!]
+  gradename_not_in: [String!]
+  gradename_lt: String
+  gradename_lte: String
+  gradename_gt: String
+  gradename_gte: String
+  gradename_contains: String
+  gradename_not_contains: String
+  gradename_starts_with: String
+  gradename_not_starts_with: String
+  gradename_ends_with: String
+  gradename_not_ends_with: String
   category: String
   category_not: String
   category_in: [String!]
@@ -9878,6 +9860,34 @@ input StdWhereInput {
   year_not_starts_with: String
   year_ends_with: String
   year_not_ends_with: String
+  semester: String
+  semester_not: String
+  semester_in: [String!]
+  semester_not_in: [String!]
+  semester_lt: String
+  semester_lte: String
+  semester_gt: String
+  semester_gte: String
+  semester_contains: String
+  semester_not_contains: String
+  semester_starts_with: String
+  semester_not_starts_with: String
+  semester_ends_with: String
+  semester_not_ends_with: String
+  specilize: String
+  specilize_not: String
+  specilize_in: [String!]
+  specilize_not_in: [String!]
+  specilize_lt: String
+  specilize_lte: String
+  specilize_gt: String
+  specilize_gte: String
+  specilize_contains: String
+  specilize_not_contains: String
+  specilize_starts_with: String
+  specilize_not_starts_with: String
+  specilize_ends_with: String
+  specilize_not_ends_with: String
   educationprofiles_every: EducationProfileWhereInput
   educationprofiles_some: EducationProfileWhereInput
   educationprofiles_none: EducationProfileWhereInput
@@ -9919,6 +9929,7 @@ type SubGroup {
   members(where: SubGroupMemberWhereInput, orderBy: SubGroupMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubGroupMember!]
   subgroupRoles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
+  medium(where: MediumWhereInput, orderBy: MediumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Medium!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -9937,11 +9948,17 @@ input SubGroupCreateInput {
   members: SubGroupMemberCreateManyWithoutMemberInput
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
   subjects: SubjectCreateManyWithoutSubgroupInput
+  medium: MediumCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateManyWithoutGroupidInput {
   create: [SubGroupCreateWithoutGroupidInput!]
   connect: [SubGroupWhereUniqueInput!]
+}
+
+input SubGroupCreateOneWithoutMediumInput {
+  create: SubGroupCreateWithoutMediumInput
+  connect: SubGroupWhereUniqueInput
 }
 
 input SubGroupCreateOneWithoutMembersInput {
@@ -9966,6 +9983,17 @@ input SubGroupCreateWithoutGroupidInput {
   members: SubGroupMemberCreateManyWithoutMemberInput
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
   subjects: SubjectCreateManyWithoutSubgroupInput
+  medium: MediumCreateManyWithoutSubgroupInput
+}
+
+input SubGroupCreateWithoutMediumInput {
+  id: ID
+  name: String!
+  description: String
+  groupid: GroupCreateOneWithoutSubgroupsInput!
+  members: SubGroupMemberCreateManyWithoutMemberInput
+  subgroupRoles: RoleCreateManyWithoutSubgroupInput
+  subjects: SubjectCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateWithoutMembersInput {
@@ -9975,6 +10003,7 @@ input SubGroupCreateWithoutMembersInput {
   groupid: GroupCreateOneWithoutSubgroupsInput!
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
   subjects: SubjectCreateManyWithoutSubgroupInput
+  medium: MediumCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateWithoutSubgroupRolesInput {
@@ -9984,6 +10013,7 @@ input SubGroupCreateWithoutSubgroupRolesInput {
   groupid: GroupCreateOneWithoutSubgroupsInput!
   members: SubGroupMemberCreateManyWithoutMemberInput
   subjects: SubjectCreateManyWithoutSubgroupInput
+  medium: MediumCreateManyWithoutSubgroupInput
 }
 
 input SubGroupCreateWithoutSubjectsInput {
@@ -9993,6 +10023,7 @@ input SubGroupCreateWithoutSubjectsInput {
   groupid: GroupCreateOneWithoutSubgroupsInput!
   members: SubGroupMemberCreateManyWithoutMemberInput
   subgroupRoles: RoleCreateManyWithoutSubgroupInput
+  medium: MediumCreateManyWithoutSubgroupInput
 }
 
 type SubGroupEdge {
@@ -10396,6 +10427,7 @@ input SubGroupUpdateInput {
   members: SubGroupMemberUpdateManyWithoutMemberInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
   subjects: SubjectUpdateManyWithoutSubgroupInput
+  medium: MediumUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateManyDataInput {
@@ -10432,6 +10464,15 @@ input SubGroupUpdateOneRequiredWithoutMembersInput {
   connect: SubGroupWhereUniqueInput
 }
 
+input SubGroupUpdateOneWithoutMediumInput {
+  create: SubGroupCreateWithoutMediumInput
+  update: SubGroupUpdateWithoutMediumDataInput
+  upsert: SubGroupUpsertWithoutMediumInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: SubGroupWhereUniqueInput
+}
+
 input SubGroupUpdateOneWithoutSubgroupRolesInput {
   create: SubGroupCreateWithoutSubgroupRolesInput
   update: SubGroupUpdateWithoutSubgroupRolesDataInput
@@ -10456,6 +10497,16 @@ input SubGroupUpdateWithoutGroupidDataInput {
   members: SubGroupMemberUpdateManyWithoutMemberInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
   subjects: SubjectUpdateManyWithoutSubgroupInput
+  medium: MediumUpdateManyWithoutSubgroupInput
+}
+
+input SubGroupUpdateWithoutMediumDataInput {
+  name: String
+  description: String
+  groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
+  members: SubGroupMemberUpdateManyWithoutMemberInput
+  subgroupRoles: RoleUpdateManyWithoutSubgroupInput
+  subjects: SubjectUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithoutMembersDataInput {
@@ -10464,6 +10515,7 @@ input SubGroupUpdateWithoutMembersDataInput {
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
   subjects: SubjectUpdateManyWithoutSubgroupInput
+  medium: MediumUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithoutSubgroupRolesDataInput {
@@ -10472,6 +10524,7 @@ input SubGroupUpdateWithoutSubgroupRolesDataInput {
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
   members: SubGroupMemberUpdateManyWithoutMemberInput
   subjects: SubjectUpdateManyWithoutSubgroupInput
+  medium: MediumUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithoutSubjectsDataInput {
@@ -10480,11 +10533,17 @@ input SubGroupUpdateWithoutSubjectsDataInput {
   groupid: GroupUpdateOneRequiredWithoutSubgroupsInput
   members: SubGroupMemberUpdateManyWithoutMemberInput
   subgroupRoles: RoleUpdateManyWithoutSubgroupInput
+  medium: MediumUpdateManyWithoutSubgroupInput
 }
 
 input SubGroupUpdateWithWhereUniqueWithoutGroupidInput {
   where: SubGroupWhereUniqueInput!
   data: SubGroupUpdateWithoutGroupidDataInput!
+}
+
+input SubGroupUpsertWithoutMediumInput {
+  update: SubGroupUpdateWithoutMediumDataInput!
+  create: SubGroupCreateWithoutMediumInput!
 }
 
 input SubGroupUpsertWithoutMembersInput {
@@ -10561,6 +10620,9 @@ input SubGroupWhereInput {
   subjects_every: SubjectWhereInput
   subjects_some: SubjectWhereInput
   subjects_none: SubjectWhereInput
+  medium_every: MediumWhereInput
+  medium_some: MediumWhereInput
+  medium_none: MediumWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -10598,12 +10660,9 @@ type Subject {
   subgroup: SubGroup
   updatedAt: DateTime!
   createdAt: DateTime!
-  educationProfiles(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationProfile!]
   units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
   topic(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   contents(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content!]
-  createdBy: User
-  updateBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10630,12 +10689,9 @@ input SubjectCreateInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10648,16 +10704,6 @@ input SubjectCreateInput {
 
 input SubjectCreateManyInput {
   create: [SubjectCreateInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutCreatedByInput {
-  create: [SubjectCreateWithoutCreatedByInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutEducationProfilesInput {
-  create: [SubjectCreateWithoutEducationProfilesInput!]
   connect: [SubjectWhereUniqueInput!]
 }
 
@@ -10678,11 +10724,6 @@ input SubjectCreateManyWithoutStdInput {
 
 input SubjectCreateManyWithoutSubgroupInput {
   create: [SubjectCreateWithoutSubgroupInput!]
-  connect: [SubjectWhereUniqueInput!]
-}
-
-input SubjectCreateManyWithoutUpdateByInput {
-  create: [SubjectCreateWithoutUpdateByInput!]
   connect: [SubjectWhereUniqueInput!]
 }
 
@@ -10721,61 +10762,8 @@ input SubjectCreateWithoutContentsInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
-  plantDate: DateTime
-  isPublished: Boolean
-  state: String
-  status: String
-  available: String
-  description: String
-  questions: QuestionCreateManyWithoutSubjectInput
-  quizes: QuizCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutCreatedByInput {
-  id: ID
-  name: String!
-  picture: String
-  medium: MediumCreateOneWithoutSubjectsInput
-  std: StdCreateOneWithoutSubjectsInput!
-  board: String
-  category: String
-  group: GroupCreateOneWithoutSubjectsInput
-  subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
-  units: UnitCreateManyWithoutSubjectInput
-  topic: TopicCreateManyWithoutSubjectInput
-  contents: ContentCreateManyWithoutSubjectInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
-  plantDate: DateTime
-  isPublished: Boolean
-  state: String
-  status: String
-  available: String
-  description: String
-  questions: QuestionCreateManyWithoutSubjectInput
-  quizes: QuizCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutEducationProfilesInput {
-  id: ID
-  name: String!
-  picture: String
-  medium: MediumCreateOneWithoutSubjectsInput
-  std: StdCreateOneWithoutSubjectsInput!
-  board: String
-  category: String
-  group: GroupCreateOneWithoutSubjectsInput
-  subgroup: SubGroupCreateOneWithoutSubjectsInput
-  units: UnitCreateManyWithoutSubjectInput
-  topic: TopicCreateManyWithoutSubjectInput
-  contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10795,12 +10783,9 @@ input SubjectCreateWithoutGroupInput {
   board: String
   category: String
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10820,12 +10805,9 @@ input SubjectCreateWithoutMediumInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10846,12 +10828,9 @@ input SubjectCreateWithoutQuestionsInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10871,12 +10850,9 @@ input SubjectCreateWithoutQuizesInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10895,12 +10871,9 @@ input SubjectCreateWithoutStdInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10920,12 +10893,9 @@ input SubjectCreateWithoutSubgroupInput {
   board: String
   category: String
   group: GroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10946,11 +10916,8 @@ input SubjectCreateWithoutTopicInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   units: UnitCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10971,36 +10938,8 @@ input SubjectCreateWithoutUnitsInput {
   category: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
-  updateBy: UserCreateManyWithoutSubjectUpddateByMeInput
-  plantDate: DateTime
-  isPublished: Boolean
-  state: String
-  status: String
-  available: String
-  description: String
-  questions: QuestionCreateManyWithoutSubjectInput
-  quizes: QuizCreateManyWithoutSubjectInput
-}
-
-input SubjectCreateWithoutUpdateByInput {
-  id: ID
-  name: String!
-  picture: String
-  medium: MediumCreateOneWithoutSubjectsInput
-  std: StdCreateOneWithoutSubjectsInput!
-  board: String
-  category: String
-  group: GroupCreateOneWithoutSubjectsInput
-  subgroup: SubGroupCreateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileCreateManyWithoutSubjectsInput
-  units: UnitCreateManyWithoutSubjectInput
-  topic: TopicCreateManyWithoutSubjectInput
-  contents: ContentCreateManyWithoutSubjectInput
-  createdBy: UserCreateOneWithoutSubjectByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11511,12 +11450,9 @@ input SubjectUpdateDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11536,12 +11472,9 @@ input SubjectUpdateInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11590,30 +11523,6 @@ input SubjectUpdateManyMutationInput {
   description: String
 }
 
-input SubjectUpdateManyWithoutCreatedByInput {
-  create: [SubjectCreateWithoutCreatedByInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutCreatedByInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutCreatedByInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithoutEducationProfilesInput {
-  create: [SubjectCreateWithoutEducationProfilesInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutEducationProfilesInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutEducationProfilesInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
 input SubjectUpdateManyWithoutGroupInput {
   create: [SubjectCreateWithoutGroupInput!]
   delete: [SubjectWhereUniqueInput!]
@@ -11658,18 +11567,6 @@ input SubjectUpdateManyWithoutSubgroupInput {
   disconnect: [SubjectWhereUniqueInput!]
   update: [SubjectUpdateWithWhereUniqueWithoutSubgroupInput!]
   upsert: [SubjectUpsertWithWhereUniqueWithoutSubgroupInput!]
-  deleteMany: [SubjectScalarWhereInput!]
-  updateMany: [SubjectUpdateManyWithWhereNestedInput!]
-}
-
-input SubjectUpdateManyWithoutUpdateByInput {
-  create: [SubjectCreateWithoutUpdateByInput!]
-  delete: [SubjectWhereUniqueInput!]
-  connect: [SubjectWhereUniqueInput!]
-  set: [SubjectWhereUniqueInput!]
-  disconnect: [SubjectWhereUniqueInput!]
-  update: [SubjectUpdateWithWhereUniqueWithoutUpdateByInput!]
-  upsert: [SubjectUpsertWithWhereUniqueWithoutUpdateByInput!]
   deleteMany: [SubjectScalarWhereInput!]
   updateMany: [SubjectUpdateManyWithWhereNestedInput!]
 }
@@ -11729,59 +11626,8 @@ input SubjectUpdateWithoutContentsDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
-  plantDate: DateTime
-  isPublished: Boolean
-  state: String
-  status: String
-  available: String
-  description: String
-  questions: QuestionUpdateManyWithoutSubjectInput
-  quizes: QuizUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutCreatedByDataInput {
-  name: String
-  picture: String
-  medium: MediumUpdateOneWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  board: String
-  category: String
-  group: GroupUpdateOneWithoutSubjectsInput
-  subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topic: TopicUpdateManyWithoutSubjectInput
-  contents: ContentUpdateManyWithoutSubjectInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
-  plantDate: DateTime
-  isPublished: Boolean
-  state: String
-  status: String
-  available: String
-  description: String
-  questions: QuestionUpdateManyWithoutSubjectInput
-  quizes: QuizUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutEducationProfilesDataInput {
-  name: String
-  picture: String
-  medium: MediumUpdateOneWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  board: String
-  category: String
-  group: GroupUpdateOneWithoutSubjectsInput
-  subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topic: TopicUpdateManyWithoutSubjectInput
-  contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11800,12 +11646,9 @@ input SubjectUpdateWithoutGroupDataInput {
   board: String
   category: String
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11824,12 +11667,9 @@ input SubjectUpdateWithoutMediumDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11849,12 +11689,9 @@ input SubjectUpdateWithoutQuestionsDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11873,12 +11710,9 @@ input SubjectUpdateWithoutQuizesDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11896,12 +11730,9 @@ input SubjectUpdateWithoutStdDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11920,12 +11751,9 @@ input SubjectUpdateWithoutSubgroupDataInput {
   board: String
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11945,11 +11773,8 @@ input SubjectUpdateWithoutTopicDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   units: UnitUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11969,35 +11794,8 @@ input SubjectUpdateWithoutUnitsDataInput {
   category: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
-  updateBy: UserUpdateManyWithoutSubjectUpddateByMeInput
-  plantDate: DateTime
-  isPublished: Boolean
-  state: String
-  status: String
-  available: String
-  description: String
-  questions: QuestionUpdateManyWithoutSubjectInput
-  quizes: QuizUpdateManyWithoutSubjectInput
-}
-
-input SubjectUpdateWithoutUpdateByDataInput {
-  name: String
-  picture: String
-  medium: MediumUpdateOneWithoutSubjectsInput
-  std: StdUpdateOneRequiredWithoutSubjectsInput
-  board: String
-  category: String
-  group: GroupUpdateOneWithoutSubjectsInput
-  subgroup: SubGroupUpdateOneWithoutSubjectsInput
-  educationProfiles: EducationProfileUpdateManyWithoutSubjectsInput
-  units: UnitUpdateManyWithoutSubjectInput
-  topic: TopicUpdateManyWithoutSubjectInput
-  contents: ContentUpdateManyWithoutSubjectInput
-  createdBy: UserUpdateOneWithoutSubjectByMeInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -12011,16 +11809,6 @@ input SubjectUpdateWithoutUpdateByDataInput {
 input SubjectUpdateWithWhereUniqueNestedInput {
   where: SubjectWhereUniqueInput!
   data: SubjectUpdateDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutCreatedByDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutEducationProfilesInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutEducationProfilesDataInput!
 }
 
 input SubjectUpdateWithWhereUniqueWithoutGroupInput {
@@ -12041,11 +11829,6 @@ input SubjectUpdateWithWhereUniqueWithoutStdInput {
 input SubjectUpdateWithWhereUniqueWithoutSubgroupInput {
   where: SubjectWhereUniqueInput!
   data: SubjectUpdateWithoutSubgroupDataInput!
-}
-
-input SubjectUpdateWithWhereUniqueWithoutUpdateByInput {
-  where: SubjectWhereUniqueInput!
-  data: SubjectUpdateWithoutUpdateByDataInput!
 }
 
 input SubjectUpsertWithoutContentsInput {
@@ -12079,18 +11862,6 @@ input SubjectUpsertWithWhereUniqueNestedInput {
   create: SubjectCreateInput!
 }
 
-input SubjectUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutCreatedByDataInput!
-  create: SubjectCreateWithoutCreatedByInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutEducationProfilesInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutEducationProfilesDataInput!
-  create: SubjectCreateWithoutEducationProfilesInput!
-}
-
 input SubjectUpsertWithWhereUniqueWithoutGroupInput {
   where: SubjectWhereUniqueInput!
   update: SubjectUpdateWithoutGroupDataInput!
@@ -12113,12 +11884,6 @@ input SubjectUpsertWithWhereUniqueWithoutSubgroupInput {
   where: SubjectWhereUniqueInput!
   update: SubjectUpdateWithoutSubgroupDataInput!
   create: SubjectCreateWithoutSubgroupInput!
-}
-
-input SubjectUpsertWithWhereUniqueWithoutUpdateByInput {
-  where: SubjectWhereUniqueInput!
-  update: SubjectUpdateWithoutUpdateByDataInput!
-  create: SubjectCreateWithoutUpdateByInput!
 }
 
 input SubjectWhereInput {
@@ -12212,9 +11977,6 @@ input SubjectWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  educationProfiles_every: EducationProfileWhereInput
-  educationProfiles_some: EducationProfileWhereInput
-  educationProfiles_none: EducationProfileWhereInput
   units_every: UnitWhereInput
   units_some: UnitWhereInput
   units_none: UnitWhereInput
@@ -12224,10 +11986,6 @@ input SubjectWhereInput {
   contents_every: ContentWhereInput
   contents_some: ContentWhereInput
   contents_none: ContentWhereInput
-  createdBy: UserWhereInput
-  updateBy_every: UserWhereInput
-  updateBy_some: UserWhereInput
-  updateBy_none: UserWhereInput
   plantDate: DateTime
   plantDate_not: DateTime
   plantDate_in: [DateTime!]
@@ -14237,8 +13995,6 @@ type User {
   myprofiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile!]
   subjectSubscription(where: SubjectSubscriptionWhereInput, orderBy: SubjectSubscriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubjectSubscription!]
   createdBy: String
-  subjectByMe(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  subjectUpddateByMe(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
   unitByMe(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
   unitUpdatedByMe(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
   topicByMe(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
@@ -14276,8 +14032,6 @@ input UserCreateInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14303,11 +14057,6 @@ input UserCreateManyWithoutOrgInput {
 
 input UserCreateManyWithoutRolesInput {
   create: [UserCreateWithoutRolesInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutSubjectUpddateByMeInput {
-  create: [UserCreateWithoutSubjectUpddateByMeInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -14376,11 +14125,6 @@ input UserCreateOneWithoutSubgroupmembersInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutSubjectByMeInput {
-  create: UserCreateWithoutSubjectByMeInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreateOneWithoutSubjectSubscriptionInput {
   create: UserCreateWithoutSubjectSubscriptionInput
   connect: UserWhereUniqueInput
@@ -14421,8 +14165,6 @@ input UserCreateWithoutCommentsInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14452,8 +14194,6 @@ input UserCreateWithoutContentByMeInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14482,8 +14222,6 @@ input UserCreateWithoutContentUpdateByMeInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14511,8 +14249,6 @@ input UserCreateWithoutGroupmembersInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14541,8 +14277,6 @@ input UserCreateWithoutMyprofilesInput {
   roles: RoleCreateManyWithoutUsersInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14571,8 +14305,6 @@ input UserCreateWithoutOrgInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14601,8 +14333,6 @@ input UserCreateWithoutPostsInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14632,8 +14362,6 @@ input UserCreateWithoutQuestionCreatedByInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14662,8 +14390,6 @@ input UserCreateWithoutQuestionUpdateddByInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14692,8 +14418,6 @@ input UserCreateWithoutQuizCreatedByInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14722,8 +14446,6 @@ input UserCreateWithoutResultInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14751,8 +14473,6 @@ input UserCreateWithoutRolesInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14781,38 +14501,6 @@ input UserCreateWithoutSubgroupmembersInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
-  unitByMe: UnitCreateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
-  topicByMe: TopicCreateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
-  contentByMe: ContentCreateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
-  votes: VoteCreateManyWithoutUserInput
-  result: ResultCreateManyWithoutUserIdInput
-}
-
-input UserCreateWithoutSubjectByMeInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  org: OrganizationCreateOneWithoutAuthorInput
-  suborg: SuborgCreateManyWithoutAuthorInput
-  groupmembers: GroupMemberCreateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  roles: RoleCreateManyWithoutUsersInput
-  myprofiles: ProfileCreateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  createdBy: String
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14841,38 +14529,6 @@ input UserCreateWithoutSubjectSubscriptionInput {
   roles: RoleCreateManyWithoutUsersInput
   myprofiles: ProfileCreateManyWithoutUserIdInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
-  unitByMe: UnitCreateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
-  topicByMe: TopicCreateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
-  contentByMe: ContentCreateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentCreateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionCreateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionCreateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizCreateManyWithoutCreatedByInput
-  votes: VoteCreateManyWithoutUserInput
-  result: ResultCreateManyWithoutUserIdInput
-}
-
-input UserCreateWithoutSubjectUpddateByMeInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  org: OrganizationCreateOneWithoutAuthorInput
-  suborg: SuborgCreateManyWithoutAuthorInput
-  groupmembers: GroupMemberCreateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberCreateManyWithoutUseridInput
-  posts: PostCreateManyWithoutAuthorInput
-  comments: CommentCreateManyWithoutAuthorInput
-  roles: RoleCreateManyWithoutUsersInput
-  myprofiles: ProfileCreateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
-  createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14901,8 +14557,6 @@ input UserCreateWithoutSuborgInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14932,8 +14586,6 @@ input UserCreateWithoutTopicByMeInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
@@ -14962,8 +14614,6 @@ input UserCreateWithoutTopicUpdateByMeInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -14992,8 +14642,6 @@ input UserCreateWithoutUnitByMeInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
@@ -15022,8 +14670,6 @@ input UserCreateWithoutUnitUpdatedByMeInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
   topicUpdateByMe: TopicCreateManyWithoutUpdateByInput
@@ -15052,8 +14698,6 @@ input UserCreateWithoutVotesInput {
   myprofiles: ProfileCreateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionCreateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectCreateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectCreateManyWithoutUpdateByInput
   unitByMe: UnitCreateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitCreateManyWithoutUpdateByInput
   topicByMe: TopicCreateManyWithoutCreatedByInput
@@ -15240,8 +14884,6 @@ input UserUpdateDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15270,8 +14912,6 @@ input UserUpdateInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15333,18 +14973,6 @@ input UserUpdateManyWithoutRolesInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutRolesInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutRolesInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
-input UserUpdateManyWithoutSubjectUpddateByMeInput {
-  create: [UserCreateWithoutSubjectUpddateByMeInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -15468,15 +15096,6 @@ input UserUpdateOneWithoutQuestionUpdateddByInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutSubjectByMeInput {
-  create: UserCreateWithoutSubjectByMeInput
-  update: UserUpdateWithoutSubjectByMeDataInput
-  upsert: UserUpsertWithoutSubjectByMeInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneWithoutTopicByMeInput {
   create: UserCreateWithoutTopicByMeInput
   update: UserUpdateWithoutTopicByMeDataInput
@@ -15527,8 +15146,6 @@ input UserUpdateWithoutCommentsDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15557,8 +15174,6 @@ input UserUpdateWithoutContentByMeDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15586,8 +15201,6 @@ input UserUpdateWithoutContentUpdateByMeDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15614,8 +15227,6 @@ input UserUpdateWithoutGroupmembersDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15643,8 +15254,6 @@ input UserUpdateWithoutMyprofilesDataInput {
   roles: RoleUpdateManyWithoutUsersInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15672,8 +15281,6 @@ input UserUpdateWithoutOrgDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15701,8 +15308,6 @@ input UserUpdateWithoutPostsDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15731,8 +15336,6 @@ input UserUpdateWithoutQuestionCreatedByDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15760,8 +15363,6 @@ input UserUpdateWithoutQuestionUpdateddByDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15789,8 +15390,6 @@ input UserUpdateWithoutQuizCreatedByDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15818,8 +15417,6 @@ input UserUpdateWithoutResultDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15846,8 +15443,6 @@ input UserUpdateWithoutRolesDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15875,37 +15470,6 @@ input UserUpdateWithoutSubgroupmembersDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
-  unitByMe: UnitUpdateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
-  topicByMe: TopicUpdateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
-  contentByMe: ContentUpdateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
-  votes: VoteUpdateManyWithoutUserInput
-  result: ResultUpdateManyWithoutUserIdInput
-}
-
-input UserUpdateWithoutSubjectByMeDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  roles: RoleUpdateManyWithoutUsersInput
-  myprofiles: ProfileUpdateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  createdBy: String
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15933,37 +15497,6 @@ input UserUpdateWithoutSubjectSubscriptionDataInput {
   roles: RoleUpdateManyWithoutUsersInput
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
-  unitByMe: UnitUpdateManyWithoutCreatedByInput
-  unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
-  topicByMe: TopicUpdateManyWithoutCreatedByInput
-  topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
-  contentByMe: ContentUpdateManyWithoutCreatedByInput
-  contentUpdateByMe: ContentUpdateManyWithoutUpdateByInput
-  questionCreatedBy: QuestionUpdateManyWithoutCreatedByInput
-  questionUpdateddBy: QuestionUpdateManyWithoutUpdatedByInput
-  quizCreatedBy: QuizUpdateManyWithoutCreatedByInput
-  votes: VoteUpdateManyWithoutUserInput
-  result: ResultUpdateManyWithoutUserIdInput
-}
-
-input UserUpdateWithoutSubjectUpddateByMeDataInput {
-  firstname: String
-  lastname: String
-  email: String
-  password: String
-  org: OrganizationUpdateOneWithoutAuthorInput
-  suborg: SuborgUpdateManyWithoutAuthorInput
-  groupmembers: GroupMemberUpdateManyWithoutUseridInput
-  subgroupmembers: SubGroupMemberUpdateManyWithoutUseridInput
-  posts: PostUpdateManyWithoutAuthorInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  roles: RoleUpdateManyWithoutUsersInput
-  myprofiles: ProfileUpdateManyWithoutUserIdInput
-  subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
-  createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -15991,8 +15524,6 @@ input UserUpdateWithoutSuborgDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -16021,8 +15552,6 @@ input UserUpdateWithoutTopicByMeDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
@@ -16050,8 +15579,6 @@ input UserUpdateWithoutTopicUpdateByMeDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -16079,8 +15606,6 @@ input UserUpdateWithoutUnitByMeDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
@@ -16108,8 +15633,6 @@ input UserUpdateWithoutUnitUpdatedByMeDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
   topicUpdateByMe: TopicUpdateManyWithoutUpdateByInput
@@ -16137,8 +15660,6 @@ input UserUpdateWithoutVotesDataInput {
   myprofiles: ProfileUpdateManyWithoutUserIdInput
   subjectSubscription: SubjectSubscriptionUpdateManyWithoutUseridInput
   createdBy: String
-  subjectByMe: SubjectUpdateManyWithoutCreatedByInput
-  subjectUpddateByMe: SubjectUpdateManyWithoutUpdateByInput
   unitByMe: UnitUpdateManyWithoutCreatedByInput
   unitUpdatedByMe: UnitUpdateManyWithoutUpdateByInput
   topicByMe: TopicUpdateManyWithoutCreatedByInput
@@ -16164,11 +15685,6 @@ input UserUpdateWithWhereUniqueWithoutOrgInput {
 input UserUpdateWithWhereUniqueWithoutRolesInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutRolesDataInput!
-}
-
-input UserUpdateWithWhereUniqueWithoutSubjectUpddateByMeInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubjectUpddateByMeDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutSuborgInput {
@@ -16236,11 +15752,6 @@ input UserUpsertWithoutSubgroupmembersInput {
   create: UserCreateWithoutSubgroupmembersInput!
 }
 
-input UserUpsertWithoutSubjectByMeInput {
-  update: UserUpdateWithoutSubjectByMeDataInput!
-  create: UserCreateWithoutSubjectByMeInput!
-}
-
 input UserUpsertWithoutSubjectSubscriptionInput {
   update: UserUpdateWithoutSubjectSubscriptionDataInput!
   create: UserCreateWithoutSubjectSubscriptionInput!
@@ -16282,12 +15793,6 @@ input UserUpsertWithWhereUniqueWithoutRolesInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutRolesDataInput!
   create: UserCreateWithoutRolesInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutSubjectUpddateByMeInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubjectUpddateByMeDataInput!
-  create: UserCreateWithoutSubjectUpddateByMeInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutSuborgInput {
@@ -16412,12 +15917,6 @@ input UserWhereInput {
   createdBy_not_starts_with: String
   createdBy_ends_with: String
   createdBy_not_ends_with: String
-  subjectByMe_every: SubjectWhereInput
-  subjectByMe_some: SubjectWhereInput
-  subjectByMe_none: SubjectWhereInput
-  subjectUpddateByMe_every: SubjectWhereInput
-  subjectUpddateByMe_some: SubjectWhereInput
-  subjectUpddateByMe_none: SubjectWhereInput
   unitByMe_every: UnitWhereInput
   unitByMe_some: UnitWhereInput
   unitByMe_none: UnitWhereInput

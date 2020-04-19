@@ -25,7 +25,28 @@ export default function ViewController() {
   if (loginLoading) {
     return <div>loginLoading Loading</div>;
   }
-  console.log("loginData ==>", loginData.loggedInUser.roles);
+  console.log("1loginData ==>ViewController ==>", loginData.loggedInUser.roles);
+  console.log("2loginData ==>", loginData.loggedInUser.roles);
+  loginData.loggedInUser.roles.map((role) => {
+    console.log("ROLE in ViewController", role);
+    if (role.org) {
+      console.log("role.org.id ", role.org.id);
+      localStorage.setItem("orgid", role.org.id);
+    }
+    if (role.suborg) {
+      console.log("roles.suborg.id ", role.suborg.id);
+      localStorage.setItem("suborgid", role.suborg.id);
+    }
+    if (role.group) {
+      console.log("group.id ", role.group.id);
+      localStorage.setItem("groupid", role.group.id);
+    }
+    if (role.subgroup) {
+      console.log("subgroup.org ", role.subgroup.id);
+      localStorage.setItem("subgroupid", role.subgroup.id);
+    }
+  });
+
   const getRoleItem = (role) => {
     return rolebased_routes().filter((item) => {
       if (item.title === role) return item;

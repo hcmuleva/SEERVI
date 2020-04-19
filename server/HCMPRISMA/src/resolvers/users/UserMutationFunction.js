@@ -1,4 +1,5 @@
-import {createUser,createUserByAdmin,createMedium,updateMedium,deleteMedium} from './mutation/createUser'
+import {createUser,createUserByAdmin} from './mutation/createUser'
+import {createMedium,updateMedium,deleteMedium} from './mutation/medium'
 import login from './mutation/loginUser'
 import deleteUser from './mutation/deleteUser'
 import {updateUser,assignUserToRoles} from './mutation/updateUser'

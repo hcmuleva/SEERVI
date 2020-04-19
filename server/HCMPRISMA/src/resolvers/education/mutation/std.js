@@ -1,11 +1,17 @@
 async function createStd(parent, args, { prisma, request }, info) {
+  console.log("REQUEST for std creation ", args.data);
+  const {
+    gradename,
+    branch,
+    year,
+    category,
+    isPublished,
+    semester,
+    specilize
+  } = args.data;
+  console.log("GRADENAME ", gradename);
   return await prisma.mutation.createStd(
-    {
-      gradename: args.data,
-      branch: args.data.branch,
-      year: args.data.year,
-      isPublished: args.data.isPublished
-    },
+    { gradename, branch, year, category, isPublished, semester, specilize },
     info
   );
 }

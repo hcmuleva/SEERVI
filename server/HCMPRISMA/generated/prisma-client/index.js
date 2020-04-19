@@ -53,11 +53,11 @@ var models = [
     embedded: false
   },
   {
-    name: "Medium",
+    name: "Post",
     embedded: false
   },
   {
-    name: "Post",
+    name: "Medium",
     embedded: false
   },
   {
@@ -89,7 +89,7 @@ var models = [
     embedded: false
   },
   {
-    name: "GRADENAME",
+    name: "GRADENAMEENUM",
     embedded: false
   },
   {

@@ -27,14 +27,11 @@ type Subject {
   subgroup: SubGroup @relation(name: "SubjectToSubGroup", sonDelete: SET_NULL)
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
-  educationProfiles: [EducationProfile!]!
-    @relation(name: "EducationProfileToSubject", onDelete: SET_NULL)
 
   units: [Unit!]! @relation(name: "UnitToSubject", onDelete: CASCADE)
   topic: [Topic!]! @relation(name: "TopicToSubject", onDelete: CASCADE)
   contents: [Content!]! @relation(name: "ContentToSubject", onDelete: CASCADE)
-  createdBy: User @relation(name: "SubjectToUser", onDelete: SET_NULL)
-  updateBy: [User!]! @relation(name: "SubjectToUserUpdate", onDelete: SET_NULL)
+
   plantDate: DateTime
   isPublished: Boolean
   state: String
