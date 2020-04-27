@@ -1,9 +1,24 @@
 import React from "react";
+import { MY_ASSIGNED_SUBJECTS } from "../../graphql/queries/users/user";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+//import SingleLineGridList from "../education/contents/management/GridListView"
+import TeacherView from "../education/contents/management/teacherview"
 
 export default function Teacher() {
-  return (
+  const {
+    loading: assignedSubjectsLoading,
+    error: assignedSubjectsError,
+    data: assignedSubjectsData,
+  } = useQuery(MY_ASSIGNED_SUBJECTS);
+  if (assignedSubjectsError) return <p>SUBORG ERROR: {assignedSubjectsError.message}</p>;
+  if (assignedSubjectsData === undefined)
+    return <p>ERROR in GETTing assignedSubjects</p>;
+  if (assignedSubjectsLoading) {
+    return <div>SUBORG Loading</div>;
+  }
+    return (
     <div>
-      <h1>Teacher page</h1>
+      <TeacherView subjectData={assignedSubjectsData.mySubscription}/>
     </div>
   );
 }

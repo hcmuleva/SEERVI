@@ -1,7 +1,7 @@
 type Query {
   users(query: String, first: Int, skip: Int, after: String): [User!]!
   loggedInUser: User!
-
+  usersRoleId(id:String): [User!]!
   getMyOrg: [Organization!]!
 }
 type Mutation {
@@ -13,6 +13,7 @@ type Mutation {
   updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
 
   assignUserToRoles(id: ID!, data: UserToRolesInput!): User!
+  assignSubjectsToUser(id:ID!,data:UserToSubjectInput):User!
 }
 
 type User {
@@ -57,6 +58,10 @@ input UpdateUserInputByAdmin {
 }
 input UserToRolesInput {
   roles: Json
+}
+input UserToSubjectInput{
+  subjectSubscription:Json
+  roles:String
 }
 input LoginUserInput {
   email: String!

@@ -1,0 +1,21 @@
+"""
+Example:
+There are many types of Examples can hold for Subject/Unit/Topic Level
+"""
+type Query {
+  getAllExamples:[Example!]!
+
+}
+type Mutation {
+  createExample(data:UnitInputData!):Example!
+  updateExample(id:ID!,data: UnitUpdateInputData!):Example!
+  deleteExample(id:ID!):Example!
+}
+type Example {
+  id: ID! 
+  name: String
+  subject:Subject               
+  unit: Unit                    
+  topic: Topic                  
+  level:Int
+}

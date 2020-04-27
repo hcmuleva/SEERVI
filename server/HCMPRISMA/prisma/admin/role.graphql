@@ -1,6 +1,6 @@
 type Role {
   id: ID! @id
-  name: ROLENAME!
+  name: ROLENAME! 
   org: Organization @relation(name: "RoleToOrg", onDelete: SET_NULL)
   suborg: Suborg @relation(name: "RoleToSubORG", onDelete: SET_NULL)
   group: Group @relation(name: "RoleToGroup", onDelete: SET_NULL)

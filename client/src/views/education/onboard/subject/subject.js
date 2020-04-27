@@ -7,9 +7,9 @@ import { Container, Row, Col } from "shards-react";
 import Chip from "@material-ui/core/Chip";
 import CreateSubjectDialog from "./addSubjectDialog"
 export default function Subject() {
-   const [gradeSelected, setGradeSelected] = useState({});
+  const [gradeSelected, setGradeSelected] = useState({});
   const [gradeRows, setGradeRows] = useState(null);
-      const [medeiumSelected, setMedeiumSelected] = useState({});
+  const [medeiumSelected, setMedeiumSelected] = useState({});
   const [mediumRows, setMediumRows] = useState(null);
   console.log("mediumRows==> ",mediumRows)
     console.log("gradeRows==> ",gradeRows)

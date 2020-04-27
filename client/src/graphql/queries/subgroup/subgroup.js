@@ -18,6 +18,7 @@ const GET_SUBGROUPS = gql`
     }
   }
 `;
+
 const GET_SUBGROUPBYID = gql`
   query GET_SUBORGBYID($id: String!) {
     subgroupById(id: $id) {
@@ -50,4 +51,25 @@ const GET_SUBGROUPBYID = gql`
   }
 `;
 
-export { GET_SUBGROUPSOFGROUP, GET_SUBGROUPS, GET_SUBGROUPBYID };
+const GET_SUBJECTS_OF_SUBGROUP =gql`
+  query GET_SUBJECTS_OF_SUBGROUP($id:String!){
+        subgroupById(id: $id) {
+              id
+              name
+               
+              subgroupRoles{
+                id
+                name
+              }
+              subjects{
+                id
+                name
+                std{
+                  id
+                  gradename
+                }
+              }
+        }
+  }
+`;
+export { GET_SUBGROUPSOFGROUP, GET_SUBGROUPS, GET_SUBGROUPBYID ,GET_SUBJECTS_OF_SUBGROUP};

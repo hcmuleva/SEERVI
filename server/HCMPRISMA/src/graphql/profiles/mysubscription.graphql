@@ -4,6 +4,8 @@ type Query {
 }
 type Mutation {
   createSubjectSubscription(data:SubjectSubscriptionInputData!):SubjectSubscription!
+  createSubscriptionBulkSubjects(data:SubjectSubscriptionBulkInputData):Boolean
+  deleteSubjectSubscription(id:ID!):SubjectSubscription!
 }
 
 
@@ -18,6 +20,12 @@ type SubjectSubscription{
 input SubjectSubscriptionInputData{
     subsType:String 
     mySubject:String! 
+    userid:String! 
+    subscribedAs:String
+}
+input SubjectSubscriptionBulkInputData{
+    subsType:String 
+    mySubjects:Json! 
     userid:String! 
     subscribedAs:String
 }

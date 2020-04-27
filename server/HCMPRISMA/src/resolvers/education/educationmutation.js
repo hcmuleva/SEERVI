@@ -5,6 +5,7 @@ import {createContent,deleteContent,updateContent} from './mutation/content'
 import {createQuestion,updateQuestion,deleteQuestion} from './mutation/question'
 import {createQuiz,updateQuiz,deleteQuiz} from './mutation/quiz'
 import {createSubject,updateSubject,deleteSubject} from './mutation/subject'
+import {createExample,deleteExample,updateExample} from "./mutation/example"
 export const educationMutation={
     createStd,deleteStd,updateStd, 
     createUnit,deleteUnit,updateUnit,
@@ -12,5 +13,6 @@ export const educationMutation={
     createContent,deleteContent,updateContent,
     createQuestion,updateQuestion,deleteQuestion,
     createQuiz,updateQuiz,deleteQuiz,
-    createSubject,updateSubject,deleteSubject
+    createSubject,updateSubject,deleteSubject,
+    createExample,deleteExample,updateExample
 }

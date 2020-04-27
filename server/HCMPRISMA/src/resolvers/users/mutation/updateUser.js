@@ -32,4 +32,24 @@ async function assignUserToRoles(parent, args, { prisma, request }, info) {
         data: args.data
     }, info)
 }
-export {updateUser,assignUserToRoles}  
+async function assignSubjectsToUser(parent, args, { prisma, request }, info) {   
+     const data=args.data
+     console.log("RECIEVED REQUEST for assignSubjectsToUser ",JSON.stringify(args))
+     let subjectlist=[]
+     data.subjectSubscription.map((elm)=>{
+         subjectlist.push({id:elm.id})
+     })
+     
+     data['subjectSubscription']={connect:subjectlist}
+     if(data.subscribedAs){
+         data['roles']={connect:{id:data.roles}}
+     }
+     console.log("JSON.stringify(data) ",JSON.stringify(data))
+    return prisma.mutation.updateUser({
+        where: {
+            id: args.id
+        },
+        data: args.data
+    }, info)
+}
+export {updateUser,assignUserToRoles,assignSubjectsToUser}  

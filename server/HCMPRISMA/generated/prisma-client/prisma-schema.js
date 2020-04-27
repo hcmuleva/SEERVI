@@ -390,6 +390,10 @@ type AggregateEducationProfile {
   count: Int!
 }
 
+type AggregateExample {
+  count: Int!
+}
+
 type AggregateGroup {
   count: Int!
 }
@@ -769,15 +773,15 @@ type Content {
   fileInfo: Json
   type: String!
   url: String
-  subject: Subject!
+  subject: Subject
   unit: Unit
   topic: Topic
   createdBy: User
   updateBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -796,15 +800,15 @@ input ContentCreateInput {
   fileInfo: Json
   type: String!
   url: String
-  subject: SubjectCreateOneWithoutContentsInput!
+  subject: SubjectCreateOneWithoutContentsInput
   unit: UnitCreateOneWithoutContentsInput
   topic: TopicCreateOneWithoutContentsInput
   createdBy: UserCreateOneWithoutContentByMeInput
   updateBy: UserCreateManyWithoutContentUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
 }
 
@@ -840,14 +844,14 @@ input ContentCreateWithoutCreatedByInput {
   fileInfo: Json
   type: String!
   url: String
-  subject: SubjectCreateOneWithoutContentsInput!
+  subject: SubjectCreateOneWithoutContentsInput
   unit: UnitCreateOneWithoutContentsInput
   topic: TopicCreateOneWithoutContentsInput
   updateBy: UserCreateManyWithoutContentUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
 }
 
@@ -863,9 +867,9 @@ input ContentCreateWithoutSubjectInput {
   createdBy: UserCreateOneWithoutContentByMeInput
   updateBy: UserCreateManyWithoutContentUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
 }
 
@@ -876,14 +880,14 @@ input ContentCreateWithoutTopicInput {
   fileInfo: Json
   type: String!
   url: String
-  subject: SubjectCreateOneWithoutContentsInput!
+  subject: SubjectCreateOneWithoutContentsInput
   unit: UnitCreateOneWithoutContentsInput
   createdBy: UserCreateOneWithoutContentByMeInput
   updateBy: UserCreateManyWithoutContentUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
 }
 
@@ -894,14 +898,14 @@ input ContentCreateWithoutUnitInput {
   fileInfo: Json
   type: String!
   url: String
-  subject: SubjectCreateOneWithoutContentsInput!
+  subject: SubjectCreateOneWithoutContentsInput
   topic: TopicCreateOneWithoutContentsInput
   createdBy: UserCreateOneWithoutContentByMeInput
   updateBy: UserCreateManyWithoutContentUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
 }
 
@@ -912,14 +916,14 @@ input ContentCreateWithoutUpdateByInput {
   fileInfo: Json
   type: String!
   url: String
-  subject: SubjectCreateOneWithoutContentsInput!
+  subject: SubjectCreateOneWithoutContentsInput
   unit: UnitCreateOneWithoutContentsInput
   topic: TopicCreateOneWithoutContentsInput
   createdBy: UserCreateOneWithoutContentByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
 }
 
@@ -965,9 +969,9 @@ type ContentPreviousValues {
   type: String!
   url: String
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -1135,7 +1139,7 @@ input ContentUpdateInput {
   fileInfo: Json
   type: String
   url: String
-  subject: SubjectUpdateOneRequiredWithoutContentsInput
+  subject: SubjectUpdateOneWithoutContentsInput
   unit: UnitUpdateOneWithoutContentsInput
   topic: TopicUpdateOneWithoutContentsInput
   createdBy: UserUpdateOneWithoutContentByMeInput
@@ -1244,7 +1248,7 @@ input ContentUpdateWithoutCreatedByDataInput {
   fileInfo: Json
   type: String
   url: String
-  subject: SubjectUpdateOneRequiredWithoutContentsInput
+  subject: SubjectUpdateOneWithoutContentsInput
   unit: UnitUpdateOneWithoutContentsInput
   topic: TopicUpdateOneWithoutContentsInput
   updateBy: UserUpdateManyWithoutContentUpdateByMeInput
@@ -1278,7 +1282,7 @@ input ContentUpdateWithoutTopicDataInput {
   fileInfo: Json
   type: String
   url: String
-  subject: SubjectUpdateOneRequiredWithoutContentsInput
+  subject: SubjectUpdateOneWithoutContentsInput
   unit: UnitUpdateOneWithoutContentsInput
   createdBy: UserUpdateOneWithoutContentByMeInput
   updateBy: UserUpdateManyWithoutContentUpdateByMeInput
@@ -1295,7 +1299,7 @@ input ContentUpdateWithoutUnitDataInput {
   fileInfo: Json
   type: String
   url: String
-  subject: SubjectUpdateOneRequiredWithoutContentsInput
+  subject: SubjectUpdateOneWithoutContentsInput
   topic: TopicUpdateOneWithoutContentsInput
   createdBy: UserUpdateOneWithoutContentByMeInput
   updateBy: UserUpdateManyWithoutContentUpdateByMeInput
@@ -1312,7 +1316,7 @@ input ContentUpdateWithoutUpdateByDataInput {
   fileInfo: Json
   type: String
   url: String
-  subject: SubjectUpdateOneRequiredWithoutContentsInput
+  subject: SubjectUpdateOneWithoutContentsInput
   unit: UnitUpdateOneWithoutContentsInput
   topic: TopicUpdateOneWithoutContentsInput
   createdBy: UserUpdateOneWithoutContentByMeInput
@@ -2090,6 +2094,311 @@ input EducationProfileWhereInput {
 }
 
 input EducationProfileWhereUniqueInput {
+  id: ID
+}
+
+type Example {
+  id: ID!
+  name: String
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  level: Int
+}
+
+type ExampleConnection {
+  pageInfo: PageInfo!
+  edges: [ExampleEdge]!
+  aggregate: AggregateExample!
+}
+
+input ExampleCreateInput {
+  id: ID
+  name: String
+  subject: SubjectCreateOneWithoutExamplesInput
+  unit: UnitCreateOneWithoutExamplesInput
+  topic: TopicCreateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleCreateManyWithoutSubjectInput {
+  create: [ExampleCreateWithoutSubjectInput!]
+  connect: [ExampleWhereUniqueInput!]
+}
+
+input ExampleCreateManyWithoutTopicInput {
+  create: [ExampleCreateWithoutTopicInput!]
+  connect: [ExampleWhereUniqueInput!]
+}
+
+input ExampleCreateManyWithoutUnitInput {
+  create: [ExampleCreateWithoutUnitInput!]
+  connect: [ExampleWhereUniqueInput!]
+}
+
+input ExampleCreateWithoutSubjectInput {
+  id: ID
+  name: String
+  unit: UnitCreateOneWithoutExamplesInput
+  topic: TopicCreateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleCreateWithoutTopicInput {
+  id: ID
+  name: String
+  subject: SubjectCreateOneWithoutExamplesInput
+  unit: UnitCreateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleCreateWithoutUnitInput {
+  id: ID
+  name: String
+  subject: SubjectCreateOneWithoutExamplesInput
+  topic: TopicCreateOneWithoutExamplesInput
+  level: Int
+}
+
+type ExampleEdge {
+  node: Example!
+  cursor: String!
+}
+
+enum ExampleOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  level_ASC
+  level_DESC
+}
+
+type ExamplePreviousValues {
+  id: ID!
+  name: String
+  level: Int
+}
+
+input ExampleScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  level: Int
+  level_not: Int
+  level_in: [Int!]
+  level_not_in: [Int!]
+  level_lt: Int
+  level_lte: Int
+  level_gt: Int
+  level_gte: Int
+  AND: [ExampleScalarWhereInput!]
+  OR: [ExampleScalarWhereInput!]
+  NOT: [ExampleScalarWhereInput!]
+}
+
+type ExampleSubscriptionPayload {
+  mutation: MutationType!
+  node: Example
+  updatedFields: [String!]
+  previousValues: ExamplePreviousValues
+}
+
+input ExampleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ExampleWhereInput
+  AND: [ExampleSubscriptionWhereInput!]
+  OR: [ExampleSubscriptionWhereInput!]
+  NOT: [ExampleSubscriptionWhereInput!]
+}
+
+input ExampleUpdateInput {
+  name: String
+  subject: SubjectUpdateOneWithoutExamplesInput
+  unit: UnitUpdateOneWithoutExamplesInput
+  topic: TopicUpdateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleUpdateManyDataInput {
+  name: String
+  level: Int
+}
+
+input ExampleUpdateManyMutationInput {
+  name: String
+  level: Int
+}
+
+input ExampleUpdateManyWithoutSubjectInput {
+  create: [ExampleCreateWithoutSubjectInput!]
+  delete: [ExampleWhereUniqueInput!]
+  connect: [ExampleWhereUniqueInput!]
+  set: [ExampleWhereUniqueInput!]
+  disconnect: [ExampleWhereUniqueInput!]
+  update: [ExampleUpdateWithWhereUniqueWithoutSubjectInput!]
+  upsert: [ExampleUpsertWithWhereUniqueWithoutSubjectInput!]
+  deleteMany: [ExampleScalarWhereInput!]
+  updateMany: [ExampleUpdateManyWithWhereNestedInput!]
+}
+
+input ExampleUpdateManyWithoutTopicInput {
+  create: [ExampleCreateWithoutTopicInput!]
+  delete: [ExampleWhereUniqueInput!]
+  connect: [ExampleWhereUniqueInput!]
+  set: [ExampleWhereUniqueInput!]
+  disconnect: [ExampleWhereUniqueInput!]
+  update: [ExampleUpdateWithWhereUniqueWithoutTopicInput!]
+  upsert: [ExampleUpsertWithWhereUniqueWithoutTopicInput!]
+  deleteMany: [ExampleScalarWhereInput!]
+  updateMany: [ExampleUpdateManyWithWhereNestedInput!]
+}
+
+input ExampleUpdateManyWithoutUnitInput {
+  create: [ExampleCreateWithoutUnitInput!]
+  delete: [ExampleWhereUniqueInput!]
+  connect: [ExampleWhereUniqueInput!]
+  set: [ExampleWhereUniqueInput!]
+  disconnect: [ExampleWhereUniqueInput!]
+  update: [ExampleUpdateWithWhereUniqueWithoutUnitInput!]
+  upsert: [ExampleUpsertWithWhereUniqueWithoutUnitInput!]
+  deleteMany: [ExampleScalarWhereInput!]
+  updateMany: [ExampleUpdateManyWithWhereNestedInput!]
+}
+
+input ExampleUpdateManyWithWhereNestedInput {
+  where: ExampleScalarWhereInput!
+  data: ExampleUpdateManyDataInput!
+}
+
+input ExampleUpdateWithoutSubjectDataInput {
+  name: String
+  unit: UnitUpdateOneWithoutExamplesInput
+  topic: TopicUpdateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleUpdateWithoutTopicDataInput {
+  name: String
+  subject: SubjectUpdateOneWithoutExamplesInput
+  unit: UnitUpdateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleUpdateWithoutUnitDataInput {
+  name: String
+  subject: SubjectUpdateOneWithoutExamplesInput
+  topic: TopicUpdateOneWithoutExamplesInput
+  level: Int
+}
+
+input ExampleUpdateWithWhereUniqueWithoutSubjectInput {
+  where: ExampleWhereUniqueInput!
+  data: ExampleUpdateWithoutSubjectDataInput!
+}
+
+input ExampleUpdateWithWhereUniqueWithoutTopicInput {
+  where: ExampleWhereUniqueInput!
+  data: ExampleUpdateWithoutTopicDataInput!
+}
+
+input ExampleUpdateWithWhereUniqueWithoutUnitInput {
+  where: ExampleWhereUniqueInput!
+  data: ExampleUpdateWithoutUnitDataInput!
+}
+
+input ExampleUpsertWithWhereUniqueWithoutSubjectInput {
+  where: ExampleWhereUniqueInput!
+  update: ExampleUpdateWithoutSubjectDataInput!
+  create: ExampleCreateWithoutSubjectInput!
+}
+
+input ExampleUpsertWithWhereUniqueWithoutTopicInput {
+  where: ExampleWhereUniqueInput!
+  update: ExampleUpdateWithoutTopicDataInput!
+  create: ExampleCreateWithoutTopicInput!
+}
+
+input ExampleUpsertWithWhereUniqueWithoutUnitInput {
+  where: ExampleWhereUniqueInput!
+  update: ExampleUpdateWithoutUnitDataInput!
+  create: ExampleCreateWithoutUnitInput!
+}
+
+input ExampleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  subject: SubjectWhereInput
+  unit: UnitWhereInput
+  topic: TopicWhereInput
+  level: Int
+  level_not: Int
+  level_in: [Int!]
+  level_not_in: [Int!]
+  level_lt: Int
+  level_lte: Int
+  level_gt: Int
+  level_gte: Int
+  AND: [ExampleWhereInput!]
+  OR: [ExampleWhereInput!]
+  NOT: [ExampleWhereInput!]
+}
+
+input ExampleWhereUniqueInput {
   id: ID
 }
 
@@ -3155,6 +3464,12 @@ type Mutation {
   upsertEducationProfile(where: EducationProfileWhereUniqueInput!, create: EducationProfileCreateInput!, update: EducationProfileUpdateInput!): EducationProfile!
   deleteEducationProfile(where: EducationProfileWhereUniqueInput!): EducationProfile
   deleteManyEducationProfiles(where: EducationProfileWhereInput): BatchPayload!
+  createExample(data: ExampleCreateInput!): Example!
+  updateExample(data: ExampleUpdateInput!, where: ExampleWhereUniqueInput!): Example
+  updateManyExamples(data: ExampleUpdateManyMutationInput!, where: ExampleWhereInput): BatchPayload!
+  upsertExample(where: ExampleWhereUniqueInput!, create: ExampleCreateInput!, update: ExampleUpdateInput!): Example!
+  deleteExample(where: ExampleWhereUniqueInput!): Example
+  deleteManyExamples(where: ExampleWhereInput): BatchPayload!
   createGroup(data: GroupCreateInput!): Group!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
@@ -4963,6 +5278,9 @@ type Query {
   educationProfile(where: EducationProfileWhereUniqueInput!): EducationProfile
   educationProfiles(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EducationProfile]!
   educationProfilesConnection(where: EducationProfileWhereInput, orderBy: EducationProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EducationProfileConnection!
+  example(where: ExampleWhereUniqueInput!): Example
+  examples(where: ExampleWhereInput, orderBy: ExampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Example]!
+  examplesConnection(where: ExampleWhereInput, orderBy: ExampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExampleConnection!
   group(where: GroupWhereUniqueInput!): Group
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
@@ -9443,7 +9761,6 @@ input RoleWhereInput {
 
 input RoleWhereUniqueInput {
   id: ID
-  users_some:UserWhereInput
 }
 
 type Std {
@@ -10656,10 +10973,13 @@ type Subject {
   std: Std!
   board: String
   category: String
+  level: Int
+  color: String
   group: Group
   subgroup: SubGroup
   updatedAt: DateTime!
   createdAt: DateTime!
+  syllabus: Json
   units(where: UnitWhereInput, orderBy: UnitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Unit!]
   topic(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   contents(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content!]
@@ -10669,6 +10989,7 @@ type Subject {
   status: String
   available: String
   description: String
+  examples(where: ExampleWhereInput, orderBy: ExampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Example!]
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   quizes(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
 }
@@ -10687,8 +11008,11 @@ input SubjectCreateInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10698,6 +11022,7 @@ input SubjectCreateInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10732,6 +11057,11 @@ input SubjectCreateOneWithoutContentsInput {
   connect: SubjectWhereUniqueInput
 }
 
+input SubjectCreateOneWithoutExamplesInput {
+  create: SubjectCreateWithoutExamplesInput
+  connect: SubjectWhereUniqueInput
+}
+
 input SubjectCreateOneWithoutQuestionsInput {
   create: SubjectCreateWithoutQuestionsInput
   connect: SubjectWhereUniqueInput
@@ -10760,10 +11090,40 @@ input SubjectCreateWithoutContentsInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  description: String
+  examples: ExampleCreateManyWithoutSubjectInput
+  questions: QuestionCreateManyWithoutSubjectInput
+  quizes: QuizCreateManyWithoutSubjectInput
+}
+
+input SubjectCreateWithoutExamplesInput {
+  id: ID
+  name: String!
+  picture: String
+  medium: MediumCreateOneWithoutSubjectsInput
+  std: StdCreateOneWithoutSubjectsInput!
+  board: String
+  category: String
+  level: Int
+  color: String
+  group: GroupCreateOneWithoutSubjectsInput
+  subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
+  units: UnitCreateManyWithoutSubjectInput
+  topic: TopicCreateManyWithoutSubjectInput
+  contents: ContentCreateManyWithoutSubjectInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -10782,7 +11142,10 @@ input SubjectCreateWithoutGroupInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10792,6 +11155,7 @@ input SubjectCreateWithoutGroupInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10803,8 +11167,11 @@ input SubjectCreateWithoutMediumInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10814,6 +11181,7 @@ input SubjectCreateWithoutMediumInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10826,8 +11194,11 @@ input SubjectCreateWithoutQuestionsInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10837,6 +11208,7 @@ input SubjectCreateWithoutQuestionsInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
 
@@ -10848,8 +11220,11 @@ input SubjectCreateWithoutQuizesInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10859,6 +11234,7 @@ input SubjectCreateWithoutQuizesInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
 }
 
@@ -10869,8 +11245,11 @@ input SubjectCreateWithoutStdInput {
   medium: MediumCreateOneWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10880,6 +11259,7 @@ input SubjectCreateWithoutStdInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10892,7 +11272,10 @@ input SubjectCreateWithoutSubgroupInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
@@ -10902,6 +11285,7 @@ input SubjectCreateWithoutSubgroupInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10914,8 +11298,11 @@ input SubjectCreateWithoutTopicInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
   plantDate: DateTime
@@ -10924,6 +11311,7 @@ input SubjectCreateWithoutTopicInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10936,8 +11324,11 @@ input SubjectCreateWithoutUnitsInput {
   std: StdCreateOneWithoutSubjectsInput!
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupCreateOneWithoutSubjectsInput
   subgroup: SubGroupCreateOneWithoutSubjectsInput
+  syllabus: Json
   topic: TopicCreateManyWithoutSubjectInput
   contents: ContentCreateManyWithoutSubjectInput
   plantDate: DateTime
@@ -10946,6 +11337,7 @@ input SubjectCreateWithoutUnitsInput {
   status: String
   available: String
   description: String
+  examples: ExampleCreateManyWithoutSubjectInput
   questions: QuestionCreateManyWithoutSubjectInput
   quizes: QuizCreateManyWithoutSubjectInput
 }
@@ -10966,10 +11358,16 @@ enum SubjectOrderByInput {
   board_DESC
   category_ASC
   category_DESC
+  level_ASC
+  level_DESC
+  color_ASC
+  color_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  syllabus_ASC
+  syllabus_DESC
   plantDate_ASC
   plantDate_DESC
   isPublished_ASC
@@ -10990,8 +11388,11 @@ type SubjectPreviousValues {
   picture: String
   board: String
   category: String
+  level: Int
+  color: String
   updatedAt: DateTime!
   createdAt: DateTime!
+  syllabus: Json
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11071,6 +11472,28 @@ input SubjectScalarWhereInput {
   category_not_starts_with: String
   category_ends_with: String
   category_not_ends_with: String
+  level: Int
+  level_not: Int
+  level_in: [Int!]
+  level_not_in: [Int!]
+  level_lt: Int
+  level_lte: Int
+  level_gt: Int
+  level_gte: Int
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -11448,8 +11871,11 @@ input SubjectUpdateDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11459,6 +11885,7 @@ input SubjectUpdateDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11470,8 +11897,11 @@ input SubjectUpdateInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11481,6 +11911,7 @@ input SubjectUpdateInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11490,6 +11921,9 @@ input SubjectUpdateManyDataInput {
   picture: String
   board: String
   category: String
+  level: Int
+  color: String
+  syllabus: Json
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11515,6 +11949,9 @@ input SubjectUpdateManyMutationInput {
   picture: String
   board: String
   category: String
+  level: Int
+  color: String
+  syllabus: Json
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11576,17 +12013,28 @@ input SubjectUpdateManyWithWhereNestedInput {
   data: SubjectUpdateManyDataInput!
 }
 
-input SubjectUpdateOneRequiredWithoutContentsInput {
-  create: SubjectCreateWithoutContentsInput
-  update: SubjectUpdateWithoutContentsDataInput
-  upsert: SubjectUpsertWithoutContentsInput
-  connect: SubjectWhereUniqueInput
-}
-
 input SubjectUpdateOneRequiredWithoutUnitsInput {
   create: SubjectCreateWithoutUnitsInput
   update: SubjectUpdateWithoutUnitsDataInput
   upsert: SubjectUpsertWithoutUnitsInput
+  connect: SubjectWhereUniqueInput
+}
+
+input SubjectUpdateOneWithoutContentsInput {
+  create: SubjectCreateWithoutContentsInput
+  update: SubjectUpdateWithoutContentsDataInput
+  upsert: SubjectUpsertWithoutContentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: SubjectWhereUniqueInput
+}
+
+input SubjectUpdateOneWithoutExamplesInput {
+  create: SubjectCreateWithoutExamplesInput
+  update: SubjectUpdateWithoutExamplesDataInput
+  upsert: SubjectUpsertWithoutExamplesInput
+  delete: Boolean
+  disconnect: Boolean
   connect: SubjectWhereUniqueInput
 }
 
@@ -11624,10 +12072,39 @@ input SubjectUpdateWithoutContentsDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
+  questions: QuestionUpdateManyWithoutSubjectInput
+  quizes: QuizUpdateManyWithoutSubjectInput
+}
+
+input SubjectUpdateWithoutExamplesDataInput {
+  name: String
+  picture: String
+  medium: MediumUpdateOneWithoutSubjectsInput
+  std: StdUpdateOneRequiredWithoutSubjectsInput
+  board: String
+  category: String
+  level: Int
+  color: String
+  group: GroupUpdateOneWithoutSubjectsInput
+  subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
+  units: UnitUpdateManyWithoutSubjectInput
+  topic: TopicUpdateManyWithoutSubjectInput
+  contents: ContentUpdateManyWithoutSubjectInput
   plantDate: DateTime
   isPublished: Boolean
   state: String
@@ -11645,7 +12122,10 @@ input SubjectUpdateWithoutGroupDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11655,6 +12135,7 @@ input SubjectUpdateWithoutGroupDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11665,8 +12146,11 @@ input SubjectUpdateWithoutMediumDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11676,6 +12160,7 @@ input SubjectUpdateWithoutMediumDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11687,8 +12172,11 @@ input SubjectUpdateWithoutQuestionsDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11698,6 +12186,7 @@ input SubjectUpdateWithoutQuestionsDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
 
@@ -11708,8 +12197,11 @@ input SubjectUpdateWithoutQuizesDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11719,6 +12211,7 @@ input SubjectUpdateWithoutQuizesDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
 }
 
@@ -11728,8 +12221,11 @@ input SubjectUpdateWithoutStdDataInput {
   medium: MediumUpdateOneWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11739,6 +12235,7 @@ input SubjectUpdateWithoutStdDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11750,7 +12247,10 @@ input SubjectUpdateWithoutSubgroupDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
@@ -11760,6 +12260,7 @@ input SubjectUpdateWithoutSubgroupDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11771,8 +12272,11 @@ input SubjectUpdateWithoutTopicDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   units: UnitUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
   plantDate: DateTime
@@ -11781,6 +12285,7 @@ input SubjectUpdateWithoutTopicDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11792,8 +12297,11 @@ input SubjectUpdateWithoutUnitsDataInput {
   std: StdUpdateOneRequiredWithoutSubjectsInput
   board: String
   category: String
+  level: Int
+  color: String
   group: GroupUpdateOneWithoutSubjectsInput
   subgroup: SubGroupUpdateOneWithoutSubjectsInput
+  syllabus: Json
   topic: TopicUpdateManyWithoutSubjectInput
   contents: ContentUpdateManyWithoutSubjectInput
   plantDate: DateTime
@@ -11802,6 +12310,7 @@ input SubjectUpdateWithoutUnitsDataInput {
   status: String
   available: String
   description: String
+  examples: ExampleUpdateManyWithoutSubjectInput
   questions: QuestionUpdateManyWithoutSubjectInput
   quizes: QuizUpdateManyWithoutSubjectInput
 }
@@ -11834,6 +12343,11 @@ input SubjectUpdateWithWhereUniqueWithoutSubgroupInput {
 input SubjectUpsertWithoutContentsInput {
   update: SubjectUpdateWithoutContentsDataInput!
   create: SubjectCreateWithoutContentsInput!
+}
+
+input SubjectUpsertWithoutExamplesInput {
+  update: SubjectUpdateWithoutExamplesDataInput!
+  create: SubjectCreateWithoutExamplesInput!
 }
 
 input SubjectUpsertWithoutQuestionsInput {
@@ -11959,6 +12473,28 @@ input SubjectWhereInput {
   category_not_starts_with: String
   category_ends_with: String
   category_not_ends_with: String
+  level: Int
+  level_not: Int
+  level_in: [Int!]
+  level_not_in: [Int!]
+  level_lt: Int
+  level_lte: Int
+  level_gt: Int
+  level_gte: Int
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
   group: GroupWhereInput
   subgroup: SubGroupWhereInput
   updatedAt: DateTime
@@ -12052,6 +12588,9 @@ input SubjectWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  examples_every: ExampleWhereInput
+  examples_some: ExampleWhereInput
+  examples_none: ExampleWhereInput
   questions_every: QuestionWhereInput
   questions_some: QuestionWhereInput
   questions_none: QuestionWhereInput
@@ -12470,6 +13009,7 @@ type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   content(where: ContentSubscriptionWhereInput): ContentSubscriptionPayload
   educationProfile(where: EducationProfileSubscriptionWhereInput): EducationProfileSubscriptionPayload
+  example(where: ExampleSubscriptionWhereInput): ExampleSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   groupMember(where: GroupMemberSubscriptionWhereInput): GroupMemberSubscriptionPayload
   medium(where: MediumSubscriptionWhereInput): MediumSubscriptionPayload
@@ -12505,12 +13045,15 @@ type Topic {
   createdBy: User
   updateBy: User
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   quizs(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
+  examples(where: ExampleWhereInput, orderBy: ExampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Example!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -12530,12 +13073,15 @@ input TopicCreateInput {
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
   quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 input TopicCreateManyWithoutCreatedByInput {
@@ -12563,6 +13109,11 @@ input TopicCreateOneWithoutContentsInput {
   connect: TopicWhereUniqueInput
 }
 
+input TopicCreateOneWithoutExamplesInput {
+  create: TopicCreateWithoutExamplesInput
+  connect: TopicWhereUniqueInput
+}
+
 input TopicCreateOneWithoutQuestionsInput {
   create: TopicCreateWithoutQuestionsInput
   connect: TopicWhereUniqueInput
@@ -12581,12 +13132,15 @@ input TopicCreateWithoutContentsInput {
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
   quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutCreatedByInput {
@@ -12597,9 +13151,31 @@ input TopicCreateWithoutCreatedByInput {
   contents: ContentCreateManyWithoutTopicInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
+  available: String
+  questions: QuestionCreateManyWithoutTopicInput
+  quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
+}
+
+input TopicCreateWithoutExamplesInput {
+  id: ID
+  name: String!
+  subject: SubjectCreateOneWithoutTopicInput
+  unit: UnitCreateOneWithoutTopicsInput
+  contents: ContentCreateManyWithoutTopicInput
+  createdBy: UserCreateOneWithoutTopicByMeInput
+  updateBy: UserCreateOneWithoutTopicUpdateByMeInput
+  plantDate: DateTime
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
   quizs: QuizCreateManyWithoutTopicInput
@@ -12614,11 +13190,14 @@ input TopicCreateWithoutQuestionsInput {
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutQuizsInput {
@@ -12630,11 +13209,14 @@ input TopicCreateWithoutQuizsInput {
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutSubjectInput {
@@ -12645,12 +13227,15 @@ input TopicCreateWithoutSubjectInput {
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
   quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutUnitInput {
@@ -12661,12 +13246,15 @@ input TopicCreateWithoutUnitInput {
   createdBy: UserCreateOneWithoutTopicByMeInput
   updateBy: UserCreateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
   quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 input TopicCreateWithoutUpdateByInput {
@@ -12677,12 +13265,15 @@ input TopicCreateWithoutUpdateByInput {
   contents: ContentCreateManyWithoutTopicInput
   createdBy: UserCreateOneWithoutTopicByMeInput
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutTopicInput
   quizs: QuizCreateManyWithoutTopicInput
+  examples: ExampleCreateManyWithoutTopicInput
 }
 
 type TopicEdge {
@@ -12699,6 +13290,10 @@ enum TopicOrderByInput {
   plantDate_DESC
   isPublished_ASC
   isPublished_DESC
+  picture_ASC
+  picture_DESC
+  description_ASC
+  description_DESC
   state_ASC
   state_DESC
   status_ASC
@@ -12715,9 +13310,11 @@ type TopicPreviousValues {
   id: ID!
   name: String!
   plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
   available: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -12762,6 +13359,34 @@ input TopicScalarWhereInput {
   plantDate_gte: DateTime
   isPublished: Boolean
   isPublished_not: Boolean
+  picture: String
+  picture_not: String
+  picture_in: [String!]
+  picture_not_in: [String!]
+  picture_lt: String
+  picture_lte: String
+  picture_gt: String
+  picture_gte: String
+  picture_contains: String
+  picture_not_contains: String
+  picture_starts_with: String
+  picture_not_starts_with: String
+  picture_ends_with: String
+  picture_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   state: String
   state_not: String
   state_in: [String!]
@@ -12852,17 +13477,22 @@ input TopicUpdateInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutTopicInput
   quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateManyDataInput {
   name: String
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
@@ -12872,6 +13502,8 @@ input TopicUpdateManyMutationInput {
   name: String
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
@@ -12939,6 +13571,15 @@ input TopicUpdateOneWithoutContentsInput {
   connect: TopicWhereUniqueInput
 }
 
+input TopicUpdateOneWithoutExamplesInput {
+  create: TopicCreateWithoutExamplesInput
+  update: TopicUpdateWithoutExamplesDataInput
+  upsert: TopicUpsertWithoutExamplesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: TopicWhereUniqueInput
+}
+
 input TopicUpdateOneWithoutQuestionsInput {
   create: TopicCreateWithoutQuestionsInput
   update: TopicUpdateWithoutQuestionsDataInput
@@ -12965,11 +13606,14 @@ input TopicUpdateWithoutContentsDataInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutTopicInput
   quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutCreatedByDataInput {
@@ -12980,6 +13624,27 @@ input TopicUpdateWithoutCreatedByDataInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
+  available: String
+  questions: QuestionUpdateManyWithoutTopicInput
+  quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
+}
+
+input TopicUpdateWithoutExamplesDataInput {
+  name: String
+  subject: SubjectUpdateOneWithoutTopicInput
+  unit: UnitUpdateOneWithoutTopicsInput
+  contents: ContentUpdateManyWithoutTopicInput
+  createdBy: UserUpdateOneWithoutTopicByMeInput
+  updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
+  plantDate: DateTime
+  isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
@@ -12996,10 +13661,13 @@ input TopicUpdateWithoutQuestionsDataInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutQuizsDataInput {
@@ -13011,10 +13679,13 @@ input TopicUpdateWithoutQuizsDataInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutSubjectDataInput {
@@ -13025,11 +13696,14 @@ input TopicUpdateWithoutSubjectDataInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutTopicInput
   quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutUnitDataInput {
@@ -13040,11 +13714,14 @@ input TopicUpdateWithoutUnitDataInput {
   updateBy: UserUpdateOneWithoutTopicUpdateByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutTopicInput
   quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithoutUpdateByDataInput {
@@ -13055,11 +13732,14 @@ input TopicUpdateWithoutUpdateByDataInput {
   createdBy: UserUpdateOneWithoutTopicByMeInput
   plantDate: DateTime
   isPublished: Boolean
+  picture: String
+  description: String
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutTopicInput
   quizs: QuizUpdateManyWithoutTopicInput
+  examples: ExampleUpdateManyWithoutTopicInput
 }
 
 input TopicUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -13085,6 +13765,11 @@ input TopicUpdateWithWhereUniqueWithoutUpdateByInput {
 input TopicUpsertWithoutContentsInput {
   update: TopicUpdateWithoutContentsDataInput!
   create: TopicCreateWithoutContentsInput!
+}
+
+input TopicUpsertWithoutExamplesInput {
+  update: TopicUpdateWithoutExamplesDataInput!
+  create: TopicCreateWithoutExamplesInput!
 }
 
 input TopicUpsertWithoutQuestionsInput {
@@ -13167,6 +13852,34 @@ input TopicWhereInput {
   plantDate_gte: DateTime
   isPublished: Boolean
   isPublished_not: Boolean
+  picture: String
+  picture_not: String
+  picture_in: [String!]
+  picture_not_in: [String!]
+  picture_lt: String
+  picture_lte: String
+  picture_gt: String
+  picture_gte: String
+  picture_contains: String
+  picture_not_contains: String
+  picture_starts_with: String
+  picture_not_starts_with: String
+  picture_ends_with: String
+  picture_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   state: String
   state_not: String
   state_in: [String!]
@@ -13215,6 +13928,9 @@ input TopicWhereInput {
   quizs_every: QuizWhereInput
   quizs_some: QuizWhereInput
   quizs_none: QuizWhereInput
+  examples_every: ExampleWhereInput
+  examples_some: ExampleWhereInput
+  examples_none: ExampleWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -13246,17 +13962,19 @@ type Unit {
   subject: Subject!
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   contents(where: ContentWhereInput, orderBy: ContentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Content!]
+  picture: String
+  description: String
   createdBy: User
   updateBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   updatedAt: DateTime!
   createdAt: DateTime!
   quizs(where: QuizWhereInput, orderBy: QuizOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Quiz!]
+  examples(where: ExampleWhereInput, orderBy: ExampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Example!]
 }
 
 type UnitConnection {
@@ -13271,15 +13989,17 @@ input UnitCreateInput {
   subject: SubjectCreateOneWithoutUnitsInput!
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
   quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 input UnitCreateManyWithoutCreatedByInput {
@@ -13299,6 +14019,11 @@ input UnitCreateManyWithoutUpdateByInput {
 
 input UnitCreateOneWithoutContentsInput {
   create: UnitCreateWithoutContentsInput
+  connect: UnitWhereUniqueInput
+}
+
+input UnitCreateOneWithoutExamplesInput {
+  create: UnitCreateWithoutExamplesInput
   connect: UnitWhereUniqueInput
 }
 
@@ -13322,15 +14047,17 @@ input UnitCreateWithoutContentsInput {
   name: String!
   subject: SubjectCreateOneWithoutUnitsInput!
   topics: TopicCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
   quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutCreatedByInput {
@@ -13339,11 +14066,31 @@ input UnitCreateWithoutCreatedByInput {
   subject: SubjectCreateOneWithoutUnitsInput!
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  questions: QuestionCreateManyWithoutUnitInput
+  quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
+}
+
+input UnitCreateWithoutExamplesInput {
+  id: ID
+  name: String!
+  subject: SubjectCreateOneWithoutUnitsInput!
+  topics: TopicCreateManyWithoutUnitInput
+  contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
+  createdBy: UserCreateOneWithoutUnitByMeInput
+  updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
   quizs: QuizCreateManyWithoutUnitInput
@@ -13355,14 +14102,16 @@ input UnitCreateWithoutQuestionsInput {
   subject: SubjectCreateOneWithoutUnitsInput!
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutQuizsInput {
@@ -13371,14 +14120,16 @@ input UnitCreateWithoutQuizsInput {
   subject: SubjectCreateOneWithoutUnitsInput!
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutSubjectInput {
@@ -13386,15 +14137,17 @@ input UnitCreateWithoutSubjectInput {
   name: String!
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
   quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutTopicsInput {
@@ -13402,15 +14155,17 @@ input UnitCreateWithoutTopicsInput {
   name: String!
   subject: SubjectCreateOneWithoutUnitsInput!
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
   updateBy: UserCreateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
   quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 input UnitCreateWithoutUpdateByInput {
@@ -13419,14 +14174,16 @@ input UnitCreateWithoutUpdateByInput {
   subject: SubjectCreateOneWithoutUnitsInput!
   topics: TopicCreateManyWithoutUnitInput
   contents: ContentCreateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserCreateOneWithoutUnitByMeInput
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   questions: QuestionCreateManyWithoutUnitInput
   quizs: QuizCreateManyWithoutUnitInput
+  examples: ExampleCreateManyWithoutUnitInput
 }
 
 type UnitEdge {
@@ -13439,8 +14196,10 @@ enum UnitOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  plantDate_ASC
-  plantDate_DESC
+  picture_ASC
+  picture_DESC
+  description_ASC
+  description_DESC
   isPublished_ASC
   isPublished_DESC
   state_ASC
@@ -13458,10 +14217,11 @@ enum UnitOrderByInput {
 type UnitPreviousValues {
   id: ID!
   name: String!
-  plantDate: DateTime
-  isPublished: Boolean!
-  state: String!
-  status: String!
+  picture: String
+  description: String
+  isPublished: Boolean
+  state: String
+  status: String
   available: String
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -13496,14 +14256,34 @@ input UnitScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  plantDate: DateTime
-  plantDate_not: DateTime
-  plantDate_in: [DateTime!]
-  plantDate_not_in: [DateTime!]
-  plantDate_lt: DateTime
-  plantDate_lte: DateTime
-  plantDate_gt: DateTime
-  plantDate_gte: DateTime
+  picture: String
+  picture_not: String
+  picture_in: [String!]
+  picture_not_in: [String!]
+  picture_lt: String
+  picture_lte: String
+  picture_gt: String
+  picture_gte: String
+  picture_contains: String
+  picture_not_contains: String
+  picture_starts_with: String
+  picture_not_starts_with: String
+  picture_ends_with: String
+  picture_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   isPublished: Boolean
   isPublished_not: Boolean
   state: String
@@ -13592,20 +14372,23 @@ input UnitUpdateInput {
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutUnitInput
   quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateManyDataInput {
   name: String
-  plantDate: DateTime
+  picture: String
+  description: String
   isPublished: Boolean
   state: String
   status: String
@@ -13614,7 +14397,8 @@ input UnitUpdateManyDataInput {
 
 input UnitUpdateManyMutationInput {
   name: String
-  plantDate: DateTime
+  picture: String
+  description: String
   isPublished: Boolean
   state: String
   status: String
@@ -13671,6 +14455,15 @@ input UnitUpdateOneWithoutContentsInput {
   connect: UnitWhereUniqueInput
 }
 
+input UnitUpdateOneWithoutExamplesInput {
+  create: UnitCreateWithoutExamplesInput
+  update: UnitUpdateWithoutExamplesDataInput
+  upsert: UnitUpsertWithoutExamplesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UnitWhereUniqueInput
+}
+
 input UnitUpdateOneWithoutQuestionsInput {
   create: UnitCreateWithoutQuestionsInput
   update: UnitUpdateWithoutQuestionsDataInput
@@ -13702,15 +14495,17 @@ input UnitUpdateWithoutContentsDataInput {
   name: String
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   topics: TopicUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutUnitInput
   quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutCreatedByDataInput {
@@ -13718,8 +14513,27 @@ input UnitUpdateWithoutCreatedByDataInput {
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  questions: QuestionUpdateManyWithoutUnitInput
+  quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
+}
+
+input UnitUpdateWithoutExamplesDataInput {
+  name: String
+  subject: SubjectUpdateOneRequiredWithoutUnitsInput
+  topics: TopicUpdateManyWithoutUnitInput
+  contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
+  createdBy: UserUpdateOneWithoutUnitByMeInput
+  updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
   isPublished: Boolean
   state: String
   status: String
@@ -13733,14 +14547,16 @@ input UnitUpdateWithoutQuestionsDataInput {
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutQuizsDataInput {
@@ -13748,44 +14564,50 @@ input UnitUpdateWithoutQuizsDataInput {
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutSubjectDataInput {
   name: String
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutUnitInput
   quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutTopicsDataInput {
   name: String
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
   updateBy: UserUpdateManyWithoutUnitUpdatedByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutUnitInput
   quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithoutUpdateByDataInput {
@@ -13793,14 +14615,16 @@ input UnitUpdateWithoutUpdateByDataInput {
   subject: SubjectUpdateOneRequiredWithoutUnitsInput
   topics: TopicUpdateManyWithoutUnitInput
   contents: ContentUpdateManyWithoutUnitInput
+  picture: String
+  description: String
   createdBy: UserUpdateOneWithoutUnitByMeInput
-  plantDate: DateTime
   isPublished: Boolean
   state: String
   status: String
   available: String
   questions: QuestionUpdateManyWithoutUnitInput
   quizs: QuizUpdateManyWithoutUnitInput
+  examples: ExampleUpdateManyWithoutUnitInput
 }
 
 input UnitUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -13821,6 +14645,11 @@ input UnitUpdateWithWhereUniqueWithoutUpdateByInput {
 input UnitUpsertWithoutContentsInput {
   update: UnitUpdateWithoutContentsDataInput!
   create: UnitCreateWithoutContentsInput!
+}
+
+input UnitUpsertWithoutExamplesInput {
+  update: UnitUpdateWithoutExamplesDataInput!
+  create: UnitCreateWithoutExamplesInput!
 }
 
 input UnitUpsertWithoutQuestionsInput {
@@ -13892,18 +14721,38 @@ input UnitWhereInput {
   contents_every: ContentWhereInput
   contents_some: ContentWhereInput
   contents_none: ContentWhereInput
+  picture: String
+  picture_not: String
+  picture_in: [String!]
+  picture_not_in: [String!]
+  picture_lt: String
+  picture_lte: String
+  picture_gt: String
+  picture_gte: String
+  picture_contains: String
+  picture_not_contains: String
+  picture_starts_with: String
+  picture_not_starts_with: String
+  picture_ends_with: String
+  picture_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   createdBy: UserWhereInput
   updateBy_every: UserWhereInput
   updateBy_some: UserWhereInput
   updateBy_none: UserWhereInput
-  plantDate: DateTime
-  plantDate_not: DateTime
-  plantDate_in: [DateTime!]
-  plantDate_not_in: [DateTime!]
-  plantDate_lt: DateTime
-  plantDate_lte: DateTime
-  plantDate_gt: DateTime
-  plantDate_gte: DateTime
   isPublished: Boolean
   isPublished_not: Boolean
   state: String
@@ -13970,6 +14819,9 @@ input UnitWhereInput {
   quizs_every: QuizWhereInput
   quizs_some: QuizWhereInput
   quizs_none: QuizWhereInput
+  examples_every: ExampleWhereInput
+  examples_some: ExampleWhereInput
+  examples_none: ExampleWhereInput
   AND: [UnitWhereInput!]
   OR: [UnitWhereInput!]
   NOT: [UnitWhereInput!]

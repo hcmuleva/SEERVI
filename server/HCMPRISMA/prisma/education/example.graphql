@@ -1,0 +1,12 @@
+"""
+Example:
+There are many types of Examples can hold for Subject/Unit/Topic Level
+"""
+type Example {
+  id: ID! @id
+  name: String
+  subject:Subject               @relation(name: "ExampleToSubject", onDelete: SET_NULL)
+  unit: Unit                    @relation(name: "ExampleToUnit", onDelete: SET_NULL)
+  topic: Topic                  @relation(name: "ExampleToTopic", onDelete: SET_NULL)
+  level:Int
+}

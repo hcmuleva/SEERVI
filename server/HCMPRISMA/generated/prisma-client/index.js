@@ -121,6 +121,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Example",
+    embedded: false
+  },
+  {
     name: "Poll",
     embedded: false
   },

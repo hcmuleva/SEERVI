@@ -4592,7 +4592,10 @@ html .ql-toolbar {
   right: initial;
   top: 0.9375rem;
   left: 0.9375rem; }
-
+  .card-post--1.card-post--aside .card-post__category1 {
+    right: initial;
+    top: 0.9375rem;
+    left: 0.6375rem; }
 .error {
   height: calc(100vh - 3.75rem);
   display: flex; }

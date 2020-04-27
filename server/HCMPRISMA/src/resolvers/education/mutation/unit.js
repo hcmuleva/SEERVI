@@ -4,16 +4,10 @@
     const userId = getUserId(request)
     console.log("createdBy ",userId)
     console.log("ARGS DATA",args)
-    let data={}
-     const {subject,name,plantDate,isPublished,state,status,available}=args.data
+    let data=args.data
      data["createdBy"]={connect:{id:userId}}
-     data["subject"]={connect:{id:subject}}
-     data["name"]=name
-     data["plantDate"]=plantDate
-     data["isPublished"]=isPublished
-     data["state"]=state
-     data["status"]=status
-     data["available"]=available
+     data["subject"]={connect:{id:args.data.subject}}
+     
     console.log("data for createUnit ", data)
     return await prisma.mutation.createUnit({
         data

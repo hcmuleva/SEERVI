@@ -18,7 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { CREATE_SUBJECT } from "../../../../graphql/mutations/education/subject";
 import {GET_ALLSUBJECTS} from "../../../../graphql/queries/education/subject"
 import { useQuery, useMutation } from "@apollo/react-hooks";
-
+import DropZoneUploader from "../../../commoncomponent/files/DropZoneUploader"
 const formObjectInit = {
   name: "",
   picture: "",
@@ -38,6 +38,7 @@ const formObjectInit = {
 };
 
 const CreateSubjectDialog = (props) => {
+  const [fileURL, setFileURL] = useState("")
   formObjectInit["medium"] = props.medium;
   formObjectInit["std"] = props.std;
   formObjectInit["subgroup"] = localStorage.getItem("subgroupid");
@@ -50,6 +51,7 @@ const CreateSubjectDialog = (props) => {
   });
 
   const handleSwitchChange = (stdname) => (event) => {
+    
     setSwitchState({ ...switchState, [stdname]: event.target.checked });
   };
 
@@ -74,7 +76,7 @@ const CreateSubjectDialog = (props) => {
     subjectCreate({
       variables: {
         name: formObject.name,
-        picture: formObject.picture,
+        picture: fileURL,
         medium: formObject.medium,
         std: formObject.std,
         category: formObject.category,
@@ -123,7 +125,7 @@ const CreateSubjectDialog = (props) => {
     };
   }
   const classes = makeStyles(iconStyles);
-
+  console.log("FILE URL FROM SUBJECT ADD DIALOG",fileURL)
   return (
     <div>
       <Tooltip title="CREATE Subject">
@@ -152,20 +154,9 @@ const CreateSubjectDialog = (props) => {
             value={formObject.name}
             onChange={handleChange("name")}
           />
-     
-        <Button
-  variant="contained"
-  component="label"
-  onClick={()=>{
-    console.log("Image upload logic need to implment ")
-  }}
->
-  Upload Subject Image
-  <input
-    type="file"
-    style={{ display: "none" }}
-  />
-</Button>
+          {fileURL?"":<DropZoneUploader setFileURL={setFileURL}/>}
+        
+
          <TextField
             margin="dense"
             label="Description"

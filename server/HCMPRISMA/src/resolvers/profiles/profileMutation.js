@@ -1,4 +1,4 @@
-import { createSubjectSubscription } from "./mutation/subjectsubscriptiion";
+import { createSubjectSubscription,createSubscriptionBulkSubjects,deleteSubjectSubscription } from "./mutation/subjectsubscriptiion";
 import {
   createProfile,
   createEducationProfile,
@@ -10,5 +10,6 @@ export const subjectSubs = {
   createProfile,
   createEducationProfile,
   createPersonalProfile,
-  createAddress
+  createAddress,createSubscriptionBulkSubjects,
+  deleteSubjectSubscription
 };

@@ -1,61 +1,64 @@
- """
-     Unit: 
-     name: Unit name 
-     Subject : Unit may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
-     topics: there may be list of Topics belongs to Unit
-     contents: there may be list of content belongs to Unit
-     createdBy: To track who has created this
-     updatedBy: to track who has update this
-     plandate: we can plan in advance, when Unit need to release
-     isPublished: we can mark Unit publish/unpublish so that user can view only publised Unit.
-     state: ACTIVE,DORMANT, DEACTIVE
-     status: APPROVED/SUBMITTED/REJECTED
-     available: Free/Paid/Subscription based etc....
-      
-     
-     """
-type Query {
-  getAllUnit:[Unit!]!
+"""
+Unit:
+name: Unit name
+Subject : Unit may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
+topics: there may be list of Topics belongs to Unit
+contents: there may be list of content belongs to Unit
+createdBy: To track who has created this
+updatedBy: to track who has update this
+plandate: we can plan in advance, when Unit need to release
+isPublished: we can mark Unit publish/unpublish so that user can view only publised Unit.
+state: ACTIVE,DORMANT, DEACTIVE
+status: APPROVED/SUBMITTED/REJECTED
+available: Free/Paid/Subscription based etc....
 
+TBD: How to complete it a)With a checkbox b)With a question c)After a period of time
+"""
+type Query {
+  getAllUnit: [Unit!]!
+  getUnitById(id: ID!): Unit!
 }
 type Mutation {
-  createUnit(data:UnitInputData!):Unit!
-  updateUnit(id:ID!,data: UnitUpdateInputData!):Unit!
-  deleteUnit(id:ID!):Unit!
+  createUnit(data: UnitInputData!): Unit!
+  updateUnit(id: ID!, data: UnitUpdateInputData!): Unit!
+  deleteUnit(id: ID!): Unit!
 }
-type Unit{
-    
-     id: ID! 
-     name:String!
-     subject:Subject!   
-     createdBy:User         
-     updateBy:[User]          
-     plantDate:DateTime
-     isPublished:Boolean! @default(value: false)
-     state:String!
-     status:String!
-     available:String   
+type Unit {
+  id: ID!
+  name: String!
+  subject: Subject!
 
-     topics: [Topic!]!     
-     contents:[Content!]!  
-     updatedAt:DateTime!         
-     createdAt:DateTime!         
+  createdBy: User
+  updateBy: [User]
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  picture: String
+  description: String
+  topics: [Topic!]!
+  contents: [Content!]!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  examples: [Example!]!
 }
-input UnitInputData{
-     name:String!
-     subject:String!     
-     plantDate:DateTime
-     isPublished:Boolean!
-     state:String!
-     status:String!
-     available:String 
+input UnitInputData {
+  name: String!
+  subject: String!
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  picture: String
+  description: String
 }
-input UnitUpdateInputData{
-     name:String
-     subject:String    
-     plantDate:DateTime
-     isPublished:Boolean
-     state:String
-     status:String
-     available:String 
+input UnitUpdateInputData {
+  name: String
+  subject: String
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  picture: String
+  description: String
 }

@@ -16,6 +16,7 @@ datamodel:
   - education/quiz.graphql
   - education/result.graphql
   - education/subject.graphql
+  - education/example.graphql
   - education/voteAndPoll.graphql
 
 secret: ${env:PRISMA_SECRET}

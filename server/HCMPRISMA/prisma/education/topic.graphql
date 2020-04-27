@@ -1,33 +1,35 @@
-type Topic{
-     """
-     Topic:
-     name: Topic name 
-     Subject : topic may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
-     Unit: topic may belongs to  units 
-     contents: there may be list of content belongs to topic
-     createdBy: To track who has created this
-     updatedBy: to track who has update this
-     plandate: we can plan in advance, when Topic need to release
-     isPublished: we can mark content publish/unpublish so that user can view only publised Topic.
-     state: ACTIVE,DORMANT, DEACTIVE
-     status: APPROVED/SUBMITTED/REJECTED
-     available: Free/Paid/Subscription based etc....
-     
-     """
-     id: ID! @id
-     name:String!
-     subject:Subject        @relation(name: "TopicToSubject", onDelete: SET_NULL)
-     unit:Unit              @relation(name: "TopicToUnit", onDelete: SET_NULL)
-     contents:[Content!]!   @relation(name: "ContentToTopic", onDelete: CASCADE)
-     createdBy:User         @relation(name: "TopicToUser", onDelete: SET_NULL)
-     updateBy:User          @relation(name: "TopicToUserUpdate", onDelete: SET_NULL)
-     plantDate:DateTime
-     isPublished:Boolean!
-     state:String!
-     status:String!
-     available:String 
-     questions:[Question!]!        @relation(name: "QuestionToTopic", onDelete: CASCADE)
-     quizs:[Quiz!]!                @relation(name: "QuizToTopic", onDelete: CASCADE)
-     updatedAt:DateTime!    @updatedAt
-     createdAt:DateTime!    @createdAt
+type Topic {
+  """
+  Topic:
+  name: Topic name
+  Subject : topic may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
+  Unit: topic may belongs to  units
+  contents: there may be list of content belongs to topic
+  createdBy: To track who has created this
+  updatedBy: to track who has update this
+  plandate: we can plan in advance, when Topic need to release
+  isPublished: we can mark content publish/unpublish so that user can view only publised Topic.
+  state: ACTIVE,DORMANT, DEACTIVE
+  status: APPROVED/SUBMITTED/REJECTED
+  available: Free/Paid/Subscription based etc....
+  """
+  id: ID! @id
+  name: String!
+  subject: Subject @relation(name: "TopicToSubject", onDelete: SET_NULL)
+  unit: Unit @relation(name: "TopicToUnit", onDelete: SET_NULL)
+  contents: [Content!]! @relation(name: "ContentToTopic", onDelete: CASCADE)
+  createdBy: User @relation(name: "TopicToUser", onDelete: SET_NULL)
+  updateBy: User @relation(name: "TopicToUserUpdate", onDelete: SET_NULL)
+  plantDate: DateTime
+  isPublished: Boolean
+  picture: String
+  description: String
+  state: String
+  status: String
+  available: String
+  questions: [Question!]! @relation(name: "QuestionToTopic", onDelete: CASCADE)
+  quizs: [Quiz!]! @relation(name: "QuizToTopic", onDelete: CASCADE)
+  examples: [Example!]! @relation(name: "ExampleToTopic", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }

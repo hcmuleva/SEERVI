@@ -1,26 +1,16 @@
 import gql from 'graphql-tag';
 
-const GET_SUBJECTDATA = gql `
-  query GET_SUBJECTDATA($id:String!){
-    subgroupById(id:$id){
-     id
-     name
-  subgroupRoles{
+const GET_SUBJECTDATA=gql`
+  query GET_SUBJECTDATA($id:ID!){
+      roleById(id:$id){
+    name
+    id
+    users{
       id
-      name
-    }     
-
-     subjects{
-         id
-         name
-        std{
-        id
-        gradename
-      }
-   
-     }
-    
-  }
+      email
+    }
+  
+    }
   
 }`;
 

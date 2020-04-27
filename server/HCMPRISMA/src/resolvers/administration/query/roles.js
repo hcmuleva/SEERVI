@@ -50,4 +50,14 @@ async function subGroupRoles(parent, args, { prisma, request }, info) {
     info
   );
 }
-export { allroles, myRoles, orgRoles, suborgRoles, groupRoles, subGroupRoles };
+
+async function roleById(parent, args, { prisma, request }, info) {
+  console.log("ROLE ID ",args)
+  return await prisma.query.role({
+         where :{
+            id:args.id
+         }
+    }, info)
+}
+
+export { allroles, myRoles, orgRoles, suborgRoles, groupRoles, subGroupRoles ,roleById};

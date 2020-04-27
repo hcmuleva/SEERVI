@@ -15,7 +15,7 @@ import Box from "@material-ui/core/Box";
 import Grade from "./grade";
 import Medium from "./medium";
 import Subject from "./subject/subject";
-import TeacherAssign from "./teacherAssign";
+import AssinSubjectToRole from "./subject/assignement/assinSubjectToRole";
 import StudentAssign from "./studentAssign";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,7 +66,7 @@ export default function CourseOnBoard() {
     { tabicon: "GRADE", comp: <Grade /> },
     { tabicon: "MEDIUM ", comp: <Medium /> },
     { tabicon: "SUBJECT", comp: <Subject /> },
-    { tabicon: "TEACHER ASSIGN", comp: <TeacherAssign /> },
+    { tabicon: "ASSIGN SUBJECT TO ROLE", comp: <AssinSubjectToRole /> },
     { tabicon: "STUDENT ASSIGNMENT", comp: <StudentAssign /> },
   ];
   const classes = useStyles();

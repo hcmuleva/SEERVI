@@ -5,6 +5,7 @@ type Query {
   suborgRoles(id: String!): [Role!]!
   groupRoles(id: String!): [Role!]!
   subGroupRoles(id: String!): [Role!]!
+  roleById(id:ID!):Role!
 }
 type Mutation {
   createBulkRoles(data: BulkRoleInput!): [Role!]!

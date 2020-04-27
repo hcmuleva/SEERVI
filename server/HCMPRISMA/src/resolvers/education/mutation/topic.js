@@ -1,19 +1,15 @@
  import getUserId from '../../../utils/getUserId'
 
  async function createTopic(parent, args, { prisma, request }, info) {
+     console.log("ArGS createTopic",args)
     const userId = getUserId(request)
-
-    console.log("createdBy ",userId)
-    console.log("ARGS DATA",args)
-    
-     const {subject,name,plantDate,isPublished,state,status,available,unit}=args.data
-     const createdBy={connect:{id:userId}}
-     const subjectVal ={connect:{id:subject}}
-     let unitValue;
-     if(unit){
-         unitValue={connect:{id:unit}}
+    let data=args.data
+     data['createdBy']={connect:{id:userId}}
+     data['subject'] ={connect:{id:args.data.subject}}
+     
+     if(data.unit){
+         data['unit']={connect:{id:args.data.unit}}
      }
-     let data={name,subject:subjectVal,plantDate,isPublished,state,status,available,unit:unitValue}
      console.log("111sdata for createTopic ", data)
     return await prisma.mutation.createTopic({data}, info)
 }

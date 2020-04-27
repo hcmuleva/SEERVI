@@ -121,6 +121,15 @@ const GET_SUBGROUPROLES = gql`
     }
   }
 `;
+const GET_USER_BY_ROLEID=gql`
+query GET_USER_BY_ROLEID($id:ID!){
+  roleById(id:$id){
+    name id
+    users{ id email firstname, lastname }
+  
+  }
+}
+`;
 export {
   GET_ORG_ROLES,
   GET_ORGROLES,
@@ -131,4 +140,5 @@ export {
   GET_SUBORGROLES,
   GET_GROUPROLES,
   GET_SUBGROUPROLES,
+  GET_USER_BY_ROLEID
 };

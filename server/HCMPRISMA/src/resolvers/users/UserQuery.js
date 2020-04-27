@@ -1,8 +1,8 @@
-import {users} from './query/users'
+import {users,usersRoleId} from './query/users'
 import {getAllMedium} from './query/medium'
 import {loggedInUser,getMyOrg} from './query/me'
 export const UserQueryFunction={
-    users,
+    users,usersRoleId,
     loggedInUser,getMyOrg,
     getAllMedium
 }

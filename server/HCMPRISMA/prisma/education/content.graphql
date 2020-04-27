@@ -20,15 +20,15 @@ type Content{
      fileInfo:Json
      type:String!
      url:String
-     subject:Subject!           @relation(name: "ContentToSubject", onDelete: SET_NULL)
+     subject:Subject            @relation(name: "ContentToSubject", onDelete: SET_NULL)
      unit:Unit                  @relation(name: "ContentToUnit", onDelete: SET_NULL)
      topic:Topic                @relation(name: "ContentToTopic", onDelete: SET_NULL)
      createdBy:User             @relation(name: "ContentToUser", onDelete: SET_NULL)
      updateBy:[User]            @relation(name: "ContentToUserUpdate", onDelete: SET_NULL)
-     plantDate:DateTime
-     isPublished:Boolean!
-     state:String!
-     status:String!
+     plantDate:DateTime          
+     isPublished:Boolean
+     state:String
+     status:String
      available:String 
      updatedAt:DateTime!         @updatedAt
      createdAt:DateTime!         @createdAt

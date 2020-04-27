@@ -2,21 +2,19 @@
 
  async function createContent(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
-    console.log("createContent ARGS DATA",args)
-    let data={}
-     const {subject,name,number,plantDate,isPublished,state,status,available,unit,topic,type,fileInfo}=args.data
-     const createdBy={connect:{id:userId}}
-     const subjectVal ={connect:{id:subject}}
-     let unitVal
-     let topicVal
-     if(unit){
-         unitVal={connect:{id:unit}}
+    let data=args.data
+   
+     data['createdBy']={connect:{id:userId}}
+     if(data.subject){
+         data['subject']={connect:{id:args.data.subject}}
      }
-     if(topic){
-           topicVal={connect:{id:topic}}
+      if(data.unit){
+         data['unit']={connect:{id:args.data.unit}}
      }
-     data ={subject:subjectVal,name,number,plantDate,isPublished,state,status,available,unit:unitVal,topic:topicVal,type,fileInfo}
-    
+      if(data.topic){
+         data['topic']={connect:{id:args.data.topic}}
+     }
+     
     console.log("data for createContent ", data)
     return await prisma.mutation.createContent({
         data

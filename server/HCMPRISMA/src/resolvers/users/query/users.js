@@ -16,5 +16,12 @@ function users(parent, args, { prisma }, info) {
     return prisma.query.users(opArgs, info)
 }
 
+function usersRoleId(parent, args, { prisma }, info) {
+    
+    return prisma.query.users({
+        roles:{connect:{id:args.id}} 
 
-export {users}
+    }, info)
+} 
+
+export {users,usersRoleId}

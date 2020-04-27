@@ -1,75 +1,95 @@
-import React,{useState} from 'react'
-import PropTypes from 'prop-types';
-import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { useQuery } from '@apollo/react-hooks';
-import {GET_ORGS, GET_GROUPS} from '../queries/getAllOrgs'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_ORGS, GET_GROUPS } from "../queries/getAllOrgs";
 
-import Orgs from './orgPage'
+import Orgs from "./orgPage";
 
-import SubOrgView from './SubOrgView'
-import GroupView from './GroupView'
-import SubGroupView from './SUBGroupView'
-import UserRoleAssignView from './UserRoleAssignView'
-import UserManagedByAdmin from './UserManagedByAdmin'
+import SubOrgView from "./SubOrgView";
+import GroupView from "./GroupView";
+import SubGroupView from "./SUBGroupView";
+import UserRoleAssignView from "./UserRoleAssignView";
+import UserManagedByAdmin from "./UserManagedByAdmin";
 function TabPanel(props) {
-    const { loading:orgLoading, error:orgError, data:orgData } = useQuery(GET_ORGS)
-    const { loading:groupLoading, error:groupError, data:groupData } = useQuery(GET_GROUPS)
-    let orgList=[]  
-    let groupList=[]
-    let subgroupList=[]
-    if(orgData) 
-    {   orgList=orgData.allorgs
-        
-    }
-    
-    
+  const { loading: orgLoading, error: orgError, data: orgData } = useQuery(
+    GET_ORGS
+  );
+  const {
+    loading: groupLoading,
+    error: groupError,
+    data: groupData,
+  } = useQuery(GET_GROUPS);
+  let orgList = [];
+  let groupList = [];
+  let subgroupList = [];
+  if (orgData) {
+    orgList = orgData.allorgs;
+  }
 
-  const [orgSelected, setOrgSelected]=useState('');
-  const [suborgSelected, setSuborgSelected]=useState('');
-  const [subOrgList,setSubOrgList]=useState([])
+  const [orgSelected, setOrgSelected] = useState("");
+  const [suborgSelected, setSuborgSelected] = useState("");
+  const [subOrgList, setSubOrgList] = useState([]);
   if (orgError) return <p>Org ERROR: {orgError.message}</p>;
   if (orgData === undefined) return <p>ERROR</p>;
-  
-  if (orgLoading) {return <div>ORG Loading</div>;}
-  const { children, value, index, ...other } = props;
-  const getBox=(index)=>{
-      let title="ORG";
-      let listData=[]
-      switch(index){
-          case 0:
-           title="ORG";
-           return (<div><Orgs title={title} /></div>)
-           break;
-         case 1:
-           title="SUBORG";
-            return (<div><SubOrgView title={"SubOrg"} /></div>)
-           break;
-         case 2:
-           title="Group";
-            return (<div><GroupView title={"Group View"} /></div>)
-           break;
-         case 3:
-           title="SUBGROUP";
-            return (<div><SubGroupView title={"SubGroup View"} /></div>)
-           break;
-         case 4:
-           title="USER";
-           return (<UserRoleAssignView/>)
-           break;
-         case 5:
-           title="ROLE";
-           return (<UserManagedByAdmin/>)
-           break;
-      }
-       console.log("Index",index)
-       
+
+  if (orgLoading) {
+    return <div>ORG Loading</div>;
   }
+  const { children, value, index, ...other } = props;
+  const getBox = (index) => {
+    let title = "ORG";
+    let listData = [];
+    switch (index) {
+      case 0:
+        title = "ORG";
+        return (
+          <div>
+            <Orgs title={title} />
+          </div>
+        );
+        break;
+      case 1:
+        title = "SUBORG";
+        return (
+          <div>
+            <SubOrgView title={"SubOrg"} />
+          </div>
+        );
+        break;
+      case 2:
+        title = "Group";
+        return (
+          <div>
+            <GroupView title={"Group View"} />
+          </div>
+        );
+        break;
+      case 3:
+        title = "SUBGROUP";
+        return (
+          <div>
+            <SubGroupView title={"SubGroup View"} />
+          </div>
+        );
+        break;
+      case 4:
+        title = "USER";
+        return <UserRoleAssignView />;
+        break;
+      case 5:
+        title = "ROLE";
+        return <UserManagedByAdmin />;
+        break;
+    }
+    console.log("Index", index);
+  };
   return (
     <Typography
       component="div"
@@ -79,8 +99,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-
-      {value === index && <Box p={6}>{getBox(index)}  </Box>}
+      {value === index && <Box p={6}>{getBox(index)} </Box>}
     </Typography>
   );
 }
@@ -94,11 +113,11 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 1350,
@@ -106,23 +125,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SuperAdminManagementPage() {
-        
   const classes = useStyles();
   const theme = useTheme();
-    
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
-  const handleChangeIndex = index => {
+
+  const handleChangeIndex = (index) => {
     setValue(index);
   };
 
-    return (
-         <div className={classes.root}>
-       
+  return (
+    <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -137,11 +154,11 @@ export default function SuperAdminManagementPage() {
           <Tab label="Group" {...a11yProps(2)} />
           <Tab label="SubGroup" {...a11yProps(3)} />
           <Tab label="RoleAssignment" {...a11yProps(4)} />
-           <Tab label="User" {...a11yProps(5)} />
+          <Tab label="User" {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
       >
@@ -157,15 +174,11 @@ export default function SuperAdminManagementPage() {
         <TabPanel value={value} index={3} dir={theme.direction}>
           Item Four
         </TabPanel>
-        <TabPanel value={value} index={4} dir={theme.direction}>
-   
-        </TabPanel>
+        <TabPanel value={value} index={4} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={5} dir={theme.direction}>
           Item Six
         </TabPanel>
-         
       </SwipeableViews>
-       
     </div>
-   )
- }
+  );
+}

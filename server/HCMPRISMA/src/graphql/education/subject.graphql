@@ -1,6 +1,6 @@
 type Query {
   getAllSubjects: [Subject!]!
-  getSubjectById(id:String!):Subject!
+  getSubjectById(id:ID!):Subject!
   getSubgroupSubjects(id:ID!):[Subject!]!
   getSubjectByStd(id:ID!):[Subject!]!
 }
@@ -19,7 +19,7 @@ type Subject {
   board: String
   group: Group
   subgroup: SubGroup
-
+  level:    Int 
   units: [Unit!]!
   topic: [Topic!]!
   contents: [Content!]!
@@ -28,6 +28,7 @@ type Subject {
   state: String
   status: String
   available: String
+  examples:[Example!]!
   description: String
 }
 input SubjectInputData {
@@ -35,6 +36,7 @@ input SubjectInputData {
   picture: String
   medium: String
   std: String!
+  level:    Int 
   educationProfiles: Json
   category: String
   board: String
@@ -52,6 +54,7 @@ input SubjectUpdateInputData {
   picture: String
   medium: String
   std: String
+  level:    Int 
   educationProfiles: Json
   category: String
   board: String

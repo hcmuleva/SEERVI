@@ -1,77 +1,74 @@
-    """
-     Content: 
-     in this 
-     type: HTML/UTube, vdo/audio/image/docs etc...
-     Subject : content may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
-     Unit: content may belongs to  units
-     Topic: content may belongs to  topic 
-     createdBy: To track who has created this
-     updatedBy: to track who has update this
-     plandate: we can plan in advance, when conent need to release
-     isPublished: we can mark content publish/unpublish so that user can view only publised content.
-     state: ACTIVE,DORMANT, DEACTIVE
-     status: APPROVED/SUBMITTED/REJECTED
-     available: Free/Paid/Subscription based etc....
-     """
+"""
+Content:
+in this
+type: HTML/UTube, vdo/audio/image/docs etc...
+Subject : content may belongs to subject ART/Commorce ELX Mech etc.... its optional because lower classes will not have it
+Unit: content may belongs to  units
+Topic: content may belongs to  topic
+createdBy: To track who has created this
+updatedBy: to track who has update this
+plandate: we can plan in advance, when conent need to release
+isPublished: we can mark content publish/unpublish so that user can view only publised content.
+state: ACTIVE,DORMANT, DEACTIVE
+status: APPROVED/SUBMITTED/REJECTED
+available: Free/Paid/Subscription based etc....
+"""
 type Query {
-  getAllContent:[Content!]!
-
+  getAllContent: [Content!]!
 }
 type Mutation {
-  createContent(data:ContentInputData!):Content!
-  updateContent(id:ID!,data: ContentUpdateInputData!):Content!
-  deleteContent(id:ID!):Content!
-}         
-type Content{
- 
-     id: ID! 
-     name:String!
-     type:String!
-     number:Int
-     url:String
-     subject:Subject! 
-     unit:Unit 
-     topic:Topic 
-     fileInfo:Json
-     createdBy:User        
-     updateBy:[User]      
-     plantDate:DateTime
-     isPublished:Boolean! @default(value: false)
-     state:String!
-     status:String!
-     available:String 
-     updatedAt:DateTime!         
-     createdAt:DateTime!        
+  createContent(data: ContentInputData!): Content!
+  updateContent(id: ID!, data: ContentUpdateInputData!): Content!
+  deleteContent(id: ID!): Content!
+}
+type Content {
+  id: ID!
+  name: String!
+  type: String!
+  number: Int
+  url: String
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  fileInfo: Json
+  createdBy: User
+  updateBy: [User]
+  plantDate: DateTime
+  isPublished: Boolean @default(value: false)
+  state: String @default(value: "ACTIVE")
+  status: String @default(value: "APPROVED")
+  available: String @default(value: "FREE")
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
-
-input ContentInputData{
-     name:String!
-     subject:String!   
-     number:Int     
-     unit:String 
-     topic:String
-     type:String!    
-     fileInfo:Json
-     url:String                    
-     plantDate:String
-     isPublished:Boolean! 
-     state:String!
-     status:String!
-     available:String 
+input ContentInputData {
+  name: String!
+  subject: String
+  number: Int
+  unit: String
+  topic: String
+  type: String!
+  fileInfo: Json
+  url: String
+  plantDate: String
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
 }
-input ContentUpdateInputData{
-    name:String
-    number:Int
-    subject:String        
-    unit:String 
-    topic:String 
-    type:String
-    fileInfo:Json
-    url:String                       
-    plantDate:DateTime
-    isPublished:Boolean 
-    state:String
-    status:String
-    available:String 
+input ContentUpdateInputData {
+  name: String
+  number: Int
+  subject: String
+  unit: String
+  topic: String
+  type: String
+  fileInfo: Json
+  url: String
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
 }
