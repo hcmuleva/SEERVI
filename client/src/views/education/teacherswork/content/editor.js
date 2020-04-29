@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import { Card, CardHeader, CardBody, Form, FormInput } from "shards-react";
 import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
-import uploadFile from "../../../../commoncomponent/files/fileupload";
+import uploadFile from "../../../commoncomponent/files/fileupload";
 import "react-quill/dist/quill.snow.css";
-import "../../../../../assets/quill.css";
+import "../../../../assets/quill.css";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],

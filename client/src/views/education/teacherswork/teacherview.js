@@ -12,10 +12,10 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import StudentView from "./studentview";
-import Content from "./content";
-import Subjectview from "./subjectview";
-import ComponentTest from "../experiment/exp";
+//import StudentView from "./studentview";
+//import Content from "./content";
+//import Subjectview from "./subjectview";
+import ContentCreation from "./contentCreation";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -71,16 +71,16 @@ export default function TeacherView(props) {
   };
 
   const myData = [
-    {
-      tabicon: "StudentView",
-      comp: <StudentView subjectList={subjectList} />,
-    },
-    {
-      tabicon: "Content",
-      comp: <Content subjectList={subjectList} />,
-    },
-    { tabicon: "SubjectView", comp: <Subjectview subjectList={subjectList} /> },
-    { tabicon: "Course", comp: <ComponentTest /> },
+    // {
+    //   tabicon: "StudentView",
+    //   comp: <StudentView subjectList={subjectList} />,
+    // },
+    // {
+    //   tabicon: "Content",
+    //   comp: <Content subjectList={subjectList} />,
+    // },
+    // { tabicon: "SubjectView", comp: <Subjectview subjectList={subjectList} /> },
+    { tabicon: "Course", comp: <ContentCreation /> },
   ];
   const classes = useStyles();
 

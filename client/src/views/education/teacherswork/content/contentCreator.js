@@ -9,10 +9,10 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import { CREATE_CONTENT } from "../../../../../graphql/mutations/education/content";
+import { CREATE_CONTENT } from "../../../../graphql/mutations/education/content";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GET_UNIT_BY_ID } from "../../../../../graphql/queries/education/unit";
-import { MY_ASSIGNED_SUBJECTS } from "../../../../../graphql/queries/users/user";
+import { GET_UNIT_BY_ID } from "../../../../graphql/queries/education/unit";
+import { MY_ASSIGNED_SUBJECTS } from "../../../../graphql/queries/users/user";
 import EditorView from "./editorChoiceMenu";
 import ContentForm from "./form";
 const useStyles = makeStyles((theme) => ({

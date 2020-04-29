@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, FormInput } from "shards-react";
-import uploadFile from "../../../../commoncomponent/files/fileupload";
+import uploadFile from "../../../commoncomponent/files/fileupload";
 
 export default function FileEdiitorChoice(props) {
   return (

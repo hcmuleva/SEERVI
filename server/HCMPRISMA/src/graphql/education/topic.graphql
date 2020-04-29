@@ -24,7 +24,7 @@ type Mutation {
 type Topic {
   id: ID!
   name: String!
-  subject: Subject!
+  subject: Subject
   unit: Unit
   contents: [Content!]!
   createdBy: User
@@ -41,7 +41,7 @@ type Topic {
 
 input TopicInputData {
   name: String!
-  subject: String!
+  subject: String
   unit: String
   plantDate: DateTime
   isPublished: Boolean

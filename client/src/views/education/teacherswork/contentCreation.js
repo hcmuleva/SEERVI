@@ -8,11 +8,10 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import SubjectContent from "./subjectContent";
-import UnitContent from "./UnitContent";
-import TopicContent from "./TopicContent";
-import Question from "./question";
-import Exam from "./exam";
-import Quiz from "./quiz";
+import SubjectManagement from "./subjectstructure/SubjectManagement";
+import Question from "./content/question";
+import Exam from "./content/exam";
+import Quiz from "./content/quiz";
 function TabPanel(props) {
   //     const { loading:orgLoading, error:orgError, data:orgData } = useQuery(GET_ORGS)
   //     const { loading:groupLoading, error:groupError, data:groupData } = useQuery(GET_GROUPS)
@@ -39,35 +38,30 @@ function TabPanel(props) {
       case 0:
         return (
           <div>
-            <SubjectContent title="FirstTAB->SubjectContent" />
+            <SubjectManagement title="FirstTAB->UniitContent" />
           </div>
         );
         break;
       case 1:
         return (
           <div>
-            <UnitContent title="FirstTAB->UniitContent" />
+            <SubjectContent title="FirstTAB->SubjectContent" />
           </div>
         );
+        break;
+
         break;
       case 2:
-        return (
-          <div>
-            <TopicContent title="FirstTAB->TopicContent" />
-          </div>
-        );
-        break;
-      case 3:
         return (
           <div>
             <Question title="FirstTAB->QuestionContent" />
           </div>
         );
         break;
-      case 4:
+      case 3:
         return <Exam title="FirstTAB->Exam" />;
         break;
-      case 5:
+      case 4:
         return <Quiz title="FirstTAB->Quiz" />;
         break;
     }
@@ -107,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SuperAdminManagementPage() {
+export default function ContentCreation() {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -132,12 +126,12 @@ export default function SuperAdminManagementPage() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="CONTENT MGMT" {...a11yProps(0)} />
-          <Tab label="SUBJECT MGMT" {...a11yProps(1)} />
-          <Tab label="TOPICCONTENT" {...a11yProps(2)} />
-          <Tab label="QUESTION" {...a11yProps(3)} />
-          <Tab label="EXAM" {...a11yProps(4)} />
-          <Tab label="QUIZ" {...a11yProps(5)} />
+          <Tab label="SUBJECT MGMT" {...a11yProps(0)} />
+          <Tab label="CONTENT MGMT" {...a11yProps(1)} />
+
+          <Tab label="QUESTION" {...a11yProps(2)} />
+          <Tab label="EXAM" {...a11yProps(3)} />
+          <Tab label="QUIZ" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
       <SwipeableViews

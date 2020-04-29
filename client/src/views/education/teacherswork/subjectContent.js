@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import ContentCreator from "./content/contentCreator";
-import ContentForm from "./content/form";
+
 import { useQuery } from "@apollo/react-hooks";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
-import EditorView from "./content/editorChoiceMenu";
-import { GET_SUBJECT_BY_ID } from "../../../../graphql/queries/education/subject";
-import { GET_UNIT_BY_ID } from "../../../../graphql/queries/education/unit";
-import { GET_TOPIC_BY_ID } from "../../../../graphql/queries/education/topic";
-import { MY_ASSIGNED_SUBJECTS } from "../../../../graphql/queries/users/user";
-import SubjectSelection from "./selection/subjectSelector";
-import TreeViewSubject from "./selection/treeview";
-
 import { Container, Row, Col } from "shards-react";
 
-import PageTitle from "../../../../components/common/PageTitle";
+import { GET_SUBJECT_BY_ID } from "../../../graphql/queries/education/subject";
+import { GET_UNIT_BY_ID } from "../../../graphql/queries/education/unit";
+import { GET_TOPIC_BY_ID } from "../../../graphql/queries/education/topic";
+import { MY_ASSIGNED_SUBJECTS } from "../../../graphql/queries/users/user";
+import EditorView from "./content/editorChoiceMenu";
+import SubjectSelection from "./content/selection/subjectSelector";
+import TreeViewSubject from "./content/selection/treeview";
+import ContentCreator from "./content/contentCreator";
+import ContentForm from "./content/form";
+import PageTitle from "../../../components/common/PageTitle";
 export default function SubjectContent(props) {
   const {
     loading: assignedSubjectsLoading,
@@ -78,7 +78,6 @@ export default function SubjectContent(props) {
         <Row noGutters className="page-header py-4">
           <PageTitle
             sm="4"
-            title="Content Management"
             subtitle="Content Creation"
             className="text-sm-left"
           />
