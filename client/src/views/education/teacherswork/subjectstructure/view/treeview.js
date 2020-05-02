@@ -22,7 +22,7 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import Examplemenu from "./examplemenu";
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.text.secondary,
@@ -149,7 +149,7 @@ export default function TreeViewSubject(props) {
               nodeId={subject.id}
               labelText={subject.name}
               labelIcon={MenuBookTwoToneIcon}
-              labelInfo={subject.contents.length}
+              labelInfo=<Examplemenu />
               onClick={() => {
                 props.setId(subject.id);
                 props.setCompLevel("SUBJECT");

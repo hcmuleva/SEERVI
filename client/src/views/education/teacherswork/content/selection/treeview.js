@@ -91,6 +91,7 @@ function StyledTreeItem(props) {
           <Typography variant="body2" className={classes.labelText}>
             {labelText}
           </Typography>
+
           <Typography variant="caption" color="inherit">
             {labelInfo}
           </Typography>
@@ -130,20 +131,8 @@ const useStyles = makeStyles({
 });
 
 export default function TreeViewSubject(props) {
-  console.log("MYSUBJECT FOR TRREE VIEW ", props);
   const classes = useStyles();
-  const subjectHandleclick = (e) => {
-    console.log("Subject Click ", e.target);
-  };
-  const unitHandleclick = (e) => {
-    console.log("Unit Click ", e.target);
-  };
-  const topicHandleclick = (e) => {
-    console.log("Topic Click ", e.target);
-  };
-  const contentHandleclick = (e) => {
-    console.log("content Click ", e.target);
-  };
+
   return (
     <TreeView
       className={classes.root}

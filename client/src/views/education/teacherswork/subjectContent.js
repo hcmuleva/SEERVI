@@ -13,7 +13,7 @@ import { MY_ASSIGNED_SUBJECTS } from "../../../graphql/queries/users/user";
 import EditorView from "./content/editorChoiceMenu";
 import SubjectSelection from "./content/selection/subjectSelector";
 import TreeViewSubject from "./content/selection/treeview";
-import ContentCreator from "./content/contentCreator";
+import ContentCreator from "./content/content_newdesign/contentCreator";
 import ContentForm from "./content/form";
 import PageTitle from "../../../components/common/PageTitle";
 export default function SubjectContent(props) {

@@ -4,7 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import BookIcon from "@material-ui/icons/Book";
 
+import LiveHelpIcon from "@material-ui/icons/LiveHelp";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import HelpIcon from "@material-ui/icons/Help";
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket";
@@ -12,12 +14,10 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-//import StudentView from "./studentview";
-//import Content from "./content";
-//import Subjectview from "./subjectview";
-import ContentCreation from "./contentCreation";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
   return (
     <Typography
       component="div"
@@ -53,17 +53,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TeacherView(props) {
-  console.log("PROPS iin TEACHER VIEW", props);
-  let subjectList = [];
-  if (props.subjectData) {
-    props.subjectData.map((data) => {
-      if (data.subscribedAs && "TEACHER" === data.subscribedAs.name) {
-        subjectList = [data.mySubjects, ...subjectList];
-      }
-    });
-  }
-
+export default function Question() {
+  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -71,22 +62,17 @@ export default function TeacherView(props) {
   };
 
   const myData = [
-    // {
-    //   tabicon: "StudentView",
-    //   comp: <StudentView subjectList={subjectList} />,
-    // },
-    // {
-    //   tabicon: "Content",
-    //   comp: <Content subjectList={subjectList} />,
-    // },
-    // { tabicon: "SubjectView", comp: <Subjectview subjectList={subjectList} /> },
-    { tabicon: "Course", comp: <ContentCreation /> },
+    { tabicon: <BookIcon /> },
+    { tabicon: <LiveHelpIcon /> },
+    { tabicon: <PersonPinIcon /> },
+    { tabicon: <HelpIcon /> },
+    { tabicon: <ShoppingBasket /> },
+    { tabicon: <ThumbDown /> },
+    { tabicon: <ThumbUp /> },
   ];
-  const classes = useStyles();
-
   return (
     <div className={classes.root}>
-      <AppBar position="static" square={false}>
+      <AppBar position="static">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -97,7 +83,6 @@ export default function TeacherView(props) {
           {myData.map((elm, index) => {
             return (
               <Tab
-                key={index}
                 icon={elm.tabicon}
                 aria-label="phone"
                 {...a11yProps(index)}
@@ -109,8 +94,8 @@ export default function TeacherView(props) {
 
       {myData.map((elm, index) => {
         return (
-          <TabPanel key={index} value={value} index={index}>
-            {elm.comp}
+          <TabPanel value={value} index={index}>
+            HarishItem {index}
           </TabPanel>
         );
       })}

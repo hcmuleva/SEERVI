@@ -102,6 +102,9 @@ export default function ContentCreator(props) {
           if (props.topicid) {
             myobj["topic"] = props.topicid;
           }
+          if (!myobj.number) {
+            myobj["number"] = 1;
+          }
           console.log("Before Create object ", myobj);
           createContent({
             variables: myobj,
