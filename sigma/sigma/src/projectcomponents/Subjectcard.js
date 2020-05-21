@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { Button } from "primereact/button";
 import { FileUpload } from "primereact/fileupload";
 import S3UploadFile from "../common/S3UploadFile";
 import { useQuery, useMutation } from "@apollo/react-hooks";
@@ -10,6 +11,7 @@ import { GET_SUBJECT_BY_ID } from "../service/graphql/education/common/queries/s
 import { MY_ASSIGNED_SUBJECTS } from "../service/graphql/education/common/queries/assignedsubjects";
 
 export function Subjectcard(props) {
+  console.log("Props ", props);
   const [url, setUrl] = useState(props.subject.picture);
   let subject = props.subject;
   const [fileInfo, setFileInfo] = useState({
@@ -22,6 +24,13 @@ export function Subjectcard(props) {
   const header = (
     <span>
       <div className="p-card-title">{subject.name}</div>
+      <Button
+        label="Details"
+        className="p-button-rounded p-button-danger"
+        onClick={() => {
+          setType("TEACHERTABVIEW");
+        }}
+      />
       <img alt="Card" src={url} />
     </span>
   );
@@ -61,18 +70,23 @@ export function Subjectcard(props) {
   if (url) {
   }
   const getPage = (subjectid, subjectname) => {
-    console.log("SUBBJ ", subjectname, " Subjectid ", subjectid);
+    console.log(
+      "GET PAGE   SUBBJ=> ",
+      subjectname,
+      " Subjectid ",
+      subjectid,
+      "type",
+      type
+    );
     switch (type) {
       case "MATERIAL":
         return (
           <Redirect to={"/content/SUBJECT/" + subjectid + "/" + subjectname} />
         );
         break;
-      case "QUESTIONBANK":
+      case "QUESTION":
         return (
-          <Redirect
-            to={"/questionbank/SUBJECT/" + subjectid + "/" + subjectname}
-          />
+          <Redirect to={"/question/SUBJECT/" + subjectid + "/" + subjectname} />
         );
         break;
       case "EXAMS":
@@ -91,12 +105,22 @@ export function Subjectcard(props) {
             to={"/tipstricks/SUBJECT/" + subjectid + "/" + subjectname}
           />
         );
+      case "QUESTIONBANK":
+        return (
+          <Redirect to={"/question/SUBJECT/" + subjectid + "/" + subjectname} />
+        );
         break;
       case "PAPERS":
         return (
           <Redirect to={"/papers/SUBJECT/" + subjectid + "/" + subjectname} />
         );
         break;
+      case "TEACHERTABVIEW":
+        return (
+          <Redirect
+            to={"/teachertabview/SUBJECT/" + subject.id + "/" + subject.name}
+          />
+        );
     }
   };
 

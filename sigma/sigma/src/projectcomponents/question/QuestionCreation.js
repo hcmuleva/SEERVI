@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2,
+} from "react-html-parser";
+
 import S3UploadFile from "../../common/S3UploadFile";
 
 import { Editor } from "primereact/editor";
@@ -7,13 +13,13 @@ import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import { FileUpload } from "primereact/fileupload";
 import { Button } from "primereact/button";
-import { GET_ALLFORMULA_SUBJECT_BY_ID } from "../../service/graphql/education/common/queries/subjects";
-import { CREATE_FORMULA } from "../../service/graphql/education/teacher/mutations/formula";
+import { GET_ALLQUESTIONS_SUBJECT_BY_ID } from "../../service/graphql/education/common/queries/subjects";
+import { CREATE_QUESTION } from "../../service/graphql/education/teacher/mutations/question";
 
 import OptionalField from "../common/OptionalField";
-export function FormulaCreation(props) {
-  console.log("FORMULA CREATION  props ", props);
-  const [createFormula] = useMutation(CREATE_FORMULA);
+export function QuestionCreation(props) {
+  console.log("Question CREATION  props ", props);
+  const [createQuestion] = useMutation(CREATE_QUESTION);
 
   const [title, setTitle] = useState(null);
   const [url, setUrl] = useState(null);
@@ -41,17 +47,16 @@ export function FormulaCreation(props) {
       case "HTML":
         return (
           <div>
-            <InputText
-              placeholder="Title"
-              style={{ width: 350, height: 40, textAlign: "center" }}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
             <Editor
               style={{ height: "220px" }}
               value={content}
-              onTextChange={(e) => setContent(e.htmlValue)}
+              onTextChange={(e) => {
+                props.setQuestionObj({
+                  ...props.questionObj,
+                  content: e.htmlValue,
+                });
+                setContent(e.htmlValue);
+              }}
             />
           </div>
         );
@@ -66,6 +71,7 @@ export function FormulaCreation(props) {
                 setTitle(e.target.value);
               }}
             />
+            <h1> </h1>
             <InputText
               placeholder="YOUTUBE URL"
               style={{ width: 350, height: 50, textAlign: "center" }}
@@ -87,6 +93,7 @@ export function FormulaCreation(props) {
                 setTitle(e.target.value);
               }}
             />
+            <h1> </h1>
             <FileUpload
               name="demo[]"
               onUpload={onUpload}
@@ -131,41 +138,14 @@ export function FormulaCreation(props) {
                   available: available,
                   description: "DUMMY",
                 };
-                if (!props.treeData) {
-                  console.log("SET SUBJECT LEVEL ");
-                  myobj["subject"] = props.subjectid;
-                } else {
-                  if (props.treeData && "UNIT" === props.treeData.type) {
-                    console.log("SET UNIT LEVEL ");
-                    myobj["unit"] = props.treeData.id;
-                  } else if (
-                    props.treeData &&
-                    "TOPIC" === props.treeData.type
-                  ) {
-                    console.log("SET TOPIC LEVEL ");
-                    myobj["topic"] = props.treeData.id;
-                  }
-                }
-                console.log("Myobj Formula", myobj);
-                createFormula({
-                  variables: myobj,
-                  refetchQueries: [
-                    {
-                      query: GET_ALLFORMULA_SUBJECT_BY_ID,
-                      variables: { id: props.subjectid },
-                    },
-                  ],
-                })
-                  .then((res) => {
-                    console.log("Created content", res);
-                    resetData();
-                  })
-                  .catch((err) => {
-                    throw new Error("Error in creating content ");
-                  });
               })
               .catch((err) => {
-                console.log("ERROR ", err);
+                console.log(
+                  "ERROR in Uploading HTML Data",
+                  err,
+                  " Error message ",
+                  err.message
+                );
               });
           }
         }}
@@ -173,23 +153,9 @@ export function FormulaCreation(props) {
     );
   };
   return (
-    <div>
-      <h1>Formula</h1>
+    <React.Fragment>
       {content ? saveContent() : ""}
       {getEditorType()}
-      <OptionalField
-        state={state}
-        setState={setState}
-        status={status}
-        setStatus={setStatus}
-        level={level}
-        setLevel={setLevel}
-        available={available}
-        setAvailable={setAvailable}
-      />
-      <div>
-        state{state}:status{status}:available{available}:level{level}
-      </div>
-    </div>
+    </React.Fragment>
   );
 }

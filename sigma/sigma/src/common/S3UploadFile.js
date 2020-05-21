@@ -10,16 +10,12 @@ const config = {
 const S3UploadFile = (file) => {
   const ReactS3Client = new S3(config);
   config["dirName"] = "12th/profile";
-  console.log("Using file funtion");
-  console.log("Modified config", JSON.stringify(config));
   return ReactS3Client.uploadFile(file)
     .then((data) => {
-      console.log("Full Data", data);
-      console.log(data.location);
       return data.location;
     })
     .catch((err) => {
-      console.log("Error in file upload");
+      console.log("Error in file upload", err);
       return err;
     });
 };

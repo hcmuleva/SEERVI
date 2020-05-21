@@ -7,13 +7,13 @@ import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import { FileUpload } from "primereact/fileupload";
 import { Button } from "primereact/button";
-import { GET_ALLFORMULA_SUBJECT_BY_ID } from "../../service/graphql/education/common/queries/subjects";
-import { CREATE_FORMULA } from "../../service/graphql/education/teacher/mutations/formula";
+import { GET_ALLTIPSTRICKS_SUBJECT_BY_ID } from "../../service/graphql/education/common/queries/subjects";
+import { CREATE_TIPSTRICKS } from "../../service/graphql/education/teacher/mutations/tipstricks";
 
 import OptionalField from "../common/OptionalField";
-export function FormulaCreation(props) {
-  console.log("FORMULA CREATION  props ", props);
-  const [createFormula] = useMutation(CREATE_FORMULA);
+export function TipsTricksCreation(props) {
+  console.log("TipsTricks CREATION  props ", props);
+  const [createTipsTricks] = useMutation(CREATE_TIPSTRICKS);
 
   const [title, setTitle] = useState(null);
   const [url, setUrl] = useState(null);
@@ -146,12 +146,12 @@ export function FormulaCreation(props) {
                     myobj["topic"] = props.treeData.id;
                   }
                 }
-                console.log("Myobj Formula", myobj);
-                createFormula({
+                console.log("Myobj TipsTricks", myobj);
+                createTipsTricks({
                   variables: myobj,
                   refetchQueries: [
                     {
-                      query: GET_ALLFORMULA_SUBJECT_BY_ID,
+                      query: GET_ALLTIPSTRICKS_SUBJECT_BY_ID,
                       variables: { id: props.subjectid },
                     },
                   ],
@@ -174,7 +174,7 @@ export function FormulaCreation(props) {
   };
   return (
     <div>
-      <h1>Formula</h1>
+      <h1>TipsTricks</h1>
       {content ? saveContent() : ""}
       {getEditorType()}
       <OptionalField

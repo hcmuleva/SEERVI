@@ -16,7 +16,7 @@ import { GET_UNIT_BY_ID } from "../../service/graphql/education/common/queries/u
 import { UnitCreateDialog } from "./UnitCreateDialog";
 import { Material } from "../material/Material";
 import { Formulas } from "../formulas/Formulas";
-import { QuestionBank } from "../questionBank/QuestionBank";
+import { Question } from "../question/Question";
 import { Exam } from "../exams/Exams";
 import { TipsTrics } from "../tipstricks/TipsTrics";
 import { Papers } from "../papers/Papers";
@@ -36,7 +36,7 @@ export function Content(props) {
   const [materialTypeVal, setMaterialTypeVal] = useState("MATERIAL");
   const [materialType, setMaterialType] = useState([
     { label: "MATERIAL", value: "MATERIAL" },
-    { label: "QUESTIONBANK", value: "QUESTIONBANK" },
+    { label: "Question", value: "Question" },
     { label: "EXAMS", value: "EXAMS" },
     { label: "FORMULAS", value: "FORMULAS" },
     { label: "TIPS&TRICKS", value: "TIPS&TRICKS" },
@@ -94,9 +94,9 @@ export function Content(props) {
           />
         );
         break;
-      case "QUESTIONBANK":
+      case "Question":
         return (
-          <QuestionBank
+          <Question
             contentTypeVal={contentTypeVal}
             treeData={treeData}
             materialTypeVal={materialTypeVal}

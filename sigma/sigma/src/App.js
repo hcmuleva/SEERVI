@@ -31,10 +31,11 @@ import MySubjects from "./components/MySubjects";
 import TeacherMgmt from "./projectcomponents/content/TeacherMgmt";
 import { Content } from "./projectcomponents/content/Content";
 import { Exams } from "./projectcomponents/exams/Exams";
-import { Formulas } from "./projectcomponents/formulas/Formulas_path";
+import { Formulas } from "./projectcomponents/formulas/Formulas";
 import { Papers } from "./projectcomponents/papers/Papers";
-import { QuestionBank } from "./projectcomponents/questionBank/QuestionBank";
+import { Question } from "./projectcomponents/question/Question";
 import { TipsTrics } from "./projectcomponents/tipstricks/TipsTrics";
+import { TeacherTabbedView } from "./projectcomponents/teacher/TeacherTabbedView";
 class App extends Component {
   constructor() {
     super();
@@ -324,14 +325,16 @@ class App extends Component {
           <Route path="/forms" component={FormsDemo} />
           <Route path="/sample" component={SampleDemo} />
           <Route path="/content/:type/:id/:name" component={Content} />
-          <Route path="/exams/:type/:id/:name" component={Exams} />
           <Route
-            path="/questionbank/:type/:id/:name"
-            component={QuestionBank}
+            path="/teachertabview/:type/:id/:name"
+            component={TeacherTabbedView}
           />
+          <Route path="/exams/:type/:id/:name" component={Exams} />
+
           <Route path="/papers/:type/:id/:name" component={Papers} />
           <Route path="/formulas/:type/:id/:name" component={Formulas} />
           <Route path="/tipstricks/:type/:id/:name" component={TipsTrics} />
+          <Route path="/question/:type/:id/:name" component={Question} />
           <Route path="/data" component={DataDemo} />
           <Route path="/panels" component={PanelsDemo} />
           <Route path="/overlays" component={OverlaysDemo} />

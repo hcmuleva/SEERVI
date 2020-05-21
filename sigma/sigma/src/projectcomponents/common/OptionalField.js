@@ -30,12 +30,18 @@ export default function OptionalField(props) {
     { label: "YOUTUBE", value: "YOUTUBE" },
     { label: "FILE", value: "FILE" },
   ];
+  const questionTypeList = [
+    { label: "MCQ", value: "MCQ" },
+    { label: "SC", value: "SC" },
+    { label: "T/F", value: "TF" },
+    { label: "SUB", value: "Subjective" },
+  ];
 
   return (
     <div className="p-grid p-fluid">
       <div className="card card-w-title">
         <div className="p-grid">
-          <div className="p-col-12 p-md-3">
+          <div className="p-col-12 p-md-4">
             <Dropdown
               options={contentTypeList}
               value={props.contentTypeVal}
@@ -43,7 +49,7 @@ export default function OptionalField(props) {
               autoWidth={true}
             />
           </div>
-          <div className="p-col-12 p-md-3">
+          {/**<div className="p-col-12 p-md-3">
             <Dropdown
               options={stateList}
               value={props.state}
@@ -66,15 +72,28 @@ export default function OptionalField(props) {
               onChange={(event) => props.setAvailable(event.value)}
               autoWidth={true}
             />
-          </div>
-          <div className="p-col-12 p-md-2">
+          </div>**/}
+          <div className="p-col-12 p-md-4">
             <Dropdown
+              placeholder="Level"
               options={levelList}
               value={props.level}
-              placeholder="Level"
               onChange={(event) => props.setLevel(event.value)}
               autoWidth={true}
             />
+          </div>
+          <div className="p-col-12 p-md-4">
+            {props.questionType ? (
+              <Dropdown
+                options={questionTypeList}
+                value={props.questionType}
+                placeholder="OptionType"
+                onChange={(event) => props.setQuestionType(event.value)}
+                autoWidth={true}
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

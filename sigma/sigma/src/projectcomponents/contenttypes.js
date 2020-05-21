@@ -3,12 +3,12 @@ import { Link, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import { Content } from "./content/Content";
-import { QuestionBank } from "./questionBank/QuestionBank";
+import { Question } from "./question/Question";
 export function ContentTypes(props) {
   let history = useHistory;
   const cars = [
     { label: "MATERIAL", value: "MATERIAL" },
-    { label: "QUESTIONBANK", value: "QUESTIONBANK" },
+    { label: "QUESTION", value: "QUESTION" },
     { label: "EXAMS", value: "EXAMS" },
     { label: "FORMULA", value: "FORMULA" },
     { label: "TIPS&TRICS", value: "TIPS&TRICS" },
