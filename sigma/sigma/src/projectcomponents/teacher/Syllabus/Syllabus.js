@@ -4,6 +4,9 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { GET_SUBJECT_SYLLABUS_BY_ID } from "../../../service/graphql/education/common/queries/subjects";
+import { CREATE_UNIT } from "../../../service/graphql/education/teacher/mutations/unit";
+import { CREATE_TOPIC } from "../../../service/graphql/education/teacher/mutations/topic";
+
 import { SyllabusTreeView } from "./SyllabusTreeView";
 
 export default function Syllabus(props) {
@@ -11,28 +14,10 @@ export default function Syllabus(props) {
 
   const [treeData, setTreeData] = useState(null);
   const [contentLevel, setContentLevel] = useState("SUBJECT");
-  const [syllabustitle, setSyllabustitle] = useState("UNIT");
-  const setTitle = (type) => {
-    switch (type) {
-      case "SUBJECT":
-        setSyllabustitle("UNIT");
-      case "UNIT":
-        setSyllabustitle("TOPIC");
-    }
-    console.log("TREE DATA IN SYLLABUS", treeData);
-  };
+  const [createUnit] = useMutation(CREATE_UNIT);
+  const [createTopic] = useMutation(CREATE_TOPIC);
+  const [unittopicName, setUnittopicName] = useState("");
 
-  useEffect(() => {
-    if (treeData) {
-      setTitle(treeData.type);
-    }
-  }, [treeData]);
-  const getAction = () => {
-    console.log("ACTION TREE DATA", treeData);
-    if (!treeData) return "UNIT";
-    console.log("Returniing ", treeData.action);
-    return treeData.action;
-  };
   const { loading: unitLoading, error: unitError, data: unitData } = useQuery(
     GET_SUBJECT_SYLLABUS_BY_ID,
     {
@@ -51,12 +36,67 @@ export default function Syllabus(props) {
     console.log("UNIT DATA is LOADING");
     return <div>UnitData Loading...</div>;
   }
+  console.log("TREE DATA", treeData);
   const footer = (
     <span>
       <div
         style={{ marginTop: "30px", paddingLeft: "15em", paddingRight: "15em" }}
       >
-        <Button label="Proceed" className="p-button-raised p-button-rounded" />
+        <Button
+          label="Create"
+          className="p-button-raised p-button-rounded"
+          onClick={() => {
+            if (!treeData || (treeData && "SUBJECT" === treeData.type)) {
+              createUnit({
+                variables: {
+                  name: unittopicName,
+                  subject: subjectid,
+                },
+                refetchQueries: () => [
+                  {
+                    query: GET_SUBJECT_SYLLABUS_BY_ID,
+                    variables: { id: subjectid },
+                  },
+                ],
+              })
+                .then((res) => {
+                  setUnittopicName("");
+                  console.log("Created Unit", res);
+
+                  console.log("CLEARD AT UNIT LEVEL", unittopicName);
+                })
+                .catch((err) => {
+                  throw new Error("Error in creating Unit");
+                });
+            } else if (treeData && "UNIT" === treeData.type) {
+              createTopic({
+                variables: {
+                  name: unittopicName,
+                  unit: treeData.id,
+                },
+                refetchQueries: () => [
+                  {
+                    query: GET_SUBJECT_SYLLABUS_BY_ID,
+                    variables: { id: subjectid },
+                  },
+                ],
+              })
+                .then((res) => {
+                  setUnittopicName("");
+                  console.log(
+                    "Created TopicResep",
+                    res,
+                    " clearn ",
+                    unittopicName
+                  );
+                })
+                .catch((err) => {
+                  throw new Error("Error in creating Topic");
+                });
+            }
+            setUnittopicName("");
+          }}
+        />
       </div>
     </span>
   );
@@ -86,11 +126,11 @@ export default function Syllabus(props) {
             }}
           >
             <InputText
-              placeholder={"Enter " + getAction() + " or Section name "}
+              placeholder="EnterName"
+              value={unittopicName}
               style={{ width: 350, height: 50, textAlign: "center" }}
               onChange={(e) => {
-                console.log("E ", e.target.value);
-                setSyllabustitle(e.target.value);
+                setUnittopicName(e.target.value);
               }}
             />
           </div>

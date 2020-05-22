@@ -105,6 +105,7 @@ const GET_ALLFORMULA_SUBJECT_BY_ID = gql`
     }
   }
 `;
+
 const GET_ALLTIPSTRICKS_SUBJECT_BY_ID = gql`
   query GET_ALLTIPSTRICKS_SUBJECT_BY_ID($id: ID!) {
     getSubjectById(id: $id) {
@@ -137,6 +138,49 @@ const GET_ALLTIPSTRICKS_SUBJECT_BY_ID = gql`
         }
       }
       tipstricks {
+        id
+        name
+        fileInfo
+        type
+        url
+        level
+      }
+    }
+  }
+`;
+
+const GET_ALLEXAMPLE_SUBJECT_BY_ID = gql`
+  query GET_ALLEXAMPLE_SUBJECT_BY_ID($id: ID!) {
+    getSubjectById(id: $id) {
+      id
+      name
+      units {
+        id
+        name
+        picture
+        description
+        examples {
+          id
+          name
+          fileInfo
+          type
+          url
+          level
+        }
+        topics {
+          id
+          name
+          examples {
+            id
+            name
+            fileInfo
+            type
+            url
+            level
+          }
+        }
+      }
+      examples {
         id
         name
         fileInfo
@@ -209,4 +253,5 @@ export {
   GET_ALLFORMULA_SUBJECT_BY_ID,
   GET_ALLTIPSTRICKS_SUBJECT_BY_ID,
   GET_ALLQUESTIONS_SUBJECT_BY_ID,
+  GET_ALLEXAMPLE_SUBJECT_BY_ID,
 };

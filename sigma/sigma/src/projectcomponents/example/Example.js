@@ -7,14 +7,12 @@ import { InputText } from "primereact/inputtext";
 import { Editor } from "primereact/editor";
 import { FileUpload } from "primereact/fileupload";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { TreeViewContentCreation } from "./TreeViewContentCreation";
-import { CREATE_CONTENT } from "../../service/graphql/education/teacher/mutations/content";
-
-import { GET_SUBJECT_BY_ID } from "../../service/graphql/education/common/queries/subjects";
-import { GET_UNIT_BY_ID } from "../../service/graphql/education/common/queries/unit";
+import { ExampleTreeView } from "./ExampleTreeView";
+import { CREATE_EXAMPLE } from "../../service/graphql/education/teacher/mutations/example";
+import { GET_ALLEXAMPLE_SUBJECT_BY_ID } from "../../service/graphql/education/common/queries/subjects";
 import S3UploadFile from "../../common/S3UploadFile";
 
-export function Content(props) {
+export function Example(props) {
   console.log("PROPS contebr ", props);
   const subjectid = props.subjectid ? props.subjectid : props.match.params.id;
 
@@ -45,7 +43,7 @@ export function Content(props) {
   const [url, setUrl] = useState("");
   const [fileInfo, setFileInfo] = useState({});
   const [treeData, setTreeData] = useState(null);
-  const [createContent] = useMutation(CREATE_CONTENT);
+  const [createExample] = useMutation(CREATE_EXAMPLE);
 
   const onUpload = (event) => {
     setContentTypeVal("FILE");
@@ -63,10 +61,8 @@ export function Content(props) {
     setTitle("");
     setContentData("");
     setUrl("");
-    console.log("cleanpage called");
-    console.log("url", url, "contentdata", contentData, "tiitile", title);
   };
-  const createContentFunction = (myurl) => {
+  const createExampleFunction = (myurl) => {
     let myobj = {
       name: title,
       fileInfo: fileInfo,
@@ -89,11 +85,11 @@ export function Content(props) {
       }
     }
     console.log("BEFORE CREATE CONTENT", myobj);
-    createContent({
+    createExample({
       variables: myobj,
       refetchQueries: [
         {
-          query: GET_SUBJECT_BY_ID,
+          query: GET_ALLEXAMPLE_SUBJECT_BY_ID,
           variables: { id: props.subjectid },
         },
       ],
@@ -107,7 +103,7 @@ export function Content(props) {
     cleanpage();
   };
   const { loading: unitLoading, error: unitError, data: unitData } = useQuery(
-    GET_SUBJECT_BY_ID,
+    GET_ALLEXAMPLE_SUBJECT_BY_ID,
     {
       variables: { id: subjectid },
     }
@@ -166,7 +162,7 @@ export function Content(props) {
           {unitLoading ? (
             <div>Loading ....</div>
           ) : (
-            <TreeViewContentCreation
+            <ExampleTreeView
               unitData={unitData.getSubjectById}
               setContentLevel={setContentLevel}
               setContentTitle={setContentTitle}
@@ -228,13 +224,13 @@ export function Content(props) {
                 .then((resp) => {
                   setUrl(resp);
                   console.log("uploadFileRESP ", resp);
-                  createContentFunction(resp);
+                  createExampleFunction(resp);
                 })
                 .catch((err) => {
                   console.log("ERROR ", err);
                 });
             } else {
-              createContentFunction(url);
+              createExampleFunction(url);
             }
           }}
         />

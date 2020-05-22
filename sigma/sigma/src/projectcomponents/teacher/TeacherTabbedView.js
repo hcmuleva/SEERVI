@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { TabMenu } from "primereact/tabmenu";
 import Syllabus from "./Syllabus/Syllabus";
 import { Question } from "../question/Question";
+import { Content } from "../content/Content";
+import { Example } from "../example/Example";
+import { Formulas } from "../formulas/Formulas";
+import { TipsTrics } from "../tipstricks/TipsTrics";
+import { Exams } from "../exams/Exams";
 export function TeacherTabbedView(props) {
   const subjectid = props.match.params.id;
   const [activeItem, setActiveItem] = useState("Syllabus");
@@ -22,17 +27,23 @@ export function TeacherTabbedView(props) {
         return <Syllabus subjectid={subjectid} />;
 
       case "Content":
+        return <Content subjectid={subjectid} />;
         break;
       case "Question":
         return <Question subjectid={subjectid} />;
         break;
       case "TipsTricks":
+        return <TipsTrics subjectid={subjectid} />;
         break;
       case "Formulas":
+        return <Formulas subjectid={subjectid} />;
         break;
       case "Examples":
+        return <Example subjectid={subjectid} />;
         break;
       case "Exams":
+        return <Exams subjectid={subjectid} />;
+
         break;
       case "Papers":
         break;

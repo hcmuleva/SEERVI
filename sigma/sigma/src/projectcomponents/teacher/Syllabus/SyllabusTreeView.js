@@ -5,7 +5,6 @@ export function SyllabusTreeView(props) {
   const [selectionKeys, setSelectionKeys] = useState(null);
   const [selectionValue, setSelectionValue] = useState(null);
   const [nodes, setNodes] = useState(null);
-  console.log("SyllabusTreeView  Props", props);
   useEffect(() => {
     let rootElm = [];
     // This is Root level and iterate over units
@@ -59,6 +58,7 @@ export function SyllabusTreeView(props) {
         key: props.unitData.id,
         label: props.unitData.name,
         data: {
+          id: props.subjectid,
           type: "SUBJECT",
           action: "UNIT",
           actionid: props.subjectid,
@@ -78,7 +78,6 @@ export function SyllabusTreeView(props) {
         selectionKeys={selectionKeys}
         selectionValue={selectionValue}
         onSelect={(e) => {
-          console.log("TREE SELECTED NODE DATA", e.node.data);
           props.setTreeData(e.node.data);
         }}
         onSelectionValueChange={(e) => {

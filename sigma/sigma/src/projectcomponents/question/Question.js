@@ -134,7 +134,6 @@ export function Question(props) {
         return <Explaination />;
     }
   };
-  console.log("OPTION DATA IN QUESTION", optionData);
   const levelList = [
     { label: "1", value: 1 },
     { label: "2", value: 2 },
@@ -148,7 +147,6 @@ export function Question(props) {
     { label: "T/F", value: "TF" },
     { label: "SUB", value: "Subjective" },
   ];
-  console.log("TREELEVEL DATA iin Que", treeData);
   const { loading: unitLoading, error: unitError, data: unitData } = useQuery(
     GET_ALLQUESTIONS_SUBJECT_BY_ID,
     {
@@ -225,7 +223,7 @@ export function Question(props) {
           </div>
           <div className="p-col-12 p-md-3 p-lg-2">
             <Dropdown
-              placeholder="Level"
+              placeholder="QueType"
               options={questionTypeList}
               value={questionType}
               onChange={(event) => setQuestionType(event.value)}

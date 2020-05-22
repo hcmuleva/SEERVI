@@ -15,7 +15,9 @@ import PreviewController from "../content/preview/PreviewController";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import StudentSubjectView from "../student/StudentSubjectView";
 export function Formulas(props) {
-  const subjectid = props.match.params.id;
+  //const subjectid = props.match.params.id;
+  const subjectid = props.subjectid ? props.subjectid : props.match.params.id;
+
   const [contentLevel, setContentLevel] = useState("SUBJECT");
   const [itemVal, setItemVal] = useState(items);
   const [contentTypeVal, setContentTypeVal] = useState("HTML");

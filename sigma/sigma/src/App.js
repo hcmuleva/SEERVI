@@ -35,6 +35,8 @@ import { Formulas } from "./projectcomponents/formulas/Formulas";
 import { Papers } from "./projectcomponents/papers/Papers";
 import { Question } from "./projectcomponents/question/Question";
 import { TipsTrics } from "./projectcomponents/tipstricks/TipsTrics";
+import { Example } from "./projectcomponents/example/Example";
+
 import { TeacherTabbedView } from "./projectcomponents/teacher/TeacherTabbedView";
 class App extends Component {
   constructor() {
@@ -330,10 +332,10 @@ class App extends Component {
             component={TeacherTabbedView}
           />
           <Route path="/exams/:type/:id/:name" component={Exams} />
-
           <Route path="/papers/:type/:id/:name" component={Papers} />
           <Route path="/formulas/:type/:id/:name" component={Formulas} />
           <Route path="/tipstricks/:type/:id/:name" component={TipsTrics} />
+          <Route path="/example/:type/:id/:name" component={Example} />
           <Route path="/question/:type/:id/:name" component={Question} />
           <Route path="/data" component={DataDemo} />
           <Route path="/panels" component={PanelsDemo} />
