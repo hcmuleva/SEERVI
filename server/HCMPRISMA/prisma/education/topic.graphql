@@ -28,8 +28,13 @@ type Topic {
   status: String
   available: String
   questions: [Question!]! @relation(name: "QuestionToTopic", onDelete: CASCADE)
-  quizs: [Quiz!]! @relation(name: "QuizToTopic", onDelete: CASCADE)
+
   examples: [Example!]! @relation(name: "ExampleToTopic", onDelete: CASCADE)
+  tipstricks: [TipsTrick!]!
+    @relation(name: "TipsTrickToTopic", onDelete: CASCADE)
+  exams: [Exam!]! @relation(name: "ExamToTopic", onDelete: CASCADE)
+  formulas: [Formula!]! @relation(name: "FormulaToTopic", onDelete: CASCADE)
+  bookmarks: [Bookmark!]! @relation(name: "BookmarkToTopic", onDelete: CASCADE)
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
 }

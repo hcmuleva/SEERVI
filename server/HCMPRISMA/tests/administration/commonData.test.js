@@ -34,6 +34,8 @@ describe( 'Create SubGroup Suite ', () => {
                      await client.mutate({mutation:createsubgroup,variables:subgroupVariable}).then(async (SubGroupResonse)=>{
                         expect(SubGroupResonse).not.toBeNull()
                         expect(SubGroupResonse.data.createSubGroup.name).toBe("ACADAMIC")
+                        
+
                      });
                      const subgroupTutionVariable=createSubGroupInputData("TUTION","TUTION SUBGROUP IS FOR PUBLIC USE",GroupResonse.data.createGroup.id )
                      await client.mutate({mutation:createsubgroup,variables:subgroupTutionVariable}).then(async (SubGroupResonse)=>{
@@ -54,7 +56,6 @@ describe( 'Create SubGroup Suite ', () => {
                      createSubGroupfunction("MOTIVATION","MOTIVATION SUBGROUP IS FOR PUBLIC USE_SEED",GroupNEWSResonse.data.createGroup.id )
                      createSubGroupfunction("RELIGIOUS","RELIGIOUS SUBGROUP IS FOR PUBLIC USE_SEED",GroupNEWSResonse.data.createGroup.id )
                      createSubGroupfunction("SPORTS","SPORTS SUBGROUP IS FOR PUBLIC USE_SEED",GroupNEWSResonse.data.createGroup.id )
-
                 });
 
             })

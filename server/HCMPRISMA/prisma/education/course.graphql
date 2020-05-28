@@ -1,5 +1,5 @@
 """
-Course:
+Course: This section need to review and see if require or not
 
 
 There are many types of Courses like :CBSE, IPL, SPECIALCLASSES , Tution, Navodaya etc ...
@@ -24,7 +24,5 @@ available: Free/Paid/Subscription based etc....
 type Course {
   id: ID! @id
   name: String
-  coursecode:String
-  exams:[Quiz!]!                @relation(name: "QuizToCourse", onDelete: SET_NULL)
-  Coursegrade:
+  coursecode: String
 }

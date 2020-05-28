@@ -1,7 +1,7 @@
 """
-Quiz or exam
-quizName:weekly/monthly/surpries
-quizType:MOCK/PREPRATION/ANUULAEXAM/
+exam or exam
+examName:weekly/monthly/surpries
+examType:MOCK/PREPRATION/ANUULAEXAM/
 subject/unit/topic
 questions[]
 markingscheme: JSON{
@@ -10,10 +10,10 @@ markingscheme: JSON{
     mcq:marks
     descriptive:marks
     special:marks
-    explainationoption: oncomplete quiz/evertquestion/dontshow
+    explainationoption: oncomplete exam/evertquestion/dontshow
 }
 
-quizlevel
+examlevel
 description
 showExplaination
 showanswer
@@ -32,16 +32,16 @@ threshold { basedOn: MarksObtain/correctQuestions }
 isForLevelPromotion
 totalmarks
 """
-type Quiz {
+type Exam {
   id: ID! @id
-  quizName: String!
-  quizType: String!
-  subject: Subject @relation(name: "QuizToSubject", onDelete: SET_NULL)
-  unit: Unit @relation(name: "QuizToUnit", onDelete: SET_NULL)
-  topic: Topic @relation(name: "QuizToTopic", onDelete: SET_NULL)
-  questions: [Question!]! @relation(name: "QuestionToQuiz", onDelete: CASCADE)
+  name: String!
+  type: String!
+  subject: Subject @relation(name: "ExamToSubject", onDelete: SET_NULL)
+  unit: Unit @relation(name: "ExamToUnit", onDelete: SET_NULL)
+  topic: Topic @relation(name: "ExamToTopic", onDelete: SET_NULL)
+  questions: [Question!]! @relation(name: "QuestionToExam", onDelete: SET_NULL)
   markingscheme: Json
-  quizlevel: Int
+  level: Int
   threshold: Json
   isForLevelPromotion: Boolean @default(value: false)
   showExplaination: String
@@ -52,12 +52,12 @@ type Quiz {
   commentFromTeacher: String
   isPublished: Boolean @default(value: true)
   isApproved: Boolean @default(value: true)
-  createdBy: User! @relation(name: "QuizCreatedByToUser", onDelete: SET_NULL)
+  createdBy: User! @relation(name: "ExamCreatedByToUser", onDelete: SET_NULL)
   weightage: Float
   totalmarks: Float
   validFrom: DateTime @createdAt
   validTo: DateTime
   retryAllowed: Boolean @default(value: true)
-  results: [Result!]! @relation(name: "ResultToQuiz", onDelete: SET_NULL)
-  courses: [Quiz!]! @relation(name: "QuizToCourse", onDelete: SET_NULL)
+  results: [Result!]! @relation(name: "ResultToExam", onDelete: CASCADE)
+  course: Course @relation(name: "ExamToCourse", onDelete: SET_NULL)
 }

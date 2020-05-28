@@ -2,21 +2,27 @@ endpoint: ${env:PRISMA_ENDPOINT}
 datamodel:
   - admin/org.graphql
   - admin/role.graphql
+  - admin/userrole.graphql
   - users/users.graphql
   - users/posts.graphql
   - users/medium.graphql
   - users/comments.graphql
   - profiles/mysubscription.graphql
   - profiles/profiles.graphql
-  - education/std.graphql
+  - education/bookmark.graphql
+  - education/course.graphql
   - education/content.graphql
+  - education/exam.graphql
+  - education/example.graphql
+  - education/formula.graphql
+  - education/note.graphql
+  - education/question.graphql
+  - education/result.graphql
+  - education/std.graphql
+  - education/subject.graphql
+  - education/tipstricks.graphql
   - education/topic.graphql
   - education/unit.graphql
-  - education/question.graphql
-  - education/quiz.graphql
-  - education/result.graphql
-  - education/subject.graphql
-  - education/example.graphql
   - education/voteAndPoll.graphql
 
 secret: ${env:PRISMA_SECRET}

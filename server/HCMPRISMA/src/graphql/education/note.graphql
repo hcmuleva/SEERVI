@@ -1,0 +1,39 @@
+type Query {
+  getAllNotes: [Note!]!
+}
+type Mutation {
+  createNote(data: NoteInputData!): Note!
+  updateNote(id: ID!, data: NoteUpdateInputData!): Note!
+  deleteNote(id: ID!): Note!
+}
+type Note {
+  """
+  Note:
+  """
+  id: ID!
+  name: String!
+  userid: User!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  notedata: Json
+}
+input NoteInputData {
+  name: String!
+  userid: String!
+  subject: String
+  unit: String
+  topic: String
+  notedata: Json
+}
+
+input NoteUpdateInputData {
+  name: String
+  userid: String
+  subject: String
+  unit: String
+  topic: String
+  notedata: Json
+}

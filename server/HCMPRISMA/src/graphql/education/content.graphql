@@ -25,7 +25,7 @@ type Content {
   id: ID!
   name: String!
   type: String!
-  number: Int
+  level: Int
   url: String
   subject: Subject
   unit: Unit

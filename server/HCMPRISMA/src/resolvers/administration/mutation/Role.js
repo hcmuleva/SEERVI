@@ -4,18 +4,11 @@ async function createRole(parent, args, { prisma, request }, info) {
   console.log("ROLE For all", args);
   const data = args.data;
   console.log("userRole", JSON.stringify(data.users));
-  if (data.users) {
-    let myusers = [];
-    data.users.map(usr => {
-      console.log("USER OBJECT ", usr);
-      myusers.push(usr);
-    });
-    data["users"] = { connect: myusers };
-  }
+
   if (data.org) {
     const orgRoleExists = await prisma.exists.Role({
       name: data.name,
-      org: { id: data.org }
+      org: { id: data.org },
     });
     if (orgRoleExists) {
       throw new Error("Role Already Exist");
@@ -25,7 +18,7 @@ async function createRole(parent, args, { prisma, request }, info) {
   if (data.suborg) {
     const suborgRoleExists = await prisma.exists.Role({
       name: data.name,
-      suborg: { id: data.suborg }
+      suborg: { id: data.suborg },
     });
     if (suborgRoleExists) {
       throw new Error("Role Already Exist");
@@ -35,7 +28,7 @@ async function createRole(parent, args, { prisma, request }, info) {
   if (data.group) {
     const groupRoleExists = await prisma.exists.Role({
       name: data.name,
-      group: { id: data.group }
+      group: { id: data.group },
     });
     if (groupRoleExists) {
       throw new Error("Role Already Exist");
@@ -45,7 +38,7 @@ async function createRole(parent, args, { prisma, request }, info) {
   if (data.subgroup) {
     const subgroupRoleExists = await prisma.exists.Role({
       name: data.name,
-      subgroup: { id: data.subgroup }
+      subgroup: { id: data.subgroup },
     });
     if (subgroupRoleExists) {
       throw new Error("Role Already Exist");
@@ -55,114 +48,40 @@ async function createRole(parent, args, { prisma, request }, info) {
   console.log("DATA for role ", data);
   return await prisma.mutation.createRole(
     {
-      data
+      data,
     },
     info
   );
 }
 
-async function assignRoleToUser(parent, args, { prisma, request }, info) {
-  const user = getUserId(request);
-
-  const roleExists = await prisma.exists.Role({ id: args.data.id });
-  if (!roleExists) {
-    throw new Error("Unable to update Role");
-  }
-
-  data["users"] = { connect: { id: user } };
-  return await prisma.mutation.updateRole(
-    {
-      where: {
-        id: args.id
-      },
-      data: args.data
-    },
-    info
-  );
-}
-
-async function assignRoleToUsers(parent, args, { prisma, request }, info) {
-  console.log("RECIEVED REQUEST for assignrole ", args);
-  const data = args.data;
-  let userlist = [];
-  data.users.map(elm => {
-    userlist.push(elm);
-  });
+async function updateRoleById(parent, args, { prisma, request }, info) {
   const roleExists = await prisma.exists.Role({ id: args.id });
   if (!roleExists) {
     throw new Error("Unable to update Role");
   }
-
-  data["users"] = { connect: userlist };
-  return await prisma.mutation.updateRole(
+  return await prisma.mutation.updateRoleById(
     {
       where: {
-        id: args.id
+        id: args.id,
       },
-      data: args.data
+      data: args.data,
     },
     info
   );
 }
-async function updateRole(parent, args, { prisma, request }, info) {
-  const roleExists = await prisma.exists.Role({ id: args.id });
-  if (!roleExists) {
-    throw new Error("Unable to update Role");
-  }
-  return await prisma.mutation.updateRole(
-    {
-      where: {
-        id: args.id
-      },
-      data: args.data
-    },
-    info
-  );
-}
-async function deleteRole(parent, args, { prisma, request }, info) {
+async function deleteRoleById(parent, args, { prisma, request }, info) {
   const roleExists = await prisma.exists.Role({ id: args.id });
   if (!roleExists) {
     throw new Error("Unable to Delete Role");
   }
-  return await prisma.mutation.deleteRole(
+  return await prisma.mutation.deleteRoleById(
     {
       where: {
-        id: args.id
-      }
-    },
-    info
-  );
-}
-async function deleteRoleOfUser(parent, args, { prisma, request }, info) {
-  console.log("REquest for delete role of a user ",args)
-  const roleExists = await prisma.exists.Role({ id: args.id });
-  if (!roleExists) {
-    throw new Error("Unable to Delete Role");
-  }
-   const userExists = await prisma.exists.User({ id: args.userId });
-     if (!userExists) {
-    throw new Error("Unable to Delete UserRole ");
-  }
-  return await prisma.mutation.deleteRole(
-    {
-       where: {
-            id: args.id,
-            AND: [ {
-                users: {
-                    id: args.userId
-                }
-            }]
-        }
+        id: args.id,
+      },
     },
     info
   );
 }
 
-export {
-  createRole,
-  updateRole,
-  deleteRole,
-  assignRoleToUser,
-  assignRoleToUsers,
-  deleteRoleOfUser
-};
+export { createRole, updateRoleById, deleteRoleById };

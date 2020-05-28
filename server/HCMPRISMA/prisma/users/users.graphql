@@ -6,13 +6,10 @@ type User {
   password: String!
   org: Organization @relation(name: "UserToOrg", onDelete: SET_NULL)
   suborg: [Suborg] @relation(name: "UserToSubOrg", onDelete: SET_NULL)
-  groupmembers: [GroupMember!]!
-    @relation(name: "GroupMemberToUser", onDelete: CASCADE)
-  subgroupmembers: [SubGroupMember!]!
-    @relation(name: "SubGroupMemberToUser", onDelete: CASCADE)
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
-  roles: [Role!]! @relation(name: "RoleToUser", onDelete: SET_NULL)
+  userroles: [UserRole!]! @relation(name: "UserRoleToUser", onDelete: CASCADE)
+
   myprofiles: [Profile!]! @relation(name: "ProfilesToUser", onDelete: CASCADE)
   subjectSubscription: [SubjectSubscription!]!
     @relation(name: "SubjectSubscriptionToUser", onDelete: CASCADE)
@@ -31,10 +28,20 @@ type User {
     @relation(name: "CreateQuestionToUser", onDelete: CASCADE)
   questionUpdateddBy: [Question!]!
     @relation(name: "UpdateQuestionToUser", onDelete: CASCADE)
-  quizCreatedBy: [Quiz!]!
-    @relation(name: "QuizCreatedByToUser", onDelete: CASCADE)
+
   votes: [Vote!]! @relation(name: "VoteToUser", onDelete: CASCADE)
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   result: [Result!]! @relation(name: "ResultToUser", onDelete: CASCADE)
+  examCreatedBy: [Exam!]!
+    @relation(name: "ExamCreatedByToUser", onDelete: CASCADE)
+  tipstricksByMe: [TipsTrick!]!
+    @relation(name: "TipsTrickToUser", onDelete: CASCADE)
+  tipstricksUpdatedByMe: [TipsTrick!]!
+    @relation(name: "TipsTrickToUserUpdate", onDelete: CASCADE)
+  formulaByMe: [Formula] @relation(name: "FormulaToUser", onDelete: CASCADE)
+  formulaUpdatedByMe: [Formula]
+    @relation(name: "FormulaToUserUpdate", onDelete: CASCADE)
+
+  bookmarks: [Bookmark]! @relation(name: "BookmarkToUser", onDelete: CASCADE)
 }

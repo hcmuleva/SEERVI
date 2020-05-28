@@ -12,15 +12,6 @@ type Query {
   subgroupById(id: String!): SubGroup!
   allSubGroups: [SubGroup!]!
   subgroupsOfGroup(id: String!): [SubGroup!]!
-  groupmember(query: String): [GroupMember]
-  mymembeship(
-    query: String
-    first: Int
-    skip: Int
-    after: String
-  ): [GroupMember!]!
-  allRoleMembers: [RoleMember!]!
-  myRoleMembers: [RoleMember!]!
 }
 type Mutation {
   orgOnboardBySuperAdmin(data: CreateOrganizationInput): Organization!
@@ -36,21 +27,6 @@ type Mutation {
   createSubGroup(data: CreateSubGroupInput!): SubGroup!
   deleteSubGroup(id: ID!): SubGroup!
   updateSubGroup(id: ID!, data: UpdateSubGroupInput!): SubGroup!
-  assignUserToGroup(data: CreateGroupMemberInput!): GroupMember!
-  deleteUserToGroup(id: ID!): GroupMember!
-  updateUserToGroup(id: ID!, data: UpdateGroupMemberInput): GroupMember!
-
-  assignUserToSubGroup(data: CreateSubGroupMemberInput!): SubGroupMember!
-  deleteUserToSubGroup(id: ID!): SubGroupMember!
-  updateUserToSubGroup(
-    id: ID!
-    data: UpdateSubGroupMemberInput
-  ): SubGroupMember!
-
-  createUserRole(data: CreateRoleMemberInput): RoleMember!
-  assignBulkRoleToUser(data: CreateRoleMemberInput): Boolean!
-  updateUserRole(id: ID!, data: UpdateRoleMemberInput): RoleMember!
-  deleteUserRole(id: ID!): RoleMember!
 }
 type Organization {
   id: ID!
@@ -98,7 +74,6 @@ type Group {
   description: String
   suborgid: Suborg!
   subgroups: [SubGroup!]!
-  members: [GroupMember!]!
   groupRoles: [Role!]!
 }
 input CreateGroupInput {
@@ -111,33 +86,13 @@ input UpdateGroupInput {
   description: String
 }
 
-type GroupMember {
-  id: ID!
-  userid: User!
-  member: Group!
-  status: MemberStatus
-  description: String
-}
-
-input CreateGroupMemberInput {
-  userid: String!
-  member: String!
-  status: String
-  description: String
-}
-input UpdateGroupMemberInput {
-  userid: String
-  member: String
-  status: String
-  description: String
-}
 type SubGroup {
   id: ID!
   name: String!
   description: String
   groupid: Group!
-  members: [SubGroupMember!]!
-  medium:[Medium!]!
+
+  medium: [Medium!]!
   subgroupRoles: [Role!]!
 }
 
@@ -149,54 +104,4 @@ input CreateSubGroupInput {
 input UpdateSubGroupInput {
   name: String
   description: String
-}
-
-type SubGroupMember {
-  id: ID!
-  userid: User!
-  member: SubGroup!
-  status: MemberStatus
-  description: String
-}
-
-input CreateSubGroupMemberInput {
-  userid: String!
-  member: String!
-  status: String
-  description: String
-}
-input UpdateSubGroupMemberInput {
-  userid: String
-  member: String
-  status: String
-  description: String
-}
-
-type RoleMember {
-  id: ID!
-  userid: User!
-  role: Role!
-  status: RoleStatus
-  description: String
-}
-input CreateRoleMemberInput {
-  userid: String!
-  role: String!
-  status: String
-  description: String
-}
-input UpdateRoleMemberInput {
-  userid: String
-  role: String
-  status: String
-  description: String
-}
-
-enum MembershipStatus {
-  ACTIVE
-  EXPIRED
-  INACTIVE
-  DORMANT
-  RENEWED
-  SPECIALGRANT
 }

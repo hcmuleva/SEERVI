@@ -23,14 +23,12 @@ type Subject {
   std: Std! @relation(name: "SubjectToStd", onDelete: SET_NULL)
   board: String
   category: String
-  level:    Int  @default(value: 1)
-  color:String   @default(value: "BLUE")
+  level: Int @default(value: 1)
+  color: String @default(value: "BLUE")
   group: Group @relation(name: "SubjectToGroup", onDelete: SET_NULL)
   subgroup: SubGroup @relation(name: "SubjectToSubGroup", sonDelete: SET_NULL)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
-  syllabus:  Json
 
+  syllabus: Json
   units: [Unit!]! @relation(name: "UnitToSubject", onDelete: CASCADE)
   topic: [Topic!]! @relation(name: "TopicToSubject", onDelete: CASCADE)
   contents: [Content!]! @relation(name: "ContentToSubject", onDelete: CASCADE)
@@ -41,8 +39,16 @@ type Subject {
   status: String
   available: String
   description: String
-  examples:[Example!]!           @relation(name: "ExampleToSubject", onDelete: CASCADE)
   questions: [Question!]!
     @relation(name: "QuestionToSubject", onDelete: CASCADE)
-  quizes: [Quiz!]! @relation(name: "QuizToSubject", onDelete: CASCADE)
+
+  examples: [Example!]! @relation(name: "ExampleToSubject", onDelete: CASCADE)
+  tipstricks: [TipsTrick!]!
+    @relation(name: "TipsTrickToSubject", onDelete: CASCADE)
+  exams: [Exam!]! @relation(name: "ExamToSubject", onDelete: CASCADE)
+  formulas: [Formula!]! @relation(name: "FormulaToSubject", onDelete: CASCADE)
+  bookmarks: [Bookmark!]!
+    @relation(name: "BookmarkToSubject", onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
 }

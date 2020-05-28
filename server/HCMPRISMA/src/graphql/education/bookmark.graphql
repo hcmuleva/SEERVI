@@ -1,0 +1,36 @@
+type Query {
+  getAllBookmarks: [Bookmark!]!
+}
+type Mutation {
+  createBookmark(data: BookmarkInputData!): Bookmark!
+  updateBookmark(id: ID!, data: BookmarkUpdateInputData!): Bookmark!
+  deleteBookmark(id: ID!): Bookmark!
+}
+type Bookmark {
+  """
+  Bookmark:
+  """
+  id: ID!
+  name: String!
+  userid: User!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  subject: Subject
+  unit: Unit
+  topic: Topic
+}
+input BookmarkInputData {
+  name: String!
+  userid: String!
+  subject: String
+  unit: String
+  topic: String
+}
+
+input BookmarkUpdateInputData {
+  name: String
+  userid: String
+  subject: String
+  unit: String
+  topic: String
+}

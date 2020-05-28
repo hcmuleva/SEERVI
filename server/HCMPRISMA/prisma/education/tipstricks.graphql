@@ -1,0 +1,24 @@
+"""
+TipsTrick:
+There are many types of TipsTricks can hold for Subject/Unit/Topic Level
+"""
+type TipsTrick {
+  id: ID! @id
+  name: String
+  subject: Subject @relation(name: "TipsTrickToSubject", onDelete: SET_NULL)
+  unit: Unit @relation(name: "TipsTrickToUnit", onDelete: SET_NULL)
+  topic: Topic @relation(name: "TipsTrickToTopic", onDelete: SET_NULL)
+  level: Int
+  type: String!
+  fileInfo: Json
+  url: String
+  createdBy: User @relation(name: "TipsTrickToUser", onDelete: SET_NULL)
+  updateBy: [User] @relation(name: "TipsTrickToUserUpdate", onDelete: SET_NULL)
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}

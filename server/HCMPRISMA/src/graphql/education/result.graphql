@@ -1,10 +1,10 @@
 """
-Result will store quiz result
-quizName:
-quizType:
+Result will store exam result
+examName:
+examType:
 questions[]
 result
-quizlevel
+examlevel
 myscore: Float
 attempted[]
 achievement:
@@ -15,72 +15,71 @@ duration
 attemptedDate
 commentFromTeacher
 rank:JSON{ class,school,state,india,}
-
 """
- type Query {
-    getAllResult:[Result!]!
-
+type Query {
+  getAllResult: [Result!]!
 }
 type Mutation {
-    createResult(data:ResultDataInput!):Result!
-    updateResult(id:ID!,data: ResultDataUpdate!):Result!
-    deleteResult(id:ID!):Result!
-} 
-type Result{
-    id:ID! 
-    quiz:Quiz!                   
-    quizName:String!
-    quizType:String!
-    questions:[Question!]!      
-    result:String!
-    quizlevel:Int! 
-    score:Float
-    attempted:[Question]        
-    notattempted:[Question]     
-    correct:[Question]          
-    wrong:[Question]            
-    achievement:String
-    duration:Int
-    attemptedDate:DateTime!
-    commentFromTeacher:String
-    rank:Int
-    userId:User!                 
+  createResult(data: ResultDataInput!): Result!
+  updateResult(id: ID!, data: ResultDataUpdate!): Result!
+  deleteResult(id: ID!): Result!
+}
+type Result {
+  id: ID!
+  exam: Exam!
+
+  name: String!
+  type: String!
+  questions: [Question!]!
+  result: String!
+  level: Int!
+  score: Float
+  attempted: [Question]
+  notattempted: [Question]
+  correct: [Question]
+  wrong: [Question]
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: User!
 }
 
-input  ResultDataInput{
-    quiz:Striing!                   
-    quizName:String!
-    quizType:String!
-    questions:Json      
-    result:String!
-    quizlevel:Int! 
-    score:Float
-    attempted:Json        
-    notattempted:Json    
-    correct:Json         
-    wrong:Json            
-    achievement:String
-    duration:Int
-    attemptedDate:DateTime!
-    commentFromTeacher:String
-    rank:Int
+input ResultDataInput {
+  exam: Striing!
+  name: String!
+  type: String!
+  questions: Json
+  result: String!
+  level: Int!
+  score: Float
+  attempted: Json
+  notattempted: Json
+  correct: Json
+  wrong: Json
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
 }
 
-input  ResultDataUpdate{
-    quiz:Striing!                   
-    quizName:String!
-    quizType:String!
-    questions:Json      
-    result:String!
-    quizlevel:Int! 
-    score:Float
-    attempted:Json        
-    notattempted:Json    
-    correct:Json         
-    wrong:Json            
-    achievement:String
-    duration:Int
-    attemptedDate:DateTime!
-    commentFromTeacher:String
-    rank:Int
+input ResultDataUpdate {
+  exam: Striing!
+  name: String!
+  type: String!
+  questions: Json
+  result: String!
+  level: Int!
+  score: Float
+  attempted: Json
+  notattempted: Json
+  correct: Json
+  wrong: Json
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
 }

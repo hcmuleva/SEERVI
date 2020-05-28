@@ -1,83 +1,61 @@
+async function createUserRole(parent, args, { prisma, request }, info) {
+  console.log("RECIEVED CREATED createUserRole REQUEST", args.data);
+  const data = args.data;
+  if (!data.userid || !data.roleid) {
+    throw new Error(
+      "Role and User ID are mandatory fields.one of this not provided"
+    );
+  }
+  const userRoleExist = await prisma.exist.UserRole({
+    roleid: { id: data.roleid },
+    userid: { id: data.userid },
+  });
+  if (userRoleExist) {
+    throw new Error("User already assigned this role");
+  }
+  data["userid"] = { connect: { id: data.userid } };
+  data["roleid"] = { connect: { id: data.roleid } };
 
-function createUserRole(parent,args,{prisma,request},info){
-    console.log("RECIEVED CREATED createUserRole REQUEST",args.data)
-     return prisma.mutation.createRoleMember({
-        data: {
-            status:args.data.status,    
-            description:args.data.description,
-            userid: {
-                connect:{
-                    id:args.data.userid
-                }
-            },
-            role:{
-               connect:{
-                   id:args.data.role
-               }
-            }
-        }
-    }, info)
+  return prisma.mutation.createUserRole(
+    {
+      data,
+    },
+    info
+  );
 }
 
-function assignBulkRoleToUser(parent,args,{prisma,request},info){
-
-    console.log("RECIEVED CREATED createUserRole REQUEST",args.data)
-    const {status,description,userid,role}=args.data
-    const roleJsonObj=JSON.parse(role)
-    const data=roleJsonObj.map((roleobj)=>{
-        return  prisma.mutation.createRoleMember({
-        data: {
-            status, description,
-            userid: {
-                connect:{
-                    id:userid
-                }
-            },
-            role:{
-               connect:{
-                   id:roleobj.id
-               }
-            }
-        }
-    
-    })
-    });
-    return true
-}
-
-
-
- async function deleteUserRole(parent, args, { prisma, request }, info) {
-    const RoleMemberExists = await prisma.exists.RoleMember({
-        id: args.id
-        
-    })
-    if (!RoleMember) {
-        throw new Error('Unable to delete RoleMember')
-    }    
-    return prisma.mutation.deleteRoleMember({
-        where: {
-            id: args.id
-        }
-    }, info)
+async function deleteUserRole(parent, args, { prisma, request }, info) {
+  const UserRoleExists = await prisma.exists.UserRole({
+    id: args.id,
+  });
+  if (!UserRoleExists) {
+    throw new Error("Unable to delete UserRole");
+  }
+  return prisma.mutation.deleteUserRole(
+    {
+      where: {
+        id: args.id,
+      },
+    },
+    info
+  );
 }
 async function updateUserRole(parent, args, { prisma, request }, info) {
-    const RoleMemberExists = await prisma.exists.RoleMember({
-        id: args.id
-        
-    })
-    if (!RoleMemberExists) {
-        throw new Error('Unable to update RoleMember')
-    }    
-   return prisma.mutation.updateRoleMember({
-        where: {
-            id: args.id
-        },
-        data: args.data
-    }, info)
+  const UserRoleExists = await prisma.exists.UserRole({
+    id: args.id,
+  });
+  if (!UserRoleExists) {
+    throw new Error("Unable to update UserRole");
+  }
+  return prisma.mutation.updateUserRole(
+    {
+      where: {
+        id: args.id,
+      },
+      data: args.data,
+    },
+    info
+  );
 }
 
-
-
-
-export {createUserRole,deleteUserRole,updateUserRole,assignBulkRoleToUser}
+export { createUserRole, deleteUserRole, updateUserRole };

@@ -1,20 +1,16 @@
 type Query {
   allroles: [Role!]!
-  myRoles: [Role!]!
   orgRoles(id: String!): [Role!]!
   suborgRoles(id: String!): [Role!]!
   groupRoles(id: String!): [Role!]!
   subGroupRoles(id: String!): [Role!]!
-  roleById(id:ID!):Role!
+  roleById(id: ID!): Role!
 }
 type Mutation {
   createBulkRoles(data: BulkRoleInput!): [Role!]!
   createRole(data: CreateRoleInput): Role!
-  updateRole(id: ID!, data: UpdateRoleInput): Role!
-  deleteRole(id: ID!): Role!
-  assignRoleToUser(id: ID!): Role!
-  assignRoleToUsers(id: ID!, data: UserListInput): Role!
-  deleteRoleOfUser(id:ID!, userId:String!):Role!
+  updateRoleById(id: ID!, data: UpdateRoleInput): Role!
+  deleteRoleById(id: ID!): Role!
 }
 type Role {
   id: ID!
@@ -23,11 +19,10 @@ type Role {
   suborg: Suborg
   group: Group
   subgroup: SubGroup
-  users: [User!]!
+
   description: String
   status: String
   state: String
-  subjectSubscriptions: [SubjectSubscription!]!
 }
 input CreateRoleInput {
   name: String!
@@ -35,7 +30,7 @@ input CreateRoleInput {
   suborg: String
   group: String
   subgroup: String
-  users: Json
+
   description: String
   status: String
   state: String
@@ -50,13 +45,7 @@ input UpdateRoleInput {
   status: String
   state: String
 }
-input UserListInput {
-  users: Json
-}
 
-input UserDeleteInput {
-  users:String!
-}
 input BulkRoleInput {
   roles: Json
   org: String

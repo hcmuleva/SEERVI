@@ -28,20 +28,9 @@ type Group {
   description: String
   suborgid: Suborg! @relation(name: "GroupToSuborg", onDelete: SET_NULL)
   subgroups: [SubGroup!]! @relation(name: "SubGroupToGroup", onDelete: CASCADE)
-  members: [GroupMember!]!
-    @relation(name: "GroupMemberToGroup", onDelete: CASCADE)
+
   groupRoles: [Role!]! @relation(name: "RoleToGroup", onDelete: CASCADE)
   subjects: [Subject!]! @relation(name: "SubjectToGroup", onDelete: CASCADE)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
-}
-
-type GroupMember {
-  id: ID! @id
-  userid: User! @relation(name: "GroupMemberToUser", onDelete: SET_NULL)
-  member: Group! @relation(name: "GroupMemberToGroup", onDelete: SET_NULL)
-  status: MemberStatus
-  description: String
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
 }
@@ -51,49 +40,9 @@ type SubGroup {
   name: String!
   description: String
   groupid: Group! @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
-  members: [SubGroupMember!]!
-    @relation(name: "SubGroupMemberToGroup", onDelete: CASCADE)
   subgroupRoles: [Role!]! @relation(name: "RoleToSubGroup", onDelete: CASCADE)
   subjects: [Subject!]! @relation(name: "SubjectToSubGroup", onDelete: CASCADE)
-  medium:[Medium!]!     @relation(name: "MediumToSubGroup", onDelete: CASCADE)
+  medium: [Medium!]! @relation(name: "MediumToSubGroup", onDelete: CASCADE)
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
-}
-
-type SubGroupMember {
-  id: ID! @id
-  userid: User! @relation(name: "SubGroupMemberToUser", onDelete: SET_NULL)
-  member: SubGroup! @relation(name: "SubGroupMemberToGroup", onDelete: SET_NULL)
-  status: MemberStatus
-  description: String
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
-}
-
-type RoleMember {
-  id: ID! @id
-  userid: User! @relation(name: "RoleMemberToUser", onDelete: SET_NULL)
-  role: Role! @relation(name: "RoleMemberToRole", onDelete: SET_NULL)
-  status: RoleStatus
-  description: String
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
-}
-
-enum RoleStatus {
-  ACTIVE @default
-  EXPIRED
-  INACTIVE
-  DORMANT
-  RENEWED
-  SPECIALGRANT
-}
-
-enum MemberStatus {
-  ACTIVE @default
-  EXPIRED
-  INACTIVE
-  DORMANT
-  RENEWED
-  SPECIALGRANT
 }

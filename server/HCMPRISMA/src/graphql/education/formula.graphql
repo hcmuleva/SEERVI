@@ -1,0 +1,63 @@
+"""
+Formula:
+There are many types of Formulas can hold for Subject/Unit/Topic Level
+"""
+type Query {
+  getAllFormulas: [Formula!]!
+}
+type Mutation {
+  createFormula(data: FormulaInputData!): Formula!
+  updateFormula(id: ID!, data: FormulaUpdateInputData!): Formula!
+  deleteFormula(id: ID!): Formula!
+}
+type Formula {
+  id: ID!
+  name: String
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  level: Int
+  type: String!
+  fileInfo: Json
+  url: String
+  createdBy: User
+  updateBy: [User]
+  plantDate: DateTime
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+input FormulaInputData {
+  name: String
+  subject: String
+  unit: String
+  topic: String
+  level: Int
+  type: String!
+  fileInfo: Json
+  url: String
+  plantDate: String
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+}
+input FormulaUpdateInputData {
+  name: String
+  subject: String
+  unit: String
+  topic: String
+  level: Int
+  type: String
+  fileInfo: Json
+  url: String
+
+  plantDate: String
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+}

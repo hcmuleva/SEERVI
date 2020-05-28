@@ -17,27 +17,7 @@ var models = [
     embedded: false
   },
   {
-    name: "GroupMember",
-    embedded: false
-  },
-  {
     name: "SubGroup",
-    embedded: false
-  },
-  {
-    name: "SubGroupMember",
-    embedded: false
-  },
-  {
-    name: "RoleMember",
-    embedded: false
-  },
-  {
-    name: "RoleStatus",
-    embedded: false
-  },
-  {
-    name: "MemberStatus",
     embedded: false
   },
   {
@@ -46,6 +26,14 @@ var models = [
   },
   {
     name: "ROLENAME",
+    embedded: false
+  },
+  {
+    name: "UserRole",
+    embedded: false
+  },
+  {
+    name: "RoleStatus",
     embedded: false
   },
   {
@@ -85,6 +73,42 @@ var models = [
     embedded: false
   },
   {
+    name: "Bookmark",
+    embedded: false
+  },
+  {
+    name: "Course",
+    embedded: false
+  },
+  {
+    name: "Content",
+    embedded: false
+  },
+  {
+    name: "Exam",
+    embedded: false
+  },
+  {
+    name: "Example",
+    embedded: false
+  },
+  {
+    name: "Formula",
+    embedded: false
+  },
+  {
+    name: "Note",
+    embedded: false
+  },
+  {
+    name: "Question",
+    embedded: false
+  },
+  {
+    name: "Result",
+    embedded: false
+  },
+  {
     name: "Std",
     embedded: false
   },
@@ -93,7 +117,11 @@ var models = [
     embedded: false
   },
   {
-    name: "Content",
+    name: "Subject",
+    embedded: false
+  },
+  {
+    name: "TipsTrick",
     embedded: false
   },
   {
@@ -102,26 +130,6 @@ var models = [
   },
   {
     name: "Unit",
-    embedded: false
-  },
-  {
-    name: "Question",
-    embedded: false
-  },
-  {
-    name: "Quiz",
-    embedded: false
-  },
-  {
-    name: "Result",
-    embedded: false
-  },
-  {
-    name: "Subject",
-    embedded: false
-  },
-  {
-    name: "Example",
     embedded: false
   },
   {

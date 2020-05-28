@@ -1,21 +1,43 @@
+import {
+  createOrganization,
+  deleteOrg,
+  updateOrg,
+  orgOnboardBySuperAdmin,
+} from "./mutation/Organization";
+import { createSubOrg, deleteSubOrg, updateSuborg } from "./mutation/SubOrg";
+import { createGroup, updateGroup, deleteGroup } from "./mutation/Group";
+import {
+  createSubGroup,
+  deleteSubGroup,
+  updateSubGroup,
+} from "./mutation/SubGroup";
 
-import {createOrganization,deleteOrg,updateOrg,orgOnboardBySuperAdmin} from './mutation/Organization'
-import {createSubOrg,deleteSubOrg,updateSuborg} from './mutation/SubOrg'
-import {createGroup,updateGroup,deleteGroup} from './mutation/Group'
-import {createSubGroup,deleteSubGroup,updateSubGroup} from './mutation/SubGroup'
-import {assignUserToGroup,deleteUserToGroup,updateUserToGroup} from './mutation/UserToGroup'
-import {assignUserToSubGroup,deleteUserToSubGroup,updateUserToSubGroup} from './mutation/UserToSubGroup'
-import {createRole,updateRole,deleteRole,assignRoleToUser,assignRoleToUsers,deleteRoleOfUser} from './mutation/Role'
-import {createUserRole,assignBulkRoleToUser,deleteUserRole,updateUserRole} from './mutation/UserRole'
+import { createRole, updateRoleById, deleteRoleById } from "./mutation/Role";
+import {
+  createUserRole,
+  deleteUserRole,
+  updateUserRole,
+} from "./mutation/UserRole";
 export const AdminMutation = {
-    createOrganization,deleteOrg,updateOrg,orgOnboardBySuperAdmin,
-    createSubOrg,deleteSubOrg,updateSuborg,
-    createGroup,updateGroup,deleteGroup,
-    createSubGroup,deleteSubGroup,updateSubGroup,
-    assignUserToGroup,deleteUserToGroup,updateUserToGroup,
-    assignUserToSubGroup,deleteUserToSubGroup,updateUserToSubGroup,
-    createRole,updateRole,deleteRole,assignRoleToUser,assignRoleToUsers,deleteRoleOfUser,
-    createUserRole,assignBulkRoleToUser,deleteUserRole,updateUserRole
-    
-}
+  createOrganization,
+  deleteOrg,
+  updateOrg,
+  orgOnboardBySuperAdmin,
+  createSubOrg,
+  deleteSubOrg,
+  updateSuborg,
+  createGroup,
+  updateGroup,
+  deleteGroup,
+  createSubGroup,
+  deleteSubGroup,
+  updateSubGroup,
 
+  createRole,
+  updateRoleById,
+  deleteRoleById,
+
+  createUserRole,
+  deleteUserRole,
+  updateUserRole,
+};

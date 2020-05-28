@@ -3,19 +3,28 @@ Example:
 There are many types of Examples can hold for Subject/Unit/Topic Level
 """
 type Query {
-  getAllExamples:[Example!]!
-
+  getAllExamples: [Example!]!
 }
 type Mutation {
-  createExample(data:UnitInputData!):Example!
-  updateExample(id:ID!,data: UnitUpdateInputData!):Example!
-  deleteExample(id:ID!):Example!
+  createExample(data: UnitInputData!): Example!
+  updateExample(id: ID!, data: UnitUpdateInputData!): Example!
+  deleteExample(id: ID!): Example!
 }
 type Example {
-  id: ID! 
+  id: ID!
   name: String
-  subject:Subject               
-  unit: Unit                    
-  topic: Topic                  
-  level:Int
+  subject: Subject
+  unit: Unit
+  topic: Topic
+  level: Int
+  fileInfo: Json
+  type: String!
+  url: String
+
+  isPublished: Boolean
+  state: String
+  status: String
+  available: String
+  createdBy: User
+  updateBy: User
 }

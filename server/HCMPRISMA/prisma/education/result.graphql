@@ -1,10 +1,10 @@
 """
-Result will store quiz result
-quizName:
-quizType:
+Result will store Exam result
+examName:
+examType:
 questions[]
 result
-quizlevel
+examlevel
 myscore: Float
 attempted[]
 achievement:
@@ -15,27 +15,28 @@ duration
 attemptedDate
 commentFromTeacher
 rank:JSON{ class,school,state,india,}
-
 """
-
-type Result{
-id:ID! @id
-quiz:Quiz!                   @relation(name: "ResultToQuiz", onDelete: SET_NULL)
-quizName:String!
-quizType:String!
-questions:[Question!]!      @relation(name: "QuestionToResult", onDelete: SET_NULL)
-result:String!
-quizlevel:Int! 
-score:Float
-attempted:[Question]        @relation(name: "AttemptedQuestionToResult", onDelete: SET_NULL)
-notattempted:[Question]     @relation(name: "NotAttemptedQuestionToResult", onDelete: SET_NULL)
-correct:[Question]          @relation(name: "CorrectQuestionToResult", onDelete: SET_NULL)
-wrong:[Question]            @relation(name: "WrongQuestionToResult", onDelete: SET_NULL)
-achievement:String
-duration:Int
-attemptedDate:DateTime!
-commentFromTeacher:String
-rank:Int
-userId:User!                 @relation(name: "ResultToUser", onDelete: SET_NULL)
+type Result {
+  id: ID! @id
+  exam: Exam! @relation(name: "ResultToExam", onDelete: SET_NULL)
+  name: String!
+  type: String!
+  questions: [Question!]!
+    @relation(name: "QuestionToResult", onDelete: SET_NULL)
+  result: String!
+  level: Int!
+  score: Float
+  attempted: [Question]
+    @relation(name: "AttemptedQuestionToResult", onDelete: SET_NULL)
+  notattempted: [Question]
+    @relation(name: "NotAttemptedQuestionToResult", onDelete: SET_NULL)
+  correct: [Question]
+    @relation(name: "CorrectQuestionToResult", onDelete: SET_NULL)
+  wrong: [Question] @relation(name: "WrongQuestionToResult", onDelete: SET_NULL)
+  achievement: String
+  duration: Int
+  attemptedDate: DateTime!
+  commentFromTeacher: String
+  rank: Int
+  userId: User! @relation(name: "ResultToUser", onDelete: SET_NULL)
 }
-

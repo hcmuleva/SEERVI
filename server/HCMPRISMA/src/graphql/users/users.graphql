@@ -1,7 +1,7 @@
 type Query {
   users(query: String, first: Int, skip: Int, after: String): [User!]!
   loggedInUser: User!
-  usersRoleId(id:String): [User!]!
+  usersRoleId(id: String): [User!]!
   getMyOrg: [Organization!]!
 }
 type Mutation {
@@ -13,7 +13,7 @@ type Mutation {
   updateUserByAdmin(data: UpdateUserInputByAdmin!): User!
 
   assignUserToRoles(id: ID!, data: UserToRolesInput!): User!
-  assignSubjectsToUser(id:ID!,data:UserToSubjectInput):User!
+  assignSubjectsToUser(id: ID!, data: UserToSubjectInput): User!
 }
 
 type User {
@@ -30,6 +30,15 @@ type User {
   myprofiles: [Profile!]!
   subjectSubscription: [SubjectSubscription!]!
   roles: [Role!]!
+  examCreatedBy: [Exam!]!
+  tipstricksByMe: [TipsTrick!]!
+  tipstricksUpdatedByMe: [TipsTrick!]!
+  formulaByMe: [Formula]
+  formulaUpdatedByMe: [Formula]
+
+  exampleByMe: Example @relation(name: "ExampleToUser", onDelete: CASCADE)
+  exampleUpdatedByMe: [Example]
+    @relation(name: "ExampleToUserUpdate", onDelete: CASCADE)
   createdBy: ID
   createdAt: String!
   updatedAt: String!
@@ -59,9 +68,9 @@ input UpdateUserInputByAdmin {
 input UserToRolesInput {
   roles: Json
 }
-input UserToSubjectInput{
-  subjectSubscription:Json
-  roles:String
+input UserToSubjectInput {
+  subjectSubscription: Json
+  roles: String
 }
 input LoginUserInput {
   email: String!

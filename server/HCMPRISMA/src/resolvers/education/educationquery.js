@@ -2,7 +2,6 @@ import { getAllStd } from "./query/std";
 import { getAllUnit, getUnitById } from "./query/unit";
 import { getAllTopic, getTopicById } from "./query/topic";
 import { getAllQuestion } from "./query/question";
-import { getAllQuiz, getSingleQuiz } from "./query/quiz";
 import {
   getAllSubjects,
   getSubjectById,
@@ -14,8 +13,7 @@ export const eduQuery = {
   getAllStd,
   getAllUnit,
   getAllQuestion,
-  getAllQuiz,
-  getSingleQuiz,
+
   getAllSubjects,
   getSubjectById,
   getSubjectByStd,
