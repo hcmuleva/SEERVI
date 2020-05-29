@@ -26,7 +26,7 @@ Constants.MERGE_MESSAGE = ": will merge with ";
 Constants.NO_INPUT = Constants.NAME + " was called without input results";
 Constants.NO_CLI_INPUT = Constants.NAME + " CLI was called without input JSON file to read";
 Constants.OVERRIDE_JEST_STARE_CONFIG = Constants.NAME + " was called with programmatic config";
-},{"chalk":21}],2:[function(require,module,exports){
+},{"chalk":20}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Constants {
@@ -242,7 +242,7 @@ class Render {
     }
 }
 exports.Render = Render;
-},{"./Constants":2,"./charts/Doughnut":4,"./charts/Status":5,"./navigation/Switch":8,"./suites/TestSuite":9,"./summary/TestSummary":11,"jquery":98,"util":105}],4:[function(require,module,exports){
+},{"./Constants":2,"./charts/Doughnut":4,"./charts/Status":5,"./navigation/Switch":8,"./suites/TestSuite":9,"./summary/TestSummary":11,"jquery":97,"util":102}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const chart_js_1 = require("chart.js");
@@ -268,7 +268,7 @@ class Doughnut {
     }
 }
 exports.Doughnut = Doughnut;
-},{"chart.js":24}],5:[function(require,module,exports){
+},{"chart.js":23}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Status {
@@ -350,7 +350,7 @@ exports.ImageSnapshotDifference = ImageSnapshotDifference;
 ImageSnapshotDifference.DIFF_INDICATOR = ["different from snapshot", "image to be the same size"];
 ImageSnapshotDifference.DIFF_IMAGE = /See diff for details:\s*((.*?)\.png)/;
 ImageSnapshotDifference.DIFF_DETAILS = /Error: (.*)/;
-},{"../../processor/Constants":1,"ansi-parser":14,"jquery":98}],7:[function(require,module,exports){
+},{"../../processor/Constants":1,"ansi-parser":14,"jquery":97}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const diff2html = require("diff2html");
@@ -361,9 +361,9 @@ class TestDifference {
     }
     static generate(jestFailureMessage) {
         const jestDiff = TestDifference.isolateDiff(jestFailureMessage);
-        const diffHtml = diff2html.Diff2Html.getPrettyHtml(jestDiff, {
-            inputFormat: "diff",
-            showFiles: false,
+        const diffjson = diff2html.parse(jestDiff);
+        const diffHtml = diff2html.html(diffjson, {
+            drawFileList: false,
             outputFormat: "side-by-side",
             matching: "lines"
         });
@@ -386,14 +386,16 @@ class TestDifference {
         }
         const changesIndicator = `\n@@ -0,${snapshotChanges} +0,${receivedChanges} @@\n`;
         isolated = isolated.replace("- Snapshot", "--- Snapshot");
-        isolated = isolated.replace("+ Received\n", "+++ Received" + changesIndicator);
-        return isolated;
+        isolated = isolated.replace("+ Received", "+++ Received");
+        const lines = isolated.split(/\r?\n/g);
+        lines.splice(2, 0, changesIndicator);
+        return lines.join(`\n`);
     }
 }
 exports.TestDifference = TestDifference;
-TestDifference.DIFF_INDICATOR = /- Snapshot\s*\n\s*\+ Received/g;
+TestDifference.DIFF_INDICATOR = /- Snapshot\s*(\-\s*[0-9]+)?\n\s*\+ Received\s*(\+\s*[0-9]+)/g;
 TestDifference.DIFF_END_INDICATOR = /(at .*? \(.*?:[0-9]+:[0-9]+\)\s)/g;
-},{"diff2html":84,"jquery":98}],8:[function(require,module,exports){
+},{"diff2html":83,"jquery":97}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("util");
@@ -450,7 +452,7 @@ class Switch {
 }
 exports.Switch = Switch;
 Switch.JOIN_CHAR = "\\.";
-},{"util":105}],9:[function(require,module,exports){
+},{"util":102}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = require("../Constants");
@@ -711,6 +713,7 @@ class Test {
         strong.classList.add("text-gray-dark");
         strong.textContent = innerTestResult.title;
         const titleId = innerTestResult.title.replace(/\s+/g, "-").toLowerCase();
+        const diffId = titleId + "-diff";
         thirdDiv.appendChild(strong);
         const small = document.createElement("small");
         small.classList.add("d-block", "text-right", "mt-3");
@@ -744,9 +747,9 @@ class Test {
             button.classList.add("btn", "btn-light", "btn-sm");
             button.type = "button";
             button.setAttribute("data-toggle", "collapse");
-            button.setAttribute("data-target", "#" + titleId);
+            button.setAttribute("data-target", "#" + diffId);
             button.setAttribute("aria-expanded", "false");
-            button.setAttribute("aria-controls", titleId);
+            button.setAttribute("aria-controls", diffId);
             button.textContent = "raw";
             collapseDiv.appendChild(button);
             const pre = document.createElement("pre");
@@ -755,7 +758,7 @@ class Test {
             if (show) {
                 pre.classList.add("show");
             }
-            pre.id = titleId;
+            pre.id = diffId;
             const code = document.createElement("code");
             pre.appendChild(code);
             failMessageSplit.forEach((entry, index) => {
@@ -1023,8 +1026,6 @@ AnsiParser.addChar = function (arr, c, s, e) {
     }, "start", e || ""));
 };
 },{}],15:[function(require,module,exports){
-
-},{}],16:[function(require,module,exports){
 'use strict';
 
 const wrapAnsi16 = (fn, offset) => (...args) => {
@@ -1189,7 +1190,7 @@ Object.defineProperty(module, 'exports', {
 	get: assembleStyles
 });
 
-},{"color-convert":18}],17:[function(require,module,exports){
+},{"color-convert":17}],16:[function(require,module,exports){
 /* MIT license */
 /* eslint-disable no-mixed-operators */
 const cssKeywords = require('color-name');
@@ -2030,7 +2031,7 @@ convert.rgb.gray = function (rgb) {
 	return [val / 255 * 100];
 };
 
-},{"color-name":20}],18:[function(require,module,exports){
+},{"color-name":19}],17:[function(require,module,exports){
 const conversions = require('./conversions');
 const route = require('./route');
 
@@ -2113,7 +2114,7 @@ models.forEach(fromModel => {
 
 module.exports = convert;
 
-},{"./conversions":17,"./route":19}],19:[function(require,module,exports){
+},{"./conversions":16,"./route":18}],18:[function(require,module,exports){
 const conversions = require('./conversions');
 
 /*
@@ -2212,7 +2213,7 @@ module.exports = function (fromModel) {
 };
 
 
-},{"./conversions":17}],20:[function(require,module,exports){
+},{"./conversions":16}],19:[function(require,module,exports){
 'use strict'
 
 module.exports = {
@@ -2366,7 +2367,7 @@ module.exports = {
 	"yellowgreen": [154, 205, 50]
 };
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 const ansiStyles = require('ansi-styles');
 const {stdout: stdoutColor, stderr: stderrColor} = require('supports-color');
@@ -2386,7 +2387,7 @@ const levelMapping = [
 const styles = Object.create(null);
 
 const applyOptions = (object, options = {}) => {
-	if (options.level > 3 || options.level < 0) {
+	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
 		throw new Error('The `level` option should be an integer from 0 to 3');
 	}
 
@@ -2397,6 +2398,7 @@ const applyOptions = (object, options = {}) => {
 
 class ChalkClass {
 	constructor(options) {
+		// eslint-disable-next-line no-constructor-return
 		return chalkFactory(options);
 	}
 }
@@ -2508,9 +2510,9 @@ const createBuilder = (self, _styler, _isEmpty) => {
 		return applyStyle(builder, (arguments_.length === 1) ? ('' + arguments_[0]) : arguments_.join(' '));
 	};
 
-	// `__proto__` is used because we must return a function, but there is
+	// We alter the prototype because we must return a function, but there is
 	// no way to create a function with a different prototype
-	builder.__proto__ = proto; // eslint-disable-line no-proto
+	Object.setPrototypeOf(builder, proto);
 
 	builder._generator = self;
 	builder._styler = _styler;
@@ -2587,26 +2589,14 @@ chalk.supportsColor = stdoutColor;
 chalk.stderr = Chalk({level: stderrColor ? stderrColor.level : 0}); // eslint-disable-line new-cap
 chalk.stderr.supportsColor = stderrColor;
 
-// For TypeScript
-chalk.Level = {
-	None: 0,
-	Basic: 1,
-	Ansi256: 2,
-	TrueColor: 3,
-	0: 'None',
-	1: 'Basic',
-	2: 'Ansi256',
-	3: 'TrueColor'
-};
-
 module.exports = chalk;
 
-},{"./templates":22,"./util":23,"ansi-styles":16,"supports-color":103}],22:[function(require,module,exports){
+},{"./templates":21,"./util":22,"ansi-styles":15,"supports-color":100}],21:[function(require,module,exports){
 'use strict';
 const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
 const STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
 const STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
-const ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.)|([^\\])/gi;
+const ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.)|([^\\])/gi;
 
 const ESCAPES = new Map([
 	['n', '\n'],
@@ -2730,14 +2720,14 @@ module.exports = (chalk, temporary) => {
 	chunks.push(chunk.join(''));
 
 	if (styles.length > 0) {
-		const errMsg = `Chalk template literal is missing ${styles.length} closing bracket${styles.length === 1 ? '' : 's'} (\`}\`)`;
-		throw new Error(errMsg);
+		const errMessage = `Chalk template literal is missing ${styles.length} closing bracket${styles.length === 1 ? '' : 's'} (\`}\`)`;
+		throw new Error(errMessage);
 	}
 
 	return chunks.join('');
 };
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 const stringReplaceAll = (string, substring, replacer) => {
@@ -2778,7 +2768,7 @@ module.exports = {
 	stringEncaseCRLFWithFirstIndex
 };
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * @namespace Chart
  */
@@ -2903,7 +2893,7 @@ Chart.canvasHelpers = Chart.helpers.canvas;
  */
 Chart.layoutService = Chart.layouts;
 
-},{"./charts/Chart.Bar":25,"./charts/Chart.Bubble":26,"./charts/Chart.Doughnut":27,"./charts/Chart.Line":28,"./charts/Chart.PolarArea":29,"./charts/Chart.Radar":30,"./charts/Chart.Scatter":31,"./controllers/controller.bar":32,"./controllers/controller.bubble":33,"./controllers/controller.doughnut":34,"./controllers/controller.line":35,"./controllers/controller.polarArea":36,"./controllers/controller.radar":37,"./controllers/controller.scatter":38,"./core/core":47,"./core/core.animation":39,"./core/core.animations":40,"./core/core.controller":41,"./core/core.datasetController":42,"./core/core.defaults":43,"./core/core.element":44,"./core/core.helpers":45,"./core/core.interaction":46,"./core/core.layouts":48,"./core/core.plugins":49,"./core/core.scale":50,"./core/core.scaleService":51,"./core/core.ticks":52,"./core/core.tooltip":53,"./elements/index":58,"./helpers/index":63,"./platforms/platform":66,"./plugins":67,"./scales/scale.category":71,"./scales/scale.linear":72,"./scales/scale.linearbase":73,"./scales/scale.logarithmic":74,"./scales/scale.radialLinear":75,"./scales/scale.time":76}],25:[function(require,module,exports){
+},{"./charts/Chart.Bar":24,"./charts/Chart.Bubble":25,"./charts/Chart.Doughnut":26,"./charts/Chart.Line":27,"./charts/Chart.PolarArea":28,"./charts/Chart.Radar":29,"./charts/Chart.Scatter":30,"./controllers/controller.bar":31,"./controllers/controller.bubble":32,"./controllers/controller.doughnut":33,"./controllers/controller.line":34,"./controllers/controller.polarArea":35,"./controllers/controller.radar":36,"./controllers/controller.scatter":37,"./core/core":46,"./core/core.animation":38,"./core/core.animations":39,"./core/core.controller":40,"./core/core.datasetController":41,"./core/core.defaults":42,"./core/core.element":43,"./core/core.helpers":44,"./core/core.interaction":45,"./core/core.layouts":47,"./core/core.plugins":48,"./core/core.scale":49,"./core/core.scaleService":50,"./core/core.ticks":51,"./core/core.tooltip":52,"./elements/index":57,"./helpers/index":62,"./platforms/platform":65,"./plugins":66,"./scales/scale.category":70,"./scales/scale.linear":71,"./scales/scale.linearbase":72,"./scales/scale.logarithmic":73,"./scales/scale.radialLinear":74,"./scales/scale.time":75}],24:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2916,7 +2906,7 @@ module.exports = function(Chart) {
 
 };
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2928,7 +2918,7 @@ module.exports = function(Chart) {
 
 };
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2941,7 +2931,7 @@ module.exports = function(Chart) {
 
 };
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2954,7 +2944,7 @@ module.exports = function(Chart) {
 
 };
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2967,7 +2957,7 @@ module.exports = function(Chart) {
 
 };
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2980,7 +2970,7 @@ module.exports = function(Chart) {
 
 };
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 module.exports = function(Chart) {
@@ -2990,7 +2980,7 @@ module.exports = function(Chart) {
 	};
 };
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -3473,7 +3463,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],33:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],32:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -3648,7 +3638,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],34:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],33:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -3951,7 +3941,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],35:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],34:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -4297,7 +4287,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],36:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],35:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -4554,7 +4544,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],37:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],36:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -4719,7 +4709,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],38:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],37:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -4763,7 +4753,7 @@ module.exports = function(Chart) {
 
 };
 
-},{"../core/core.defaults":43}],39:[function(require,module,exports){
+},{"../core/core.defaults":42}],38:[function(require,module,exports){
 'use strict';
 
 var Element = require('./core.element');
@@ -4808,7 +4798,7 @@ Object.defineProperty(exports.prototype, 'chartInstance', {
 	}
 });
 
-},{"./core.element":44}],40:[function(require,module,exports){
+},{"./core.element":43}],39:[function(require,module,exports){
 /* global window: false */
 'use strict';
 
@@ -4939,7 +4929,7 @@ module.exports = {
 	}
 };
 
-},{"../helpers/index":63,"./core.defaults":43}],41:[function(require,module,exports){
+},{"../helpers/index":62,"./core.defaults":42}],40:[function(require,module,exports){
 'use strict';
 
 var Animation = require('./core.animation');
@@ -5901,7 +5891,7 @@ module.exports = function(Chart) {
 	Chart.Controller = Chart;
 };
 
-},{"../core/core.scaleService":51,"../helpers/index":63,"../platforms/platform":66,"./core.animation":39,"./core.animations":40,"./core.defaults":43,"./core.interaction":46,"./core.layouts":48,"./core.plugins":49,"./core.tooltip":53}],42:[function(require,module,exports){
+},{"../core/core.scaleService":50,"../helpers/index":62,"../platforms/platform":65,"./core.animation":38,"./core.animations":39,"./core.defaults":42,"./core.interaction":45,"./core.layouts":47,"./core.plugins":48,"./core.tooltip":52}],41:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -6232,7 +6222,7 @@ module.exports = function(Chart) {
 	Chart.DatasetController.extend = helpers.inherits;
 };
 
-},{"../helpers/index":63}],43:[function(require,module,exports){
+},{"../helpers/index":62}],42:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -6246,7 +6236,7 @@ module.exports = {
 	}
 };
 
-},{"../helpers/index":63}],44:[function(require,module,exports){
+},{"../helpers/index":62}],43:[function(require,module,exports){
 'use strict';
 
 var color = require('chartjs-color');
@@ -6363,7 +6353,7 @@ Element.extend = helpers.inherits;
 
 module.exports = Element;
 
-},{"../helpers/index":63,"chartjs-color":78}],45:[function(require,module,exports){
+},{"../helpers/index":62,"chartjs-color":77}],44:[function(require,module,exports){
 /* global window: false */
 /* global document: false */
 'use strict';
@@ -6999,7 +6989,7 @@ module.exports = function() {
 	};
 };
 
-},{"../core/core.scaleService":51,"../helpers/index":63,"./core.defaults":43,"chartjs-color":78}],46:[function(require,module,exports){
+},{"../core/core.scaleService":50,"../helpers/index":62,"./core.defaults":42,"chartjs-color":77}],45:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -7331,7 +7321,7 @@ module.exports = {
 	}
 };
 
-},{"../helpers/index":63}],47:[function(require,module,exports){
+},{"../helpers/index":62}],46:[function(require,module,exports){
 'use strict';
 
 var defaults = require('./core.defaults');
@@ -7382,7 +7372,7 @@ module.exports = function() {
 	return Chart;
 };
 
-},{"./core.defaults":43}],48:[function(require,module,exports){
+},{"./core.defaults":42}],47:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -7803,7 +7793,7 @@ module.exports = {
 	}
 };
 
-},{"../helpers/index":63}],49:[function(require,module,exports){
+},{"../helpers/index":62}],48:[function(require,module,exports){
 'use strict';
 
 var defaults = require('./core.defaults');
@@ -8187,7 +8177,7 @@ module.exports = {
  * @param {Object} options - The plugin options.
  */
 
-},{"../helpers/index":63,"./core.defaults":43}],50:[function(require,module,exports){
+},{"../helpers/index":62,"./core.defaults":42}],49:[function(require,module,exports){
 'use strict';
 
 var defaults = require('./core.defaults');
@@ -9123,7 +9113,7 @@ module.exports = Element.extend({
 	}
 });
 
-},{"../helpers/index":63,"./core.defaults":43,"./core.element":44,"./core.ticks":52}],51:[function(require,module,exports){
+},{"../helpers/index":62,"./core.defaults":42,"./core.element":43,"./core.ticks":51}],50:[function(require,module,exports){
 'use strict';
 
 var defaults = require('./core.defaults');
@@ -9168,7 +9158,7 @@ module.exports = {
 	}
 };
 
-},{"../helpers/index":63,"./core.defaults":43,"./core.layouts":48}],52:[function(require,module,exports){
+},{"../helpers/index":62,"./core.defaults":42,"./core.layouts":47}],51:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -9246,7 +9236,7 @@ module.exports = {
 	}
 };
 
-},{"../helpers/index":63}],53:[function(require,module,exports){
+},{"../helpers/index":62}],52:[function(require,module,exports){
 'use strict';
 
 var defaults = require('./core.defaults');
@@ -10221,7 +10211,7 @@ var exports = module.exports = Element.extend({
 exports.positioners = positioners;
 
 
-},{"../helpers/index":63,"./core.defaults":43,"./core.element":44}],54:[function(require,module,exports){
+},{"../helpers/index":62,"./core.defaults":42,"./core.element":43}],53:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -10330,7 +10320,7 @@ module.exports = Element.extend({
 	}
 });
 
-},{"../core/core.defaults":43,"../core/core.element":44,"../helpers/index":63}],55:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.element":43,"../helpers/index":62}],54:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -10423,7 +10413,7 @@ module.exports = Element.extend({
 	}
 });
 
-},{"../core/core.defaults":43,"../core/core.element":44,"../helpers/index":63}],56:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.element":43,"../helpers/index":62}],55:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -10514,7 +10504,7 @@ module.exports = Element.extend({
 	}
 });
 
-},{"../core/core.defaults":43,"../core/core.element":44,"../helpers/index":63}],57:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.element":43,"../helpers/index":62}],56:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -10733,7 +10723,7 @@ module.exports = Element.extend({
 	}
 });
 
-},{"../core/core.defaults":43,"../core/core.element":44}],58:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.element":43}],57:[function(require,module,exports){
 'use strict';
 
 module.exports = {};
@@ -10742,7 +10732,7 @@ module.exports.Line = require('./element.line');
 module.exports.Point = require('./element.point');
 module.exports.Rectangle = require('./element.rectangle');
 
-},{"./element.arc":54,"./element.line":55,"./element.point":56,"./element.rectangle":57}],59:[function(require,module,exports){
+},{"./element.arc":53,"./element.line":54,"./element.point":55,"./element.rectangle":56}],58:[function(require,module,exports){
 'use strict';
 
 var helpers = require('./helpers.core');
@@ -10953,7 +10943,7 @@ helpers.drawRoundedRectangle = function(ctx) {
 	exports.roundedRect.apply(exports, arguments);
 };
 
-},{"./helpers.core":60}],60:[function(require,module,exports){
+},{"./helpers.core":59}],59:[function(require,module,exports){
 'use strict';
 
 /**
@@ -11294,7 +11284,7 @@ helpers.getValueOrDefault = helpers.valueOrDefault;
  */
 helpers.getValueAtIndexOrDefault = helpers.valueAtIndexOrDefault;
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 'use strict';
 
 var helpers = require('./helpers.core');
@@ -11546,7 +11536,7 @@ module.exports = {
  */
 helpers.easingEffects = effects;
 
-},{"./helpers.core":60}],62:[function(require,module,exports){
+},{"./helpers.core":59}],61:[function(require,module,exports){
 'use strict';
 
 var helpers = require('./helpers.core');
@@ -11644,7 +11634,7 @@ module.exports = {
 	}
 };
 
-},{"./helpers.core":60}],63:[function(require,module,exports){
+},{"./helpers.core":59}],62:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./helpers.core');
@@ -11652,7 +11642,7 @@ module.exports.easing = require('./helpers.easing');
 module.exports.canvas = require('./helpers.canvas');
 module.exports.options = require('./helpers.options');
 
-},{"./helpers.canvas":59,"./helpers.core":60,"./helpers.easing":61,"./helpers.options":62}],64:[function(require,module,exports){
+},{"./helpers.canvas":58,"./helpers.core":59,"./helpers.easing":60,"./helpers.options":61}],63:[function(require,module,exports){
 /**
  * Platform fallback implementation (minimal).
  * @see https://github.com/chartjs/Chart.js/pull/4591#issuecomment-319575939
@@ -11669,7 +11659,7 @@ module.exports = {
 	}
 };
 
-},{}],65:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 /**
  * Chart.Platform implementation for targeting a web browser
  */
@@ -12128,7 +12118,7 @@ helpers.addEvent = addEventListener;
  */
 helpers.removeEvent = removeEventListener;
 
-},{"../helpers/index":63}],66:[function(require,module,exports){
+},{"../helpers/index":62}],65:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -12204,7 +12194,7 @@ module.exports = helpers.extend({
  * @prop {Number} y - The mouse y position, relative to the canvas (null for incompatible events)
  */
 
-},{"../helpers/index":63,"./platform.basic":64,"./platform.dom":65}],67:[function(require,module,exports){
+},{"../helpers/index":62,"./platform.basic":63,"./platform.dom":64}],66:[function(require,module,exports){
 'use strict';
 
 module.exports = {};
@@ -12212,7 +12202,7 @@ module.exports.filler = require('./plugin.filler');
 module.exports.legend = require('./plugin.legend');
 module.exports.title = require('./plugin.title');
 
-},{"./plugin.filler":68,"./plugin.legend":69,"./plugin.title":70}],68:[function(require,module,exports){
+},{"./plugin.filler":67,"./plugin.legend":68,"./plugin.title":69}],67:[function(require,module,exports){
 /**
  * Plugin based on discussion from the following Chart.js issues:
  * @see https://github.com/chartjs/Chart.js/issues/2380#issuecomment-279961569
@@ -12532,7 +12522,7 @@ module.exports = {
 	}
 };
 
-},{"../core/core.defaults":43,"../elements/index":58,"../helpers/index":63}],69:[function(require,module,exports){
+},{"../core/core.defaults":42,"../elements/index":57,"../helpers/index":62}],68:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -13110,7 +13100,7 @@ module.exports = {
 	}
 };
 
-},{"../core/core.defaults":43,"../core/core.element":44,"../core/core.layouts":48,"../helpers/index":63}],70:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.element":43,"../core/core.layouts":47,"../helpers/index":62}],69:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -13364,7 +13354,7 @@ module.exports = {
 	}
 };
 
-},{"../core/core.defaults":43,"../core/core.element":44,"../core/core.layouts":48,"../helpers/index":63}],71:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.element":43,"../core/core.layouts":47,"../helpers/index":62}],70:[function(require,module,exports){
 'use strict';
 
 var Scale = require('../core/core.scale');
@@ -13501,7 +13491,7 @@ module.exports = function() {
 	scaleService.registerScaleType('category', DatasetScale, defaultConfig);
 };
 
-},{"../core/core.scale":50,"../core/core.scaleService":51}],72:[function(require,module,exports){
+},{"../core/core.scale":49,"../core/core.scaleService":50}],71:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -13695,7 +13685,7 @@ module.exports = function(Chart) {
 	scaleService.registerScaleType('linear', LinearScale, defaultConfig);
 };
 
-},{"../core/core.defaults":43,"../core/core.scaleService":51,"../core/core.ticks":52,"../helpers/index":63}],73:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.scaleService":50,"../core/core.ticks":51,"../helpers/index":62}],72:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -13894,7 +13884,7 @@ module.exports = function(Chart) {
 	});
 };
 
-},{"../core/core.scale":50,"../helpers/index":63}],74:[function(require,module,exports){
+},{"../core/core.scale":49,"../helpers/index":62}],73:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/index');
@@ -14245,7 +14235,7 @@ module.exports = function(Chart) {
 	scaleService.registerScaleType('logarithmic', LogarithmicScale, defaultConfig);
 };
 
-},{"../core/core.scale":50,"../core/core.scaleService":51,"../core/core.ticks":52,"../helpers/index":63}],75:[function(require,module,exports){
+},{"../core/core.scale":49,"../core/core.scaleService":50,"../core/core.ticks":51,"../helpers/index":62}],74:[function(require,module,exports){
 'use strict';
 
 var defaults = require('../core/core.defaults');
@@ -14777,7 +14767,7 @@ module.exports = function(Chart) {
 	scaleService.registerScaleType('radialLinear', LinearRadialScale, defaultConfig);
 };
 
-},{"../core/core.defaults":43,"../core/core.scaleService":51,"../core/core.ticks":52,"../helpers/index":63}],76:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.scaleService":50,"../core/core.ticks":51,"../helpers/index":62}],75:[function(require,module,exports){
 /* global window: false */
 'use strict';
 
@@ -15564,7 +15554,7 @@ module.exports = function() {
 	scaleService.registerScaleType('time', TimeScale, defaultConfig);
 };
 
-},{"../core/core.defaults":43,"../core/core.scale":50,"../core/core.scaleService":51,"../helpers/index":63,"moment":100}],77:[function(require,module,exports){
+},{"../core/core.defaults":42,"../core/core.scale":49,"../core/core.scaleService":50,"../helpers/index":62,"moment":98}],76:[function(require,module,exports){
 /* MIT license */
 var colorNames = require('color-name');
 
@@ -15787,7 +15777,7 @@ for (var name in colorNames) {
    reverseNames[colorNames[name]] = name;
 }
 
-},{"color-name":81}],78:[function(require,module,exports){
+},{"color-name":80}],77:[function(require,module,exports){
 /* MIT license */
 var convert = require('color-convert');
 var string = require('chartjs-color-string');
@@ -16274,7 +16264,7 @@ if (typeof window !== 'undefined') {
 
 module.exports = Color;
 
-},{"chartjs-color-string":77,"color-convert":80}],79:[function(require,module,exports){
+},{"chartjs-color-string":76,"color-convert":79}],78:[function(require,module,exports){
 /* MIT license */
 
 module.exports = {
@@ -16974,7 +16964,7 @@ for (var key in cssKeywords) {
   reverseKeywords[JSON.stringify(cssKeywords[key])] = key;
 }
 
-},{}],80:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var conversions = require("./conversions");
 
 var convert = function() {
@@ -17067,9 +17057,1350 @@ Converter.prototype.getValues = function(space) {
 });
 
 module.exports = convert;
-},{"./conversions":79}],81:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"dup":20}],82:[function(require,module,exports){
+},{"./conversions":78}],80:[function(require,module,exports){
+arguments[4][19][0].apply(exports,arguments)
+},{"dup":19}],81:[function(require,module,exports){
+"use strict";
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = require("./types");
+var utils_1 = require("./utils");
+function getExtension(filename, language) {
+    var filenameParts = filename.split('.');
+    return filenameParts.length > 1 ? filenameParts[filenameParts.length - 1] : language;
+}
+function startsWithAny(str, prefixes) {
+    return prefixes.reduce(function (startsWith, prefix) { return startsWith || str.startsWith(prefix); }, false);
+}
+var baseDiffFilenamePrefixes = ['a/', 'b/', 'i/', 'w/', 'c/', 'o/'];
+function getFilename(line, linePrefix, extraPrefix) {
+    var prefixes = extraPrefix !== undefined ? __spreadArrays(baseDiffFilenamePrefixes, [extraPrefix]) : baseDiffFilenamePrefixes;
+    var FilenameRegExp = linePrefix
+        ? new RegExp("^" + utils_1.escapeForRegExp(linePrefix) + " \"?(.+?)\"?$")
+        : new RegExp('^"?(.+?)"?$');
+    var _a = FilenameRegExp.exec(line) || [], _b = _a[1], filename = _b === void 0 ? '' : _b;
+    var matchingPrefix = prefixes.find(function (p) { return filename.indexOf(p) === 0; });
+    var fnameWithoutPrefix = matchingPrefix ? filename.slice(matchingPrefix.length) : filename;
+    return fnameWithoutPrefix.replace(/\s+\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)? [+-]\d{4}.*$/, '');
+}
+function getSrcFilename(line, srcPrefix) {
+    return getFilename(line, '---', srcPrefix);
+}
+function getDstFilename(line, dstPrefix) {
+    return getFilename(line, '+++', dstPrefix);
+}
+function parse(diffInput, config) {
+    if (config === void 0) { config = {}; }
+    var files = [];
+    var currentFile = null;
+    var currentBlock = null;
+    var oldLine = null;
+    var oldLine2 = null;
+    var newLine = null;
+    var possibleOldName = null;
+    var possibleNewName = null;
+    var oldFileNameHeader = '--- ';
+    var newFileNameHeader = '+++ ';
+    var hunkHeaderPrefix = '@@';
+    var oldMode = /^old mode (\d{6})/;
+    var newMode = /^new mode (\d{6})/;
+    var deletedFileMode = /^deleted file mode (\d{6})/;
+    var newFileMode = /^new file mode (\d{6})/;
+    var copyFrom = /^copy from "?(.+)"?/;
+    var copyTo = /^copy to "?(.+)"?/;
+    var renameFrom = /^rename from "?(.+)"?/;
+    var renameTo = /^rename to "?(.+)"?/;
+    var similarityIndex = /^similarity index (\d+)%/;
+    var dissimilarityIndex = /^dissimilarity index (\d+)%/;
+    var index = /^index ([\da-z]+)\.\.([\da-z]+)\s*(\d{6})?/;
+    var binaryFiles = /^Binary files (.*) and (.*) differ/;
+    var binaryDiff = /^GIT binary patch/;
+    var combinedIndex = /^index ([\da-z]+),([\da-z]+)\.\.([\da-z]+)/;
+    var combinedMode = /^mode (\d{6}),(\d{6})\.\.(\d{6})/;
+    var combinedNewFile = /^new file mode (\d{6})/;
+    var combinedDeletedFile = /^deleted file mode (\d{6}),(\d{6})/;
+    var diffLines = diffInput
+        .replace(/\\ No newline at end of file/g, '')
+        .replace(/\r\n?/g, '\n')
+        .split('\n');
+    function saveBlock() {
+        if (currentBlock !== null && currentFile !== null) {
+            currentFile.blocks.push(currentBlock);
+            currentBlock = null;
+        }
+    }
+    function saveFile() {
+        if (currentFile !== null) {
+            if (!currentFile.oldName && possibleOldName !== null) {
+                currentFile.oldName = possibleOldName;
+            }
+            if (!currentFile.newName && possibleNewName !== null) {
+                currentFile.newName = possibleNewName;
+            }
+            if (currentFile.newName) {
+                files.push(currentFile);
+                currentFile = null;
+            }
+        }
+        possibleOldName = null;
+        possibleNewName = null;
+    }
+    function startFile() {
+        saveBlock();
+        saveFile();
+        currentFile = {
+            blocks: [],
+            deletedLines: 0,
+            addedLines: 0,
+        };
+    }
+    function startBlock(line) {
+        saveBlock();
+        var values;
+        if (currentFile !== null) {
+            if ((values = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@.*/.exec(line))) {
+                currentFile.isCombined = false;
+                oldLine = parseInt(values[1], 10);
+                newLine = parseInt(values[2], 10);
+            }
+            else if ((values = /^@@@ -(\d+)(?:,\d+)? -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@@.*/.exec(line))) {
+                currentFile.isCombined = true;
+                oldLine = parseInt(values[1], 10);
+                oldLine2 = parseInt(values[2], 10);
+                newLine = parseInt(values[3], 10);
+            }
+            else {
+                if (line.startsWith(hunkHeaderPrefix)) {
+                    console.error('Failed to parse lines, starting in 0!');
+                }
+                oldLine = 0;
+                newLine = 0;
+                currentFile.isCombined = false;
+            }
+        }
+        currentBlock = {
+            lines: [],
+            oldStartLine: oldLine,
+            oldStartLine2: oldLine2,
+            newStartLine: newLine,
+            header: line,
+        };
+    }
+    function createLine(line) {
+        if (currentFile === null || currentBlock === null || oldLine === null || newLine === null)
+            return;
+        var currentLine = {
+            content: line,
+        };
+        var addedPrefixes = currentFile.isCombined ? ['+ ', ' +', '++'] : ['+'];
+        var deletedPrefixes = currentFile.isCombined ? ['- ', ' -', '--'] : ['-'];
+        if (startsWithAny(line, addedPrefixes)) {
+            currentFile.addedLines++;
+            currentLine.type = types_1.LineType.INSERT;
+            currentLine.oldNumber = undefined;
+            currentLine.newNumber = newLine++;
+        }
+        else if (startsWithAny(line, deletedPrefixes)) {
+            currentFile.deletedLines++;
+            currentLine.type = types_1.LineType.DELETE;
+            currentLine.oldNumber = oldLine++;
+            currentLine.newNumber = undefined;
+        }
+        else {
+            currentLine.type = types_1.LineType.CONTEXT;
+            currentLine.oldNumber = oldLine++;
+            currentLine.newNumber = newLine++;
+        }
+        currentBlock.lines.push(currentLine);
+    }
+    function existHunkHeader(line, lineIdx) {
+        var idx = lineIdx;
+        while (idx < diffLines.length - 3) {
+            if (line.startsWith('diff')) {
+                return false;
+            }
+            if (diffLines[idx].startsWith(oldFileNameHeader) &&
+                diffLines[idx + 1].startsWith(newFileNameHeader) &&
+                diffLines[idx + 2].startsWith(hunkHeaderPrefix)) {
+                return true;
+            }
+            idx++;
+        }
+        return false;
+    }
+    diffLines.forEach(function (line, lineIndex) {
+        if (!line || line.startsWith('*')) {
+            return;
+        }
+        var values;
+        var prevLine = diffLines[lineIndex - 1];
+        var nxtLine = diffLines[lineIndex + 1];
+        var afterNxtLine = diffLines[lineIndex + 2];
+        if (line.startsWith('diff')) {
+            startFile();
+            var gitDiffStart = /^diff --git "?(.+)"? "?(.+)"?/;
+            if ((values = gitDiffStart.exec(line))) {
+                possibleOldName = getFilename(values[1], undefined, config.dstPrefix);
+                possibleNewName = getFilename(values[2], undefined, config.srcPrefix);
+            }
+            if (currentFile === null) {
+                throw new Error('Where is my file !!!');
+            }
+            currentFile.isGitDiff = true;
+            return;
+        }
+        if (!currentFile ||
+            (!currentFile.isGitDiff &&
+                currentFile &&
+                line.startsWith(oldFileNameHeader) &&
+                nxtLine.startsWith(newFileNameHeader) &&
+                afterNxtLine.startsWith(hunkHeaderPrefix))) {
+            startFile();
+        }
+        if ((line.startsWith(oldFileNameHeader) && nxtLine.startsWith(newFileNameHeader)) ||
+            (line.startsWith(newFileNameHeader) && prevLine.startsWith(oldFileNameHeader))) {
+            if (currentFile &&
+                !currentFile.oldName &&
+                line.startsWith('--- ') &&
+                (values = getSrcFilename(line, config.srcPrefix))) {
+                currentFile.oldName = values;
+                currentFile.language = getExtension(currentFile.oldName, currentFile.language);
+                return;
+            }
+            if (currentFile &&
+                !currentFile.newName &&
+                line.startsWith('+++ ') &&
+                (values = getDstFilename(line, config.dstPrefix))) {
+                currentFile.newName = values;
+                currentFile.language = getExtension(currentFile.newName, currentFile.language);
+                return;
+            }
+        }
+        if (currentFile &&
+            (line.startsWith(hunkHeaderPrefix) ||
+                (currentFile.isGitDiff && currentFile.oldName && currentFile.newName && !currentBlock))) {
+            startBlock(line);
+            return;
+        }
+        if (currentBlock && (line.startsWith('+') || line.startsWith('-') || line.startsWith(' '))) {
+            createLine(line);
+            return;
+        }
+        var doesNotExistHunkHeader = !existHunkHeader(line, lineIndex);
+        if (currentFile === null) {
+            throw new Error('Where is my file !!!');
+        }
+        if ((values = oldMode.exec(line))) {
+            currentFile.oldMode = values[1];
+        }
+        else if ((values = newMode.exec(line))) {
+            currentFile.newMode = values[1];
+        }
+        else if ((values = deletedFileMode.exec(line))) {
+            currentFile.deletedFileMode = values[1];
+            currentFile.isDeleted = true;
+        }
+        else if ((values = newFileMode.exec(line))) {
+            currentFile.newFileMode = values[1];
+            currentFile.isNew = true;
+        }
+        else if ((values = copyFrom.exec(line))) {
+            if (doesNotExistHunkHeader) {
+                currentFile.oldName = values[1];
+            }
+            currentFile.isCopy = true;
+        }
+        else if ((values = copyTo.exec(line))) {
+            if (doesNotExistHunkHeader) {
+                currentFile.newName = values[1];
+            }
+            currentFile.isCopy = true;
+        }
+        else if ((values = renameFrom.exec(line))) {
+            if (doesNotExistHunkHeader) {
+                currentFile.oldName = values[1];
+            }
+            currentFile.isRename = true;
+        }
+        else if ((values = renameTo.exec(line))) {
+            if (doesNotExistHunkHeader) {
+                currentFile.newName = values[1];
+            }
+            currentFile.isRename = true;
+        }
+        else if ((values = binaryFiles.exec(line))) {
+            currentFile.isBinary = true;
+            currentFile.oldName = getFilename(values[1], undefined, config.srcPrefix);
+            currentFile.newName = getFilename(values[2], undefined, config.dstPrefix);
+            startBlock('Binary file');
+        }
+        else if (binaryDiff.test(line)) {
+            currentFile.isBinary = true;
+            startBlock(line);
+        }
+        else if ((values = similarityIndex.exec(line))) {
+            currentFile.unchangedPercentage = parseInt(values[1], 10);
+        }
+        else if ((values = dissimilarityIndex.exec(line))) {
+            currentFile.changedPercentage = parseInt(values[1], 10);
+        }
+        else if ((values = index.exec(line))) {
+            currentFile.checksumBefore = values[1];
+            currentFile.checksumAfter = values[2];
+            values[3] && (currentFile.mode = values[3]);
+        }
+        else if ((values = combinedIndex.exec(line))) {
+            currentFile.checksumBefore = [values[2], values[3]];
+            currentFile.checksumAfter = values[1];
+        }
+        else if ((values = combinedMode.exec(line))) {
+            currentFile.oldMode = [values[2], values[3]];
+            currentFile.newMode = values[1];
+        }
+        else if ((values = combinedNewFile.exec(line))) {
+            currentFile.newFileMode = values[1];
+            currentFile.isNew = true;
+        }
+        else if ((values = combinedDeletedFile.exec(line))) {
+            currentFile.deletedFileMode = values[1];
+            currentFile.isDeleted = true;
+        }
+    });
+    saveBlock();
+    saveFile();
+    return files;
+}
+exports.parse = parse;
+
+},{"./types":90,"./utils":91}],82:[function(require,module,exports){
+"use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Hogan = __importStar(require("hogan.js"));
+exports.defaultTemplates = {};
+exports.defaultTemplates["file-summary-line"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<li class=\"d2h-file-list-line\">"); t.b("\n" + i); t.b("    <span class=\"d2h-file-name-wrapper\">"); t.b("\n" + i); t.b(t.rp("<fileIcon0", c, p, "      ")); t.b("      <a href=\"#"); t.b(t.v(t.f("fileHtmlId", c, p, 0))); t.b("\" class=\"d2h-file-name\">"); t.b(t.v(t.f("fileName", c, p, 0))); t.b("</a>"); t.b("\n" + i); t.b("      <span class=\"d2h-file-stats\">"); t.b("\n" + i); t.b("          <span class=\"d2h-lines-added\">"); t.b(t.v(t.f("addedLines", c, p, 0))); t.b("</span>"); t.b("\n" + i); t.b("          <span class=\"d2h-lines-deleted\">"); t.b(t.v(t.f("deletedLines", c, p, 0))); t.b("</span>"); t.b("\n" + i); t.b("      </span>"); t.b("\n" + i); t.b("    </span>"); t.b("\n" + i); t.b("</li>"); return t.fl(); }, partials: { "<fileIcon0": { name: "fileIcon", partials: {}, subs: {} } }, subs: {} });
+exports.defaultTemplates["file-summary-wrapper"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<div class=\"d2h-file-list-wrapper\">"); t.b("\n" + i); t.b("    <div class=\"d2h-file-list-header\">"); t.b("\n" + i); t.b("        <span class=\"d2h-file-list-title\">Files changed ("); t.b(t.v(t.f("filesNumber", c, p, 0))); t.b(")</span>"); t.b("\n" + i); t.b("        <a class=\"d2h-file-switch d2h-hide\">hide</a>"); t.b("\n" + i); t.b("        <a class=\"d2h-file-switch d2h-show\">show</a>"); t.b("\n" + i); t.b("    </div>"); t.b("\n" + i); t.b("    <ol class=\"d2h-file-list\">"); t.b("\n" + i); t.b("    "); t.b(t.t(t.f("files", c, p, 0))); t.b("\n" + i); t.b("    </ol>"); t.b("\n" + i); t.b("</div>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["generic-block-header"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<tr>"); t.b("\n" + i); t.b("    <td class=\""); t.b(t.v(t.f("lineClass", c, p, 0))); t.b(" "); t.b(t.v(t.d("CSSLineClass.INFO", c, p, 0))); t.b("\"></td>"); t.b("\n" + i); t.b("    <td class=\""); t.b(t.v(t.d("CSSLineClass.INFO", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("        <div class=\""); t.b(t.v(t.f("contentClass", c, p, 0))); t.b(" "); t.b(t.v(t.d("CSSLineClass.INFO", c, p, 0))); t.b("\">"); t.b(t.t(t.f("blockHeader", c, p, 0))); t.b("</div>"); t.b("\n" + i); t.b("    </td>"); t.b("\n" + i); t.b("</tr>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["generic-empty-diff"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<tr>"); t.b("\n" + i); t.b("    <td class=\""); t.b(t.v(t.d("CSSLineClass.INFO", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("        <div class=\""); t.b(t.v(t.f("contentClass", c, p, 0))); t.b(" "); t.b(t.v(t.d("CSSLineClass.INFO", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("            File without changes"); t.b("\n" + i); t.b("        </div>"); t.b("\n" + i); t.b("    </td>"); t.b("\n" + i); t.b("</tr>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["generic-file-path"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<span class=\"d2h-file-name-wrapper\">"); t.b("\n" + i); t.b(t.rp("<fileIcon0", c, p, "    ")); t.b("    <span class=\"d2h-file-name\">"); t.b(t.v(t.f("fileDiffName", c, p, 0))); t.b("</span>"); t.b("\n" + i); t.b(t.rp("<fileTag1", c, p, "    ")); t.b("</span>"); return t.fl(); }, partials: { "<fileIcon0": { name: "fileIcon", partials: {}, subs: {} }, "<fileTag1": { name: "fileTag", partials: {}, subs: {} } }, subs: {} });
+exports.defaultTemplates["generic-line"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<tr>"); t.b("\n" + i); t.b("    <td class=\""); t.b(t.v(t.f("lineClass", c, p, 0))); t.b(" "); t.b(t.v(t.f("type", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("      "); t.b(t.t(t.f("lineNumber", c, p, 0))); t.b("\n" + i); t.b("    </td>"); t.b("\n" + i); t.b("    <td class=\""); t.b(t.v(t.f("type", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("        <div class=\""); t.b(t.v(t.f("contentClass", c, p, 0))); t.b(" "); t.b(t.v(t.f("type", c, p, 0))); t.b("\">"); t.b("\n" + i); if (t.s(t.f("prefix", c, p, 1), c, p, 0, 171, 247, "{{ }}")) {
+        t.rs(c, p, function (c, p, t) { t.b("            <span class=\"d2h-code-line-prefix\">"); t.b(t.t(t.f("prefix", c, p, 0))); t.b("</span>"); t.b("\n" + i); });
+        c.pop();
+    } if (!t.s(t.f("prefix", c, p, 1), c, p, 1, 0, 0, "")) {
+        t.b("            <span class=\"d2h-code-line-prefix\">&nbsp;</span>");
+        t.b("\n" + i);
+    } ; if (t.s(t.f("content", c, p, 1), c, p, 0, 380, 454, "{{ }}")) {
+        t.rs(c, p, function (c, p, t) { t.b("            <span class=\"d2h-code-line-ctn\">"); t.b(t.t(t.f("content", c, p, 0))); t.b("</span>"); t.b("\n" + i); });
+        c.pop();
+    } if (!t.s(t.f("content", c, p, 1), c, p, 1, 0, 0, "")) {
+        t.b("            <span class=\"d2h-code-line-ctn\"><br></span>");
+        t.b("\n" + i);
+    } ; t.b("        </div>"); t.b("\n" + i); t.b("    </td>"); t.b("\n" + i); t.b("</tr>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["generic-wrapper"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<div class=\"d2h-wrapper\">"); t.b("\n" + i); t.b("    "); t.b(t.t(t.f("content", c, p, 0))); t.b("\n" + i); t.b("</div>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["icon-file-added"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-added\" height=\"16\" title=\"added\" version=\"1.1\" viewBox=\"0 0 14 16\""); t.b("\n" + i); t.b("     width=\"14\">"); t.b("\n" + i); t.b("    <path d=\"M13 1H1C0.45 1 0 1.45 0 2v12c0 0.55 0.45 1 1 1h12c0.55 0 1-0.45 1-1V2c0-0.55-0.45-1-1-1z m0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z\"></path>"); t.b("\n" + i); t.b("</svg>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["icon-file-changed"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-changed\" height=\"16\" title=\"modified\" version=\"1.1\""); t.b("\n" + i); t.b("     viewBox=\"0 0 14 16\" width=\"14\">"); t.b("\n" + i); t.b("    <path d=\"M13 1H1C0.45 1 0 1.45 0 2v12c0 0.55 0.45 1 1 1h12c0.55 0 1-0.45 1-1V2c0-0.55-0.45-1-1-1z m0 13H1V2h12v12zM4 8c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z\"></path>"); t.b("\n" + i); t.b("</svg>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["icon-file-deleted"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-deleted\" height=\"16\" title=\"removed\" version=\"1.1\""); t.b("\n" + i); t.b("     viewBox=\"0 0 14 16\" width=\"14\">"); t.b("\n" + i); t.b("    <path d=\"M13 1H1C0.45 1 0 1.45 0 2v12c0 0.55 0.45 1 1 1h12c0.55 0 1-0.45 1-1V2c0-0.55-0.45-1-1-1z m0 13H1V2h12v12zM11 9H3V7h8v2z\"></path>"); t.b("\n" + i); t.b("</svg>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["icon-file-renamed"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-moved\" height=\"16\" title=\"renamed\" version=\"1.1\""); t.b("\n" + i); t.b("     viewBox=\"0 0 14 16\" width=\"14\">"); t.b("\n" + i); t.b("    <path d=\"M6 9H3V7h3V4l5 4-5 4V9z m8-7v12c0 0.55-0.45 1-1 1H1c-0.55 0-1-0.45-1-1V2c0-0.55 0.45-1 1-1h12c0.55 0 1 0.45 1 1z m-1 0H1v12h12V2z\"></path>"); t.b("\n" + i); t.b("</svg>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["icon-file"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<svg aria-hidden=\"true\" class=\"d2h-icon\" height=\"16\" version=\"1.1\" viewBox=\"0 0 12 16\" width=\"12\">"); t.b("\n" + i); t.b("    <path d=\"M6 5H2v-1h4v1zM2 8h7v-1H2v1z m0 2h7v-1H2v1z m0 2h7v-1H2v1z m10-7.5v9.5c0 0.55-0.45 1-1 1H1c-0.55 0-1-0.45-1-1V2c0-0.55 0.45-1 1-1h7.5l3.5 3.5z m-1 0.5L8 2H1v12h10V5z\"></path>"); t.b("\n" + i); t.b("</svg>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["line-by-line-file-diff"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<div id=\""); t.b(t.v(t.f("fileHtmlId", c, p, 0))); t.b("\" class=\"d2h-file-wrapper\" data-lang=\""); t.b(t.v(t.d("file.language", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("    <div class=\"d2h-file-header\">"); t.b("\n" + i); t.b("    "); t.b(t.t(t.f("filePath", c, p, 0))); t.b("\n" + i); t.b("    </div>"); t.b("\n" + i); t.b("    <div class=\"d2h-file-diff\">"); t.b("\n" + i); t.b("        <div class=\"d2h-code-wrapper\">"); t.b("\n" + i); t.b("            <table class=\"d2h-diff-table\">"); t.b("\n" + i); t.b("                <tbody class=\"d2h-diff-tbody\">"); t.b("\n" + i); t.b("                "); t.b(t.t(t.f("diffs", c, p, 0))); t.b("\n" + i); t.b("                </tbody>"); t.b("\n" + i); t.b("            </table>"); t.b("\n" + i); t.b("        </div>"); t.b("\n" + i); t.b("    </div>"); t.b("\n" + i); t.b("</div>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["line-by-line-numbers"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<div class=\"line-num1\">"); t.b(t.v(t.f("oldNumber", c, p, 0))); t.b("</div>"); t.b("\n" + i); t.b("<div class=\"line-num2\">"); t.b(t.v(t.f("newNumber", c, p, 0))); t.b("</div>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["side-by-side-file-diff"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<div id=\""); t.b(t.v(t.f("fileHtmlId", c, p, 0))); t.b("\" class=\"d2h-file-wrapper\" data-lang=\""); t.b(t.v(t.d("file.language", c, p, 0))); t.b("\">"); t.b("\n" + i); t.b("    <div class=\"d2h-file-header\">"); t.b("\n" + i); t.b("      "); t.b(t.t(t.f("filePath", c, p, 0))); t.b("\n" + i); t.b("    </div>"); t.b("\n" + i); t.b("    <div class=\"d2h-files-diff\">"); t.b("\n" + i); t.b("        <div class=\"d2h-file-side-diff\">"); t.b("\n" + i); t.b("            <div class=\"d2h-code-wrapper\">"); t.b("\n" + i); t.b("                <table class=\"d2h-diff-table\">"); t.b("\n" + i); t.b("                    <tbody class=\"d2h-diff-tbody\">"); t.b("\n" + i); t.b("                    "); t.b(t.t(t.d("diffs.left", c, p, 0))); t.b("\n" + i); t.b("                    </tbody>"); t.b("\n" + i); t.b("                </table>"); t.b("\n" + i); t.b("            </div>"); t.b("\n" + i); t.b("        </div>"); t.b("\n" + i); t.b("        <div class=\"d2h-file-side-diff\">"); t.b("\n" + i); t.b("            <div class=\"d2h-code-wrapper\">"); t.b("\n" + i); t.b("                <table class=\"d2h-diff-table\">"); t.b("\n" + i); t.b("                    <tbody class=\"d2h-diff-tbody\">"); t.b("\n" + i); t.b("                    "); t.b(t.t(t.d("diffs.right", c, p, 0))); t.b("\n" + i); t.b("                    </tbody>"); t.b("\n" + i); t.b("                </table>"); t.b("\n" + i); t.b("            </div>"); t.b("\n" + i); t.b("        </div>"); t.b("\n" + i); t.b("    </div>"); t.b("\n" + i); t.b("</div>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["tag-file-added"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<span class=\"d2h-tag d2h-added d2h-added-tag\">ADDED</span>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["tag-file-changed"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<span class=\"d2h-tag d2h-changed d2h-changed-tag\">CHANGED</span>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["tag-file-deleted"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<span class=\"d2h-tag d2h-deleted d2h-deleted-tag\">DELETED</span>"); return t.fl(); }, partials: {}, subs: {} });
+exports.defaultTemplates["tag-file-renamed"] = new Hogan.Template({ code: function (c, p, i) { var t = this; t.b(i = i || ""); t.b("<span class=\"d2h-tag d2h-moved d2h-moved-tag\">RENAMED</span>"); return t.fl(); }, partials: {}, subs: {} });
+
+},{"hogan.js":94}],83:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var DiffParser = __importStar(require("./diff-parser"));
+var fileListPrinter = __importStar(require("./file-list-renderer"));
+var line_by_line_renderer_1 = __importStar(require("./line-by-line-renderer"));
+var side_by_side_renderer_1 = __importStar(require("./side-by-side-renderer"));
+var types_1 = require("./types");
+var hoganjs_utils_1 = __importDefault(require("./hoganjs-utils"));
+exports.defaultDiff2HtmlConfig = __assign(__assign(__assign({}, line_by_line_renderer_1.defaultLineByLineRendererConfig), side_by_side_renderer_1.defaultSideBySideRendererConfig), { outputFormat: types_1.OutputFormatType.LINE_BY_LINE, drawFileList: true });
+function parse(diffInput, configuration) {
+    if (configuration === void 0) { configuration = {}; }
+    return DiffParser.parse(diffInput, __assign(__assign({}, exports.defaultDiff2HtmlConfig), configuration));
+}
+exports.parse = parse;
+function html(diffInput, configuration) {
+    if (configuration === void 0) { configuration = {}; }
+    var config = __assign(__assign({}, exports.defaultDiff2HtmlConfig), configuration);
+    var diffJson = typeof diffInput === 'string' ? DiffParser.parse(diffInput, config) : diffInput;
+    var hoganUtils = new hoganjs_utils_1.default(config);
+    var fileList = config.drawFileList ? fileListPrinter.render(diffJson, hoganUtils) : '';
+    var diffOutput = config.outputFormat === 'side-by-side'
+        ? new side_by_side_renderer_1.default(hoganUtils, config).render(diffJson)
+        : new line_by_line_renderer_1.default(hoganUtils, config).render(diffJson);
+    return fileList + diffOutput;
+}
+exports.html = html;
+
+},{"./diff-parser":81,"./file-list-renderer":84,"./hoganjs-utils":85,"./line-by-line-renderer":86,"./side-by-side-renderer":89,"./types":90}],84:[function(require,module,exports){
+"use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var renderUtils = __importStar(require("./render-utils"));
+var baseTemplatesPath = 'file-summary';
+var iconsBaseTemplatesPath = 'icon';
+function render(diffFiles, hoganUtils) {
+    var files = diffFiles
+        .map(function (file) {
+        return hoganUtils.render(baseTemplatesPath, 'line', {
+            fileHtmlId: renderUtils.getHtmlId(file),
+            oldName: file.oldName,
+            newName: file.newName,
+            fileName: renderUtils.filenameDiff(file),
+            deletedLines: '-' + file.deletedLines,
+            addedLines: '+' + file.addedLines,
+        }, {
+            fileIcon: hoganUtils.template(iconsBaseTemplatesPath, renderUtils.getFileIcon(file)),
+        });
+    })
+        .join('\n');
+    return hoganUtils.render(baseTemplatesPath, 'wrapper', {
+        filesNumber: diffFiles.length,
+        files: files,
+    });
+}
+exports.render = render;
+
+},{"./render-utils":88}],85:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Hogan = __importStar(require("hogan.js"));
+var diff2html_templates_1 = require("./diff2html-templates");
+var HoganJsUtils = (function () {
+    function HoganJsUtils(_a) {
+        var _b = _a.compiledTemplates, compiledTemplates = _b === void 0 ? {} : _b, _c = _a.rawTemplates, rawTemplates = _c === void 0 ? {} : _c;
+        var compiledRawTemplates = Object.entries(rawTemplates).reduce(function (previousTemplates, _a) {
+            var _b;
+            var name = _a[0], templateString = _a[1];
+            var compiledTemplate = Hogan.compile(templateString, { asString: false });
+            return __assign(__assign({}, previousTemplates), (_b = {}, _b[name] = compiledTemplate, _b));
+        }, {});
+        this.preCompiledTemplates = __assign(__assign(__assign({}, diff2html_templates_1.defaultTemplates), compiledTemplates), compiledRawTemplates);
+    }
+    HoganJsUtils.compile = function (templateString) {
+        return Hogan.compile(templateString, { asString: false });
+    };
+    HoganJsUtils.prototype.render = function (namespace, view, params, partials, indent) {
+        var templateKey = this.templateKey(namespace, view);
+        try {
+            var template = this.preCompiledTemplates[templateKey];
+            return template.render(params, partials, indent);
+        }
+        catch (e) {
+            throw new Error("Could not find template to render '" + templateKey + "'");
+        }
+    };
+    HoganJsUtils.prototype.template = function (namespace, view) {
+        return this.preCompiledTemplates[this.templateKey(namespace, view)];
+    };
+    HoganJsUtils.prototype.templateKey = function (namespace, view) {
+        return namespace + "-" + view;
+    };
+    return HoganJsUtils;
+}());
+exports.default = HoganJsUtils;
+
+},{"./diff2html-templates":82,"hogan.js":94}],86:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Rematch = __importStar(require("./rematch"));
+var renderUtils = __importStar(require("./render-utils"));
+var types_1 = require("./types");
+exports.defaultLineByLineRendererConfig = __assign(__assign({}, renderUtils.defaultRenderConfig), { renderNothingWhenEmpty: false, matchingMaxComparisons: 2500, maxLineSizeInBlockForComparison: 200 });
+var genericTemplatesPath = 'generic';
+var baseTemplatesPath = 'line-by-line';
+var iconsBaseTemplatesPath = 'icon';
+var tagsBaseTemplatesPath = 'tag';
+var LineByLineRenderer = (function () {
+    function LineByLineRenderer(hoganUtils, config) {
+        if (config === void 0) { config = {}; }
+        this.hoganUtils = hoganUtils;
+        this.config = __assign(__assign({}, exports.defaultLineByLineRendererConfig), config);
+    }
+    LineByLineRenderer.prototype.render = function (diffFiles) {
+        var _this = this;
+        var diffsHtml = diffFiles
+            .map(function (file) {
+            var diffs;
+            if (file.blocks.length) {
+                diffs = _this.generateFileHtml(file);
+            }
+            else {
+                diffs = _this.generateEmptyDiff();
+            }
+            return _this.makeFileDiffHtml(file, diffs);
+        })
+            .join('\n');
+        return this.hoganUtils.render(genericTemplatesPath, 'wrapper', { content: diffsHtml });
+    };
+    LineByLineRenderer.prototype.makeFileDiffHtml = function (file, diffs) {
+        if (this.config.renderNothingWhenEmpty && Array.isArray(file.blocks) && file.blocks.length === 0)
+            return '';
+        var fileDiffTemplate = this.hoganUtils.template(baseTemplatesPath, 'file-diff');
+        var filePathTemplate = this.hoganUtils.template(genericTemplatesPath, 'file-path');
+        var fileIconTemplate = this.hoganUtils.template(iconsBaseTemplatesPath, 'file');
+        var fileTagTemplate = this.hoganUtils.template(tagsBaseTemplatesPath, renderUtils.getFileIcon(file));
+        return fileDiffTemplate.render({
+            file: file,
+            fileHtmlId: renderUtils.getHtmlId(file),
+            diffs: diffs,
+            filePath: filePathTemplate.render({
+                fileDiffName: renderUtils.filenameDiff(file),
+            }, {
+                fileIcon: fileIconTemplate,
+                fileTag: fileTagTemplate,
+            }),
+        });
+    };
+    LineByLineRenderer.prototype.generateEmptyDiff = function () {
+        return this.hoganUtils.render(genericTemplatesPath, 'empty-diff', {
+            contentClass: 'd2h-code-line',
+            CSSLineClass: renderUtils.CSSLineClass,
+        });
+    };
+    LineByLineRenderer.prototype.generateFileHtml = function (file) {
+        var _this = this;
+        var matcher = Rematch.newMatcherFn(Rematch.newDistanceFn(function (e) { return renderUtils.deconstructLine(e.content, file.isCombined).content; }));
+        return file.blocks
+            .map(function (block) {
+            var lines = _this.hoganUtils.render(genericTemplatesPath, 'block-header', {
+                CSSLineClass: renderUtils.CSSLineClass,
+                blockHeader: block.header,
+                lineClass: 'd2h-code-linenumber',
+                contentClass: 'd2h-code-line',
+            });
+            _this.applyLineGroupping(block).forEach(function (_a) {
+                var contextLines = _a[0], oldLines = _a[1], newLines = _a[2];
+                if (oldLines.length && newLines.length && !contextLines.length) {
+                    _this.applyRematchMatching(oldLines, newLines, matcher).map(function (_a) {
+                        var oldLines = _a[0], newLines = _a[1];
+                        var _b = _this.processChangedLines(file.isCombined, oldLines, newLines), left = _b.left, right = _b.right;
+                        lines += left;
+                        lines += right;
+                    });
+                }
+                else if (contextLines.length) {
+                    contextLines.forEach(function (line) {
+                        var _a = renderUtils.deconstructLine(line.content, file.isCombined), prefix = _a.prefix, content = _a.content;
+                        lines += _this.generateSingleLineHtml({
+                            type: renderUtils.CSSLineClass.CONTEXT,
+                            prefix: prefix,
+                            content: content,
+                            oldNumber: line.oldNumber,
+                            newNumber: line.newNumber,
+                        });
+                    });
+                }
+                else if (oldLines.length || newLines.length) {
+                    var _b = _this.processChangedLines(file.isCombined, oldLines, newLines), left = _b.left, right = _b.right;
+                    lines += left;
+                    lines += right;
+                }
+                else {
+                    console.error('Unknown state reached while processing groups of lines', contextLines, oldLines, newLines);
+                }
+            });
+            return lines;
+        })
+            .join('\n');
+    };
+    LineByLineRenderer.prototype.applyLineGroupping = function (block) {
+        var blockLinesGroups = [];
+        var oldLines = [];
+        var newLines = [];
+        for (var i = 0; i < block.lines.length; i++) {
+            var diffLine = block.lines[i];
+            if ((diffLine.type !== types_1.LineType.INSERT && newLines.length) ||
+                (diffLine.type === types_1.LineType.CONTEXT && oldLines.length > 0)) {
+                blockLinesGroups.push([[], oldLines, newLines]);
+                oldLines = [];
+                newLines = [];
+            }
+            if (diffLine.type === types_1.LineType.CONTEXT) {
+                blockLinesGroups.push([[diffLine], [], []]);
+            }
+            else if (diffLine.type === types_1.LineType.INSERT && oldLines.length === 0) {
+                blockLinesGroups.push([[], [], [diffLine]]);
+            }
+            else if (diffLine.type === types_1.LineType.INSERT && oldLines.length > 0) {
+                newLines.push(diffLine);
+            }
+            else if (diffLine.type === types_1.LineType.DELETE) {
+                oldLines.push(diffLine);
+            }
+        }
+        if (oldLines.length || newLines.length) {
+            blockLinesGroups.push([[], oldLines, newLines]);
+            oldLines = [];
+            newLines = [];
+        }
+        return blockLinesGroups;
+    };
+    LineByLineRenderer.prototype.applyRematchMatching = function (oldLines, newLines, matcher) {
+        var comparisons = oldLines.length * newLines.length;
+        var maxLineSizeInBlock = Math.max.apply(null, [0].concat(oldLines.concat(newLines).map(function (elem) { return elem.content.length; })));
+        var doMatching = comparisons < this.config.matchingMaxComparisons &&
+            maxLineSizeInBlock < this.config.maxLineSizeInBlockForComparison &&
+            (this.config.matching === 'lines' || this.config.matching === 'words');
+        return doMatching ? matcher(oldLines, newLines) : [[oldLines, newLines]];
+    };
+    LineByLineRenderer.prototype.processChangedLines = function (isCombined, oldLines, newLines) {
+        var fileHtml = {
+            right: '',
+            left: '',
+        };
+        var maxLinesNumber = Math.max(oldLines.length, newLines.length);
+        for (var i = 0; i < maxLinesNumber; i++) {
+            var oldLine = oldLines[i];
+            var newLine = newLines[i];
+            var diff = oldLine !== undefined && newLine !== undefined
+                ? renderUtils.diffHighlight(oldLine.content, newLine.content, isCombined, this.config)
+                : undefined;
+            var preparedOldLine = oldLine !== undefined && oldLine.oldNumber !== undefined
+                ? __assign(__assign({}, (diff !== undefined
+                    ? {
+                        prefix: diff.oldLine.prefix,
+                        content: diff.oldLine.content,
+                        type: renderUtils.CSSLineClass.DELETE_CHANGES,
+                    }
+                    : __assign(__assign({}, renderUtils.deconstructLine(oldLine.content, isCombined)), { type: renderUtils.toCSSClass(oldLine.type) }))), { oldNumber: oldLine.oldNumber, newNumber: oldLine.newNumber }) : undefined;
+            var preparedNewLine = newLine !== undefined && newLine.newNumber !== undefined
+                ? __assign(__assign({}, (diff !== undefined
+                    ? {
+                        prefix: diff.newLine.prefix,
+                        content: diff.newLine.content,
+                        type: renderUtils.CSSLineClass.INSERT_CHANGES,
+                    }
+                    : __assign(__assign({}, renderUtils.deconstructLine(newLine.content, isCombined)), { type: renderUtils.toCSSClass(newLine.type) }))), { oldNumber: newLine.oldNumber, newNumber: newLine.newNumber }) : undefined;
+            var _a = this.generateLineHtml(preparedOldLine, preparedNewLine), left = _a.left, right = _a.right;
+            fileHtml.left += left;
+            fileHtml.right += right;
+        }
+        return fileHtml;
+    };
+    LineByLineRenderer.prototype.generateLineHtml = function (oldLine, newLine) {
+        return {
+            left: this.generateSingleLineHtml(oldLine),
+            right: this.generateSingleLineHtml(newLine),
+        };
+    };
+    LineByLineRenderer.prototype.generateSingleLineHtml = function (line) {
+        if (line === undefined)
+            return '';
+        var lineNumberHtml = this.hoganUtils.render(baseTemplatesPath, 'numbers', {
+            oldNumber: line.oldNumber || '',
+            newNumber: line.newNumber || '',
+        });
+        return this.hoganUtils.render(genericTemplatesPath, 'line', {
+            type: line.type,
+            lineClass: 'd2h-code-linenumber',
+            contentClass: 'd2h-code-line',
+            prefix: line.prefix === ' ' ? '&nbsp;' : line.prefix,
+            content: line.content,
+            lineNumber: lineNumberHtml,
+        });
+    };
+    return LineByLineRenderer;
+}());
+exports.default = LineByLineRenderer;
+
+},{"./rematch":87,"./render-utils":88,"./types":90}],87:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function levenshtein(a, b) {
+    if (a.length === 0) {
+        return b.length;
+    }
+    if (b.length === 0) {
+        return a.length;
+    }
+    var matrix = [];
+    var i;
+    for (i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+    var j;
+    for (j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (i = 1; i <= b.length; i++) {
+        for (j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            }
+            else {
+                matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+            }
+        }
+    }
+    return matrix[b.length][a.length];
+}
+exports.levenshtein = levenshtein;
+function newDistanceFn(str) {
+    return function (x, y) {
+        var xValue = str(x).trim();
+        var yValue = str(y).trim();
+        var lev = levenshtein(xValue, yValue);
+        return lev / (xValue.length + yValue.length);
+    };
+}
+exports.newDistanceFn = newDistanceFn;
+function newMatcherFn(distance) {
+    function findBestMatch(a, b, cache) {
+        if (cache === void 0) { cache = new Map(); }
+        var bestMatchDist = Infinity;
+        var bestMatch;
+        for (var i = 0; i < a.length; ++i) {
+            for (var j = 0; j < b.length; ++j) {
+                var cacheKey = JSON.stringify([a[i], b[j]]);
+                var md = void 0;
+                if (!(cache.has(cacheKey) && (md = cache.get(cacheKey)))) {
+                    md = distance(a[i], b[j]);
+                    cache.set(cacheKey, md);
+                }
+                if (md < bestMatchDist) {
+                    bestMatchDist = md;
+                    bestMatch = { indexA: i, indexB: j, score: bestMatchDist };
+                }
+            }
+        }
+        return bestMatch;
+    }
+    function group(a, b, level, cache) {
+        if (level === void 0) { level = 0; }
+        if (cache === void 0) { cache = new Map(); }
+        var bm = findBestMatch(a, b, cache);
+        if (!bm || a.length + b.length < 3) {
+            return [[a, b]];
+        }
+        var a1 = a.slice(0, bm.indexA);
+        var b1 = b.slice(0, bm.indexB);
+        var aMatch = [a[bm.indexA]];
+        var bMatch = [b[bm.indexB]];
+        var tailA = bm.indexA + 1;
+        var tailB = bm.indexB + 1;
+        var a2 = a.slice(tailA);
+        var b2 = b.slice(tailB);
+        var group1 = group(a1, b1, level + 1, cache);
+        var groupMatch = group(aMatch, bMatch, level + 1, cache);
+        var group2 = group(a2, b2, level + 1, cache);
+        var result = groupMatch;
+        if (bm.indexA > 0 || bm.indexB > 0) {
+            result = group1.concat(result);
+        }
+        if (a.length > tailA || b.length > tailB) {
+            result = result.concat(group2);
+        }
+        return result;
+    }
+    return group;
+}
+exports.newMatcherFn = newMatcherFn;
+
+},{}],88:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsDiff = __importStar(require("diff"));
+var utils_1 = require("./utils");
+var rematch = __importStar(require("./rematch"));
+var types_1 = require("./types");
+exports.CSSLineClass = {
+    INSERTS: 'd2h-ins',
+    DELETES: 'd2h-del',
+    CONTEXT: 'd2h-cntx',
+    INFO: 'd2h-info',
+    INSERT_CHANGES: 'd2h-ins d2h-change',
+    DELETE_CHANGES: 'd2h-del d2h-change',
+};
+exports.defaultRenderConfig = {
+    matching: types_1.LineMatchingType.NONE,
+    matchWordsThreshold: 0.25,
+    maxLineLengthHighlight: 10000,
+    diffStyle: types_1.DiffStyleType.WORD,
+};
+var separator = '/';
+var distance = rematch.newDistanceFn(function (change) { return change.value; });
+var matcher = rematch.newMatcherFn(distance);
+function isDevNullName(name) {
+    return name.indexOf('dev/null') !== -1;
+}
+function removeInsElements(line) {
+    return line.replace(/(<ins[^>]*>((.|\n)*?)<\/ins>)/g, '');
+}
+function removeDelElements(line) {
+    return line.replace(/(<del[^>]*>((.|\n)*?)<\/del>)/g, '');
+}
+function toCSSClass(lineType) {
+    switch (lineType) {
+        case types_1.LineType.CONTEXT:
+            return exports.CSSLineClass.CONTEXT;
+        case types_1.LineType.INSERT:
+            return exports.CSSLineClass.INSERTS;
+        case types_1.LineType.DELETE:
+            return exports.CSSLineClass.DELETES;
+    }
+}
+exports.toCSSClass = toCSSClass;
+function prefixLength(isCombined) {
+    return isCombined ? 2 : 1;
+}
+function escapeForHtml(str) {
+    return str
+        .slice(0)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;');
+}
+exports.escapeForHtml = escapeForHtml;
+function deconstructLine(line, isCombined, escape) {
+    if (escape === void 0) { escape = true; }
+    var indexToSplit = prefixLength(isCombined);
+    return {
+        prefix: line.substring(0, indexToSplit),
+        content: escape ? escapeForHtml(line.substring(indexToSplit)) : line.substring(indexToSplit),
+    };
+}
+exports.deconstructLine = deconstructLine;
+function filenameDiff(file) {
+    var oldFilename = utils_1.unifyPath(file.oldName);
+    var newFilename = utils_1.unifyPath(file.newName);
+    if (oldFilename !== newFilename && !isDevNullName(oldFilename) && !isDevNullName(newFilename)) {
+        var prefixPaths = [];
+        var suffixPaths = [];
+        var oldFilenameParts = oldFilename.split(separator);
+        var newFilenameParts = newFilename.split(separator);
+        var oldFilenamePartsSize = oldFilenameParts.length;
+        var newFilenamePartsSize = newFilenameParts.length;
+        var i = 0;
+        var j = oldFilenamePartsSize - 1;
+        var k = newFilenamePartsSize - 1;
+        while (i < j && i < k) {
+            if (oldFilenameParts[i] === newFilenameParts[i]) {
+                prefixPaths.push(newFilenameParts[i]);
+                i += 1;
+            }
+            else {
+                break;
+            }
+        }
+        while (j > i && k > i) {
+            if (oldFilenameParts[j] === newFilenameParts[k]) {
+                suffixPaths.unshift(newFilenameParts[k]);
+                j -= 1;
+                k -= 1;
+            }
+            else {
+                break;
+            }
+        }
+        var finalPrefix = prefixPaths.join(separator);
+        var finalSuffix = suffixPaths.join(separator);
+        var oldRemainingPath = oldFilenameParts.slice(i, j + 1).join(separator);
+        var newRemainingPath = newFilenameParts.slice(i, k + 1).join(separator);
+        if (finalPrefix.length && finalSuffix.length) {
+            return (finalPrefix + separator + '{' + oldRemainingPath + ' → ' + newRemainingPath + '}' + separator + finalSuffix);
+        }
+        else if (finalPrefix.length) {
+            return finalPrefix + separator + '{' + oldRemainingPath + ' → ' + newRemainingPath + '}';
+        }
+        else if (finalSuffix.length) {
+            return '{' + oldRemainingPath + ' → ' + newRemainingPath + '}' + separator + finalSuffix;
+        }
+        return oldFilename + ' → ' + newFilename;
+    }
+    else if (!isDevNullName(newFilename)) {
+        return newFilename;
+    }
+    else {
+        return oldFilename;
+    }
+}
+exports.filenameDiff = filenameDiff;
+function getHtmlId(file) {
+    return "d2h-" + utils_1.hashCode(filenameDiff(file))
+        .toString()
+        .slice(-6);
+}
+exports.getHtmlId = getHtmlId;
+function getFileIcon(file) {
+    var templateName = 'file-changed';
+    if (file.isRename) {
+        templateName = 'file-renamed';
+    }
+    else if (file.isCopy) {
+        templateName = 'file-renamed';
+    }
+    else if (file.isNew) {
+        templateName = 'file-added';
+    }
+    else if (file.isDeleted) {
+        templateName = 'file-deleted';
+    }
+    else if (file.newName !== file.oldName) {
+        templateName = 'file-renamed';
+    }
+    return templateName;
+}
+exports.getFileIcon = getFileIcon;
+function diffHighlight(diffLine1, diffLine2, isCombined, config) {
+    if (config === void 0) { config = {}; }
+    var _a = __assign(__assign({}, exports.defaultRenderConfig), config), matching = _a.matching, maxLineLengthHighlight = _a.maxLineLengthHighlight, matchWordsThreshold = _a.matchWordsThreshold, diffStyle = _a.diffStyle;
+    var line1 = deconstructLine(diffLine1, isCombined, false);
+    var line2 = deconstructLine(diffLine2, isCombined, false);
+    if (line1.content.length > maxLineLengthHighlight || line2.content.length > maxLineLengthHighlight) {
+        return {
+            oldLine: {
+                prefix: line1.prefix,
+                content: line1.content,
+            },
+            newLine: {
+                prefix: line2.prefix,
+                content: line2.content,
+            },
+        };
+    }
+    var diff = diffStyle === 'char'
+        ? jsDiff.diffChars(line1.content, line2.content)
+        : jsDiff.diffWordsWithSpace(line1.content, line2.content);
+    var changedWords = [];
+    if (diffStyle === 'word' && matching === 'words') {
+        var removed = diff.filter(function (element) { return element.removed; });
+        var added = diff.filter(function (element) { return element.added; });
+        var chunks = matcher(added, removed);
+        chunks.forEach(function (chunk) {
+            if (chunk[0].length === 1 && chunk[1].length === 1) {
+                var dist = distance(chunk[0][0], chunk[1][0]);
+                if (dist < matchWordsThreshold) {
+                    changedWords.push(chunk[0][0]);
+                    changedWords.push(chunk[1][0]);
+                }
+            }
+        });
+    }
+    var highlightedLine = diff.reduce(function (highlightedLine, part) {
+        var elemType = part.added ? 'ins' : part.removed ? 'del' : null;
+        var addClass = changedWords.indexOf(part) > -1 ? ' class="d2h-change"' : '';
+        var escapedValue = escapeForHtml(part.value);
+        return elemType !== null
+            ? highlightedLine + "<" + elemType + addClass + ">" + escapedValue + "</" + elemType + ">"
+            : "" + highlightedLine + escapedValue;
+    }, '');
+    return {
+        oldLine: {
+            prefix: line1.prefix,
+            content: removeInsElements(highlightedLine),
+        },
+        newLine: {
+            prefix: line2.prefix,
+            content: removeDelElements(highlightedLine),
+        },
+    };
+}
+exports.diffHighlight = diffHighlight;
+
+},{"./rematch":87,"./types":90,"./utils":91,"diff":92}],89:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Rematch = __importStar(require("./rematch"));
+var renderUtils = __importStar(require("./render-utils"));
+var types_1 = require("./types");
+exports.defaultSideBySideRendererConfig = __assign(__assign({}, renderUtils.defaultRenderConfig), { renderNothingWhenEmpty: false, matchingMaxComparisons: 2500, maxLineSizeInBlockForComparison: 200 });
+var genericTemplatesPath = 'generic';
+var baseTemplatesPath = 'side-by-side';
+var iconsBaseTemplatesPath = 'icon';
+var tagsBaseTemplatesPath = 'tag';
+var SideBySideRenderer = (function () {
+    function SideBySideRenderer(hoganUtils, config) {
+        if (config === void 0) { config = {}; }
+        this.hoganUtils = hoganUtils;
+        this.config = __assign(__assign({}, exports.defaultSideBySideRendererConfig), config);
+    }
+    SideBySideRenderer.prototype.render = function (diffFiles) {
+        var _this = this;
+        var diffsHtml = diffFiles
+            .map(function (file) {
+            var diffs;
+            if (file.blocks.length) {
+                diffs = _this.generateFileHtml(file);
+            }
+            else {
+                diffs = _this.generateEmptyDiff();
+            }
+            return _this.makeFileDiffHtml(file, diffs);
+        })
+            .join('\n');
+        return this.hoganUtils.render(genericTemplatesPath, 'wrapper', { content: diffsHtml });
+    };
+    SideBySideRenderer.prototype.makeFileDiffHtml = function (file, diffs) {
+        if (this.config.renderNothingWhenEmpty && Array.isArray(file.blocks) && file.blocks.length === 0)
+            return '';
+        var fileDiffTemplate = this.hoganUtils.template(baseTemplatesPath, 'file-diff');
+        var filePathTemplate = this.hoganUtils.template(genericTemplatesPath, 'file-path');
+        var fileIconTemplate = this.hoganUtils.template(iconsBaseTemplatesPath, 'file');
+        var fileTagTemplate = this.hoganUtils.template(tagsBaseTemplatesPath, renderUtils.getFileIcon(file));
+        return fileDiffTemplate.render({
+            file: file,
+            fileHtmlId: renderUtils.getHtmlId(file),
+            diffs: diffs,
+            filePath: filePathTemplate.render({
+                fileDiffName: renderUtils.filenameDiff(file),
+            }, {
+                fileIcon: fileIconTemplate,
+                fileTag: fileTagTemplate,
+            }),
+        });
+    };
+    SideBySideRenderer.prototype.generateEmptyDiff = function () {
+        return {
+            right: '',
+            left: this.hoganUtils.render(genericTemplatesPath, 'empty-diff', {
+                contentClass: 'd2h-code-side-line',
+                CSSLineClass: renderUtils.CSSLineClass,
+            }),
+        };
+    };
+    SideBySideRenderer.prototype.generateFileHtml = function (file) {
+        var _this = this;
+        var matcher = Rematch.newMatcherFn(Rematch.newDistanceFn(function (e) { return renderUtils.deconstructLine(e.content, file.isCombined).content; }));
+        return file.blocks
+            .map(function (block) {
+            var fileHtml = {
+                left: _this.makeHeaderHtml(block.header),
+                right: _this.makeHeaderHtml(''),
+            };
+            _this.applyLineGroupping(block).forEach(function (_a) {
+                var contextLines = _a[0], oldLines = _a[1], newLines = _a[2];
+                if (oldLines.length && newLines.length && !contextLines.length) {
+                    _this.applyRematchMatching(oldLines, newLines, matcher).map(function (_a) {
+                        var oldLines = _a[0], newLines = _a[1];
+                        var _b = _this.processChangedLines(file.isCombined, oldLines, newLines), left = _b.left, right = _b.right;
+                        fileHtml.left += left;
+                        fileHtml.right += right;
+                    });
+                }
+                else if (contextLines.length) {
+                    contextLines.forEach(function (line) {
+                        var _a = renderUtils.deconstructLine(line.content, file.isCombined), prefix = _a.prefix, content = _a.content;
+                        var _b = _this.generateLineHtml({
+                            type: renderUtils.CSSLineClass.CONTEXT,
+                            prefix: prefix,
+                            content: content,
+                            number: line.oldNumber,
+                        }, {
+                            type: renderUtils.CSSLineClass.CONTEXT,
+                            prefix: prefix,
+                            content: content,
+                            number: line.newNumber,
+                        }), left = _b.left, right = _b.right;
+                        fileHtml.left += left;
+                        fileHtml.right += right;
+                    });
+                }
+                else if (oldLines.length || newLines.length) {
+                    var _b = _this.processChangedLines(file.isCombined, oldLines, newLines), left = _b.left, right = _b.right;
+                    fileHtml.left += left;
+                    fileHtml.right += right;
+                }
+                else {
+                    console.error('Unknown state reached while processing groups of lines', contextLines, oldLines, newLines);
+                }
+            });
+            return fileHtml;
+        })
+            .reduce(function (accomulated, html) {
+            return { left: accomulated.left + html.left, right: accomulated.right + html.right };
+        }, { left: '', right: '' });
+    };
+    SideBySideRenderer.prototype.applyLineGroupping = function (block) {
+        var blockLinesGroups = [];
+        var oldLines = [];
+        var newLines = [];
+        for (var i = 0; i < block.lines.length; i++) {
+            var diffLine = block.lines[i];
+            if ((diffLine.type !== types_1.LineType.INSERT && newLines.length) ||
+                (diffLine.type === types_1.LineType.CONTEXT && oldLines.length > 0)) {
+                blockLinesGroups.push([[], oldLines, newLines]);
+                oldLines = [];
+                newLines = [];
+            }
+            if (diffLine.type === types_1.LineType.CONTEXT) {
+                blockLinesGroups.push([[diffLine], [], []]);
+            }
+            else if (diffLine.type === types_1.LineType.INSERT && oldLines.length === 0) {
+                blockLinesGroups.push([[], [], [diffLine]]);
+            }
+            else if (diffLine.type === types_1.LineType.INSERT && oldLines.length > 0) {
+                newLines.push(diffLine);
+            }
+            else if (diffLine.type === types_1.LineType.DELETE) {
+                oldLines.push(diffLine);
+            }
+        }
+        if (oldLines.length || newLines.length) {
+            blockLinesGroups.push([[], oldLines, newLines]);
+            oldLines = [];
+            newLines = [];
+        }
+        return blockLinesGroups;
+    };
+    SideBySideRenderer.prototype.applyRematchMatching = function (oldLines, newLines, matcher) {
+        var comparisons = oldLines.length * newLines.length;
+        var maxLineSizeInBlock = Math.max.apply(null, [0].concat(oldLines.concat(newLines).map(function (elem) { return elem.content.length; })));
+        var doMatching = comparisons < this.config.matchingMaxComparisons &&
+            maxLineSizeInBlock < this.config.maxLineSizeInBlockForComparison &&
+            (this.config.matching === 'lines' || this.config.matching === 'words');
+        return doMatching ? matcher(oldLines, newLines) : [[oldLines, newLines]];
+    };
+    SideBySideRenderer.prototype.makeHeaderHtml = function (blockHeader) {
+        return this.hoganUtils.render(genericTemplatesPath, 'block-header', {
+            CSSLineClass: renderUtils.CSSLineClass,
+            blockHeader: blockHeader,
+            lineClass: 'd2h-code-side-linenumber',
+            contentClass: 'd2h-code-side-line',
+        });
+    };
+    SideBySideRenderer.prototype.processChangedLines = function (isCombined, oldLines, newLines) {
+        var fileHtml = {
+            right: '',
+            left: '',
+        };
+        var maxLinesNumber = Math.max(oldLines.length, newLines.length);
+        for (var i = 0; i < maxLinesNumber; i++) {
+            var oldLine = oldLines[i];
+            var newLine = newLines[i];
+            var diff = oldLine !== undefined && newLine !== undefined
+                ? renderUtils.diffHighlight(oldLine.content, newLine.content, isCombined, this.config)
+                : undefined;
+            var preparedOldLine = oldLine !== undefined && oldLine.oldNumber !== undefined
+                ? __assign(__assign({}, (diff !== undefined
+                    ? {
+                        prefix: diff.oldLine.prefix,
+                        content: diff.oldLine.content,
+                        type: renderUtils.CSSLineClass.DELETE_CHANGES,
+                    }
+                    : __assign(__assign({}, renderUtils.deconstructLine(oldLine.content, isCombined)), { type: renderUtils.toCSSClass(oldLine.type) }))), { number: oldLine.oldNumber }) : undefined;
+            var preparedNewLine = newLine !== undefined && newLine.newNumber !== undefined
+                ? __assign(__assign({}, (diff !== undefined
+                    ? {
+                        prefix: diff.newLine.prefix,
+                        content: diff.newLine.content,
+                        type: renderUtils.CSSLineClass.INSERT_CHANGES,
+                    }
+                    : __assign(__assign({}, renderUtils.deconstructLine(newLine.content, isCombined)), { type: renderUtils.toCSSClass(newLine.type) }))), { number: newLine.newNumber }) : undefined;
+            var _a = this.generateLineHtml(preparedOldLine, preparedNewLine), left = _a.left, right = _a.right;
+            fileHtml.left += left;
+            fileHtml.right += right;
+        }
+        return fileHtml;
+    };
+    SideBySideRenderer.prototype.generateLineHtml = function (oldLine, newLine) {
+        return {
+            left: this.generateSingleHtml(oldLine),
+            right: this.generateSingleHtml(newLine),
+        };
+    };
+    SideBySideRenderer.prototype.generateSingleHtml = function (line) {
+        var lineClass = 'd2h-code-side-linenumber';
+        var contentClass = 'd2h-code-side-line';
+        return this.hoganUtils.render(genericTemplatesPath, 'line', {
+            type: (line === null || line === void 0 ? void 0 : line.type) || renderUtils.CSSLineClass.CONTEXT + " d2h-emptyplaceholder",
+            lineClass: line !== undefined ? lineClass : lineClass + " d2h-code-side-emptyplaceholder",
+            contentClass: line !== undefined ? contentClass : contentClass + " d2h-code-side-emptyplaceholder",
+            prefix: (line === null || line === void 0 ? void 0 : line.prefix) === ' ' ? '&nbsp;' : line === null || line === void 0 ? void 0 : line.prefix,
+            content: line === null || line === void 0 ? void 0 : line.content,
+            lineNumber: line === null || line === void 0 ? void 0 : line.number,
+        });
+    };
+    return SideBySideRenderer;
+}());
+exports.default = SideBySideRenderer;
+
+},{"./rematch":87,"./render-utils":88,"./types":90}],90:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var LineType;
+(function (LineType) {
+    LineType["INSERT"] = "insert";
+    LineType["DELETE"] = "delete";
+    LineType["CONTEXT"] = "context";
+})(LineType = exports.LineType || (exports.LineType = {}));
+exports.OutputFormatType = {
+    LINE_BY_LINE: 'line-by-line',
+    SIDE_BY_SIDE: 'side-by-side',
+};
+exports.LineMatchingType = {
+    LINES: 'lines',
+    WORDS: 'words',
+    NONE: 'none',
+};
+exports.DiffStyleType = {
+    WORD: 'word',
+    CHAR: 'char',
+};
+
+},{}],91:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var specials = [
+    '-',
+    '[',
+    ']',
+    '/',
+    '{',
+    '}',
+    '(',
+    ')',
+    '*',
+    '+',
+    '?',
+    '.',
+    '\\',
+    '^',
+    '$',
+    '|',
+];
+var regex = RegExp('[' + specials.join('\\') + ']', 'g');
+function escapeForRegExp(str) {
+    return str.replace(regex, '\\$&');
+}
+exports.escapeForRegExp = escapeForRegExp;
+function unifyPath(path) {
+    return path ? path.replace(/\\/g, '/') : path;
+}
+exports.unifyPath = unifyPath;
+function hashCode(text) {
+    var i, chr, len;
+    var hash = 0;
+    for (i = 0, len = text.length; i < len; i++) {
+        chr = text.charCodeAt(i);
+        hash = (hash << 5) - hash + chr;
+        hash |= 0;
+    }
+    return hash;
+}
+exports.hashCode = hashCode;
+
+},{}],92:[function(require,module,exports){
 /*!
 
  diff v4.0.1
@@ -18656,1710 +19987,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 }));
 
-},{}],83:[function(require,module,exports){
-/*
- *
- * Diff Parser (diff-parser.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var utils = require('./utils.js').Utils;
-
-  var LINE_TYPE = {
-    INSERTS: 'd2h-ins',
-    DELETES: 'd2h-del',
-    INSERT_CHANGES: 'd2h-ins d2h-change',
-    DELETE_CHANGES: 'd2h-del d2h-change',
-    CONTEXT: 'd2h-cntx',
-    INFO: 'd2h-info'
-  };
-
-  function DiffParser() {
-  }
-
-  DiffParser.prototype.LINE_TYPE = LINE_TYPE;
-
-  DiffParser.prototype.generateDiffJson = function(diffInput, configuration) {
-    var config = configuration || {};
-
-    var files = [];
-    var currentFile = null;
-    var currentBlock = null;
-    var oldLine = null;
-    var oldLine2 = null; // Used for combined diff
-    var newLine = null;
-
-    var possibleOldName;
-    var possibleNewName;
-
-    /* Diff Header */
-    var oldFileNameHeader = '--- ';
-    var newFileNameHeader = '+++ ';
-    var hunkHeaderPrefix = '@@';
-
-    /* Add previous block(if exists) before start a new file */
-    function saveBlock() {
-      if (currentBlock) {
-        currentFile.blocks.push(currentBlock);
-        currentBlock = null;
-      }
-    }
-
-    /*
-     * Add previous file(if exists) before start a new one
-     * if it has name (to avoid binary files errors)
-     */
-    function saveFile() {
-      if (currentFile) {
-        if (!currentFile.oldName) {
-          currentFile.oldName = possibleOldName;
-        }
-
-        if (!currentFile.newName) {
-          currentFile.newName = possibleNewName;
-        }
-
-        if (currentFile.newName) {
-          files.push(currentFile);
-          currentFile = null;
-        }
-      }
-
-      possibleOldName = undefined;
-      possibleNewName = undefined;
-    }
-
-    /* Create file structure */
-    function startFile() {
-      saveBlock();
-      saveFile();
-
-      currentFile = {};
-      currentFile.blocks = [];
-      currentFile.deletedLines = 0;
-      currentFile.addedLines = 0;
-    }
-
-    function startBlock(line) {
-      saveBlock();
-
-      var values;
-
-      /**
-       * From Range:
-       * -<start line>[,<number of lines>]
-       *
-       * To Range:
-       * +<start line>[,<number of lines>]
-       *
-       * @@ from-file-range to-file-range @@
-       *
-       * @@@ from-file-range from-file-range to-file-range @@@
-       *
-       * number of lines is optional, if omited consider 0
-       */
-
-      if ((values = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@.*/.exec(line))) {
-        currentFile.isCombined = false;
-        oldLine = values[1];
-        newLine = values[2];
-      } else if ((values = /^@@@ -(\d+)(?:,\d+)? -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@@.*/.exec(line))) {
-        currentFile.isCombined = true;
-        oldLine = values[1];
-        oldLine2 = values[2];
-        newLine = values[3];
-      } else {
-        if (utils.startsWith(line, hunkHeaderPrefix)) {
-          console.error('Failed to parse lines, starting in 0!');
-        }
-
-        oldLine = 0;
-        newLine = 0;
-        currentFile.isCombined = false;
-      }
-
-      /* Create block metadata */
-      currentBlock = {};
-      currentBlock.lines = [];
-      currentBlock.oldStartLine = oldLine;
-      currentBlock.oldStartLine2 = oldLine2;
-      currentBlock.newStartLine = newLine;
-      currentBlock.header = line;
-    }
-
-    function createLine(line) {
-      var currentLine = {};
-      currentLine.content = line;
-
-      var newLinePrefixes = !currentFile.isCombined ? ['+'] : ['+', ' +'];
-      var delLinePrefixes = !currentFile.isCombined ? ['-'] : ['-', ' -'];
-
-      /* Fill the line data */
-      if (utils.startsWith(line, newLinePrefixes)) {
-        currentFile.addedLines++;
-
-        currentLine.type = LINE_TYPE.INSERTS;
-        currentLine.oldNumber = null;
-        currentLine.newNumber = newLine++;
-
-        currentBlock.lines.push(currentLine);
-      } else if (utils.startsWith(line, delLinePrefixes)) {
-        currentFile.deletedLines++;
-
-        currentLine.type = LINE_TYPE.DELETES;
-        currentLine.oldNumber = oldLine++;
-        currentLine.newNumber = null;
-
-        currentBlock.lines.push(currentLine);
-      } else {
-        currentLine.type = LINE_TYPE.CONTEXT;
-        currentLine.oldNumber = oldLine++;
-        currentLine.newNumber = newLine++;
-
-        currentBlock.lines.push(currentLine);
-      }
-    }
-
-    /*
-     * Checks if there is a hunk header coming before a new file starts
-     *
-     * Hunk header is a group of three lines started by ( `--- ` , `+++ ` , `@@` )
-     */
-    function existHunkHeader(line, lineIdx) {
-      var idx = lineIdx;
-
-      while (idx < diffLines.length - 3) {
-        if (utils.startsWith(line, 'diff')) {
-          return false;
-        }
-
-        if (
-          utils.startsWith(diffLines[idx], oldFileNameHeader) &&
-          utils.startsWith(diffLines[idx + 1], newFileNameHeader) &&
-          utils.startsWith(diffLines[idx + 2], hunkHeaderPrefix)
-        ) {
-          return true;
-        }
-
-        idx++;
-      }
-
-      return false;
-    }
-
-    var diffLines =
-      diffInput.replace(/\\ No newline at end of file/g, '')
-        .replace(/\r\n?/g, '\n')
-        .split('\n');
-
-    /* Diff */
-    var oldMode = /^old mode (\d{6})/;
-    var newMode = /^new mode (\d{6})/;
-    var deletedFileMode = /^deleted file mode (\d{6})/;
-    var newFileMode = /^new file mode (\d{6})/;
-
-    var copyFrom = /^copy from "?(.+)"?/;
-    var copyTo = /^copy to "?(.+)"?/;
-
-    var renameFrom = /^rename from "?(.+)"?/;
-    var renameTo = /^rename to "?(.+)"?/;
-
-    var similarityIndex = /^similarity index (\d+)%/;
-    var dissimilarityIndex = /^dissimilarity index (\d+)%/;
-    var index = /^index ([0-9a-z]+)\.\.([0-9a-z]+)\s*(\d{6})?/;
-
-    var binaryFiles = /^Binary files (.*) and (.*) differ/;
-    var binaryDiff = /^GIT binary patch/;
-
-    /* Combined Diff */
-    var combinedIndex = /^index ([0-9a-z]+),([0-9a-z]+)\.\.([0-9a-z]+)/;
-    var combinedMode = /^mode (\d{6}),(\d{6})\.\.(\d{6})/;
-    var combinedNewFile = /^new file mode (\d{6})/;
-    var combinedDeletedFile = /^deleted file mode (\d{6}),(\d{6})/;
-
-    diffLines.forEach(function(line, lineIndex) {
-      // Unmerged paths, and possibly other non-diffable files
-      // https://github.com/scottgonzalez/pretty-diff/issues/11
-      // Also, remove some useless lines
-      if (!line || utils.startsWith(line, '*')) {
-        return;
-      }
-
-      // Used to store regex capture groups
-      var values;
-
-      var prevLine = diffLines[lineIndex - 1];
-      var nxtLine = diffLines[lineIndex + 1];
-      var afterNxtLine = diffLines[lineIndex + 2];
-
-      if (utils.startsWith(line, 'diff')) {
-        startFile();
-
-        // diff --git a/blocked_delta_results.png b/blocked_delta_results.png
-        var gitDiffStart = /^diff --git "?(.+)"? "?(.+)"?/;
-        if ((values = gitDiffStart.exec(line))) {
-          possibleOldName = _getFilename(null, values[1], config.dstPrefix);
-          possibleNewName = _getFilename(null, values[2], config.srcPrefix);
-        }
-
-        currentFile.isGitDiff = true;
-        return;
-      }
-
-      if (!currentFile || // If we do not have a file yet, we should crete one
-        (
-          !currentFile.isGitDiff && currentFile && // If we already have some file in progress and
-          (
-            utils.startsWith(line, oldFileNameHeader) && // If we get to an old file path header line
-            // And is followed by the new file path header line and the hunk header line
-            utils.startsWith(nxtLine, newFileNameHeader) && utils.startsWith(afterNxtLine, hunkHeaderPrefix)
-          )
-        )
-      ) {
-        startFile();
-      }
-
-      /*
-       * We need to make sure that we have the three lines of the header.
-       * This avoids cases like the ones described in:
-       *   - https://github.com/rtfpessoa/diff2html/issues/87
-       */
-      if (
-        (utils.startsWith(line, oldFileNameHeader) &&
-        utils.startsWith(nxtLine, newFileNameHeader)) ||
-
-        (utils.startsWith(line, newFileNameHeader) &&
-        utils.startsWith(prevLine, oldFileNameHeader))
-      ) {
-        /*
-         * --- Date Timestamp[FractionalSeconds] TimeZone
-         * --- 2002-02-21 23:30:39.942229878 -0800
-         */
-        if (currentFile && !currentFile.oldName &&
-          utils.startsWith(line, '--- ') && (values = getSrcFilename(line, config))) {
-          currentFile.oldName = values;
-          currentFile.language = getExtension(currentFile.oldName, currentFile.language);
-          return;
-        }
-
-        /*
-         * +++ Date Timestamp[FractionalSeconds] TimeZone
-         * +++ 2002-02-21 23:30:39.942229878 -0800
-         */
-        if (currentFile && !currentFile.newName &&
-          utils.startsWith(line, '+++ ') && (values = getDstFilename(line, config))) {
-          currentFile.newName = values;
-          currentFile.language = getExtension(currentFile.newName, currentFile.language);
-          return;
-        }
-      }
-
-      if (
-        (currentFile && utils.startsWith(line, hunkHeaderPrefix)) ||
-        (currentFile.isGitDiff && currentFile && currentFile.oldName && currentFile.newName && !currentBlock)
-      ) {
-        startBlock(line);
-        return;
-      }
-
-      /*
-       * There are three types of diff lines. These lines are defined by the way they start.
-       * 1. New line     starts with: +
-       * 2. Old line     starts with: -
-       * 3. Context line starts with: <SPACE>
-       */
-      if (currentBlock && (utils.startsWith(line, '+') || utils.startsWith(line, '-') || utils.startsWith(line, ' '))) {
-        createLine(line);
-        return;
-      }
-
-      var doesNotExistHunkHeader = !existHunkHeader(line, lineIndex);
-
-      /*
-       * Git diffs provide more information regarding files modes, renames, copies,
-       * commits between changes and similarity indexes
-       */
-      if ((values = oldMode.exec(line))) {
-        currentFile.oldMode = values[1];
-      } else if ((values = newMode.exec(line))) {
-        currentFile.newMode = values[1];
-      } else if ((values = deletedFileMode.exec(line))) {
-        currentFile.deletedFileMode = values[1];
-        currentFile.isDeleted = true;
-      } else if ((values = newFileMode.exec(line))) {
-        currentFile.newFileMode = values[1];
-        currentFile.isNew = true;
-      } else if ((values = copyFrom.exec(line))) {
-        if (doesNotExistHunkHeader) {
-          currentFile.oldName = values[1];
-        }
-        currentFile.isCopy = true;
-      } else if ((values = copyTo.exec(line))) {
-        if (doesNotExistHunkHeader) {
-          currentFile.newName = values[1];
-        }
-        currentFile.isCopy = true;
-      } else if ((values = renameFrom.exec(line))) {
-        if (doesNotExistHunkHeader) {
-          currentFile.oldName = values[1];
-        }
-        currentFile.isRename = true;
-      } else if ((values = renameTo.exec(line))) {
-        if (doesNotExistHunkHeader) {
-          currentFile.newName = values[1];
-        }
-        currentFile.isRename = true;
-      } else if ((values = binaryFiles.exec(line))) {
-        currentFile.isBinary = true;
-        currentFile.oldName = _getFilename(null, values[1], config.srcPrefix);
-        currentFile.newName = _getFilename(null, values[2], config.dstPrefix);
-        startBlock('Binary file');
-      } else if ((values = binaryDiff.exec(line))) {
-        currentFile.isBinary = true;
-        startBlock(line);
-      } else if ((values = similarityIndex.exec(line))) {
-        currentFile.unchangedPercentage = values[1];
-      } else if ((values = dissimilarityIndex.exec(line))) {
-        currentFile.changedPercentage = values[1];
-      } else if ((values = index.exec(line))) {
-        currentFile.checksumBefore = values[1];
-        currentFile.checksumAfter = values[2];
-        values[3] && (currentFile.mode = values[3]);
-      } else if ((values = combinedIndex.exec(line))) {
-        currentFile.checksumBefore = [values[2], values[3]];
-        currentFile.checksumAfter = values[1];
-      } else if ((values = combinedMode.exec(line))) {
-        currentFile.oldMode = [values[2], values[3]];
-        currentFile.newMode = values[1];
-      } else if ((values = combinedNewFile.exec(line))) {
-        currentFile.newFileMode = values[1];
-        currentFile.isNew = true;
-      } else if ((values = combinedDeletedFile.exec(line))) {
-        currentFile.deletedFileMode = values[1];
-        currentFile.isDeleted = true;
-      }
-    });
-
-    saveBlock();
-    saveFile();
-
-    return files;
-  };
-
-  function getExtension(filename, language) {
-    var nameSplit = filename.split('.');
-    if (nameSplit.length > 1) {
-      return nameSplit[nameSplit.length - 1];
-    }
-
-    return language;
-  }
-
-  function getSrcFilename(line, cfg) {
-    return _getFilename('---', line, cfg.srcPrefix);
-  }
-
-  function getDstFilename(line, cfg) {
-    return _getFilename('\\+\\+\\+', line, cfg.dstPrefix);
-  }
-
-  function _getFilename(linePrefix, line, extraPrefix) {
-    var prefixes = ['a/', 'b/', 'i/', 'w/', 'c/', 'o/'];
-    if (extraPrefix) {
-      prefixes.push(extraPrefix);
-    }
-
-    var FilenameRegExp;
-    if (linePrefix) {
-      FilenameRegExp = new RegExp('^' + linePrefix + ' "?(.+?)"?$');
-    } else {
-      FilenameRegExp = new RegExp('^"?(.+?)"?$');
-    }
-
-    var filename;
-    var values = FilenameRegExp.exec(line);
-    if (values && values[1]) {
-      filename = values[1];
-      var matchingPrefixes = prefixes.filter(function(p) {
-        return filename.indexOf(p) === 0;
-      });
-
-      if (matchingPrefixes[0]) {
-        // Remove prefix if exists
-        filename = filename.slice(matchingPrefixes[0].length);
-      }
-
-      // Cleanup timestamps generated by the unified diff (diff command) as specified in
-      // https://www.gnu.org/software/diffutils/manual/html_node/Detailed-Unified.html
-      // Ie: 2016-10-25 11:37:14.000000000 +0200
-      filename = filename.replace(/\s+\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)? [-+]\d{4}.*$/, '');
-    }
-
-    return filename;
-  }
-
-  module.exports.DiffParser = new DiffParser();
-})();
-
-},{"./utils.js":93}],84:[function(require,module,exports){
-(function (global){
-/*
- *
- * Diff to HTML (diff2html.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var diffParser = require('./diff-parser.js').DiffParser;
-  var htmlPrinter = require('./html-printer.js').HtmlPrinter;
-  var utils = require('./utils.js').Utils;
-
-  function Diff2Html() {
-  }
-
-  var defaultConfig = {
-    wordByWord: true,
-    outputFormat: 'line-by-line',
-    matching: 'none',
-    matchWordsThreshold: 0.25,
-    matchingMaxComparisons: 2500,
-    maxLineLengthHighlight: 10000,
-    renderNothingWhenEmpty: false
-  };
-
-  /*
-   * Generates json object from string diff input
-   */
-  Diff2Html.prototype.getJsonFromDiff = function(diffInput, config) {
-    var cfg = utils.safeConfig(config, defaultConfig);
-    return diffParser.generateDiffJson(diffInput, cfg);
-  };
-
-  /*
-   * Generates the html diff. The config parameter configures the output/input formats and other options
-   */
-  Diff2Html.prototype.getPrettyHtml = function(diffInput, config) {
-    var cfg = utils.safeConfig(config, defaultConfig);
-
-    var diffJson = diffInput;
-    if (!cfg.inputFormat || cfg.inputFormat === 'diff') {
-      diffJson = diffParser.generateDiffJson(diffInput, cfg);
-    }
-
-    var fileList = '';
-    if (cfg.showFiles === true) {
-      fileList = htmlPrinter.generateFileListSummary(diffJson, cfg);
-    }
-
-    var diffOutput = '';
-    if (cfg.outputFormat === 'side-by-side') {
-      diffOutput = htmlPrinter.generateSideBySideJsonHtml(diffJson, cfg);
-    } else {
-      diffOutput = htmlPrinter.generateLineByLineJsonHtml(diffJson, cfg);
-    }
-
-    return fileList + diffOutput;
-  };
-
-  /*
-   * Deprecated methods - The following methods exist only to maintain compatibility with previous versions
-   */
-
-  /*
-   * Generates pretty html from string diff input
-   */
-  Diff2Html.prototype.getPrettyHtmlFromDiff = function(diffInput, config) {
-    var cfg = utils.safeConfig(config, defaultConfig);
-    cfg.inputFormat = 'diff';
-    cfg.outputFormat = 'line-by-line';
-    return this.getPrettyHtml(diffInput, cfg);
-  };
-
-  /*
-   * Generates pretty html from a json object
-   */
-  Diff2Html.prototype.getPrettyHtmlFromJson = function(diffJson, config) {
-    var cfg = utils.safeConfig(config, defaultConfig);
-    cfg.inputFormat = 'json';
-    cfg.outputFormat = 'line-by-line';
-    return this.getPrettyHtml(diffJson, cfg);
-  };
-
-  /*
-   * Generates pretty side by side html from string diff input
-   */
-  Diff2Html.prototype.getPrettySideBySideHtmlFromDiff = function(diffInput, config) {
-    var cfg = utils.safeConfig(config, defaultConfig);
-    cfg.inputFormat = 'diff';
-    cfg.outputFormat = 'side-by-side';
-    return this.getPrettyHtml(diffInput, cfg);
-  };
-
-  /*
-   * Generates pretty side by side html from a json object
-   */
-  Diff2Html.prototype.getPrettySideBySideHtmlFromJson = function(diffJson, config) {
-    var cfg = utils.safeConfig(config, defaultConfig);
-    cfg.inputFormat = 'json';
-    cfg.outputFormat = 'side-by-side';
-    return this.getPrettyHtml(diffJson, cfg);
-  };
-
-  var diffObject = new Diff2Html();
-  module.exports.Diff2Html = diffObject;
-
-  // Expose diff2html in the browser
-  global.Diff2Html = diffObject;
-})();
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./diff-parser.js":83,"./html-printer.js":87,"./utils.js":93}],85:[function(require,module,exports){
-/*
- *
- * FileListPrinter (file-list-printer.js)
- * Author: nmatpt
- *
- */
-
-(function() {
-  var printerUtils = require('./printer-utils.js').PrinterUtils;
-
-  var hoganUtils;
-
-  var baseTemplatesPath = 'file-summary';
-  var iconsBaseTemplatesPath = 'icon';
-
-  function FileListPrinter(config) {
-    this.config = config;
-
-    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-    hoganUtils = new HoganJsUtils(config);
-  }
-
-  FileListPrinter.prototype.generateFileList = function(diffFiles) {
-    var lineTemplate = hoganUtils.template(baseTemplatesPath, 'line');
-
-    var files = diffFiles.map(function(file) {
-      var fileTypeName = printerUtils.getFileTypeIcon(file);
-      var iconTemplate = hoganUtils.template(iconsBaseTemplatesPath, fileTypeName);
-
-      return lineTemplate.render({
-        fileHtmlId: printerUtils.getHtmlId(file),
-        fileName: printerUtils.getDiffName(file),
-        deletedLines: '-' + file.deletedLines,
-        addedLines: '+' + file.addedLines
-      }, {
-        fileIcon: iconTemplate
-      });
-    }).join('\n');
-
-    return hoganUtils.render(baseTemplatesPath, 'wrapper', {
-      filesNumber: diffFiles.length,
-      files: files
-    });
-  };
-
-  module.exports.FileListPrinter = FileListPrinter;
-})();
-
-},{"./hoganjs-utils.js":86,"./printer-utils.js":89}],86:[function(require,module,exports){
-(function (__dirname){
-/*
- *
- * Utils (hoganjs-utils.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var fs = require('fs');
-  var path = require('path');
-  var hogan = require('hogan.js');
-
-  var hoganTemplates = require('./templates/diff2html-templates.js');
-
-  var extraTemplates;
-
-  function HoganJsUtils(configuration) {
-    this.config = configuration || {};
-    extraTemplates = this.config.templates || {};
-
-    var rawTemplates = this.config.rawTemplates || {};
-    for (var templateName in rawTemplates) {
-      if (rawTemplates.hasOwnProperty(templateName)) {
-        if (!extraTemplates[templateName]) extraTemplates[templateName] = this.compile(rawTemplates[templateName]);
-      }
-    }
-  }
-
-  HoganJsUtils.prototype.render = function(namespace, view, params) {
-    var template = this.template(namespace, view);
-    if (template) {
-      return template.render(params);
-    }
-
-    return null;
-  };
-
-  HoganJsUtils.prototype.template = function(namespace, view) {
-    var templateKey = this._templateKey(namespace, view);
-
-    return this._getTemplate(templateKey);
-  };
-
-  HoganJsUtils.prototype._getTemplate = function(templateKey) {
-    var template;
-
-    if (!this.config.noCache) {
-      template = this._readFromCache(templateKey);
-    }
-
-    if (!template) {
-      template = this._loadTemplate(templateKey);
-    }
-
-    return template;
-  };
-
-  HoganJsUtils.prototype._loadTemplate = function(templateKey) {
-    var template;
-
-    try {
-      if (fs.readFileSync) {
-        var templatesPath = path.resolve(__dirname, 'templates');
-        var templatePath = path.join(templatesPath, templateKey);
-        var templateContent = fs.readFileSync(templatePath + '.mustache', 'utf8');
-        template = hogan.compile(templateContent);
-        hoganTemplates[templateKey] = template;
-      }
-    } catch (e) {
-      console.error('Failed to read (template: ' + templateKey + ') from fs: ' + e.message);
-    }
-
-    return template;
-  };
-
-  HoganJsUtils.prototype._readFromCache = function(templateKey) {
-    return extraTemplates[templateKey] || hoganTemplates[templateKey];
-  };
-
-  HoganJsUtils.prototype._templateKey = function(namespace, view) {
-    return namespace + '-' + view;
-  };
-
-  HoganJsUtils.prototype.compile = function(templateStr) {
-    return hogan.compile(templateStr);
-  };
-
-  module.exports.HoganJsUtils = HoganJsUtils;
-})();
-
-}).call(this,"/node_modules/diff2html/src")
-},{"./templates/diff2html-templates.js":92,"fs":15,"hogan.js":95,"path":101}],87:[function(require,module,exports){
-/*
- *
- * HtmlPrinter (html-printer.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var LineByLinePrinter = require('./line-by-line-printer.js').LineByLinePrinter;
-  var SideBySidePrinter = require('./side-by-side-printer.js').SideBySidePrinter;
-  var FileListPrinter = require('./file-list-printer.js').FileListPrinter;
-
-  function HtmlPrinter() {
-  }
-
-  HtmlPrinter.prototype.generateLineByLineJsonHtml = function(diffFiles, config) {
-    var lineByLinePrinter = new LineByLinePrinter(config);
-    return lineByLinePrinter.generateLineByLineJsonHtml(diffFiles);
-  };
-
-  HtmlPrinter.prototype.generateSideBySideJsonHtml = function(diffFiles, config) {
-    var sideBySidePrinter = new SideBySidePrinter(config);
-    return sideBySidePrinter.generateSideBySideJsonHtml(diffFiles);
-  };
-
-  HtmlPrinter.prototype.generateFileListSummary = function(diffJson, config) {
-    var fileListPrinter = new FileListPrinter(config);
-    return fileListPrinter.generateFileList(diffJson);
-  };
-
-  module.exports.HtmlPrinter = new HtmlPrinter();
-})();
-
-},{"./file-list-printer.js":85,"./line-by-line-printer.js":88,"./side-by-side-printer.js":91}],88:[function(require,module,exports){
-/*
- *
- * LineByLinePrinter (line-by-line-printer.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var diffParser = require('./diff-parser.js').DiffParser;
-  var printerUtils = require('./printer-utils.js').PrinterUtils;
-  var utils = require('./utils.js').Utils;
-  var Rematch = require('./rematch.js').Rematch;
-
-  var hoganUtils;
-
-  var genericTemplatesPath = 'generic';
-  var baseTemplatesPath = 'line-by-line';
-  var iconsBaseTemplatesPath = 'icon';
-  var tagsBaseTemplatesPath = 'tag';
-
-  function LineByLinePrinter(config) {
-    this.config = config;
-
-    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-    hoganUtils = new HoganJsUtils(config);
-  }
-
-  LineByLinePrinter.prototype.makeFileDiffHtml = function(file, diffs) {
-    if (this.config.renderNothingWhenEmpty && file.blocks && !file.blocks.length) return '';
-
-    var fileDiffTemplate = hoganUtils.template(baseTemplatesPath, 'file-diff');
-    var filePathTemplate = hoganUtils.template(genericTemplatesPath, 'file-path');
-    var fileIconTemplate = hoganUtils.template(iconsBaseTemplatesPath, 'file');
-    var fileTagTemplate = hoganUtils.template(tagsBaseTemplatesPath, printerUtils.getFileTypeIcon(file));
-
-    return fileDiffTemplate.render({
-      file: file,
-      fileHtmlId: printerUtils.getHtmlId(file),
-      diffs: diffs,
-      filePath: filePathTemplate.render({
-        fileDiffName: printerUtils.getDiffName(file)
-      }, {
-        fileIcon: fileIconTemplate,
-        fileTag: fileTagTemplate
-      })
-    });
-  };
-
-  LineByLinePrinter.prototype.makeLineByLineHtmlWrapper = function(content) {
-    return hoganUtils.render(genericTemplatesPath, 'wrapper', {'content': content});
-  };
-
-  LineByLinePrinter.prototype.generateLineByLineJsonHtml = function(diffFiles) {
-    var that = this;
-    var htmlDiffs = diffFiles.map(function(file) {
-      var diffs;
-      if (file.blocks.length) {
-        diffs = that._generateFileHtml(file);
-      } else {
-        diffs = that._generateEmptyDiff();
-      }
-      return that.makeFileDiffHtml(file, diffs);
-    });
-
-    return this.makeLineByLineHtmlWrapper(htmlDiffs.join('\n'));
-  };
-
-  var matcher = Rematch.rematch(function(a, b) {
-    var amod = a.content.substr(1);
-    var bmod = b.content.substr(1);
-
-    return Rematch.distance(amod, bmod);
-  });
-
-  LineByLinePrinter.prototype.makeColumnLineNumberHtml = function(block) {
-    return hoganUtils.render(genericTemplatesPath, 'column-line-number', {
-      diffParser: diffParser,
-      blockHeader: utils.escape(block.header),
-      lineClass: 'd2h-code-linenumber',
-      contentClass: 'd2h-code-line'
-    });
-  };
-
-  LineByLinePrinter.prototype._generateFileHtml = function(file) {
-    var that = this;
-    return file.blocks.map(function(block) {
-      var lines = that.makeColumnLineNumberHtml(block);
-      var oldLines = [];
-      var newLines = [];
-
-      function processChangeBlock() {
-        var matches;
-        var insertType;
-        var deleteType;
-
-        var comparisons = oldLines.length * newLines.length;
-        var maxComparisons = that.config.matchingMaxComparisons || 2500;
-        var doMatching = comparisons < maxComparisons && (that.config.matching === 'lines' ||
-          that.config.matching === 'words');
-
-        if (doMatching) {
-          matches = matcher(oldLines, newLines);
-          insertType = diffParser.LINE_TYPE.INSERT_CHANGES;
-          deleteType = diffParser.LINE_TYPE.DELETE_CHANGES;
-        } else {
-          matches = [[oldLines, newLines]];
-          insertType = diffParser.LINE_TYPE.INSERTS;
-          deleteType = diffParser.LINE_TYPE.DELETES;
-        }
-
-        matches.forEach(function(match) {
-          oldLines = match[0];
-          newLines = match[1];
-
-          var processedOldLines = [];
-          var processedNewLines = [];
-
-          var common = Math.min(oldLines.length, newLines.length);
-
-          var oldLine, newLine;
-          for (var j = 0; j < common; j++) {
-            oldLine = oldLines[j];
-            newLine = newLines[j];
-
-            that.config.isCombined = file.isCombined;
-            var diff = printerUtils.diffHighlight(oldLine.content, newLine.content, that.config);
-
-            processedOldLines +=
-              that.makeLineHtml(file.isCombined, deleteType, oldLine.oldNumber, oldLine.newNumber,
-                diff.first.line, diff.first.prefix);
-            processedNewLines +=
-              that.makeLineHtml(file.isCombined, insertType, newLine.oldNumber, newLine.newNumber,
-                diff.second.line, diff.second.prefix);
-          }
-
-          lines += processedOldLines + processedNewLines;
-          lines += that._processLines(file.isCombined, oldLines.slice(common), newLines.slice(common));
-        });
-
-        oldLines = [];
-        newLines = [];
-      }
-
-      for (var i = 0; i < block.lines.length; i++) {
-        var line = block.lines[i];
-        var escapedLine = utils.escape(line.content);
-
-        if (line.type !== diffParser.LINE_TYPE.INSERTS &&
-          (newLines.length > 0 || (line.type !== diffParser.LINE_TYPE.DELETES && oldLines.length > 0))) {
-          processChangeBlock();
-        }
-
-        if (line.type === diffParser.LINE_TYPE.CONTEXT) {
-          lines += that.makeLineHtml(file.isCombined, line.type, line.oldNumber, line.newNumber, escapedLine);
-        } else if (line.type === diffParser.LINE_TYPE.INSERTS && !oldLines.length) {
-          lines += that.makeLineHtml(file.isCombined, line.type, line.oldNumber, line.newNumber, escapedLine);
-        } else if (line.type === diffParser.LINE_TYPE.DELETES) {
-          oldLines.push(line);
-        } else if (line.type === diffParser.LINE_TYPE.INSERTS && Boolean(oldLines.length)) {
-          newLines.push(line);
-        } else {
-          console.error('Unknown state in html line-by-line generator');
-          processChangeBlock();
-        }
-      }
-
-      processChangeBlock();
-
-      return lines;
-    }).join('\n');
-  };
-
-  LineByLinePrinter.prototype._processLines = function(isCombined, oldLines, newLines) {
-    var lines = '';
-
-    for (var i = 0; i < oldLines.length; i++) {
-      var oldLine = oldLines[i];
-      var oldEscapedLine = utils.escape(oldLine.content);
-      lines += this.makeLineHtml(isCombined, oldLine.type, oldLine.oldNumber, oldLine.newNumber, oldEscapedLine);
-    }
-
-    for (var j = 0; j < newLines.length; j++) {
-      var newLine = newLines[j];
-      var newEscapedLine = utils.escape(newLine.content);
-      lines += this.makeLineHtml(isCombined, newLine.type, newLine.oldNumber, newLine.newNumber, newEscapedLine);
-    }
-
-    return lines;
-  };
-
-  LineByLinePrinter.prototype.makeLineHtml = function(isCombined, type, oldNumber, newNumber, content, possiblePrefix) {
-    var lineNumberTemplate = hoganUtils.render(baseTemplatesPath, 'numbers', {
-      oldNumber: utils.valueOrEmpty(oldNumber),
-      newNumber: utils.valueOrEmpty(newNumber)
-    });
-
-    var lineWithoutPrefix = content;
-    var prefix = possiblePrefix;
-
-    if (!prefix) {
-      var lineWithPrefix = printerUtils.separatePrefix(isCombined, content);
-      prefix = lineWithPrefix.prefix;
-      lineWithoutPrefix = lineWithPrefix.line;
-    }
-
-    return hoganUtils.render(genericTemplatesPath, 'line',
-      {
-        type: type,
-        lineClass: 'd2h-code-linenumber',
-        contentClass: 'd2h-code-line',
-        prefix: prefix,
-        content: lineWithoutPrefix,
-        lineNumber: lineNumberTemplate
-      });
-  };
-
-  LineByLinePrinter.prototype._generateEmptyDiff = function() {
-    return hoganUtils.render(genericTemplatesPath, 'empty-diff', {
-      contentClass: 'd2h-code-line',
-      diffParser: diffParser
-    });
-  };
-
-  module.exports.LineByLinePrinter = LineByLinePrinter;
-})();
-
-},{"./diff-parser.js":83,"./hoganjs-utils.js":86,"./printer-utils.js":89,"./rematch.js":90,"./utils.js":93}],89:[function(require,module,exports){
-/*
- *
- * PrinterUtils (printer-utils.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var jsDiff = require('diff');
-  var utils = require('./utils.js').Utils;
-  var Rematch = require('./rematch.js').Rematch;
-
-  var separator = '/';
-
-  function PrinterUtils() {
-  }
-
-  PrinterUtils.prototype.separatePrefix = function(isCombined, line) {
-    var prefix;
-    var lineWithoutPrefix;
-
-    if (isCombined) {
-      prefix = line.substring(0, 2);
-      lineWithoutPrefix = line.substring(2);
-    } else {
-      prefix = line.substring(0, 1);
-      lineWithoutPrefix = line.substring(1);
-    }
-
-    return {
-      'prefix': prefix,
-      'line': lineWithoutPrefix
-    };
-  };
-
-  PrinterUtils.prototype.getHtmlId = function(file) {
-    var hashCode = function(text) {
-      var i, chr, len;
-      var hash = 0;
-
-      for (i = 0, len = text.length; i < len; i++) {
-        chr = text.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-      }
-
-      return hash;
-    };
-
-    return 'd2h-' + hashCode(this.getDiffName(file)).toString().slice(-6);
-  };
-
-  PrinterUtils.prototype.getDiffName = function(file) {
-    var oldFilename = unifyPath(file.oldName);
-    var newFilename = unifyPath(file.newName);
-
-    if (oldFilename && newFilename && oldFilename !== newFilename && !isDevNullName(oldFilename) && !isDevNullName(newFilename)) {
-      var prefixPaths = [];
-      var suffixPaths = [];
-
-      var oldFilenameParts = oldFilename.split(separator);
-      var newFilenameParts = newFilename.split(separator);
-
-      var oldFilenamePartsSize = oldFilenameParts.length;
-      var newFilenamePartsSize = newFilenameParts.length;
-
-      var i = 0;
-      var j = oldFilenamePartsSize - 1;
-      var k = newFilenamePartsSize - 1;
-
-      while (i < j && i < k) {
-        if (oldFilenameParts[i] === newFilenameParts[i]) {
-          prefixPaths.push(newFilenameParts[i]);
-          i += 1;
-        } else {
-          break;
-        }
-      }
-
-      while (j > i && k > i) {
-        if (oldFilenameParts[j] === newFilenameParts[k]) {
-          suffixPaths.unshift(newFilenameParts[k]);
-          j -= 1;
-          k -= 1;
-        } else {
-          break;
-        }
-      }
-
-      var finalPrefix = prefixPaths.join(separator);
-      var finalSuffix = suffixPaths.join(separator);
-
-      var oldRemainingPath = oldFilenameParts.slice(i, j + 1).join(separator);
-      var newRemainingPath = newFilenameParts.slice(i, k + 1).join(separator);
-
-      if (finalPrefix.length && finalSuffix.length) {
-        return finalPrefix + separator + '{' + oldRemainingPath + ' → ' + newRemainingPath + '}' + separator + finalSuffix;
-      } else if (finalPrefix.length) {
-        return finalPrefix + separator + '{' + oldRemainingPath + ' → ' + newRemainingPath + '}';
-      } else if (finalSuffix.length) {
-        return '{' + oldRemainingPath + ' → ' + newRemainingPath + '}' + separator + finalSuffix;
-      }
-
-      return oldFilename + ' → ' + newFilename;
-    } else if (newFilename && !isDevNullName(newFilename)) {
-      return newFilename;
-    } else if (oldFilename) {
-      return oldFilename;
-    }
-
-    return 'unknown/file/path';
-  };
-
-  PrinterUtils.prototype.getFileTypeIcon = function(file) {
-    var templateName = 'file-changed';
-
-    if (file.isRename) {
-      templateName = 'file-renamed';
-    } else if (file.isCopy) {
-      templateName = 'file-renamed';
-    } else if (file.isNew) {
-      templateName = 'file-added';
-    } else if (file.isDeleted) {
-      templateName = 'file-deleted';
-    } else if (file.newName !== file.oldName) {
-      // If file is not Added, not Deleted and the names changed it must be a rename :)
-      templateName = 'file-renamed';
-    }
-
-    return templateName;
-  };
-
-  PrinterUtils.prototype.diffHighlight = function(diffLine1, diffLine2, config) {
-    var linePrefix1, linePrefix2, unprefixedLine1, unprefixedLine2;
-
-    var prefixSize = 1;
-
-    if (config.isCombined) {
-      prefixSize = 2;
-    }
-
-    linePrefix1 = diffLine1.substr(0, prefixSize);
-    linePrefix2 = diffLine2.substr(0, prefixSize);
-    unprefixedLine1 = diffLine1.substr(prefixSize);
-    unprefixedLine2 = diffLine2.substr(prefixSize);
-
-    if (unprefixedLine1.length > config.maxLineLengthHighlight ||
-      unprefixedLine2.length > config.maxLineLengthHighlight) {
-      return {
-        first: {
-          prefix: linePrefix1,
-          line: utils.escape(unprefixedLine1)
-        },
-        second: {
-          prefix: linePrefix2,
-          line: utils.escape(unprefixedLine2)
-        }
-      };
-    }
-
-    var diff;
-    if (config.charByChar) {
-      diff = jsDiff.diffChars(unprefixedLine1, unprefixedLine2);
-    } else {
-      diff = jsDiff.diffWordsWithSpace(unprefixedLine1, unprefixedLine2);
-    }
-
-    var highlightedLine = '';
-
-    var changedWords = [];
-    if (!config.charByChar && config.matching === 'words') {
-      var treshold = 0.25;
-
-      if (typeof (config.matchWordsThreshold) !== 'undefined') {
-        treshold = config.matchWordsThreshold;
-      }
-
-      var matcher = Rematch.rematch(function(a, b) {
-        var amod = a.value;
-        var bmod = b.value;
-
-        return Rematch.distance(amod, bmod);
-      });
-
-      var removed = diff.filter(function isRemoved(element) {
-        return element.removed;
-      });
-
-      var added = diff.filter(function isAdded(element) {
-        return element.added;
-      });
-
-      var chunks = matcher(added, removed);
-      chunks.forEach(function(chunk) {
-        if (chunk[0].length === 1 && chunk[1].length === 1) {
-          var dist = Rematch.distance(chunk[0][0].value, chunk[1][0].value);
-          if (dist < treshold) {
-            changedWords.push(chunk[0][0]);
-            changedWords.push(chunk[1][0]);
-          }
-        }
-      });
-    }
-
-    diff.forEach(function(part) {
-      var addClass = changedWords.indexOf(part) > -1 ? ' class="d2h-change"' : '';
-      var elemType = part.added ? 'ins' : part.removed ? 'del' : null;
-      var escapedValue = utils.escape(part.value);
-
-      if (elemType !== null) {
-        highlightedLine += '<' + elemType + addClass + '>' + escapedValue + '</' + elemType + '>';
-      } else {
-        highlightedLine += escapedValue;
-      }
-    });
-
-    return {
-      first: {
-        prefix: linePrefix1,
-        line: removeIns(highlightedLine)
-      },
-      second: {
-        prefix: linePrefix2,
-        line: removeDel(highlightedLine)
-      }
-    };
-  };
-
-  function unifyPath(path) {
-    if (path) {
-      return path.replace('\\', '/');
-    }
-
-    return path;
-  }
-
-  function isDevNullName(name) {
-    return name.indexOf('dev/null') !== -1;
-  }
-
-  function removeIns(line) {
-    return line.replace(/(<ins[^>]*>((.|\n)*?)<\/ins>)/g, '');
-  }
-
-  function removeDel(line) {
-    return line.replace(/(<del[^>]*>((.|\n)*?)<\/del>)/g, '');
-  }
-
-  module.exports.PrinterUtils = new PrinterUtils();
-})();
-
-},{"./rematch.js":90,"./utils.js":93,"diff":82}],90:[function(require,module,exports){
-/*
- *
- * Rematch (rematch.js)
- * Matching two sequences of objects by similarity
- * Author: W. Illmeyer, Nexxar GmbH
- *
- */
-
-(function() {
-  var Rematch = {};
-
-  /*
-   Copyright (c) 2011 Andrei Mackenzie
-   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-   documentation files (the "Software"), to deal in the Software without restriction, including without limitation
-   the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
-   and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-   The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-   THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-   */
-  function levenshtein(a, b) {
-    if (a.length === 0) {
-      return b.length;
-    }
-    if (b.length === 0) {
-      return a.length;
-    }
-
-    var matrix = [];
-
-    // Increment along the first column of each row
-    var i;
-    for (i = 0; i <= b.length; i++) {
-      matrix[i] = [i];
-    }
-
-    // Increment each column in the first row
-    var j;
-    for (j = 0; j <= a.length; j++) {
-      matrix[0][j] = j;
-    }
-
-    // Fill in the rest of the matrix
-    for (i = 1; i <= b.length; i++) {
-      for (j = 1; j <= a.length; j++) {
-        if (b.charAt(i - 1) === a.charAt(j - 1)) {
-          matrix[i][j] = matrix[i - 1][j - 1];
-        } else {
-          matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // Substitution
-            Math.min(matrix[i][j - 1] + 1, // Insertion
-              matrix[i - 1][j] + 1)); // Deletion
-        }
-      }
-    }
-
-    return matrix[b.length][a.length];
-  }
-
-  Rematch.levenshtein = levenshtein;
-
-  Rematch.distance = function distance(x, y) {
-    x = x.trim();
-    y = y.trim();
-    var lev = levenshtein(x, y);
-    var score = lev / (x.length + y.length);
-
-    return score;
-  };
-
-  Rematch.rematch = function rematch(distanceFunction) {
-    function findBestMatch(a, b, cache) {
-      var bestMatchDist = Infinity;
-      var bestMatch;
-      for (var i = 0; i < a.length; ++i) {
-        for (var j = 0; j < b.length; ++j) {
-          var cacheKey = JSON.stringify([a[i], b[j]]);
-          var md;
-          if (cache.hasOwnProperty(cacheKey)) {
-            md = cache[cacheKey];
-          } else {
-            md = distanceFunction(a[i], b[j]);
-            cache[cacheKey] = md;
-          }
-          if (md < bestMatchDist) {
-            bestMatchDist = md;
-            bestMatch = {indexA: i, indexB: j, score: bestMatchDist};
-          }
-        }
-      }
-
-      return bestMatch;
-    }
-
-    function group(a, b, level, cache) {
-      if (typeof (cache) === 'undefined') {
-        cache = {};
-      }
-
-      var bm = findBestMatch(a, b, cache);
-
-      if (!level) {
-        level = 0;
-      }
-
-      if (!bm || (a.length + b.length < 3)) {
-        return [[a, b]];
-      }
-
-      var a1 = a.slice(0, bm.indexA);
-      var b1 = b.slice(0, bm.indexB);
-      var aMatch = [a[bm.indexA]];
-      var bMatch = [b[bm.indexB]];
-      var tailA = bm.indexA + 1;
-      var tailB = bm.indexB + 1;
-      var a2 = a.slice(tailA);
-      var b2 = b.slice(tailB);
-
-      var group1 = group(a1, b1, level + 1, cache);
-      var groupMatch = group(aMatch, bMatch, level + 1, cache);
-      var group2 = group(a2, b2, level + 1, cache);
-      var result = groupMatch;
-
-      if (bm.indexA > 0 || bm.indexB > 0) {
-        result = group1.concat(result);
-      }
-
-      if (a.length > tailA || b.length > tailB) {
-        result = result.concat(group2);
-      }
-
-      return result;
-    }
-
-    return group;
-  };
-
-  module.exports.Rematch = Rematch;
-})();
-
-},{}],91:[function(require,module,exports){
-/*
- *
- * HtmlPrinter (html-printer.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var diffParser = require('./diff-parser.js').DiffParser;
-  var printerUtils = require('./printer-utils.js').PrinterUtils;
-  var utils = require('./utils.js').Utils;
-  var Rematch = require('./rematch.js').Rematch;
-
-  var hoganUtils;
-
-  var genericTemplatesPath = 'generic';
-  var baseTemplatesPath = 'side-by-side';
-  var iconsBaseTemplatesPath = 'icon';
-  var tagsBaseTemplatesPath = 'tag';
-
-  var matcher = Rematch.rematch(function(a, b) {
-    var amod = a.content.substr(1);
-    var bmod = b.content.substr(1);
-
-    return Rematch.distance(amod, bmod);
-  });
-
-  function SideBySidePrinter(config) {
-    this.config = config;
-
-    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-    hoganUtils = new HoganJsUtils(config);
-  }
-
-  SideBySidePrinter.prototype.makeDiffHtml = function(file, diffs) {
-    var fileDiffTemplate = hoganUtils.template(baseTemplatesPath, 'file-diff');
-    var filePathTemplate = hoganUtils.template(genericTemplatesPath, 'file-path');
-    var fileIconTemplate = hoganUtils.template(iconsBaseTemplatesPath, 'file');
-    var fileTagTemplate = hoganUtils.template(tagsBaseTemplatesPath, printerUtils.getFileTypeIcon(file));
-
-    return fileDiffTemplate.render({
-      file: file,
-      fileHtmlId: printerUtils.getHtmlId(file),
-      diffs: diffs,
-      filePath: filePathTemplate.render({
-        fileDiffName: printerUtils.getDiffName(file)
-      }, {
-        fileIcon: fileIconTemplate,
-        fileTag: fileTagTemplate
-      })
-    });
-  };
-
-  SideBySidePrinter.prototype.generateSideBySideJsonHtml = function(diffFiles) {
-    var that = this;
-
-    var content = diffFiles.map(function(file) {
-      var diffs;
-      if (file.blocks.length) {
-        diffs = that.generateSideBySideFileHtml(file);
-      } else {
-        diffs = that.generateEmptyDiff();
-      }
-
-      return that.makeDiffHtml(file, diffs);
-    }).join('\n');
-
-    return hoganUtils.render(genericTemplatesPath, 'wrapper', {'content': content});
-  };
-
-  SideBySidePrinter.prototype.makeSideHtml = function(blockHeader) {
-    return hoganUtils.render(genericTemplatesPath, 'column-line-number', {
-      diffParser: diffParser,
-      blockHeader: utils.escape(blockHeader),
-      lineClass: 'd2h-code-side-linenumber',
-      contentClass: 'd2h-code-side-line'
-    });
-  };
-
-  SideBySidePrinter.prototype.generateSideBySideFileHtml = function(file) {
-    var that = this;
-    var fileHtml = {};
-    fileHtml.left = '';
-    fileHtml.right = '';
-
-    file.blocks.forEach(function(block) {
-      fileHtml.left += that.makeSideHtml(block.header);
-      fileHtml.right += that.makeSideHtml('');
-
-      var oldLines = [];
-      var newLines = [];
-
-      function processChangeBlock() {
-        var matches;
-        var insertType;
-        var deleteType;
-
-        var comparisons = oldLines.length * newLines.length;
-        var maxComparisons = that.config.matchingMaxComparisons || 2500;
-        var doMatching = comparisons < maxComparisons && (that.config.matching === 'lines' ||
-          that.config.matching === 'words');
-
-        if (doMatching) {
-          matches = matcher(oldLines, newLines);
-          insertType = diffParser.LINE_TYPE.INSERT_CHANGES;
-          deleteType = diffParser.LINE_TYPE.DELETE_CHANGES;
-        } else {
-          matches = [[oldLines, newLines]];
-          insertType = diffParser.LINE_TYPE.INSERTS;
-          deleteType = diffParser.LINE_TYPE.DELETES;
-        }
-
-        matches.forEach(function(match) {
-          oldLines = match[0];
-          newLines = match[1];
-
-          var common = Math.min(oldLines.length, newLines.length);
-          var max = Math.max(oldLines.length, newLines.length);
-
-          for (var j = 0; j < common; j++) {
-            var oldLine = oldLines[j];
-            var newLine = newLines[j];
-
-            that.config.isCombined = file.isCombined;
-
-            var diff = printerUtils.diffHighlight(oldLine.content, newLine.content, that.config);
-
-            fileHtml.left +=
-              that.generateSingleLineHtml(file.isCombined, deleteType, oldLine.oldNumber,
-                diff.first.line, diff.first.prefix);
-            fileHtml.right +=
-              that.generateSingleLineHtml(file.isCombined, insertType, newLine.newNumber,
-                diff.second.line, diff.second.prefix);
-          }
-
-          if (max > common) {
-            var oldSlice = oldLines.slice(common);
-            var newSlice = newLines.slice(common);
-
-            var tmpHtml = that.processLines(file.isCombined, oldSlice, newSlice);
-            fileHtml.left += tmpHtml.left;
-            fileHtml.right += tmpHtml.right;
-          }
-        });
-
-        oldLines = [];
-        newLines = [];
-      }
-
-      for (var i = 0; i < block.lines.length; i++) {
-        var line = block.lines[i];
-        var prefix = line.content[0];
-        var escapedLine = utils.escape(line.content.substr(1));
-
-        if (line.type !== diffParser.LINE_TYPE.INSERTS &&
-          (newLines.length > 0 || (line.type !== diffParser.LINE_TYPE.DELETES && oldLines.length > 0))) {
-          processChangeBlock();
-        }
-
-        if (line.type === diffParser.LINE_TYPE.CONTEXT) {
-          fileHtml.left += that.generateSingleLineHtml(file.isCombined, line.type, line.oldNumber, escapedLine, prefix);
-          fileHtml.right += that.generateSingleLineHtml(file.isCombined, line.type, line.newNumber, escapedLine, prefix);
-        } else if (line.type === diffParser.LINE_TYPE.INSERTS && !oldLines.length) {
-          fileHtml.left += that.generateSingleLineHtml(file.isCombined, diffParser.LINE_TYPE.CONTEXT, '', '', '');
-          fileHtml.right += that.generateSingleLineHtml(file.isCombined, line.type, line.newNumber, escapedLine, prefix);
-        } else if (line.type === diffParser.LINE_TYPE.DELETES) {
-          oldLines.push(line);
-        } else if (line.type === diffParser.LINE_TYPE.INSERTS && Boolean(oldLines.length)) {
-          newLines.push(line);
-        } else {
-          console.error('unknown state in html side-by-side generator');
-          processChangeBlock();
-        }
-      }
-
-      processChangeBlock();
-    });
-
-    return fileHtml;
-  };
-
-  SideBySidePrinter.prototype.processLines = function(isCombined, oldLines, newLines) {
-    var that = this;
-    var fileHtml = {};
-    fileHtml.left = '';
-    fileHtml.right = '';
-
-    var maxLinesNumber = Math.max(oldLines.length, newLines.length);
-    for (var i = 0; i < maxLinesNumber; i++) {
-      var oldLine = oldLines[i];
-      var newLine = newLines[i];
-      var oldContent;
-      var newContent;
-      var oldPrefix;
-      var newPrefix;
-
-      if (oldLine) {
-        oldContent = utils.escape(oldLine.content.substr(1));
-        oldPrefix = oldLine.content[0];
-      }
-
-      if (newLine) {
-        newContent = utils.escape(newLine.content.substr(1));
-        newPrefix = newLine.content[0];
-      }
-
-      if (oldLine && newLine) {
-        fileHtml.left += that.generateSingleLineHtml(isCombined, oldLine.type, oldLine.oldNumber, oldContent, oldPrefix);
-        fileHtml.right += that.generateSingleLineHtml(isCombined, newLine.type, newLine.newNumber, newContent, newPrefix);
-      } else if (oldLine) {
-        fileHtml.left += that.generateSingleLineHtml(isCombined, oldLine.type, oldLine.oldNumber, oldContent, oldPrefix);
-        fileHtml.right += that.generateSingleLineHtml(isCombined, diffParser.LINE_TYPE.CONTEXT, '', '', '');
-      } else if (newLine) {
-        fileHtml.left += that.generateSingleLineHtml(isCombined, diffParser.LINE_TYPE.CONTEXT, '', '', '');
-        fileHtml.right += that.generateSingleLineHtml(isCombined, newLine.type, newLine.newNumber, newContent, newPrefix);
-      } else {
-        console.error('How did it get here?');
-      }
-    }
-
-    return fileHtml;
-  };
-
-  SideBySidePrinter.prototype.generateSingleLineHtml = function(isCombined, type, number, content, possiblePrefix) {
-    var lineWithoutPrefix = content;
-    var prefix = possiblePrefix;
-    var lineClass = 'd2h-code-side-linenumber';
-    var contentClass = 'd2h-code-side-line';
-
-    if (!number && !content) {
-      lineClass += ' d2h-code-side-emptyplaceholder';
-      contentClass += ' d2h-code-side-emptyplaceholder';
-      type += ' d2h-emptyplaceholder';
-    }
-
-    if (!prefix) {
-      var lineWithPrefix = printerUtils.separatePrefix(isCombined, content);
-      prefix = lineWithPrefix.prefix;
-      lineWithoutPrefix = lineWithPrefix.line;
-    }
-
-    return hoganUtils.render(genericTemplatesPath, 'line',
-      {
-        type: type,
-        lineClass: lineClass,
-        contentClass: contentClass,
-        prefix: prefix,
-        content: lineWithoutPrefix,
-        lineNumber: number
-      });
-  };
-
-  SideBySidePrinter.prototype.generateEmptyDiff = function() {
-    var fileHtml = {};
-    fileHtml.right = '';
-
-    fileHtml.left = hoganUtils.render(genericTemplatesPath, 'empty-diff', {
-      contentClass: 'd2h-code-side-line',
-      diffParser: diffParser
-    });
-
-    return fileHtml;
-  };
-
-  module.exports.SideBySidePrinter = SideBySidePrinter;
-})();
-
-},{"./diff-parser.js":83,"./hoganjs-utils.js":86,"./printer-utils.js":89,"./rematch.js":90,"./utils.js":93}],92:[function(require,module,exports){
-(function (global){
-(function() {
-if (!!!global.browserTemplates) global.browserTemplates = {};
-var Hogan = require("hogan.js");global.browserTemplates["file-summary-line"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<li class=\"d2h-file-list-line\">");t.b("\n" + i);t.b("    <span class=\"d2h-file-name-wrapper\">");t.b("\n" + i);t.b(t.rp("<fileIcon0",c,p,"      "));t.b("      <a href=\"#");t.b(t.v(t.f("fileHtmlId",c,p,0)));t.b("\" class=\"d2h-file-name\">");t.b(t.v(t.f("fileName",c,p,0)));t.b("</a>");t.b("\n" + i);t.b("      <span class=\"d2h-file-stats\">");t.b("\n" + i);t.b("          <span class=\"d2h-lines-added\">");t.b(t.v(t.f("addedLines",c,p,0)));t.b("</span>");t.b("\n" + i);t.b("          <span class=\"d2h-lines-deleted\">");t.b(t.v(t.f("deletedLines",c,p,0)));t.b("</span>");t.b("\n" + i);t.b("      </span>");t.b("\n" + i);t.b("    </span>");t.b("\n" + i);t.b("</li>");return t.fl(); },partials: {"<fileIcon0":{name:"fileIcon", partials: {}, subs: {  }}}, subs: {  }});
-global.browserTemplates["file-summary-wrapper"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"d2h-file-list-wrapper\">");t.b("\n" + i);t.b("    <div class=\"d2h-file-list-header\">");t.b("\n" + i);t.b("        <span class=\"d2h-file-list-title\">Files changed (");t.b(t.v(t.f("filesNumber",c,p,0)));t.b(")</span>");t.b("\n" + i);t.b("        <a class=\"d2h-file-switch d2h-hide\">hide</a>");t.b("\n" + i);t.b("        <a class=\"d2h-file-switch d2h-show\">show</a>");t.b("\n" + i);t.b("    </div>");t.b("\n" + i);t.b("    <ol class=\"d2h-file-list\">");t.b("\n" + i);t.b("    ");t.b(t.t(t.f("files",c,p,0)));t.b("\n" + i);t.b("    </ol>");t.b("\n" + i);t.b("</div>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["generic-column-line-number"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<tr>");t.b("\n" + i);t.b("    <td class=\"");t.b(t.v(t.f("lineClass",c,p,0)));t.b(" ");t.b(t.v(t.d("diffParser.LINE_TYPE.INFO",c,p,0)));t.b("\"></td>");t.b("\n" + i);t.b("    <td class=\"");t.b(t.v(t.d("diffParser.LINE_TYPE.INFO",c,p,0)));t.b("\">");t.b("\n" + i);t.b("        <div class=\"");t.b(t.v(t.f("contentClass",c,p,0)));t.b(" ");t.b(t.v(t.d("diffParser.LINE_TYPE.INFO",c,p,0)));t.b("\">");t.b(t.t(t.f("blockHeader",c,p,0)));t.b("</div>");t.b("\n" + i);t.b("    </td>");t.b("\n" + i);t.b("</tr>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["generic-empty-diff"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<tr>");t.b("\n" + i);t.b("    <td class=\"");t.b(t.v(t.d("diffParser.LINE_TYPE.INFO",c,p,0)));t.b("\">");t.b("\n" + i);t.b("        <div class=\"");t.b(t.v(t.f("contentClass",c,p,0)));t.b(" ");t.b(t.v(t.d("diffParser.LINE_TYPE.INFO",c,p,0)));t.b("\">");t.b("\n" + i);t.b("            File without changes");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("    </td>");t.b("\n" + i);t.b("</tr>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["generic-file-path"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<span class=\"d2h-file-name-wrapper\">");t.b("\n" + i);t.b(t.rp("<fileIcon0",c,p,"    "));t.b("    <span class=\"d2h-file-name\">");t.b(t.v(t.f("fileDiffName",c,p,0)));t.b("</span>");t.b("\n" + i);t.b(t.rp("<fileTag1",c,p,"    "));t.b("</span>");return t.fl(); },partials: {"<fileIcon0":{name:"fileIcon", partials: {}, subs: {  }},"<fileTag1":{name:"fileTag", partials: {}, subs: {  }}}, subs: {  }});
-global.browserTemplates["generic-line"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<tr>");t.b("\n" + i);t.b("    <td class=\"");t.b(t.v(t.f("lineClass",c,p,0)));t.b(" ");t.b(t.v(t.f("type",c,p,0)));t.b("\">");t.b("\n" + i);t.b("      ");t.b(t.t(t.f("lineNumber",c,p,0)));t.b("\n" + i);t.b("    </td>");t.b("\n" + i);t.b("    <td class=\"");t.b(t.v(t.f("type",c,p,0)));t.b("\">");t.b("\n" + i);t.b("        <div class=\"");t.b(t.v(t.f("contentClass",c,p,0)));t.b(" ");t.b(t.v(t.f("type",c,p,0)));t.b("\">");t.b("\n" + i);if(t.s(t.f("prefix",c,p,1),c,p,0,171,247,"{{ }}")){t.rs(c,p,function(c,p,t){t.b("            <span class=\"d2h-code-line-prefix\">");t.b(t.t(t.f("prefix",c,p,0)));t.b("</span>");t.b("\n" + i);});c.pop();}if(t.s(t.f("content",c,p,1),c,p,0,279,353,"{{ }}")){t.rs(c,p,function(c,p,t){t.b("            <span class=\"d2h-code-line-ctn\">");t.b(t.t(t.f("content",c,p,0)));t.b("</span>");t.b("\n" + i);});c.pop();}t.b("        </div>");t.b("\n" + i);t.b("    </td>");t.b("\n" + i);t.b("</tr>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["generic-wrapper"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"d2h-wrapper\">");t.b("\n" + i);t.b("    ");t.b(t.t(t.f("content",c,p,0)));t.b("\n" + i);t.b("</div>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["icon-file-added"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-added\" height=\"16\" title=\"added\" version=\"1.1\" viewBox=\"0 0 14 16\"");t.b("\n" + i);t.b("     width=\"14\">");t.b("\n" + i);t.b("    <path d=\"M13 1H1C0.45 1 0 1.45 0 2v12c0 0.55 0.45 1 1 1h12c0.55 0 1-0.45 1-1V2c0-0.55-0.45-1-1-1z m0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z\"></path>");t.b("\n" + i);t.b("</svg>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["icon-file-changed"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-changed\" height=\"16\" title=\"modified\" version=\"1.1\"");t.b("\n" + i);t.b("     viewBox=\"0 0 14 16\" width=\"14\">");t.b("\n" + i);t.b("    <path d=\"M13 1H1C0.45 1 0 1.45 0 2v12c0 0.55 0.45 1 1 1h12c0.55 0 1-0.45 1-1V2c0-0.55-0.45-1-1-1z m0 13H1V2h12v12zM4 8c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z\"></path>");t.b("\n" + i);t.b("</svg>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["icon-file-deleted"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-deleted\" height=\"16\" title=\"removed\" version=\"1.1\"");t.b("\n" + i);t.b("     viewBox=\"0 0 14 16\" width=\"14\">");t.b("\n" + i);t.b("    <path d=\"M13 1H1C0.45 1 0 1.45 0 2v12c0 0.55 0.45 1 1 1h12c0.55 0 1-0.45 1-1V2c0-0.55-0.45-1-1-1z m0 13H1V2h12v12zM11 9H3V7h8v2z\"></path>");t.b("\n" + i);t.b("</svg>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["icon-file-renamed"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<svg aria-hidden=\"true\" class=\"d2h-icon d2h-moved\" height=\"16\" title=\"renamed\" version=\"1.1\"");t.b("\n" + i);t.b("     viewBox=\"0 0 14 16\" width=\"14\">");t.b("\n" + i);t.b("    <path d=\"M6 9H3V7h3V4l5 4-5 4V9z m8-7v12c0 0.55-0.45 1-1 1H1c-0.55 0-1-0.45-1-1V2c0-0.55 0.45-1 1-1h12c0.55 0 1 0.45 1 1z m-1 0H1v12h12V2z\"></path>");t.b("\n" + i);t.b("</svg>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["icon-file"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<svg aria-hidden=\"true\" class=\"d2h-icon\" height=\"16\" version=\"1.1\" viewBox=\"0 0 12 16\" width=\"12\">");t.b("\n" + i);t.b("    <path d=\"M6 5H2v-1h4v1zM2 8h7v-1H2v1z m0 2h7v-1H2v1z m0 2h7v-1H2v1z m10-7.5v9.5c0 0.55-0.45 1-1 1H1c-0.55 0-1-0.45-1-1V2c0-0.55 0.45-1 1-1h7.5l3.5 3.5z m-1 0.5L8 2H1v12h10V5z\"></path>");t.b("\n" + i);t.b("</svg>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["line-by-line-file-diff"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div id=\"");t.b(t.v(t.f("fileHtmlId",c,p,0)));t.b("\" class=\"d2h-file-wrapper\" data-lang=\"");t.b(t.v(t.d("file.language",c,p,0)));t.b("\">");t.b("\n" + i);t.b("    <div class=\"d2h-file-header\">");t.b("\n" + i);t.b("    ");t.b(t.t(t.f("filePath",c,p,0)));t.b("\n" + i);t.b("    </div>");t.b("\n" + i);t.b("    <div class=\"d2h-file-diff\">");t.b("\n" + i);t.b("        <div class=\"d2h-code-wrapper\">");t.b("\n" + i);t.b("            <table class=\"d2h-diff-table\">");t.b("\n" + i);t.b("                <tbody class=\"d2h-diff-tbody\">");t.b("\n" + i);t.b("                ");t.b(t.t(t.f("diffs",c,p,0)));t.b("\n" + i);t.b("                </tbody>");t.b("\n" + i);t.b("            </table>");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("    </div>");t.b("\n" + i);t.b("</div>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["line-by-line-numbers"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"line-num1\">");t.b(t.v(t.f("oldNumber",c,p,0)));t.b("</div>");t.b("\n" + i);t.b("<div class=\"line-num2\">");t.b(t.v(t.f("newNumber",c,p,0)));t.b("</div>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["side-by-side-file-diff"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div id=\"");t.b(t.v(t.f("fileHtmlId",c,p,0)));t.b("\" class=\"d2h-file-wrapper\" data-lang=\"");t.b(t.v(t.d("file.language",c,p,0)));t.b("\">");t.b("\n" + i);t.b("    <div class=\"d2h-file-header\">");t.b("\n" + i);t.b("      ");t.b(t.t(t.f("filePath",c,p,0)));t.b("\n" + i);t.b("    </div>");t.b("\n" + i);t.b("    <div class=\"d2h-files-diff\">");t.b("\n" + i);t.b("        <div class=\"d2h-file-side-diff\">");t.b("\n" + i);t.b("            <div class=\"d2h-code-wrapper\">");t.b("\n" + i);t.b("                <table class=\"d2h-diff-table\">");t.b("\n" + i);t.b("                    <tbody class=\"d2h-diff-tbody\">");t.b("\n" + i);t.b("                    ");t.b(t.t(t.d("diffs.left",c,p,0)));t.b("\n" + i);t.b("                    </tbody>");t.b("\n" + i);t.b("                </table>");t.b("\n" + i);t.b("            </div>");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("        <div class=\"d2h-file-side-diff\">");t.b("\n" + i);t.b("            <div class=\"d2h-code-wrapper\">");t.b("\n" + i);t.b("                <table class=\"d2h-diff-table\">");t.b("\n" + i);t.b("                    <tbody class=\"d2h-diff-tbody\">");t.b("\n" + i);t.b("                    ");t.b(t.t(t.d("diffs.right",c,p,0)));t.b("\n" + i);t.b("                    </tbody>");t.b("\n" + i);t.b("                </table>");t.b("\n" + i);t.b("            </div>");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("    </div>");t.b("\n" + i);t.b("</div>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["tag-file-added"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<span class=\"d2h-tag d2h-added d2h-added-tag\">ADDED</span>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["tag-file-changed"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<span class=\"d2h-tag d2h-changed d2h-changed-tag\">CHANGED</span>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["tag-file-deleted"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<span class=\"d2h-tag d2h-deleted d2h-deleted-tag\">DELETED</span>");return t.fl(); },partials: {}, subs: {  }});
-global.browserTemplates["tag-file-renamed"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<span class=\"d2h-tag d2h-moved d2h-moved-tag\">RENAMED</span>");return t.fl(); },partials: {}, subs: {  }});
-module.exports = global.browserTemplates;
-})();
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"hogan.js":95}],93:[function(require,module,exports){
-/*
- *
- * Utils (utils.js)
- * Author: rtfpessoa
- *
- */
-
-(function() {
-  var merge = require('merge');
-
-  function Utils() {
-  }
-
-  Utils.prototype.escape = function(str) {
-    return str.slice(0)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#x27;')
-      .replace(/\//g, '&#x2F;');
-  };
-
-  Utils.prototype.startsWith = function(str, start) {
-    if (typeof start === 'object') {
-      var result = false;
-      start.forEach(function(s) {
-        if (str.indexOf(s) === 0) {
-          result = true;
-        }
-      });
-
-      return result;
-    }
-
-    return str && str.indexOf(start) === 0;
-  };
-
-  Utils.prototype.valueOrEmpty = function(value) {
-    return value || '';
-  };
-
-  Utils.prototype.safeConfig = function(cfg, defaultConfig) {
-    return merge.recursive(true, defaultConfig, cfg);
-  };
-
-  module.exports.Utils = new Utils();
-})();
-
-},{"merge":99}],94:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 /*
  *  Copyright 2011 Twitter, Inc.
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20784,7 +20412,7 @@ module.exports = global.browserTemplates;
   }
 })(typeof exports !== 'undefined' ? exports : Hogan);
 
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 /*
  *  Copyright 2011 Twitter, Inc.
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20807,7 +20435,7 @@ Hogan.Template = require('./template').Template;
 Hogan.template = Hogan.Template;
 module.exports = Hogan;
 
-},{"./compiler":94,"./template":96}],96:[function(require,module,exports){
+},{"./compiler":93,"./template":95}],95:[function(require,module,exports){
 /*
  *  Copyright 2011 Twitter, Inc.
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21150,7 +20778,7 @@ var Hogan = {};
 
 })(typeof exports !== 'undefined' ? exports : Hogan);
 
-},{}],97:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -21175,7 +20803,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.4.1
  * https://jquery.com/
@@ -31775,185 +31403,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],99:[function(require,module,exports){
-/*!
- * @name JavaScript/NodeJS Merge v1.2.1
- * @author yeikos
- * @repository https://github.com/yeikos/js.merge
-
- * Copyright 2014 yeikos - MIT license
- * https://raw.github.com/yeikos/js.merge/master/LICENSE
- */
-
-;(function(isNode) {
-
-	/**
-	 * Merge one or more objects 
-	 * @param bool? clone
-	 * @param mixed,... arguments
-	 * @return object
-	 */
-
-	var Public = function(clone) {
-
-		return merge(clone === true, false, arguments);
-
-	}, publicName = 'merge';
-
-	/**
-	 * Merge two or more objects recursively 
-	 * @param bool? clone
-	 * @param mixed,... arguments
-	 * @return object
-	 */
-
-	Public.recursive = function(clone) {
-
-		return merge(clone === true, true, arguments);
-
-	};
-
-	/**
-	 * Clone the input removing any reference
-	 * @param mixed input
-	 * @return mixed
-	 */
-
-	Public.clone = function(input) {
-
-		var output = input,
-			type = typeOf(input),
-			index, size;
-
-		if (type === 'array') {
-
-			output = [];
-			size = input.length;
-
-			for (index=0;index<size;++index)
-
-				output[index] = Public.clone(input[index]);
-
-		} else if (type === 'object') {
-
-			output = {};
-
-			for (index in input)
-
-				output[index] = Public.clone(input[index]);
-
-		}
-
-		return output;
-
-	};
-
-	/**
-	 * Merge two objects recursively
-	 * @param mixed input
-	 * @param mixed extend
-	 * @return mixed
-	 */
-
-	function merge_recursive(base, extend) {
-
-		if (typeOf(base) !== 'object')
-
-			return extend;
-
-		for (var key in extend) {
-
-			if (typeOf(base[key]) === 'object' && typeOf(extend[key]) === 'object') {
-
-				base[key] = merge_recursive(base[key], extend[key]);
-
-			} else {
-
-				base[key] = extend[key];
-
-			}
-
-		}
-
-		return base;
-
-	}
-
-	/**
-	 * Merge two or more objects
-	 * @param bool clone
-	 * @param bool recursive
-	 * @param array argv
-	 * @return object
-	 */
-
-	function merge(clone, recursive, argv) {
-
-		var result = argv[0],
-			size = argv.length;
-
-		if (clone || typeOf(result) !== 'object')
-
-			result = {};
-
-		for (var index=0;index<size;++index) {
-
-			var item = argv[index],
-
-				type = typeOf(item);
-
-			if (type !== 'object') continue;
-
-			for (var key in item) {
-
-				if (key === '__proto__') continue;
-
-				var sitem = clone ? Public.clone(item[key]) : item[key];
-
-				if (recursive) {
-
-					result[key] = merge_recursive(result[key], sitem);
-
-				} else {
-
-					result[key] = sitem;
-
-				}
-
-			}
-
-		}
-
-		return result;
-
-	}
-
-	/**
-	 * Get type of variable
-	 * @param mixed input
-	 * @return string
-	 *
-	 * @see http://jsperf.com/typeofvar
-	 */
-
-	function typeOf(input) {
-
-		return ({}).toString.call(input).slice(8, -1).toLowerCase();
-
-	}
-
-	if (isNode) {
-
-		module.exports = Public;
-
-	} else {
-
-		window[publicName] = Public;
-
-	}
-
-})(typeof module === 'object' && module && typeof module.exports === 'object' && module.exports);
-},{}],100:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 //! moment.js
 
 ;(function (global, factory) {
@@ -36466,313 +35916,7 @@ return jQuery;
 
 })));
 
-},{}],101:[function(require,module,exports){
-(function (process){
-// .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
-// backported and transplited with Babel, with backwards-compat fixes
-
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// resolves . and .. elements in a path array with directory names there
-// must be no slashes, empty elements, or device names (c:\) in the array
-// (so also no leading and trailing slashes - it does not distinguish
-// relative and absolute paths)
-function normalizeArray(parts, allowAboveRoot) {
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = parts.length - 1; i >= 0; i--) {
-    var last = parts[i];
-    if (last === '.') {
-      parts.splice(i, 1);
-    } else if (last === '..') {
-      parts.splice(i, 1);
-      up++;
-    } else if (up) {
-      parts.splice(i, 1);
-      up--;
-    }
-  }
-
-  // if the path is allowed to go above the root, restore leading ..s
-  if (allowAboveRoot) {
-    for (; up--; up) {
-      parts.unshift('..');
-    }
-  }
-
-  return parts;
-}
-
-// path.resolve([from ...], to)
-// posix version
-exports.resolve = function() {
-  var resolvedPath = '',
-      resolvedAbsolute = false;
-
-  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-    var path = (i >= 0) ? arguments[i] : process.cwd();
-
-    // Skip empty and invalid entries
-    if (typeof path !== 'string') {
-      throw new TypeError('Arguments to path.resolve must be strings');
-    } else if (!path) {
-      continue;
-    }
-
-    resolvedPath = path + '/' + resolvedPath;
-    resolvedAbsolute = path.charAt(0) === '/';
-  }
-
-  // At this point the path should be resolved to a full absolute path, but
-  // handle relative paths to be safe (might happen when process.cwd() fails)
-
-  // Normalize the path
-  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
-    return !!p;
-  }), !resolvedAbsolute).join('/');
-
-  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-};
-
-// path.normalize(path)
-// posix version
-exports.normalize = function(path) {
-  var isAbsolute = exports.isAbsolute(path),
-      trailingSlash = substr(path, -1) === '/';
-
-  // Normalize the path
-  path = normalizeArray(filter(path.split('/'), function(p) {
-    return !!p;
-  }), !isAbsolute).join('/');
-
-  if (!path && !isAbsolute) {
-    path = '.';
-  }
-  if (path && trailingSlash) {
-    path += '/';
-  }
-
-  return (isAbsolute ? '/' : '') + path;
-};
-
-// posix version
-exports.isAbsolute = function(path) {
-  return path.charAt(0) === '/';
-};
-
-// posix version
-exports.join = function() {
-  var paths = Array.prototype.slice.call(arguments, 0);
-  return exports.normalize(filter(paths, function(p, index) {
-    if (typeof p !== 'string') {
-      throw new TypeError('Arguments to path.join must be strings');
-    }
-    return p;
-  }).join('/'));
-};
-
-
-// path.relative(from, to)
-// posix version
-exports.relative = function(from, to) {
-  from = exports.resolve(from).substr(1);
-  to = exports.resolve(to).substr(1);
-
-  function trim(arr) {
-    var start = 0;
-    for (; start < arr.length; start++) {
-      if (arr[start] !== '') break;
-    }
-
-    var end = arr.length - 1;
-    for (; end >= 0; end--) {
-      if (arr[end] !== '') break;
-    }
-
-    if (start > end) return [];
-    return arr.slice(start, end - start + 1);
-  }
-
-  var fromParts = trim(from.split('/'));
-  var toParts = trim(to.split('/'));
-
-  var length = Math.min(fromParts.length, toParts.length);
-  var samePartsLength = length;
-  for (var i = 0; i < length; i++) {
-    if (fromParts[i] !== toParts[i]) {
-      samePartsLength = i;
-      break;
-    }
-  }
-
-  var outputParts = [];
-  for (var i = samePartsLength; i < fromParts.length; i++) {
-    outputParts.push('..');
-  }
-
-  outputParts = outputParts.concat(toParts.slice(samePartsLength));
-
-  return outputParts.join('/');
-};
-
-exports.sep = '/';
-exports.delimiter = ':';
-
-exports.dirname = function (path) {
-  if (typeof path !== 'string') path = path + '';
-  if (path.length === 0) return '.';
-  var code = path.charCodeAt(0);
-  var hasRoot = code === 47 /*/*/;
-  var end = -1;
-  var matchedSlash = true;
-  for (var i = path.length - 1; i >= 1; --i) {
-    code = path.charCodeAt(i);
-    if (code === 47 /*/*/) {
-        if (!matchedSlash) {
-          end = i;
-          break;
-        }
-      } else {
-      // We saw the first non-path separator
-      matchedSlash = false;
-    }
-  }
-
-  if (end === -1) return hasRoot ? '/' : '.';
-  if (hasRoot && end === 1) {
-    // return '//';
-    // Backwards-compat fix:
-    return '/';
-  }
-  return path.slice(0, end);
-};
-
-function basename(path) {
-  if (typeof path !== 'string') path = path + '';
-
-  var start = 0;
-  var end = -1;
-  var matchedSlash = true;
-  var i;
-
-  for (i = path.length - 1; i >= 0; --i) {
-    if (path.charCodeAt(i) === 47 /*/*/) {
-        // If we reached a path separator that was not part of a set of path
-        // separators at the end of the string, stop now
-        if (!matchedSlash) {
-          start = i + 1;
-          break;
-        }
-      } else if (end === -1) {
-      // We saw the first non-path separator, mark this as the end of our
-      // path component
-      matchedSlash = false;
-      end = i + 1;
-    }
-  }
-
-  if (end === -1) return '';
-  return path.slice(start, end);
-}
-
-// Uses a mixed approach for backwards-compatibility, as ext behavior changed
-// in new Node.js versions, so only basename() above is backported here
-exports.basename = function (path, ext) {
-  var f = basename(path);
-  if (ext && f.substr(-1 * ext.length) === ext) {
-    f = f.substr(0, f.length - ext.length);
-  }
-  return f;
-};
-
-exports.extname = function (path) {
-  if (typeof path !== 'string') path = path + '';
-  var startDot = -1;
-  var startPart = 0;
-  var end = -1;
-  var matchedSlash = true;
-  // Track the state of characters (if any) we see before our first dot and
-  // after any path separator we find
-  var preDotState = 0;
-  for (var i = path.length - 1; i >= 0; --i) {
-    var code = path.charCodeAt(i);
-    if (code === 47 /*/*/) {
-        // If we reached a path separator that was not part of a set of path
-        // separators at the end of the string, stop now
-        if (!matchedSlash) {
-          startPart = i + 1;
-          break;
-        }
-        continue;
-      }
-    if (end === -1) {
-      // We saw the first non-path separator, mark this as the end of our
-      // extension
-      matchedSlash = false;
-      end = i + 1;
-    }
-    if (code === 46 /*.*/) {
-        // If this is our first dot, mark it as the start of our extension
-        if (startDot === -1)
-          startDot = i;
-        else if (preDotState !== 1)
-          preDotState = 1;
-    } else if (startDot !== -1) {
-      // We saw a non-dot and non-path separator before our dot, so we should
-      // have a good chance at having a non-empty extension
-      preDotState = -1;
-    }
-  }
-
-  if (startDot === -1 || end === -1 ||
-      // We saw a non-dot character immediately before the dot
-      preDotState === 0 ||
-      // The (right-most) trimmed path component is exactly '..'
-      preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-    return '';
-  }
-  return path.slice(startDot, end);
-};
-
-function filter (xs, f) {
-    if (xs.filter) return xs.filter(f);
-    var res = [];
-    for (var i = 0; i < xs.length; i++) {
-        if (f(xs[i], i, xs)) res.push(xs[i]);
-    }
-    return res;
-}
-
-// String.prototype.substr - negative index don't work in IE8
-var substr = 'ab'.substr(-1) === 'b'
-    ? function (str, start, len) { return str.substr(start, len) }
-    : function (str, start, len) {
-        if (start < 0) start = str.length + start;
-        return str.substr(start, len);
-    }
-;
-
-}).call(this,require('_process'))
-},{"_process":102}],102:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -36958,21 +36102,21 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],103:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 'use strict';
 module.exports = {
 	stdout: false,
 	stderr: false
 };
 
-},{}],104:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],105:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -37562,4 +36706,4 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":104,"_process":102,"inherits":97}]},{},[13]);
+},{"./support/isBuffer":101,"_process":99,"inherits":96}]},{},[13]);

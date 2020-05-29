@@ -12,7 +12,7 @@ const GET_TOPIC_BY_ID = gql`
         fileInfo
         type
         url
-        number
+        level
       }
     }
   }

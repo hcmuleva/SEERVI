@@ -39,7 +39,7 @@ export default function ContentCreator(props) {
   });
   const formObjectInit = {
     name: "",
-    number: "",
+    level: "",
     isPublished: true,
     state: "ACTIVE",
     status: "APPROOVED",
@@ -102,8 +102,8 @@ export default function ContentCreator(props) {
           if (props.topicid) {
             myobj["topic"] = props.topicid;
           }
-          if (!myobj.number) {
-            myobj["number"] = 1;
+          if (!myobj.level) {
+            myobj["level"] = 1;
           }
           console.log("Before Create object ", myobj);
           createContent({

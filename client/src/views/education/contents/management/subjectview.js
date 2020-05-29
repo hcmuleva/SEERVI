@@ -15,7 +15,7 @@ export default function Subjectview(props) {
     "name",
     "url",
     "type",
-    "number",
+    "level",
     "description",
   ];
   const options = {

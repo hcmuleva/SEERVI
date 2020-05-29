@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 const CREATE_CONTENT = gql`
   mutation CREATE_CONTENT(
     $name: String!
-    $number: Int
+    $level: Int
     $fileInfo: Json
     $type: String!
     $url: String
@@ -17,7 +17,7 @@ const CREATE_CONTENT = gql`
     createContent(
       data: {
         name: $name
-        number: $number
+        level: $level
         fileInfo: $fileInfo
         type: $type
         url: $url

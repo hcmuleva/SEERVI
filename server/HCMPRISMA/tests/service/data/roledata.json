@@ -1,0 +1,42 @@
+{
+    "superorgroles": [
+        {
+            "name": "SUPERADMIN"
+        }
+    ],
+    "orgroles": [
+        {
+            "name": "ORGADMIN"
+        }
+    ],
+    "suborgroles": [
+        {
+            "name": "SUBORGADMIN"
+        }
+    ],
+    "grouproles": [
+        {
+            "name": "GROUPADMIN"
+        }
+    ],
+    "subgrouproles": [
+        {
+            "name": "SUBGROUPADMIN"
+        },
+        {
+            "name": "PARENT"
+        },
+        {
+            "name": "TEACHER"
+        },
+        {
+            "name": "PRINCIPAL"
+        },
+        {
+            "name": "TUTOR"
+        },
+        {
+            "name": "STUDENT"
+        }
+    ]
+}

@@ -50,7 +50,7 @@ const GET_SUBJECT_BY_ID = gql`
         fileInfo
         type
         url
-        number
+        level
       }
     }
   }

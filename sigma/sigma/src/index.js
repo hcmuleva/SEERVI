@@ -1,20 +1,19 @@
 import "react-app-polyfill/ie11";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-//import * as serviceWorker from './serviceWorker';
+
+import * as serviceWorker from "./serviceWorker";
 import { HashRouter } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import { ApolloProvider } from "@apollo/react-hooks";
 
-import Login from "./tbd/login";
 import { client } from "./common/apolloclient";
-
+import Authentication from "./Authentication";
 ReactDOM.render(
   <HashRouter>
     <ScrollToTop>
       <ApolloProvider client={client}>
-        {localStorage.getItem("token") ? <App /> : <Login />}
+        <Authentication />
       </ApolloProvider>
     </ScrollToTop>
   </HashRouter>,

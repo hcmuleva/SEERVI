@@ -158,7 +158,7 @@ export default function ContentCreator(props) {
 
     subject: props.subjectid,
     url: url,
-    number: formObject.number,
+    level: formObject.level,
     isPublished: true,
     state: "ACTIVE",
     status: "APPROOVED",
@@ -293,7 +293,7 @@ export default function ContentCreator(props) {
                 onChange={(e) => {
                   console.log("Selected LEvel ", e.target.value);
                   setLevel(e.target.value);
-                  setFormObject({ ...formObject, ["number"]: e.target.value });
+                  setFormObject({ ...formObject, ["level"]: e.target.value });
                 }}
               >
                 <MenuItem value={1}>1</MenuItem>

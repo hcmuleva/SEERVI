@@ -144,131 +144,95 @@ export default function TreeViewSubject(props) {
     >
       {props.mySubjectList.map((subject) => {
         return (
-          <Tooltip arrow title="SUBJECT">
-            <StyledTreeItem
-              nodeId={subject.id}
-              labelText={subject.name}
-              labelIcon={MenuBookTwoToneIcon}
-              labelInfo=<Examplemenu />
-              onClick={() => {
-                props.setId(subject.id);
-                props.setCompLevel("SUBJECT");
-              }}
-              color="#e3742f"
-              bgColor="#fcefe3"
-            >
-              {subject.contents.map((content) => {
-                return (
-                  <Tooltip title="CONTENT">
-                    <StyledTreeItem
-                      nodeId={content.id}
-                      labelText={content.name}
-                      labelIcon={LocalLibraryTwoToneIcon}
-                      style={{ color: green[500] }}
-                      fontSize="small"
-                      onClick={() => {
-                        console.log(
-                          "content.id",
-                          content.id,
-                          "content.name",
-                          content.name
-                        );
-                      }}
-                      color="#e3742f"
-                      bgColor="#fcefe3"
-                    ></StyledTreeItem>
-                  </Tooltip>
-                );
-              })}
-              {subject.units.map((unit) => {
-                return (
-                  <Tooltip title="UNIT" placement="top" arrow>
-                    <StyledTreeItem
-                      nodeId={unit.id}
-                      labelText={unit.name}
-                      labelIcon={CollectionsBookmarkTwoToneIcon}
-                      labelInfo={unit.topics.length}
-                      color="#e3742f"
-                      bgColor="#fcefe3"
-                      onClick={() => {
-                        console.log("unit.id", unit.id, "unit.name", unit.name);
-                        props.setId(unit.id);
-                        props.setCompLevel("UNIT");
-                      }}
-                    >
-                      {unit.contents.map((content) => {
-                        return (
-                          <StyledTreeItem
-                            nodeId={content.id}
-                            labelText={content.name}
-                            labelIcon={LocalLibraryTwoToneIcon}
-                            style={{ color: green[500] }}
-                            fontSize="small"
-                            onClick={() => {
-                              console.log(
-                                "content.id",
-                                content.id,
-                                "content.name",
-                                content.name
-                              );
-                            }}
-                            color="#e3742f"
-                            bgColor="#fcefe3"
-                          ></StyledTreeItem>
-                        );
-                      })}
-                      {unit.topics.map((topic) => {
-                        return (
-                          <Tooltip title="TOPIC">
+          <StyledTreeItem
+            nodeId={subject.id}
+            labelText={subject.name}
+            labelIcon={MenuBookTwoToneIcon}
+            labelInfo=<Examplemenu />
+            onClick={() => {
+              props.setId(subject.id);
+              props.setCompLevel("SUBJECT");
+            }}
+            color="#e3742f"
+            bgColor="#fcefe3"
+          >
+            {subject.contents.map((content) => {
+              return (
+                <StyledTreeItem
+                  nodeId={content.id}
+                  labelText={content.name}
+                  labelIcon={LocalLibraryTwoToneIcon}
+                  style={{ color: green[500] }}
+                  fontSize="small"
+                  onClick={() => {}}
+                  color="#e3742f"
+                  bgColor="#fcefe3"
+                ></StyledTreeItem>
+              );
+            })}
+            {subject.units.map((unit) => {
+              return (
+                <StyledTreeItem
+                  nodeId={unit.id}
+                  labelText={unit.name}
+                  labelIcon={CollectionsBookmarkTwoToneIcon}
+                  labelInfo={unit.topics.length + ""}
+                  color="#e3742f"
+                  bgColor="#fcefe3"
+                  onClick={() => {
+                    props.setId(unit.id);
+                    props.setCompLevel("UNIT");
+                  }}
+                >
+                  {unit.contents.map((content) => {
+                    return (
+                      <StyledTreeItem
+                        nodeId={content.id}
+                        labelText={content.name}
+                        labelIcon={LocalLibraryTwoToneIcon}
+                        style={{ color: green[500] }}
+                        fontSize="small"
+                        onClick={() => {}}
+                        color="#e3742f"
+                        bgColor="#fcefe3"
+                      ></StyledTreeItem>
+                    );
+                  })}
+                  {unit.topics.map((topic) => {
+                    return (
+                      <StyledTreeItem
+                        nodeId={topic.id}
+                        labelText={topic.name}
+                        labelIcon={LibraryBooksTwoToneIcon}
+                        labelInfo={topic.contents.length + ""}
+                        color="#e3742f"
+                        bgColor="#fcefe3"
+                        onClick={() => {
+                          props.setId(topic.id);
+                          props.setCompLevel("TOPIC");
+                        }}
+                      >
+                        {topic.contents.map((content) => {
+                          return (
                             <StyledTreeItem
-                              nodeId={topic.id}
-                              labelText={topic.name}
-                              labelIcon={LibraryBooksTwoToneIcon}
-                              labelInfo={topic.contents.length}
+                              nodeId={content.id}
+                              labelText={content.name}
+                              labelIcon={LocalLibraryTwoToneIcon}
+                              style={{ color: green[500] }}
+                              fontSize="small"
+                              onClick={() => {}}
                               color="#e3742f"
                               bgColor="#fcefe3"
-                              onClick={() => {
-                                console.log(
-                                  "topic.id",
-                                  topic.id,
-                                  "topic.name",
-                                  topic.name
-                                );
-                                props.setId(topic.id);
-                                props.setCompLevel("TOPIC");
-                              }}
-                            >
-                              {topic.contents.map((content) => {
-                                return (
-                                  <StyledTreeItem
-                                    nodeId={content.id}
-                                    labelText={content.name}
-                                    labelIcon={LocalLibraryTwoToneIcon}
-                                    style={{ color: green[500] }}
-                                    fontSize="small"
-                                    onClick={() => {
-                                      console.log(
-                                        "content.id",
-                                        content.id,
-                                        "content.name",
-                                        content.name
-                                      );
-                                    }}
-                                    color="#e3742f"
-                                    bgColor="#fcefe3"
-                                  ></StyledTreeItem>
-                                );
-                              })}
-                            </StyledTreeItem>
-                          </Tooltip>
-                        );
-                      })}
-                    </StyledTreeItem>
-                  </Tooltip>
-                );
-              })}
-            </StyledTreeItem>
-          </Tooltip>
+                            ></StyledTreeItem>
+                          );
+                        })}
+                      </StyledTreeItem>
+                    );
+                  })}
+                </StyledTreeItem>
+              );
+            })}
+          </StyledTreeItem>
         );
       })}
     </TreeView>

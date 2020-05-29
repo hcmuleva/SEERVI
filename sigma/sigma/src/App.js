@@ -16,6 +16,7 @@ import { MessagesDemo } from "./components/MessagesDemo";
 import { ChartsDemo } from "./components/ChartsDemo";
 import { MiscDemo } from "./components/MiscDemo";
 import { EmptyPage } from "./components/EmptyPage";
+import Gridview from "./tbd/mypractice/Gridview";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -110,6 +111,12 @@ class App extends Component {
         icon: "pi pi-fw pi-user",
         command: () => {
           window.location = "#/teachermgmt";
+        },
+      },
+      {
+        label: "PRACTICE",
+        command: () => {
+          window.location = "#/practice";
         },
       },
       {
@@ -322,6 +329,7 @@ class App extends Component {
 
         <div className="layout-main">
           <Route path="/" exact component={Dashboard} />
+          <Route path="/practice" component={Gridview} />
           <Route path="/teachermgmt" exact component={TeacherMgmt} />
           <Route path="/mysubjects" component={MySubjects} />
           <Route path="/forms" component={FormsDemo} />

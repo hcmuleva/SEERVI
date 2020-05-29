@@ -38,7 +38,7 @@ export default function Subjectview(props) {
       </Row>
       <Row key={112}>
         {unitData.getSubjectById.contents.map((content, idx) => (
-          <ContentView content={content} idx={idx} />
+          <ContentView key={idx} content={content} idx={idx} />
         ))}
       </Row>
     </Container>

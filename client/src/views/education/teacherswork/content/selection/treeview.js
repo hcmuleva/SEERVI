@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { green } from "@material-ui/core/colors";
+import Box from "@material-ui/core/Box";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -21,7 +22,7 @@ import ForumIcon from "@material-ui/icons/Forum";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-
+import ContentTypeMenu from "../content_newdesign/common/ContentTypeMenu";
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.text.secondary,
@@ -75,6 +76,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
 function StyledTreeItem(props) {
   const classes = useTreeItemStyles();
   const {
+    labelTextsubject,
     labelText,
     labelIcon: LabelIcon,
     labelInfo,
@@ -91,7 +93,11 @@ function StyledTreeItem(props) {
           <Typography variant="body2" className={classes.labelText}>
             {labelText}
           </Typography>
-
+          <Typography variant="body2" className={classes.labelTextsubject}>
+            <Box fontSize="h6.fontSize" m={1}>
+              {labelTextsubject}
+            </Box>
+          </Typography>
           <Typography variant="caption" color="inherit">
             {labelInfo}
           </Typography>
@@ -139,22 +145,17 @@ export default function TreeViewSubject(props) {
       defaultExpanded={["3"]}
       defaultCollapseIcon={<ArrowDropDownIcon />}
       defaultExpandIcon={<ArrowRightIcon />}
-      defaultEndIcon={<div style={{ width: 24 }} />}
+      defaultEndIcon={<div style={{ width: 30 }} />}
     >
       {props.mySubjectList.map((subject) => {
         return (
           <StyledTreeItem
             nodeId={subject.id}
-            labelText={subject.name}
+            labelTextsubject={subject.name}
             labelIcon={MenuBookTwoToneIcon}
-            labelInfo={subject.contents.length}
+            labelInfo=<ContentTypeMenu setDatatype={props.setDatatype} />
             onClick={() => {
-              console.log(
-                "subject.id",
-                subject.id,
-                "subject.name",
-                subject.name
-              );
+              props.setName(subject.name);
               props.setId(subject.id);
               props.setCompLevel("SUBJECT");
             }}
@@ -169,14 +170,7 @@ export default function TreeViewSubject(props) {
                   labelIcon={LocalLibraryTwoToneIcon}
                   style={{ color: green[500] }}
                   fontSize="small"
-                  onClick={() => {
-                    console.log(
-                      "content.id",
-                      content.id,
-                      "content.name",
-                      content.name
-                    );
-                  }}
+                  onClick={() => {}}
                   color="#e3742f"
                   bgColor="#fcefe3"
                 ></StyledTreeItem>
@@ -187,13 +181,14 @@ export default function TreeViewSubject(props) {
                 <StyledTreeItem
                   nodeId={unit.id}
                   labelText={unit.name}
+                  fontSize="medium"
                   labelIcon={CollectionsBookmarkTwoToneIcon}
-                  labelInfo={unit.topics.length}
+                  labelInfo=<ContentTypeMenu setDatatype={props.setDatatype} />
                   color="#e3742f"
                   bgColor="#fcefe3"
                   onClick={() => {
-                    console.log("unit.id", unit.id, "unit.name", unit.name);
                     props.setId(unit.id);
+                    props.setName(unit.name);
                     props.setCompLevel("UNIT");
                   }}
                 >
@@ -205,14 +200,7 @@ export default function TreeViewSubject(props) {
                         labelIcon={LocalLibraryTwoToneIcon}
                         style={{ color: green[500] }}
                         fontSize="small"
-                        onClick={() => {
-                          console.log(
-                            "content.id",
-                            content.id,
-                            "content.name",
-                            content.name
-                          );
-                        }}
+                        onClick={() => {}}
                         color="#e3742f"
                         bgColor="#fcefe3"
                       ></StyledTreeItem>
@@ -224,17 +212,14 @@ export default function TreeViewSubject(props) {
                         nodeId={topic.id}
                         labelText={topic.name}
                         labelIcon={LibraryBooksTwoToneIcon}
-                        labelInfo={topic.contents.length}
+                        labelInfo=<ContentTypeMenu
+                          setDatatype={props.setDatatype}
+                        />
                         color="#e3742f"
                         bgColor="#fcefe3"
                         onClick={() => {
-                          console.log(
-                            "topic.id",
-                            topic.id,
-                            "topic.name",
-                            topic.name
-                          );
                           props.setId(topic.id);
+                          props.setName(topic.name);
                           props.setCompLevel("TOPIC");
                         }}
                       >
@@ -246,14 +231,7 @@ export default function TreeViewSubject(props) {
                               labelIcon={LocalLibraryTwoToneIcon}
                               style={{ color: green[500] }}
                               fontSize="small"
-                              onClick={() => {
-                                console.log(
-                                  "content.id",
-                                  content.id,
-                                  "content.name",
-                                  content.name
-                                );
-                              }}
+                              onClick={() => {}}
                               color="#e3742f"
                               bgColor="#fcefe3"
                             ></StyledTreeItem>

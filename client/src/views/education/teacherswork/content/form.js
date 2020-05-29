@@ -59,7 +59,7 @@ export default function ContentForm(props) {
               setLevel(e.target.value);
               props.setFormObject({
                 ...props.formObject,
-                ["number"]: parseInt(e.target.value),
+                ["level"]: parseInt(e.target.value),
               });
             }}
           >

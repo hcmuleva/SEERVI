@@ -136,9 +136,7 @@ const useStyles = makeStyles({
     maxWidth: 400,
   },
 });
-const handleClick = () => {
-  console.log("CALLED");
-};
+const handleClick = () => {};
 
 export default function SubjectManagement(props) {
   const {
@@ -156,16 +154,18 @@ export default function SubjectManagement(props) {
   let mySubjectList = [];
   assignedSubjectsData.mySubscription.map((sub) => {
     if (("TEACHER", sub.subscribedAs.name)) {
-      console.log("SUBJECTS ", sub.mySubjects);
       mySubjectList = [...mySubjectList, ...sub.mySubjects];
     }
   });
-  console.log("MY_ASSIGNED_SUBJECTS ", mySubjectList);
-
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [compLevel, setCompLevel] = useState(null);
-  const [id, setId] = useState(null);
-  console.log("selectedSubject", selectedSubject);
+
+  const myInitialSubjectId =
+    mySubjectList && mySubjectList.length > 0 ? mySubjectList[0].id : null;
+  const myInitialCompLevel =
+    mySubjectList && mySubjectList.length > 0 ? "SUBJECT" : null;
+
+  const [compLevel, setCompLevel] = useState(myInitialCompLevel);
+  const [id, setId] = useState(myInitialSubjectId);
   const getComponent = (complevel, id) => {
     switch (complevel) {
       case "SUBJECT":

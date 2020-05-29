@@ -1,16 +1,24 @@
 import "./login.css";
-import React from "react";
+import React, { useState } from "react";
+import { Card } from "primereact/card";
+import { Checkbox } from "primereact/checkbox";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import profile from "./arpitaPhoto.png";
+
+import "./LoginCard.scss";
 import { useMutation } from "@apollo/react-hooks";
 import { LOGIN_USER } from "../service/graphql/users/query/user";
 export default function LoginMd(props) {
   const [userLogin] = useMutation(LOGIN_USER);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkedOne, setCheckedOne] = useState(false);
+  const updateOne = () => setCheckedOne(!checkedOne);
+  const myprofileurl = localStorage.getItem("profileurl");
+  const profileurl = myprofileurl ? myprofileurl : profile;
 
-  //const handleRegister = (event) => {};
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    console.log("email", email, "passowrd", password);
+  const onClickAction = () => {
     userLogin({ variables: { email, password } })
       .then((loginResponse) => {
         console.log("loginResponse", loginResponse);
@@ -21,51 +29,82 @@ export default function LoginMd(props) {
           loginResponse.data.login.token
         ) {
           localStorage.setItem("token", loginResponse.data.login.token);
+          props.setIsLoggedin(true);
         }
       })
       .catch((error) => {
         console.log("\n Error in login ", error);
       });
   };
-
   return (
-    <div class="container">
-      <div class="logo">LOGO TBD</div>
-      <div class="login-item">
-        <form id="login-form" class="form form-login" onSubmit={handleSubmit}>
-          <div class="form-field">
-            <label class="user" for="login-username">
-              <span class="hidden">Username</span>
-            </label>
-            <input
-              id="login-username"
+    <div className="p-grid">
+      <Card className="form-card">
+        <header className="p-col-12" style={{ textAlign: "center" }}>
+          <h1>Login</h1>
+        </header>
+        <div>
+          <div className="p-col-12 imgpro">
+            {" "}
+            <img className="proimg" src={profileurl} alt="Profile" />
+          </div>
+
+          <div className="p-col-12 p-logininput">
+            <InputText
+              className="text"
               type="email"
-              class="form-input"
-              name="email"
-              placeholder="Email Id"
-              required
+              placeholder="Email"
+              style={{ textAlign: "center" }}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
             />
           </div>
-
-          <div class="form-field">
-            <label class="lock" for="login-password">
-              <span class="hidden">Password</span>
-            </label>
-            <input
-              id="login-password"
+          <div className="p-col-12 p-logininput">
+            <InputText
+              className="text"
               type="password"
-              name="password"
-              class="form-input"
               placeholder="Password"
-              required
+              style={{ textAlign: "center" }}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
             />
           </div>
+          <div className="p-grid" style={{ marginTop: 30 }}>
+            <div className="p-col-1"></div>
+            <div className="p-col-5" style={{ textAlign: "center" }}>
+              <Checkbox
+                name="a"
+                label="Checkbox"
+                checked={checkedOne}
+                onChange={updateOne}
+              />
+              <label style={{ paddingLeft: 5 }}>Remember me</label>
+            </div>
 
-          <div class="form-field">
-            <input type="submit" value="Log in" />
+            <div className="p-col-5" style={{ textAlign: "center" }}>
+              <a href="https://google.com">Forgot Password?</a>
+            </div>
+            <div className="p-col-1"></div>
           </div>
-        </form>
-      </div>
+
+          <div className="p-grid p-fluid">
+            <div className="p-col-3 p-md-3 p-xl-3 p-lg-3"></div>
+            <div className="p-col-3 p-md-3 p-xl-3 p-lg-3">
+              <Button
+                label="Login"
+                className="p-col-3 p-lg-3 p-xs-3"
+                onClick={() => {
+                  onClickAction();
+                }}
+              />
+            </div>
+            <div className="p-col-3 p-md-3 p-xl-3 p-lg-3">
+              <Button label="Cancel" className="p-col-3 p-lg-3 p-xs-3" />
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }

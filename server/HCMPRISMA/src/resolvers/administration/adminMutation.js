@@ -36,7 +36,6 @@ export const AdminMutation = {
   createRole,
   updateRoleById,
   deleteRoleById,
-
   createUserRole,
   deleteUserRole,
   updateUserRole,

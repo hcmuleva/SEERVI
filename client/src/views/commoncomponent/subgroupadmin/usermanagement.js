@@ -84,7 +84,7 @@ export default function Usermanagement(props) {
   if (subgroupLoading) {
     return <div>SUBORG Loading</div>;
   }
-  console.log("subgroupData groupById", subgroupData.subgroupById);
+  console.log("HCMsubgroupData groupById", subgroupData.subgroupById);
   const myOrg = subgroupData.subgroupById.groupid.suborgid.org;
   const orgid = myOrg.id;
   console.log("orgid ", orgid);

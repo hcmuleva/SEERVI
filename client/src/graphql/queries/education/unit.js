@@ -12,7 +12,7 @@ const GET_UNIT_BY_ID = gql`
         fileInfo
         type
         url
-        number
+        level
       }
       topics {
         id

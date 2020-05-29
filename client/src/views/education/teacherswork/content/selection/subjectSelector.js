@@ -60,7 +60,12 @@ export default function SubjectSelection(props) {
         id="subject-select-label1"
         value={selectedSubject}
         onChange={(e) => {
-          console.log("SELECTED SUBJECT", e.target.name, "  and E ", e.target);
+          console.log(
+            "HCMSELECTED SUBJECT",
+            e.target.name,
+            "  and E ",
+            e.target
+          );
           const name = e.target.value;
           console.log("NAME ", name);
           console.log("e.target ", e.target);

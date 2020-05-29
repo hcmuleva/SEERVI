@@ -47,21 +47,20 @@ export function Question(props) {
   const [questionType, setQuestionType] = useState("SC");
   const [createQuestion] = useMutation(CREATE_QUESTION);
 
-  const [questionObj, setQuestionObj] = useState({
-    title: "",
-    quetype: "",
-    descrtionType: "HTML",
-    descrtionurl: "",
-    options: [],
-    level: 1,
-    isPublished: true,
-    state: "ACTIVE",
-    status: "APPROVED",
-    available: "FREE",
-    descriptionfileInfo: {},
-  });
   const uploadFiles = () => {
-    let myQueObj = questionObj;
+    let myQueObj = {
+      title: "",
+      quetype: "",
+      descrtionType: "HTML",
+      descrtionurl: "",
+      options: [],
+      level: 1,
+      isPublished: true,
+      state: "ACTIVE",
+      status: "APPROVED",
+      available: "FREE",
+      descriptionfileInfo: {},
+    };
     let modifiedData = [...optionData];
     optionData.map((opt, index) => {
       const file = new File([opt.data], "HARDCODEDFILENAME.html", {
@@ -105,8 +104,12 @@ export function Question(props) {
       ],
     }).then((res) => {
       console.log("Created content", res);
-      //resetData();
+      resetData();
     });
+  };
+  const resetData = () => {
+    setTitle("");
+    setQuestionContent("");
   };
   const getComponent = () => {
     console.log("activeItem", activeItem);
@@ -122,8 +125,6 @@ export function Question(props) {
       case "Options":
         return (
           <Options
-            questionObj={questionObj}
-            setQuestionObj={setQuestionObj}
             questionType={questionType}
             optionData={optionData}
             setOptionData={setOptionData}
@@ -247,12 +248,6 @@ export function Question(props) {
           icon="pi pi-check"
           onClick={() => {
             uploadFiles();
-            console.log(
-              "SAVING OPTION DATA",
-              optionData,
-              "questionObj",
-              questionObj
-            );
           }}
         />
         <Button
