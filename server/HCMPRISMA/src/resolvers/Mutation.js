@@ -1,32 +1,12 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 const path = require("path");
 
-import getUserId from '../utils/getUserId'
-import singleUpload from './files/singlefileupload'
-import {UserMutationFunction} from './users/UserMutationFunction'
-import {PostMutationFunctions} from './posts/PostMutationFunctions'
-import {CommentsMutationFunction} from './comments/CommentsMutationFunction'
-import {AdminMutation} from './administration/adminMutation'
-import {subjectSubs} from './profiles/profileMutation'
-import {educationMutation} from './education/educationmutation'
+import getUserId from "../utils/getUserId";
+import { AdminMutation } from "./administration/AdminMutation";
 const Mutation = {
-    /** Administrator mutations */
-    ...AdminMutation,
-    /** Users */
-    ...UserMutationFunction,
-    /** Posts  and comments*/
-    ...PostMutationFunctions,
-    ...CommentsMutationFunction,
-    /** Subject Subscription  */
-    ...subjectSubs,
-    /** Education */
-    ...educationMutation
+  /** Administrator mutations */
+  ...AdminMutation,
+};
 
-}
-
-
-
-
-
-export { Mutation as default }
+export { Mutation as default };

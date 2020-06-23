@@ -1,48 +1,53 @@
 type Organization {
   id: ID! @id
-  name: String!
-  logo: String
-  color: String
-  description: String
-  author: [User!]! @relation(name: "UserToOrg", onDelete: CASCADE)
-  suborgs: [Suborg!]! @relation(name: "SuborgToOrg", onDelete: CASCADE)
-  orgRoles: [Role!]! @relation(name: "RoleToOrg", onDelete: CASCADE)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
+  organization_name: String!
+  organization_description: String
+  organization_logo: String
+  organization_size: Int
+  organization_type: String
+  organization_website: String
+  sub_organizations: [Sub_Organization!]!
+    @relation(name: "SuborgToOrg", onDelete: CASCADE)
+  organization_created_at: DateTime! @updatedAt
+  organization_updated_at: DateTime! @createdAt
 }
-type Suborg {
+type Sub_Organization {
   id: ID! @id
-  name: String!
-  description: String
-  author: [User!]! @relation(name: "UserToSubOrg", onDelete: CASCADE)
-  org: Organization! @relation(name: "SuborgToOrg", onDelete: SET_NULL)
-  userGroups: [Group!]! @relation(name: "GroupToSuborg", onDelete: CASCADE)
-  suborgRoles: [Role!]! @relation(name: "RoleToSubOrg", onDelete: CASCADE)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
+  sub_organization_name: String!
+  sub_organization_description: String
+  sub_organization_logo: String
+  sub_organization_type: String
+  sub_organization_size: Int
+  sub_organization_website: String
+  organization: Organization! @relation(name: "SuborgToOrg", onDelete: SET_NULL)
+  groups: [Group!]! @relation(name: "GroupToSuborg", onDelete: CASCADE)
+  sub_organization_created_at: DateTime! @updatedAt
+  sub_organization_updated_at: DateTime! @createdAt
 }
 
 type Group {
   id: ID! @id
-  name: String!
-  description: String
-  suborgid: Suborg! @relation(name: "GroupToSuborg", onDelete: SET_NULL)
-  subgroups: [SubGroup!]! @relation(name: "SubGroupToGroup", onDelete: CASCADE)
-
-  groupRoles: [Role!]! @relation(name: "RoleToGroup", onDelete: CASCADE)
-  subjects: [Subject!]! @relation(name: "SubjectToGroup", onDelete: CASCADE)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
+  group_name: String!
+  group_logo: String
+  group_size: Int
+  group_description: String
+  group_type: String
+  sub_organization: Sub_Organization!
+    @relation(name: "GroupToSuborg", onDelete: SET_NULL)
+  sub_groups: [Sub_Group!]!
+    @relation(name: "SubGroupToGroup", onDelete: CASCADE)
+  group_created_at: DateTime! @createdAt
+  group_updated_at: DateTime! @updatedAt
 }
 
-type SubGroup {
+type Sub_Group {
   id: ID! @id
-  name: String!
-  description: String
-  groupid: Group! @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
-  subgroupRoles: [Role!]! @relation(name: "RoleToSubGroup", onDelete: CASCADE)
-  subjects: [Subject!]! @relation(name: "SubjectToSubGroup", onDelete: CASCADE)
-  medium: [Medium!]! @relation(name: "MediumToSubGroup", onDelete: CASCADE)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
+  sub_group_name: String!
+  sub_group_logo: String
+  sub_group_size: Int
+  sub_group_description: String
+  sub_group_type: String
+  group: Group! @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
+  sub_group_created_at: DateTime! @createdAt
+  subb_group_updated_at: DateTime! @updatedAt
 }

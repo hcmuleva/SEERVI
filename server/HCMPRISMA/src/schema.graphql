@@ -1,21 +1,5 @@
 # import Query.*, Mutation.* from "graphql/administration/administration.graphql"
-# import Query.*, Mutation.* from "graphql/administration/role.graphql"
-# import Query.*, Mutation.* from "graphql/administration/userrole.graphql"
-# import Query.*, Mutation.* from "graphql/users/posts.graphql"
-# import Query.*, Mutation.* from "graphql/users/medium.graphql"
-# import Query.*, Mutation.* from "graphql/users/users.graphql"
-# import Query.*, Mutation.* from "graphql/profiles/mysubscription.graphql"
-# import Query.*, Mutation.* from "graphql/profiles/profiles.graphql"
-# import Query.*, Mutation.* from "graphql/users/comments.graphql"
-# import Query.*, Mutation.* from "graphql/education/std.graphql"
-# import Query.*, Mutation.* from "graphql/education/unit.graphql"
-# import Query.*, Mutation.* from "graphql/education/topic.graphql"
-# import Query.*, Mutation.* from "graphql/education/content.graphql"
-# import Query.*, Mutation.* from "graphql/education/question.graphql"
-# import Query.*, Mutation.* from "graphql/education/exam.graphql"
-# import Query.*, Mutation.* from "graphql/education/subject.graphql"
-# import Query.*, Mutation.* from "graphql/education/example.graphql"
-# import Subscription.* from "graphql/users/subscriptions.graphql"
+
 # import * from "generated/prisma.graphql"
 
 scalar Upload

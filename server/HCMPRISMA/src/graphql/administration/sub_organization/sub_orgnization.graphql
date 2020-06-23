@@ -1,0 +1,37 @@
+type Query {
+  getAllOrganization: [Organization!]!
+  getOrganizationById(id: ID!): Organization!
+}
+type Mutation {
+  createOrganization(data: CreateOrganizationInput): Organization!
+  deleteOrganization(id: ID!): Organization!
+  updateOrganization(id: ID!, data: UpdateOrganizationInpput): Organization!
+}
+type Organization {
+  id: ID!
+  organization_name: String!
+  organization_description: String
+  organization_logo: String
+  organization_size: Int
+  organization_type: String
+  organization_website: String
+  sub_organizations: [Sub_Organization!]!
+}
+
+input CreateOrganizationInput {
+  organization_name: String!
+  organization_description: String
+  organization_logo: String
+  organization_size: Int
+  organization_type: String
+  organization_website: String
+}
+
+input UpdateOrganizationInpput {
+  organization_name: String
+  organization_description: String
+  organization_logo: String
+  organization_size: Int
+  organization_type: String
+  organization_website: String
+}
