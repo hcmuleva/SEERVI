@@ -6,10 +6,10 @@ import {
   DELETE_ORGANIZATION,
   UPDATE_ORGANIZATION,
 } from "./mutation/orgmutation.js";
-import organizationSeedData, {
+import seedDatabase, {
   organization_1,
-  organization_2,
-  organization_3,
+  sub_organization_1,
+  group_1,
 } from "../../seedData/admin/organization";
 
 import {
@@ -19,7 +19,9 @@ import {
 import { onError } from "apollo-link-error";
 
 const client = getClient();
-beforeAll(organizationSeedData);
+beforeAll(() => {
+  seedDatabase();
+});
 /**
  * org tests
  *  @group regression

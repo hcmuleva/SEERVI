@@ -32,6 +32,7 @@ type Group {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_organization: Sub_Organization!
   sub_groups(where: Sub_GroupWhereInput, orderBy: Sub_GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sub_Group!]
   group_created_at: DateTime!
@@ -51,6 +52,7 @@ input GroupCreateInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_organization: Sub_OrganizationCreateOneWithoutGroupsInput!
   sub_groups: Sub_GroupCreateManyWithoutGroupInput
 }
@@ -72,6 +74,7 @@ input GroupCreateWithoutSub_groupsInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_organization: Sub_OrganizationCreateOneWithoutGroupsInput!
 }
 
@@ -82,6 +85,7 @@ input GroupCreateWithoutSub_organizationInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_groups: Sub_GroupCreateManyWithoutGroupInput
 }
 
@@ -103,6 +107,8 @@ enum GroupOrderByInput {
   group_description_DESC
   group_type_ASC
   group_type_DESC
+  group_website_ASC
+  group_website_DESC
   group_created_at_ASC
   group_created_at_DESC
   group_updated_at_ASC
@@ -116,6 +122,7 @@ type GroupPreviousValues {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   group_created_at: DateTime!
   group_updated_at: DateTime!
 }
@@ -199,6 +206,20 @@ input GroupScalarWhereInput {
   group_type_not_starts_with: String
   group_type_ends_with: String
   group_type_not_ends_with: String
+  group_website: String
+  group_website_not: String
+  group_website_in: [String!]
+  group_website_not_in: [String!]
+  group_website_lt: String
+  group_website_lte: String
+  group_website_gt: String
+  group_website_gte: String
+  group_website_contains: String
+  group_website_not_contains: String
+  group_website_starts_with: String
+  group_website_not_starts_with: String
+  group_website_ends_with: String
+  group_website_not_ends_with: String
   group_created_at: DateTime
   group_created_at_not: DateTime
   group_created_at_in: [DateTime!]
@@ -244,6 +265,7 @@ input GroupUpdateInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_organization: Sub_OrganizationUpdateOneRequiredWithoutGroupsInput
   sub_groups: Sub_GroupUpdateManyWithoutGroupInput
 }
@@ -254,6 +276,7 @@ input GroupUpdateManyDataInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
 }
 
 input GroupUpdateManyMutationInput {
@@ -262,6 +285,7 @@ input GroupUpdateManyMutationInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
 }
 
 input GroupUpdateManyWithoutSub_organizationInput {
@@ -294,6 +318,7 @@ input GroupUpdateWithoutSub_groupsDataInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_organization: Sub_OrganizationUpdateOneRequiredWithoutGroupsInput
 }
 
@@ -303,6 +328,7 @@ input GroupUpdateWithoutSub_organizationDataInput {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_groups: Sub_GroupUpdateManyWithoutGroupInput
 }
 
@@ -401,6 +427,20 @@ input GroupWhereInput {
   group_type_not_starts_with: String
   group_type_ends_with: String
   group_type_not_ends_with: String
+  group_website: String
+  group_website_not: String
+  group_website_in: [String!]
+  group_website_not_in: [String!]
+  group_website_lt: String
+  group_website_lte: String
+  group_website_gt: String
+  group_website_gte: String
+  group_website_contains: String
+  group_website_not_contains: String
+  group_website_starts_with: String
+  group_website_not_starts_with: String
+  group_website_ends_with: String
+  group_website_not_ends_with: String
   sub_organization: Sub_OrganizationWhereInput
   sub_groups_every: Sub_GroupWhereInput
   sub_groups_some: Sub_GroupWhereInput
@@ -761,6 +801,7 @@ type Sub_Group {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
   group: Group!
   sub_group_created_at: DateTime!
   subb_group_updated_at: DateTime!
@@ -779,6 +820,7 @@ input Sub_GroupCreateInput {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
   group: GroupCreateOneWithoutSub_groupsInput!
 }
 
@@ -794,6 +836,7 @@ input Sub_GroupCreateWithoutGroupInput {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
 }
 
 type Sub_GroupEdge {
@@ -814,6 +857,8 @@ enum Sub_GroupOrderByInput {
   sub_group_description_DESC
   sub_group_type_ASC
   sub_group_type_DESC
+  sub_group_website_ASC
+  sub_group_website_DESC
   sub_group_created_at_ASC
   sub_group_created_at_DESC
   subb_group_updated_at_ASC
@@ -827,6 +872,7 @@ type Sub_GroupPreviousValues {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
   sub_group_created_at: DateTime!
   subb_group_updated_at: DateTime!
 }
@@ -910,6 +956,20 @@ input Sub_GroupScalarWhereInput {
   sub_group_type_not_starts_with: String
   sub_group_type_ends_with: String
   sub_group_type_not_ends_with: String
+  sub_group_website: String
+  sub_group_website_not: String
+  sub_group_website_in: [String!]
+  sub_group_website_not_in: [String!]
+  sub_group_website_lt: String
+  sub_group_website_lte: String
+  sub_group_website_gt: String
+  sub_group_website_gte: String
+  sub_group_website_contains: String
+  sub_group_website_not_contains: String
+  sub_group_website_starts_with: String
+  sub_group_website_not_starts_with: String
+  sub_group_website_ends_with: String
+  sub_group_website_not_ends_with: String
   sub_group_created_at: DateTime
   sub_group_created_at_not: DateTime
   sub_group_created_at_in: [DateTime!]
@@ -955,6 +1015,7 @@ input Sub_GroupUpdateInput {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
   group: GroupUpdateOneRequiredWithoutSub_groupsInput
 }
 
@@ -964,6 +1025,7 @@ input Sub_GroupUpdateManyDataInput {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
 }
 
 input Sub_GroupUpdateManyMutationInput {
@@ -972,6 +1034,7 @@ input Sub_GroupUpdateManyMutationInput {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
 }
 
 input Sub_GroupUpdateManyWithoutGroupInput {
@@ -997,6 +1060,7 @@ input Sub_GroupUpdateWithoutGroupDataInput {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
 }
 
 input Sub_GroupUpdateWithWhereUniqueWithoutGroupInput {
@@ -1089,6 +1153,20 @@ input Sub_GroupWhereInput {
   sub_group_type_not_starts_with: String
   sub_group_type_ends_with: String
   sub_group_type_not_ends_with: String
+  sub_group_website: String
+  sub_group_website_not: String
+  sub_group_website_in: [String!]
+  sub_group_website_not_in: [String!]
+  sub_group_website_lt: String
+  sub_group_website_lte: String
+  sub_group_website_gt: String
+  sub_group_website_gte: String
+  sub_group_website_contains: String
+  sub_group_website_not_contains: String
+  sub_group_website_starts_with: String
+  sub_group_website_not_starts_with: String
+  sub_group_website_ends_with: String
+  sub_group_website_not_ends_with: String
   group: GroupWhereInput
   sub_group_created_at: DateTime
   sub_group_created_at_not: DateTime
@@ -1123,7 +1201,6 @@ type Sub_Organization {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   organization: Organization!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   sub_organization_created_at: DateTime!
@@ -1144,7 +1221,6 @@ input Sub_OrganizationCreateInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   organization: OrganizationCreateOneWithoutSub_organizationsInput!
   groups: GroupCreateManyWithoutSub_organizationInput
 }
@@ -1167,7 +1243,6 @@ input Sub_OrganizationCreateWithoutGroupsInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   organization: OrganizationCreateOneWithoutSub_organizationsInput!
 }
 
@@ -1179,7 +1254,6 @@ input Sub_OrganizationCreateWithoutOrganizationInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   groups: GroupCreateManyWithoutSub_organizationInput
 }
 
@@ -1203,8 +1277,6 @@ enum Sub_OrganizationOrderByInput {
   sub_organization_size_DESC
   sub_organization_website_ASC
   sub_organization_website_DESC
-  tbd_ASC
-  tbd_DESC
   sub_organization_created_at_ASC
   sub_organization_created_at_DESC
   sub_organization_updated_at_ASC
@@ -1219,7 +1291,6 @@ type Sub_OrganizationPreviousValues {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   sub_organization_created_at: DateTime!
   sub_organization_updated_at: DateTime!
 }
@@ -1317,20 +1388,6 @@ input Sub_OrganizationScalarWhereInput {
   sub_organization_website_not_starts_with: String
   sub_organization_website_ends_with: String
   sub_organization_website_not_ends_with: String
-  tbd: String
-  tbd_not: String
-  tbd_in: [String!]
-  tbd_not_in: [String!]
-  tbd_lt: String
-  tbd_lte: String
-  tbd_gt: String
-  tbd_gte: String
-  tbd_contains: String
-  tbd_not_contains: String
-  tbd_starts_with: String
-  tbd_not_starts_with: String
-  tbd_ends_with: String
-  tbd_not_ends_with: String
   sub_organization_created_at: DateTime
   sub_organization_created_at_not: DateTime
   sub_organization_created_at_in: [DateTime!]
@@ -1377,7 +1434,6 @@ input Sub_OrganizationUpdateInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   organization: OrganizationUpdateOneRequiredWithoutSub_organizationsInput
   groups: GroupUpdateManyWithoutSub_organizationInput
 }
@@ -1389,7 +1445,6 @@ input Sub_OrganizationUpdateManyDataInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
 }
 
 input Sub_OrganizationUpdateManyMutationInput {
@@ -1399,7 +1454,6 @@ input Sub_OrganizationUpdateManyMutationInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
 }
 
 input Sub_OrganizationUpdateManyWithoutOrganizationInput {
@@ -1433,7 +1487,6 @@ input Sub_OrganizationUpdateWithoutGroupsDataInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   organization: OrganizationUpdateOneRequiredWithoutSub_organizationsInput
 }
 
@@ -1444,7 +1497,6 @@ input Sub_OrganizationUpdateWithoutOrganizationDataInput {
   sub_organization_type: String
   sub_organization_size: Int
   sub_organization_website: String
-  tbd: String
   groups: GroupUpdateManyWithoutSub_organizationInput
 }
 
@@ -1557,20 +1609,6 @@ input Sub_OrganizationWhereInput {
   sub_organization_website_not_starts_with: String
   sub_organization_website_ends_with: String
   sub_organization_website_not_ends_with: String
-  tbd: String
-  tbd_not: String
-  tbd_in: [String!]
-  tbd_not_in: [String!]
-  tbd_lt: String
-  tbd_lte: String
-  tbd_gt: String
-  tbd_gte: String
-  tbd_contains: String
-  tbd_not_contains: String
-  tbd_starts_with: String
-  tbd_not_starts_with: String
-  tbd_ends_with: String
-  tbd_not_ends_with: String
   organization: OrganizationWhereInput
   groups_every: GroupWhereInput
   groups_some: GroupWhereInput

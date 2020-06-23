@@ -7,7 +7,7 @@ const cleanupData = async () => {
   console.log("\n *****CLEANING BOTH ORGS and SUBORGS from Global setpup\n");
   await prisma.mutation.deleteManyOrganizations();
   // console.log("\n*****ORG DELETED*****\n");
-  // await prisma.mutation.deleteManySuborgs();
+  await prisma.mutation.deleteManySub_Organizations();
   // console.log("\n*****SUBORG DELETED*****\n");
   // await prisma.mutation.deleteManyGroups();
   // console.log("\n*****GROUP DELETED*****\n");

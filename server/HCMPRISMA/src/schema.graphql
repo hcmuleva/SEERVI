@@ -1,5 +1,7 @@
 # import Query.*, Mutation.* from "graphql/administration/orgnization/orgnization.graphql"
 # import Query.*, Mutation.* from "graphql/administration/sub_organization/sub_orgnization.graphql"
+# import Query.*, Mutation.* from "graphql/administration/group/group.graphql"
+# import Query.*, Mutation.* from "graphql/administration/sub_group/sub_group.graphql"
 # import * from "generated/prisma.graphql"
 
 scalar Upload

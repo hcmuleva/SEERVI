@@ -1,0 +1,38 @@
+type Query {
+  getAllSub_Group: [Sub_Group!]!
+  getSub_GroupById(id: ID!): Sub_Group!
+}
+type Mutation {
+  createSub_Group(data: CreateSubGroupInput): Sub_Group!
+  deleteSub_Group(id: ID!): Sub_Group!
+  updateSub_Group(id: ID!, data: UpdateSubGroupInpput): Sub_Group!
+}
+type Sub_Group {
+  id: ID!
+  sub_group_name: String!
+  sub_group_description: String
+  sub_group_logo: String
+  sub_group_size: Int
+  sub_group_type: String
+  sub_group_website: String
+  group: Group!
+}
+
+input CreateSubGroupInput {
+  sub_group_name: String!
+  sub_group_description: String
+  sub_group_logo: String
+  sub_group_size: Int
+  sub_group_type: String
+  sub_group_website: String
+  group: String!
+}
+
+input UpdateSubGroupInpput {
+  sub_group_name: String
+  sub_group_description: String
+  sub_group_logo: String
+  sub_group_size: Int
+  sub_group_type: String
+  sub_group_website: String
+}

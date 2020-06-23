@@ -32,6 +32,7 @@ type Group {
   group_size: Int
   group_description: String
   group_type: String
+  group_website: String
   sub_organization: Sub_Organization!
     @relation(name: "GroupToSuborg", onDelete: SET_NULL)
   sub_groups: [Sub_Group!]!
@@ -47,6 +48,7 @@ type Sub_Group {
   sub_group_size: Int
   sub_group_description: String
   sub_group_type: String
+  sub_group_website: String
   group: Group! @relation(name: "SubGroupToGroup", onDelete: SET_NULL)
   sub_group_created_at: DateTime! @createdAt
   subb_group_updated_at: DateTime! @updatedAt

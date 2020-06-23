@@ -26,7 +26,7 @@
     "unmatched": 0,
     "updated": 0
   },
-  "startTime": 1592914716099,
+  "startTime": 1592930805720,
   "success": false,
   "testResults": [
     {
@@ -37,8 +37,8 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1592914722438,
-        "start": 1592914717649
+        "end": 1592930808893,
+        "start": 1592930806765
       },
       "skipped": false,
       "snapshot": {
@@ -56,7 +56,7 @@
           "ancestorTitles": [
             "Org Create Test "
           ],
-          "duration": 148,
+          "duration": 137,
           "failureMessages": [],
           "fullName": "Org Create Test  create Org Positive Case",
           "location": null,
@@ -68,7 +68,7 @@
           "ancestorTitles": [
             "Org Read, uppdate and Delete Test"
           ],
-          "duration": 79,
+          "duration": 40,
           "failureMessages": [],
           "fullName": "Org Read, uppdate and Delete Test Read Org Positive Case",
           "location": null,
@@ -80,7 +80,7 @@
           "ancestorTitles": [
             "Org Read, uppdate and Delete Test"
           ],
-          "duration": 62,
+          "duration": 27,
           "failureMessages": [],
           "fullName": "Org Read, uppdate and Delete Test GetOrganization byId Positive Case",
           "location": null,
@@ -92,7 +92,7 @@
           "ancestorTitles": [
             "Org Read, uppdate and Delete Test"
           ],
-          "duration": 149,
+          "duration": 75,
           "failureMessages": [],
           "fullName": "Org Read, uppdate and Delete Test UpdateOrganization byId Positive Case",
           "location": null,

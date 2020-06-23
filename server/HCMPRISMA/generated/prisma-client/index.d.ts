@@ -247,8 +247,6 @@ export type Sub_OrganizationOrderByInput =
   | "sub_organization_size_DESC"
   | "sub_organization_website_ASC"
   | "sub_organization_website_DESC"
-  | "tbd_ASC"
-  | "tbd_DESC"
   | "sub_organization_created_at_ASC"
   | "sub_organization_created_at_DESC"
   | "sub_organization_updated_at_ASC"
@@ -267,6 +265,8 @@ export type GroupOrderByInput =
   | "group_description_DESC"
   | "group_type_ASC"
   | "group_type_DESC"
+  | "group_website_ASC"
+  | "group_website_DESC"
   | "group_created_at_ASC"
   | "group_created_at_DESC"
   | "group_updated_at_ASC"
@@ -285,6 +285,8 @@ export type Sub_GroupOrderByInput =
   | "sub_group_description_DESC"
   | "sub_group_type_ASC"
   | "sub_group_type_DESC"
+  | "sub_group_website_ASC"
+  | "sub_group_website_DESC"
   | "sub_group_created_at_ASC"
   | "sub_group_created_at_DESC"
   | "subb_group_updated_at_ASC"
@@ -409,20 +411,6 @@ export interface Sub_OrganizationWhereInput {
   sub_organization_website_not_starts_with?: Maybe<String>;
   sub_organization_website_ends_with?: Maybe<String>;
   sub_organization_website_not_ends_with?: Maybe<String>;
-  tbd?: Maybe<String>;
-  tbd_not?: Maybe<String>;
-  tbd_in?: Maybe<String[] | String>;
-  tbd_not_in?: Maybe<String[] | String>;
-  tbd_lt?: Maybe<String>;
-  tbd_lte?: Maybe<String>;
-  tbd_gt?: Maybe<String>;
-  tbd_gte?: Maybe<String>;
-  tbd_contains?: Maybe<String>;
-  tbd_not_contains?: Maybe<String>;
-  tbd_starts_with?: Maybe<String>;
-  tbd_not_starts_with?: Maybe<String>;
-  tbd_ends_with?: Maybe<String>;
-  tbd_not_ends_with?: Maybe<String>;
   organization?: Maybe<OrganizationWhereInput>;
   groups_every?: Maybe<GroupWhereInput>;
   groups_some?: Maybe<GroupWhereInput>;
@@ -644,6 +632,20 @@ export interface GroupWhereInput {
   group_type_not_starts_with?: Maybe<String>;
   group_type_ends_with?: Maybe<String>;
   group_type_not_ends_with?: Maybe<String>;
+  group_website?: Maybe<String>;
+  group_website_not?: Maybe<String>;
+  group_website_in?: Maybe<String[] | String>;
+  group_website_not_in?: Maybe<String[] | String>;
+  group_website_lt?: Maybe<String>;
+  group_website_lte?: Maybe<String>;
+  group_website_gt?: Maybe<String>;
+  group_website_gte?: Maybe<String>;
+  group_website_contains?: Maybe<String>;
+  group_website_not_contains?: Maybe<String>;
+  group_website_starts_with?: Maybe<String>;
+  group_website_not_starts_with?: Maybe<String>;
+  group_website_ends_with?: Maybe<String>;
+  group_website_not_ends_with?: Maybe<String>;
   sub_organization?: Maybe<Sub_OrganizationWhereInput>;
   sub_groups_every?: Maybe<Sub_GroupWhereInput>;
   sub_groups_some?: Maybe<Sub_GroupWhereInput>;
@@ -748,6 +750,20 @@ export interface Sub_GroupWhereInput {
   sub_group_type_not_starts_with?: Maybe<String>;
   sub_group_type_ends_with?: Maybe<String>;
   sub_group_type_not_ends_with?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
+  sub_group_website_not?: Maybe<String>;
+  sub_group_website_in?: Maybe<String[] | String>;
+  sub_group_website_not_in?: Maybe<String[] | String>;
+  sub_group_website_lt?: Maybe<String>;
+  sub_group_website_lte?: Maybe<String>;
+  sub_group_website_gt?: Maybe<String>;
+  sub_group_website_gte?: Maybe<String>;
+  sub_group_website_contains?: Maybe<String>;
+  sub_group_website_not_contains?: Maybe<String>;
+  sub_group_website_starts_with?: Maybe<String>;
+  sub_group_website_not_starts_with?: Maybe<String>;
+  sub_group_website_ends_with?: Maybe<String>;
+  sub_group_website_not_ends_with?: Maybe<String>;
   group?: Maybe<GroupWhereInput>;
   sub_group_created_at?: Maybe<DateTimeInput>;
   sub_group_created_at_not?: Maybe<DateTimeInput>;
@@ -789,6 +805,7 @@ export interface GroupCreateInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
   sub_organization: Sub_OrganizationCreateOneWithoutGroupsInput;
   sub_groups?: Maybe<Sub_GroupCreateManyWithoutGroupInput>;
 }
@@ -806,7 +823,6 @@ export interface Sub_OrganizationCreateWithoutGroupsInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
   organization: OrganizationCreateOneWithoutSub_organizationsInput;
 }
 
@@ -839,6 +855,7 @@ export interface Sub_GroupCreateWithoutGroupInput {
   sub_group_size?: Maybe<Int>;
   sub_group_description?: Maybe<String>;
   sub_group_type?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
 }
 
 export interface GroupUpdateInput {
@@ -847,6 +864,7 @@ export interface GroupUpdateInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
   sub_organization?: Maybe<Sub_OrganizationUpdateOneRequiredWithoutGroupsInput>;
   sub_groups?: Maybe<Sub_GroupUpdateManyWithoutGroupInput>;
 }
@@ -865,7 +883,6 @@ export interface Sub_OrganizationUpdateWithoutGroupsDataInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
   organization?: Maybe<
     OrganizationUpdateOneRequiredWithoutSub_organizationsInput
   >;
@@ -931,6 +948,7 @@ export interface Sub_GroupUpdateWithoutGroupDataInput {
   sub_group_size?: Maybe<Int>;
   sub_group_description?: Maybe<String>;
   sub_group_type?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
 }
 
 export interface Sub_GroupUpsertWithWhereUniqueWithoutGroupInput {
@@ -1018,6 +1036,20 @@ export interface Sub_GroupScalarWhereInput {
   sub_group_type_not_starts_with?: Maybe<String>;
   sub_group_type_ends_with?: Maybe<String>;
   sub_group_type_not_ends_with?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
+  sub_group_website_not?: Maybe<String>;
+  sub_group_website_in?: Maybe<String[] | String>;
+  sub_group_website_not_in?: Maybe<String[] | String>;
+  sub_group_website_lt?: Maybe<String>;
+  sub_group_website_lte?: Maybe<String>;
+  sub_group_website_gt?: Maybe<String>;
+  sub_group_website_gte?: Maybe<String>;
+  sub_group_website_contains?: Maybe<String>;
+  sub_group_website_not_contains?: Maybe<String>;
+  sub_group_website_starts_with?: Maybe<String>;
+  sub_group_website_not_starts_with?: Maybe<String>;
+  sub_group_website_ends_with?: Maybe<String>;
+  sub_group_website_not_ends_with?: Maybe<String>;
   sub_group_created_at?: Maybe<DateTimeInput>;
   sub_group_created_at_not?: Maybe<DateTimeInput>;
   sub_group_created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1050,6 +1082,7 @@ export interface Sub_GroupUpdateManyDataInput {
   sub_group_size?: Maybe<Int>;
   sub_group_description?: Maybe<String>;
   sub_group_type?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
 }
 
 export interface GroupUpdateManyMutationInput {
@@ -1058,6 +1091,7 @@ export interface GroupUpdateManyMutationInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
 }
 
 export interface OrganizationCreateInput {
@@ -1089,7 +1123,6 @@ export interface Sub_OrganizationCreateWithoutOrganizationInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
   groups?: Maybe<GroupCreateManyWithoutSub_organizationInput>;
 }
 
@@ -1108,6 +1141,7 @@ export interface GroupCreateWithoutSub_organizationInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
   sub_groups?: Maybe<Sub_GroupCreateManyWithoutGroupInput>;
 }
 
@@ -1167,7 +1201,6 @@ export interface Sub_OrganizationUpdateWithoutOrganizationDataInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
   groups?: Maybe<GroupUpdateManyWithoutSub_organizationInput>;
 }
 
@@ -1205,6 +1238,7 @@ export interface GroupUpdateWithoutSub_organizationDataInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
   sub_groups?: Maybe<Sub_GroupUpdateManyWithoutGroupInput>;
 }
 
@@ -1293,6 +1327,20 @@ export interface GroupScalarWhereInput {
   group_type_not_starts_with?: Maybe<String>;
   group_type_ends_with?: Maybe<String>;
   group_type_not_ends_with?: Maybe<String>;
+  group_website?: Maybe<String>;
+  group_website_not?: Maybe<String>;
+  group_website_in?: Maybe<String[] | String>;
+  group_website_not_in?: Maybe<String[] | String>;
+  group_website_lt?: Maybe<String>;
+  group_website_lte?: Maybe<String>;
+  group_website_gt?: Maybe<String>;
+  group_website_gte?: Maybe<String>;
+  group_website_contains?: Maybe<String>;
+  group_website_not_contains?: Maybe<String>;
+  group_website_starts_with?: Maybe<String>;
+  group_website_not_starts_with?: Maybe<String>;
+  group_website_ends_with?: Maybe<String>;
+  group_website_not_ends_with?: Maybe<String>;
   group_created_at?: Maybe<DateTimeInput>;
   group_created_at_not?: Maybe<DateTimeInput>;
   group_created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1325,6 +1373,7 @@ export interface GroupUpdateManyDataInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
 }
 
 export interface Sub_OrganizationUpsertWithWhereUniqueWithoutOrganizationInput {
@@ -1426,20 +1475,6 @@ export interface Sub_OrganizationScalarWhereInput {
   sub_organization_website_not_starts_with?: Maybe<String>;
   sub_organization_website_ends_with?: Maybe<String>;
   sub_organization_website_not_ends_with?: Maybe<String>;
-  tbd?: Maybe<String>;
-  tbd_not?: Maybe<String>;
-  tbd_in?: Maybe<String[] | String>;
-  tbd_not_in?: Maybe<String[] | String>;
-  tbd_lt?: Maybe<String>;
-  tbd_lte?: Maybe<String>;
-  tbd_gt?: Maybe<String>;
-  tbd_gte?: Maybe<String>;
-  tbd_contains?: Maybe<String>;
-  tbd_not_contains?: Maybe<String>;
-  tbd_starts_with?: Maybe<String>;
-  tbd_not_starts_with?: Maybe<String>;
-  tbd_ends_with?: Maybe<String>;
-  tbd_not_ends_with?: Maybe<String>;
   sub_organization_created_at?: Maybe<DateTimeInput>;
   sub_organization_created_at_not?: Maybe<DateTimeInput>;
   sub_organization_created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1479,7 +1514,6 @@ export interface Sub_OrganizationUpdateManyDataInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
 }
 
 export interface OrganizationUpdateManyMutationInput {
@@ -1498,6 +1532,7 @@ export interface Sub_GroupCreateInput {
   sub_group_size?: Maybe<Int>;
   sub_group_description?: Maybe<String>;
   sub_group_type?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
   group: GroupCreateOneWithoutSub_groupsInput;
 }
 
@@ -1513,6 +1548,7 @@ export interface GroupCreateWithoutSub_groupsInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
   sub_organization: Sub_OrganizationCreateOneWithoutGroupsInput;
 }
 
@@ -1522,6 +1558,7 @@ export interface Sub_GroupUpdateInput {
   sub_group_size?: Maybe<Int>;
   sub_group_description?: Maybe<String>;
   sub_group_type?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
   group?: Maybe<GroupUpdateOneRequiredWithoutSub_groupsInput>;
 }
 
@@ -1538,6 +1575,7 @@ export interface GroupUpdateWithoutSub_groupsDataInput {
   group_size?: Maybe<Int>;
   group_description?: Maybe<String>;
   group_type?: Maybe<String>;
+  group_website?: Maybe<String>;
   sub_organization?: Maybe<Sub_OrganizationUpdateOneRequiredWithoutGroupsInput>;
 }
 
@@ -1552,6 +1590,7 @@ export interface Sub_GroupUpdateManyMutationInput {
   sub_group_size?: Maybe<Int>;
   sub_group_description?: Maybe<String>;
   sub_group_type?: Maybe<String>;
+  sub_group_website?: Maybe<String>;
 }
 
 export interface Sub_OrganizationCreateInput {
@@ -1562,7 +1601,6 @@ export interface Sub_OrganizationCreateInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
   organization: OrganizationCreateOneWithoutSub_organizationsInput;
   groups?: Maybe<GroupCreateManyWithoutSub_organizationInput>;
 }
@@ -1574,7 +1612,6 @@ export interface Sub_OrganizationUpdateInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
   organization?: Maybe<
     OrganizationUpdateOneRequiredWithoutSub_organizationsInput
   >;
@@ -1588,7 +1625,6 @@ export interface Sub_OrganizationUpdateManyMutationInput {
   sub_organization_type?: Maybe<String>;
   sub_organization_size?: Maybe<Int>;
   sub_organization_website?: Maybe<String>;
-  tbd?: Maybe<String>;
 }
 
 export interface GroupSubscriptionWhereInput {
@@ -1667,6 +1703,7 @@ export interface Group {
   group_size?: Int;
   group_description?: String;
   group_type?: String;
+  group_website?: String;
   group_created_at: DateTimeOutput;
   group_updated_at: DateTimeOutput;
 }
@@ -1678,6 +1715,7 @@ export interface GroupPromise extends Promise<Group>, Fragmentable {
   group_size: () => Promise<Int>;
   group_description: () => Promise<String>;
   group_type: () => Promise<String>;
+  group_website: () => Promise<String>;
   sub_organization: <T = Sub_OrganizationPromise>() => T;
   sub_groups: <T = FragmentableArray<Sub_Group>>(args?: {
     where?: Sub_GroupWhereInput;
@@ -1701,6 +1739,7 @@ export interface GroupSubscription
   group_size: () => Promise<AsyncIterator<Int>>;
   group_description: () => Promise<AsyncIterator<String>>;
   group_type: () => Promise<AsyncIterator<String>>;
+  group_website: () => Promise<AsyncIterator<String>>;
   sub_organization: <T = Sub_OrganizationSubscription>() => T;
   sub_groups: <T = Promise<AsyncIterator<Sub_GroupSubscription>>>(args?: {
     where?: Sub_GroupWhereInput;
@@ -1724,6 +1763,7 @@ export interface GroupNullablePromise
   group_size: () => Promise<Int>;
   group_description: () => Promise<String>;
   group_type: () => Promise<String>;
+  group_website: () => Promise<String>;
   sub_organization: <T = Sub_OrganizationPromise>() => T;
   sub_groups: <T = FragmentableArray<Sub_Group>>(args?: {
     where?: Sub_GroupWhereInput;
@@ -1746,7 +1786,6 @@ export interface Sub_Organization {
   sub_organization_type?: String;
   sub_organization_size?: Int;
   sub_organization_website?: String;
-  tbd?: String;
   sub_organization_created_at: DateTimeOutput;
   sub_organization_updated_at: DateTimeOutput;
 }
@@ -1761,7 +1800,6 @@ export interface Sub_OrganizationPromise
   sub_organization_type: () => Promise<String>;
   sub_organization_size: () => Promise<Int>;
   sub_organization_website: () => Promise<String>;
-  tbd: () => Promise<String>;
   organization: <T = OrganizationPromise>() => T;
   groups: <T = FragmentableArray<Group>>(args?: {
     where?: GroupWhereInput;
@@ -1786,7 +1824,6 @@ export interface Sub_OrganizationSubscription
   sub_organization_type: () => Promise<AsyncIterator<String>>;
   sub_organization_size: () => Promise<AsyncIterator<Int>>;
   sub_organization_website: () => Promise<AsyncIterator<String>>;
-  tbd: () => Promise<AsyncIterator<String>>;
   organization: <T = OrganizationSubscription>() => T;
   groups: <T = Promise<AsyncIterator<GroupSubscription>>>(args?: {
     where?: GroupWhereInput;
@@ -1811,7 +1848,6 @@ export interface Sub_OrganizationNullablePromise
   sub_organization_type: () => Promise<String>;
   sub_organization_size: () => Promise<Int>;
   sub_organization_website: () => Promise<String>;
-  tbd: () => Promise<String>;
   organization: <T = OrganizationPromise>() => T;
   groups: <T = FragmentableArray<Group>>(args?: {
     where?: GroupWhereInput;
@@ -1916,6 +1952,7 @@ export interface Sub_Group {
   sub_group_size?: Int;
   sub_group_description?: String;
   sub_group_type?: String;
+  sub_group_website?: String;
   sub_group_created_at: DateTimeOutput;
   subb_group_updated_at: DateTimeOutput;
 }
@@ -1927,6 +1964,7 @@ export interface Sub_GroupPromise extends Promise<Sub_Group>, Fragmentable {
   sub_group_size: () => Promise<Int>;
   sub_group_description: () => Promise<String>;
   sub_group_type: () => Promise<String>;
+  sub_group_website: () => Promise<String>;
   group: <T = GroupPromise>() => T;
   sub_group_created_at: () => Promise<DateTimeOutput>;
   subb_group_updated_at: () => Promise<DateTimeOutput>;
@@ -1941,6 +1979,7 @@ export interface Sub_GroupSubscription
   sub_group_size: () => Promise<AsyncIterator<Int>>;
   sub_group_description: () => Promise<AsyncIterator<String>>;
   sub_group_type: () => Promise<AsyncIterator<String>>;
+  sub_group_website: () => Promise<AsyncIterator<String>>;
   group: <T = GroupSubscription>() => T;
   sub_group_created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
   subb_group_updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -1955,6 +1994,7 @@ export interface Sub_GroupNullablePromise
   sub_group_size: () => Promise<Int>;
   sub_group_description: () => Promise<String>;
   sub_group_type: () => Promise<String>;
+  sub_group_website: () => Promise<String>;
   group: <T = GroupPromise>() => T;
   sub_group_created_at: () => Promise<DateTimeOutput>;
   subb_group_updated_at: () => Promise<DateTimeOutput>;
@@ -2253,6 +2293,7 @@ export interface GroupPreviousValues {
   group_size?: Int;
   group_description?: String;
   group_type?: String;
+  group_website?: String;
   group_created_at: DateTimeOutput;
   group_updated_at: DateTimeOutput;
 }
@@ -2266,6 +2307,7 @@ export interface GroupPreviousValuesPromise
   group_size: () => Promise<Int>;
   group_description: () => Promise<String>;
   group_type: () => Promise<String>;
+  group_website: () => Promise<String>;
   group_created_at: () => Promise<DateTimeOutput>;
   group_updated_at: () => Promise<DateTimeOutput>;
 }
@@ -2279,6 +2321,7 @@ export interface GroupPreviousValuesSubscription
   group_size: () => Promise<AsyncIterator<Int>>;
   group_description: () => Promise<AsyncIterator<String>>;
   group_type: () => Promise<AsyncIterator<String>>;
+  group_website: () => Promise<AsyncIterator<String>>;
   group_created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
   group_updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -2380,6 +2423,7 @@ export interface Sub_GroupPreviousValues {
   sub_group_size?: Int;
   sub_group_description?: String;
   sub_group_type?: String;
+  sub_group_website?: String;
   sub_group_created_at: DateTimeOutput;
   subb_group_updated_at: DateTimeOutput;
 }
@@ -2393,6 +2437,7 @@ export interface Sub_GroupPreviousValuesPromise
   sub_group_size: () => Promise<Int>;
   sub_group_description: () => Promise<String>;
   sub_group_type: () => Promise<String>;
+  sub_group_website: () => Promise<String>;
   sub_group_created_at: () => Promise<DateTimeOutput>;
   subb_group_updated_at: () => Promise<DateTimeOutput>;
 }
@@ -2406,6 +2451,7 @@ export interface Sub_GroupPreviousValuesSubscription
   sub_group_size: () => Promise<AsyncIterator<Int>>;
   sub_group_description: () => Promise<AsyncIterator<String>>;
   sub_group_type: () => Promise<AsyncIterator<String>>;
+  sub_group_website: () => Promise<AsyncIterator<String>>;
   sub_group_created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
   subb_group_updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -2443,7 +2489,6 @@ export interface Sub_OrganizationPreviousValues {
   sub_organization_type?: String;
   sub_organization_size?: Int;
   sub_organization_website?: String;
-  tbd?: String;
   sub_organization_created_at: DateTimeOutput;
   sub_organization_updated_at: DateTimeOutput;
 }
@@ -2458,7 +2503,6 @@ export interface Sub_OrganizationPreviousValuesPromise
   sub_organization_type: () => Promise<String>;
   sub_organization_size: () => Promise<Int>;
   sub_organization_website: () => Promise<String>;
-  tbd: () => Promise<String>;
   sub_organization_created_at: () => Promise<DateTimeOutput>;
   sub_organization_updated_at: () => Promise<DateTimeOutput>;
 }
@@ -2473,7 +2517,6 @@ export interface Sub_OrganizationPreviousValuesSubscription
   sub_organization_type: () => Promise<AsyncIterator<String>>;
   sub_organization_size: () => Promise<AsyncIterator<Int>>;
   sub_organization_website: () => Promise<AsyncIterator<String>>;
-  tbd: () => Promise<AsyncIterator<String>>;
   sub_organization_created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
   sub_organization_updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

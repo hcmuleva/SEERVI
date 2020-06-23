@@ -1,0 +1,38 @@
+type Query {
+  getAllGroup: [Group!]!
+  getGroupById(id: ID!): Group!
+}
+type Mutation {
+  createGroup(data: CreateGroupInput): Group!
+  deleteGroup(id: ID!): Group!
+  updateGroup(id: ID!, data: UpdateGroupInpput): Group!
+}
+type Group {
+  id: ID!
+  group_name: String!
+  group_description: String
+  group_logo: String
+  group_size: Int
+  group_type: String
+  group_website: String
+  sub_organization: Sub_Organization!
+}
+
+input CreateGroupInput {
+  group_name: String!
+  group_description: String
+  group_logo: String
+  group_size: Int
+  group_type: String
+  group_website: String
+  sub_organization: String!
+}
+
+input UpdateGroupInpput {
+  group_name: String
+  group_description: String
+  group_logo: String
+  group_size: Int
+  group_type: String
+  group_website: String
+}
