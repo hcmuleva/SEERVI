@@ -1,8 +1,0 @@
-type Comment {
-  id: ID! @id
-  text: String!
-  author: User! @relation(name: "CommentToUser", onDelete: SET_NULL)
-  post: Post!@relation(name: "CommentToPost", onDelete: SET_NULL)
-  updatedAt:DateTime! @updatedAt
-  createdAt:DateTime! @createdAt
-}

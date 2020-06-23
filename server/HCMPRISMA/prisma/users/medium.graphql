@@ -1,9 +1,0 @@
-type Medium {
-  id: ID! @id
-  name: String!
-  localname:String
-  subgroup:SubGroup     @relation(name: "MediumToSubGroup", onDelete: SET_NULL)
-  subjects: [Subject!]! @relation(name: "SubjectToMedium", onDelete: CASCADE)
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
-}
