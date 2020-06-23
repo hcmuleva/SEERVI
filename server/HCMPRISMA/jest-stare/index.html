@@ -80,7 +80,7 @@
                 <canvas id="test-suites-canvas" width="100" height="100"></canvas>
                 <h2>Test Suites</h2>
                 <div class="list-group">
-                    <p id="test-suites-results" class="list-group-item list-group-item-action">0 passed, 1 total</p>
+                    <p id="test-suites-results" class="list-group-item list-group-item-action">1 passed, 1 total</p>
                 </div>
             </div>
             <!-- /.col-lg-4 -->
@@ -88,7 +88,7 @@
                 <canvas id="tests-canvas" width="100" height="100"></canvas>
                 <h2>Tests</h2>
                 <div class="list-group">
-                    <p id="tests-results" class="list-group-item list-group-item-action">3 passed, 4 total</p>
+                    <p id="tests-results" class="list-group-item list-group-item-action">4 passed, 4 total</p>
                 </div>
             </div>
             <!-- /.col-lg-4 -->
@@ -115,10 +115,10 @@
   &quot;resultJson&quot;: &quot;jest-results.json&quot;
 }</div>
         <div class="d-none" id="test-results">{
-  &quot;numFailedTestSuites&quot;: 1,
-  &quot;numFailedTests&quot;: 1,
-  &quot;numPassedTestSuites&quot;: 0,
-  &quot;numPassedTests&quot;: 3,
+  &quot;numFailedTestSuites&quot;: 0,
+  &quot;numFailedTests&quot;: 0,
+  &quot;numPassedTestSuites&quot;: 1,
+  &quot;numPassedTests&quot;: 4,
   &quot;numPendingTestSuites&quot;: 0,
   &quot;numPendingTests&quot;: 0,
   &quot;numRuntimeErrorTestSuites&quot;: 0,
@@ -142,19 +142,19 @@
     &quot;unmatched&quot;: 0,
     &quot;updated&quot;: 0
   },
-  &quot;startTime&quot;: 1592908062607,
+  &quot;startTime&quot;: 1592914716099,
   &quot;success&quot;: false,
   &quot;testResults&quot;: [
     {
       &quot;leaks&quot;: false,
-      &quot;numFailingTests&quot;: 1,
-      &quot;numPassingTests&quot;: 3,
+      &quot;numFailingTests&quot;: 0,
+      &quot;numPassingTests&quot;: 4,
       &quot;numPendingTests&quot;: 0,
       &quot;numTodoTests&quot;: 0,
       &quot;openHandles&quot;: [],
       &quot;perfStats&quot;: {
-        &quot;end&quot;: 1592908065397,
-        &quot;start&quot;: 1592908063292
+        &quot;end&quot;: 1592914722438,
+        &quot;start&quot;: 1592914717649
       },
       &quot;skipped&quot;: false,
       &quot;snapshot&quot;: {
@@ -172,7 +172,7 @@
           &quot;ancestorTitles&quot;: [
             &quot;Org Create Test &quot;
           ],
-          &quot;duration&quot;: 57,
+          &quot;duration&quot;: 148,
           &quot;failureMessages&quot;: [],
           &quot;fullName&quot;: &quot;Org Create Test  create Org Positive Case&quot;,
           &quot;location&quot;: null,
@@ -184,7 +184,7 @@
           &quot;ancestorTitles&quot;: [
             &quot;Org Read, uppdate and Delete Test&quot;
           ],
-          &quot;duration&quot;: 31,
+          &quot;duration&quot;: 79,
           &quot;failureMessages&quot;: [],
           &quot;fullName&quot;: &quot;Org Read, uppdate and Delete Test Read Org Positive Case&quot;,
           &quot;location&quot;: null,
@@ -196,7 +196,7 @@
           &quot;ancestorTitles&quot;: [
             &quot;Org Read, uppdate and Delete Test&quot;
           ],
-          &quot;duration&quot;: 23,
+          &quot;duration&quot;: 62,
           &quot;failureMessages&quot;: [],
           &quot;fullName&quot;: &quot;Org Read, uppdate and Delete Test GetOrganization byId Positive Case&quot;,
           &quot;location&quot;: null,
@@ -208,18 +208,16 @@
           &quot;ancestorTitles&quot;: [
             &quot;Org Read, uppdate and Delete Test&quot;
           ],
-          &quot;duration&quot;: 62,
-          &quot;failureMessages&quot;: [
-            &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; Object.is equality\u001b[22m\n\nExpected: \u001b[32m\&quot;Updated\u001b[7m1\u001b[27m\&quot;\u001b[39m\nReceived: \u001b[31m\&quot;Updated\&quot;\u001b[39m\n    at _callee4$ (&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;tests&#x2F;administration&#x2F;organization&#x2F;orgnization.test.js:92:65)\n    at tryCatch (&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;node_modules&#x2F;regenerator-runtime&#x2F;runtime.js:45:40)\n    at Generator.invoke [as _invoke] (&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;node_modules&#x2F;regenerator-runtime&#x2F;runtime.js:274:22)\n    at Generator.prototype.&lt;computed&gt; [as next] (&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;node_modules&#x2F;regenerator-runtime&#x2F;runtime.js:97:21)\n    at asyncGeneratorStep (&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;node_modules&#x2F;@babel&#x2F;runtime&#x2F;helpers&#x2F;asyncToGenerator.js:3:24)\n    at _next (&#x2F;Users&#x2F;hmuleva&#x2F;Personal&#x2F;SEERVI&#x2F;server&#x2F;HCMPRISMA&#x2F;node_modules&#x2F;@babel&#x2F;runtime&#x2F;helpers&#x2F;asyncToGenerator.js:25:9)\n    at processTicksAndRejections (internal&#x2F;process&#x2F;task_queues.js:97:5)&quot;
-          ],
+          &quot;duration&quot;: 149,
+          &quot;failureMessages&quot;: [],
           &quot;fullName&quot;: &quot;Org Read, uppdate and Delete Test UpdateOrganization byId Positive Case&quot;,
           &quot;location&quot;: null,
           &quot;numPassingAsserts&quot;: 0,
-          &quot;status&quot;: &quot;failed&quot;,
+          &quot;status&quot;: &quot;passed&quot;,
           &quot;title&quot;: &quot;UpdateOrganization byId Positive Case&quot;
         }
       ],
-      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mOrg Read, uppdate and Delete Test › UpdateOrganization byId Positive Case\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; Object.is equality\u001b[22m\n\n    Expected: \u001b[32m\&quot;Updated\u001b[7m1\u001b[27m\&quot;\u001b[39m\n    Received: \u001b[31m\&quot;Updated\&quot;\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 90 | \u001b[39m    console\u001b[33m.\u001b[39mlog(\u001b[32m\&quot;updateOrg\&quot;\u001b[39m\u001b[33m,\u001b[39m orgId)\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 91 | \u001b[39m    expect(updateOrg\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mupdateOrganization\u001b[33m.\u001b[39mid)\u001b[33m.\u001b[39mtoBe(orgId)\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m\u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 92 | \u001b[39m    expect(updateOrg\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mupdateOrganization\u001b[33m.\u001b[39morganization_name)\u001b[33m.\u001b[39mtoBe(\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m    | \u001b[39m                                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 93 | \u001b[39m      \u001b[32m\&quot;Updated1\&quot;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 94 | \u001b[39m    )\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 95 | \u001b[39m  })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat _callee4$ (\u001b[22m\u001b[2m\u001b[0m\u001b[36mtests&#x2F;administration&#x2F;organization&#x2F;orgnization.test.js\u001b[39m\u001b[0m\u001b[2m:92:65)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat tryCatch (\u001b[22m\u001b[2mnode_modules&#x2F;regenerator-runtime&#x2F;runtime.js\u001b[2m:45:40)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Generator.invoke [as _invoke] (\u001b[22m\u001b[2mnode_modules&#x2F;regenerator-runtime&#x2F;runtime.js\u001b[2m:274:22)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Generator.prototype.&lt;computed&gt; [as next] (\u001b[22m\u001b[2mnode_modules&#x2F;regenerator-runtime&#x2F;runtime.js\u001b[2m:97:21)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat asyncGeneratorStep (\u001b[22m\u001b[2mnode_modules&#x2F;@babel&#x2F;runtime&#x2F;helpers&#x2F;asyncToGenerator.js\u001b[2m:3:24)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat _next (\u001b[22m\u001b[2mnode_modules&#x2F;@babel&#x2F;runtime&#x2F;helpers&#x2F;asyncToGenerator.js\u001b[2m:25:9)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+      &quot;failureMessage&quot;: null
     }
   ],
   &quot;wasInterrupted&quot;: false

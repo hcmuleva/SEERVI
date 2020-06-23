@@ -1,8 +1,8 @@
 {
-  "numFailedTestSuites": 1,
-  "numFailedTests": 1,
-  "numPassedTestSuites": 0,
-  "numPassedTests": 3,
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 4,
   "numPendingTestSuites": 0,
   "numPendingTests": 0,
   "numRuntimeErrorTestSuites": 0,
@@ -26,19 +26,19 @@
     "unmatched": 0,
     "updated": 0
   },
-  "startTime": 1592908062607,
+  "startTime": 1592914716099,
   "success": false,
   "testResults": [
     {
       "leaks": false,
-      "numFailingTests": 1,
-      "numPassingTests": 3,
+      "numFailingTests": 0,
+      "numPassingTests": 4,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1592908065397,
-        "start": 1592908063292
+        "end": 1592914722438,
+        "start": 1592914717649
       },
       "skipped": false,
       "snapshot": {
@@ -56,7 +56,7 @@
           "ancestorTitles": [
             "Org Create Test "
           ],
-          "duration": 57,
+          "duration": 148,
           "failureMessages": [],
           "fullName": "Org Create Test  create Org Positive Case",
           "location": null,
@@ -68,7 +68,7 @@
           "ancestorTitles": [
             "Org Read, uppdate and Delete Test"
           ],
-          "duration": 31,
+          "duration": 79,
           "failureMessages": [],
           "fullName": "Org Read, uppdate and Delete Test Read Org Positive Case",
           "location": null,
@@ -80,7 +80,7 @@
           "ancestorTitles": [
             "Org Read, uppdate and Delete Test"
           ],
-          "duration": 23,
+          "duration": 62,
           "failureMessages": [],
           "fullName": "Org Read, uppdate and Delete Test GetOrganization byId Positive Case",
           "location": null,
@@ -92,18 +92,16 @@
           "ancestorTitles": [
             "Org Read, uppdate and Delete Test"
           ],
-          "duration": 62,
-          "failureMessages": [
-            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"Updated\u001b[7m1\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Updated\"\u001b[39m\n    at _callee4$ (/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/tests/administration/organization/orgnization.test.js:92:65)\n    at tryCatch (/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/node_modules/regenerator-runtime/runtime.js:45:40)\n    at Generator.invoke [as _invoke] (/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/node_modules/regenerator-runtime/runtime.js:274:22)\n    at Generator.prototype.<computed> [as next] (/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/node_modules/regenerator-runtime/runtime.js:97:21)\n    at asyncGeneratorStep (/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:24)\n    at _next (/Users/hmuleva/Personal/SEERVI/server/HCMPRISMA/node_modules/@babel/runtime/helpers/asyncToGenerator.js:25:9)\n    at processTicksAndRejections (internal/process/task_queues.js:97:5)"
-          ],
+          "duration": 149,
+          "failureMessages": [],
           "fullName": "Org Read, uppdate and Delete Test UpdateOrganization byId Positive Case",
           "location": null,
           "numPassingAsserts": 0,
-          "status": "failed",
+          "status": "passed",
           "title": "UpdateOrganization byId Positive Case"
         }
       ],
-      "failureMessage": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mOrg Read, uppdate and Delete Test › UpdateOrganization byId Positive Case\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32m\"Updated\u001b[7m1\u001b[27m\"\u001b[39m\n    Received: \u001b[31m\"Updated\"\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 90 | \u001b[39m    console\u001b[33m.\u001b[39mlog(\u001b[32m\"updateOrg\"\u001b[39m\u001b[33m,\u001b[39m orgId)\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 91 | \u001b[39m    expect(updateOrg\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mupdateOrganization\u001b[33m.\u001b[39mid)\u001b[33m.\u001b[39mtoBe(orgId)\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m 92 | \u001b[39m    expect(updateOrg\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mupdateOrganization\u001b[33m.\u001b[39morganization_name)\u001b[33m.\u001b[39mtoBe(\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m    | \u001b[39m                                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 93 | \u001b[39m      \u001b[32m\"Updated1\"\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 94 | \u001b[39m    )\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 95 | \u001b[39m  })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat _callee4$ (\u001b[22m\u001b[2m\u001b[0m\u001b[36mtests/administration/organization/orgnization.test.js\u001b[39m\u001b[0m\u001b[2m:92:65)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat tryCatch (\u001b[22m\u001b[2mnode_modules/regenerator-runtime/runtime.js\u001b[2m:45:40)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Generator.invoke [as _invoke] (\u001b[22m\u001b[2mnode_modules/regenerator-runtime/runtime.js\u001b[2m:274:22)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Generator.prototype.<computed> [as next] (\u001b[22m\u001b[2mnode_modules/regenerator-runtime/runtime.js\u001b[2m:97:21)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat asyncGeneratorStep (\u001b[22m\u001b[2mnode_modules/@babel/runtime/helpers/asyncToGenerator.js\u001b[2m:3:24)\u001b[22m\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat _next (\u001b[22m\u001b[2mnode_modules/@babel/runtime/helpers/asyncToGenerator.js\u001b[2m:25:9)\u001b[22m\u001b[2m\u001b[22m\n"
+      "failureMessage": null
     }
   ],
   "wasInterrupted": false

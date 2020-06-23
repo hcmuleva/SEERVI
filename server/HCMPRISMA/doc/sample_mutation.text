@@ -1,0 +1,90 @@
+**************************** Organization****************************
+
+# mutation{
+# 	createOrganization(data:{organization_name:"changed",organization_size:12,
+# 		organization_logo:"dummylogo",organization_website:"dwebsite",organization_type:"Test",
+# 		organization_description:"Test"}){
+# 			id
+		
+# 			organization_name
+# 				organization_size
+# 		organization_logo
+# 		organization_website
+# 		organization_type
+
+# 		organization_description
+# 		organization_created_at
+# 		organization_updated_at
+# 	}
+# }
+
+# query{
+# 	getAllOrganization{
+# 		id
+# 		organization_name
+# 	}
+# }
+
+# mutation{
+# 	updateOrganization(id:"ckbrrc3js000s0834f6e7ddsa", data:{organization_name:"reverted",
+# 		organization_logo:"dummylogo",organization_website:"dwebsite",organization_type:"Test",
+# 		organization_description:"Test"}){
+# 		id
+# 		organization_name
+
+# 	}
+# }
+
+# mutation{
+# 	deleteOrganization(id:"ckbrwapiu001u0734vi48r50v"){
+# 		organization_name
+# 	}
+# }
+
+**************************** SubOrganization****************************
+# mutation{
+# 	createSubOrganization(data:{sub_organization_name:"suborg3",sub_organization_size:12,
+# 		sub_organization_logo:"dummylogo",sub_organization_website:"dwebsite",sub_organization_type:"Test",
+# 		sub_organization_description:"Test",organization:"ckbrwapiu001u0734vi48r50v"}){
+# 			id
+# 			sub_organization_name
+# 			sub_organization_size
+# 		sub_organization_logo
+# 		sub_organization_website
+# 		sub_organization_type
+
+# 		sub_organization_description
+# 		sub_organization_created_at
+# 		sub_organization_updated_at
+	
+# 	}
+# }
+
+# query{
+# 	getAllSubOrganization{
+# 		id
+# 		sub_organization_name
+		
+# 	}
+# }
+
+# query{
+# getSubOrganizationById(id:"ckbrwrx2k002s0734otmq4fm5"){
+# 	id
+# 	sub_organization_name
+# }
+# }
+
+# mutation{
+# 	updateSubOrganization(id:"ckbrxin1300340734o7xa64u3", data:{sub_organization_name:"updated"}){
+# 		sub_organization_name
+# 		id
+# 	}
+# }
+# mutation{
+# 	deleteSubOrganization(id:"ckbrxin1300340734o7xa64u3"){
+# 		id
+# 		sub_organization_name
+# 	}
+# }
+**************************** Group****************************

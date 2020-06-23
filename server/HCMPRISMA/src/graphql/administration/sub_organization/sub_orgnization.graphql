@@ -1,37 +1,41 @@
 type Query {
-  getAllOrganization: [Organization!]!
-  getOrganizationById(id: ID!): Organization!
+  getAllSubOrganization: [Sub_Organization!]!
+  getSubOrganizationById(id: ID!): Sub_Organization!
 }
 type Mutation {
-  createOrganization(data: CreateOrganizationInput): Organization!
-  deleteOrganization(id: ID!): Organization!
-  updateOrganization(id: ID!, data: UpdateOrganizationInpput): Organization!
+  createSubOrganization(data: CreateSubOrganizationInput): Sub_Organization!
+  deleteSubOrganization(id: ID!): Sub_Organization!
+  updateSubOrganization(
+    id: ID!
+    data: UpdateSubOrganizationInpput
+  ): Sub_Organization!
 }
-type Organization {
+type Sub_Organization {
   id: ID!
-  organization_name: String!
-  organization_description: String
-  organization_logo: String
-  organization_size: Int
-  organization_type: String
-  organization_website: String
-  sub_organizations: [Sub_Organization!]!
+  sub_organization_name: String!
+  sub_organization_description: String
+  sub_organization_logo: String
+  sub_organization_size: Int
+  sub_organization_type: String
+  sub_organization_website: String
+  organization: Organization!
 }
 
-input CreateOrganizationInput {
-  organization_name: String!
-  organization_description: String
-  organization_logo: String
-  organization_size: Int
-  organization_type: String
-  organization_website: String
+input CreateSubOrganizationInput {
+  sub_organization_name: String!
+  sub_organization_description: String
+  sub_organization_logo: String
+  sub_organization_size: Int
+  sub_organization_type: String
+  sub_organization_website: String
+  organization: String!
 }
 
-input UpdateOrganizationInpput {
-  organization_name: String
-  organization_description: String
-  organization_logo: String
-  organization_size: Int
-  organization_type: String
-  organization_website: String
+input UpdateSubOrganizationInpput {
+  sub_organization_name: String
+  sub_organization_description: String
+  sub_organization_logo: String
+  sub_organization_size: Int
+  sub_organization_type: String
+  sub_organization_website: String
 }

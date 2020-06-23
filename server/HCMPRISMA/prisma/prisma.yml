@@ -2,7 +2,6 @@ endpoint: ${env:PRISMA_ENDPOINT}
 datamodel:
   - admin/organization.graphql
 
-
 secret: ${env:PRISMA_SECRET}
 generate:
   - generator: javascript-client
